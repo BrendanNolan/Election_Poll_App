@@ -1,0 +1,7 @@
+Requirements:
+    (1) User should be able to select a constituency to see photos of candidates and to create .txt files
+        which they can fill with whatever notes they choose relating to that constituency.
+    (2) Constituency should rander as a solid block of colour corresponding to the party which currently
+        holds the seat.
+    (3) If the user mouses over a constituency, they should see a histogram representing the most recent general-election results
+        for that constituency.

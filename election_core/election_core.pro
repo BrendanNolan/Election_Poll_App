@@ -8,9 +8,11 @@ CONFIG += shared
 DEFINES += ELECTIONCORE_LIBRARY
 
 SOURCES += \
-    SqlConstituencyDataManager.h
+    SqlConstituencyDataManager.cpp \
+    Constituency.cpp
 
 HEADERS += \
     election_core_global.h \
     ConstituencyDataManagerBase.h \
-    SqlConstituencyDataManager.cpp
+    SqlConstituencyDataManager.h \
+    Constituency.h

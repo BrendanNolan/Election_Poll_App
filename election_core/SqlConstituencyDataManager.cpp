@@ -2,6 +2,7 @@
 
 #include <QSqlDatabase>
 #include <QSqlQuery>
+#include <QStringList>
 
 #include "Constituency.h"
 
@@ -20,4 +21,41 @@ void SqlConstituencyDataManager::init() const
     QSqlQuery query(*database_);
     query.exec("CREATE TABLE constituencies" 
         "(if INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT)");
+}
+
+void SqlConstituencyDataManager::addConstituency(Constituency& constituency)
+    const
+{
+    if (!database_)
+        return;
+
+    QSqlQuery query(*database_);
+    query.prepare("INSERT INTO constituencies (name) VALUES (:name)");
+    query.bindValue("name", constituency.name());
+    query.exec();
+    constituency.setId(query.lastInsertId().toInt());
+}
+
+void SqlConstituencyDataManager::updateConstituency(
+    const Constituency& constituency) const
+{
+    if (!database_)
+        return;
+
+    QSqlQuery query(*database_);
+    query.prepare("UPDATE constituencies SET name = (:name) WHERE id = (:id)");
+    query.bindValue(":name", constituency.name());
+    query.bindValue(":id", constituency.id());
+    query.exec();
+}
+
+void SqlConstituencyDataManager::removeConstituency(int id) const
+{
+    if (!database_)
+        return;
+
+    QSqlQuery query(*database_);
+    query.prepare("DELETE FROM albums WHERE id = (:id)");
+    query.bindValue(":id", id);
+    query.exec();
 }

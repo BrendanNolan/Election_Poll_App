@@ -1,7 +1,16 @@
 Requirements:
-    (1) User should be able to select a constituency to see photos of candidates and to create .txt files
-        which they can fill with whatever notes they choose relating to that constituency.
-    (2) Constituency should rander as a solid block of colour corresponding to the party which currently
-        holds the seat.
-    (3) If the user mouses over a constituency, they should see a histogram representing the most recent general-election results
-        for that constituency.
+    (1) The user should be able to select a constituency to see photos of 
+        candidates and to create .txt files which they can fill with 
+        whatever notes they choose relating to that constituency.
+    (2) Constituency should rander as a solid block of colour corresponding to 
+        the party which currently holds the seat.
+    (3) If the user mouses over a constituency, they should see a histogram 
+        representing the most recent general-election results for that 
+        constituency.
+    (4) Perhaps the user should be able to edit the data to create their own 
+        personal political fantasy land (not yet sure if this would mean having 
+        two models of the data or just populating the model diferently in either 
+        case (say, from disk if to see their own fantasy land and from web
+        scraping to see the real world)). It probably makes sense to allow the 
+        user to toggle between real and fantasy data, resetting the model when 
+        the user toggles.

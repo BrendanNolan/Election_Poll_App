@@ -3,6 +3,7 @@
 #include <QSqlDatabase>
 #include <QSqlQuery>
 #include <QStringList>
+#include <Qvariant>
 
 #include "Constituency.h"
 
@@ -23,8 +24,8 @@ void SqlConstituencyDataManager::init() const
         "(if INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT)");
 }
 
-void SqlConstituencyDataManager::addConstituency(Constituency& constituency)
-    const
+void SqlConstituencyDataManager::addConstituency(
+    Constituency& constituency) const
 {
     if (!database_)
         return;
@@ -36,8 +37,8 @@ void SqlConstituencyDataManager::addConstituency(Constituency& constituency)
     constituency.setId(query.lastInsertId().toInt());
 }
 
-void SqlConstituencyDataManager::updateConstituency(
-    const Constituency& constituency) const
+void SqlConstituencyDataManager::
+    updateConstituency(const Constituency& constituency) const
 {
     if (!database_)
         return;
@@ -58,4 +59,26 @@ void SqlConstituencyDataManager::removeConstituency(int id) const
     query.prepare("DELETE FROM albums WHERE id = (:id)");
     query.bindValue(":id", id);
     query.exec();
+}
+
+vector<unique_ptr<Constituency>> SqlConstituencyDataManager::
+    constituencies() const
+{
+    vector<unique_ptr<Constituency>> ret;
+    if (!database_)
+        return ret;
+
+    QSqlQuery query("SELECT * FROM constituencies", *database_);
+    query.exec();
+    while (query.next())
+    {
+        auto constituency = make_unique<Constituency>();
+        if (!constituency)
+            continue;
+        constituency->setId(query.value("id").toInt());
+        constituency->setName(query.value("name").toString());
+        ret.push_back(move(constituency));
+    }
+
+    return ret;
 }

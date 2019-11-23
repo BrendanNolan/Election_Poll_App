@@ -1,0 +1,9 @@
+#ifndef SQLCONSTITUENCYDATAMANAGER_H
+#define SQLCONSTITUENCYDATAMANAGER_H
+
+class SqlConstituencyDataManager
+{
+
+};
+
+#endif // SQLCONSTITUENCYDATAMANAGER_H

@@ -4,12 +4,12 @@
 #include <memory>
 #include <vector>
 
-#include "ConstituencyDatabaseManagerBase.h"
+#include "IConstituencyDatabaseManager.h"
 
 class Constituency;
 class QSqlDatabase;
 
-class SqlConstituencyDatabaseManager : public ConstituencyDatabaseManagerBase
+class SqlConstituencyDatabaseManager : public IConstituencyDatabaseManager
 {
 public:
     explicit SqlConstituencyDatabaseManager(std::shared_ptr<QSqlDatabase> database);

@@ -9,10 +9,16 @@ DEFINES += ELECTIONCORE_LIBRARY
 
 SOURCES += \
     SqlConstituencyDataManager.cpp \
-    Constituency.cpp
+    Constituency.cpp \
+    ConstituencyModel.cpp \
+    ImageModel.cpp \
+    PollResultsModel.cpp
 
 HEADERS += \
     election_core_global.h \
     ConstituencyDataManagerBase.h \
     SqlConstituencyDataManager.h \
-    Constituency.h
+    Constituency.h \
+    ConstituencyModel.h \
+    ImageModel.h \
+    PollResultsModel.h

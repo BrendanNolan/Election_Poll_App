@@ -1,0 +1,9 @@
+#ifndef IIMAGEDATABASEMANAGER_H
+#define IIMAGEDATABASEMANAGER_H
+
+class IImageDatabaseManager
+{
+
+};
+
+#endif // IIMAGEDATABASEMANAGER_H

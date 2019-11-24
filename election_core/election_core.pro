@@ -12,7 +12,9 @@ SOURCES += \
     Constituency.cpp \
     ConstituencyModel.cpp \
     ImageModel.cpp \
-    PollResultsModel.cpp
+    PollResultsModel.cpp \
+    IPollResultsDatabaseManager.cpp \
+    IImageDatabaseManager.cpp
 
 HEADERS += \
     election_core_global.h \
@@ -21,4 +23,6 @@ HEADERS += \
     Constituency.h \
     ConstituencyModel.h \
     ImageModel.h \
-    PollResultsModel.h
+    PollResultsModel.h \
+    IPollResultsDatabaseManager.h \
+    IImageDatabaseManager.h

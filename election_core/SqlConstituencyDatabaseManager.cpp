@@ -1,4 +1,4 @@
-#include "SqlConstituencyDataManager.h"
+#include "SqlConstituencyDatabaseManager.h"
 
 #include <QSqlDatabase>
 #include <QSqlQuery>
@@ -9,12 +9,12 @@
 
 using namespace std;
 
-SqlConstituencyDataManager::SqlConstituencyDataManager(
+SqlConstituencyDatabaseManager::SqlConstituencyDatabaseManager(
     shared_ptr<QSqlDatabase> database)
     : database_(move(database))
 {}
 
-void SqlConstituencyDataManager::init() const
+void SqlConstituencyDatabaseManager::init() const
 {
     if (!database_ || database_->tables().contains("constituencies"))
         return;
@@ -24,7 +24,7 @@ void SqlConstituencyDataManager::init() const
         "(if INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT)");
 }
 
-void SqlConstituencyDataManager::addConstituency(
+void SqlConstituencyDatabaseManager::addConstituency(
     Constituency& constituency) const
 {
     if (!database_)
@@ -37,7 +37,7 @@ void SqlConstituencyDataManager::addConstituency(
     constituency.setId(query.lastInsertId().toInt());
 }
 
-void SqlConstituencyDataManager::
+void SqlConstituencyDatabaseManager::
     updateConstituency(const Constituency& constituency) const
 {
     if (!database_)
@@ -50,7 +50,7 @@ void SqlConstituencyDataManager::
     query.exec();
 }
 
-void SqlConstituencyDataManager::removeConstituency(int id) const
+void SqlConstituencyDatabaseManager::removeConstituency(int id) const
 {
     if (!database_)
         return;
@@ -61,7 +61,7 @@ void SqlConstituencyDataManager::removeConstituency(int id) const
     query.exec();
 }
 
-vector<unique_ptr<Constituency>> SqlConstituencyDataManager::
+vector<unique_ptr<Constituency>> SqlConstituencyDatabaseManager::
     constituencies() const
 {
     vector<unique_ptr<Constituency>> ret;

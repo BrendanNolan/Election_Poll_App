@@ -1,14 +1,15 @@
-#ifndef CONSTITUENCYDATAMANAGERBASE_H
-#define CONSTITUENCYDATAMANAGERBASE_H
+#ifndef CONSTITUENCYDATABASEMANAGERBASE_H
+#define CONSTITUENCYDATABASEMANAGERBASE_H
 
 #include <memory>
 #include <vector>
 
 class Constituency;
 
-class ConstituencyDataManagerBase
+class ConstituencyDatabaseManagerBase
 {
 public:
+    virtual ~ConstituencyDatabaseManagerBase() = default;
     virtual void init() const = 0;
     virtual void addConstituency(Constituency& constituency) const = 0;
     virtual void updateConstituency(const Constituency& constituency) const = 0;
@@ -17,4 +18,4 @@ public:
         constituencies() const = 0;
 };
 
-#endif // CONSTITUENCYDATAMANAGERBASE_H
+#endif // CONSTITUENCYDATABASEMANAGERBASE_H

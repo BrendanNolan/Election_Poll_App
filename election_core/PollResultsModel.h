@@ -1,9 +1,9 @@
-#ifndef POLLRESULTSMODEL_H
-#define POLLRESULTSMODEL_H
+#ifndef POLLRESULTMODEL_H
+#define POLLRESULTMODEL_H
 
-class PollResultsModel
+class PollResultModel
 {
 
 };
 
-#endif // POLLRESULTSMODEL_H
+#endif // POLLRESULTMODEL_H

@@ -1,7 +1,9 @@
 #ifndef CONSTITUENCYMODEL_H
 #define CONSTITUENCYMODEL_H
 
-class ConstituencyModel
+#include <QAbstractTableModel>
+
+class ConstituencyModel : public QAbstractTableModel
 {
 
 };

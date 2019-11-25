@@ -1,0 +1,9 @@
+#ifndef SQLDATABASEMANAGERFACTORY_H
+#define SQLDATABASEMANAGERFACTORY_H
+
+class SqlDatabaseManagerfactory
+{
+
+};
+
+#endif // SQLDATABASEMANAGERFACTORY_H

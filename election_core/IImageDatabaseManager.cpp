@@ -1,1 +1,0 @@
-#include "IImageDatabaseManager.h"

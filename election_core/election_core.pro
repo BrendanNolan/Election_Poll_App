@@ -14,7 +14,7 @@ SOURCES += \
     ImageModel.cpp \
     PollResultsModel.cpp \
     IPollResultsDatabaseManager.cpp \
-    IImageDatabaseManager.cpp
+    IImageDatabaseManager.cpp \
 
 HEADERS += \
     election_core_global.h \
@@ -25,4 +25,5 @@ HEADERS += \
     ImageModel.h \
     PollResultsModel.h \
     IPollResultsDatabaseManager.h \
-    IImageDatabaseManager.h
+    IImageDatabaseManager.h \
+    IDatabaseManager.h

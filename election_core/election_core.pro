@@ -24,4 +24,4 @@ HEADERS += \
     PollResultModel.h \
     IPollResultDatabaseManager.h \
     IImageDatabaseManager.h \
-    DatabaseManager.h
+    IDatabaseManager.h

@@ -1,21 +1,22 @@
 #ifndef IDATABASEMANAGERFACTORY_H
 #define IDATABASEMANAGERFACTORY_H
 
+#include "election_core_global.h"
 #include <memory>
 
 class IConstituencyDatabaseManager;
 class IPollResultDatabaseManager;
 class IImageDatabaseManager;
 
-class IDatabaseManagerFactory
+class ELECTIONCORESHARED_EXPORT IDatabaseManagerFactory
 {
 public:
     virtual std::shared_ptr<IConstituencyDatabaseManager> 
-        createConstituencyDatabaseManager() = 0;
+        createConstituencyDatabaseManager() const = 0;
     virtual std::shared_ptr<IPollResultDatabaseManager>
-        createPollResultDatabaseManager() = 0;
+        createPollResultDatabaseManager() const = 0;
     virtual std::shared_ptr<IImageDatabaseManager>
-        createImageDatabaseManager() = 0;
+        createImageDatabaseManager() const = 0;
 };
 
 #endif //IDATABASEMANAGERFACTORY_H

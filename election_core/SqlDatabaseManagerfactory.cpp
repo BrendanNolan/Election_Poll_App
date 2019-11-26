@@ -13,5 +13,14 @@ SqlDatabaseManagerfactory::createConstituencyDatabaseManager() const
     return std::make_shared<SqlConstituencyDatabaseManager>(database_);
 }
 
+std::shared_ptr<IPollResultDatabaseManager>
+SqlDatabaseManagerfactory::createPollResultDatabaseManager() const
+{
+    return std::make_shared<SqlPollResultDatabaseManager>(database_);
+}
+
 std::shared_ptr<IImageDatabaseManager>
-SqlDatabaseManagerFactory
+SqlDatabaseManagerfactory::createImageDatabaseManager() const
+{
+    return std::make_shared<SqlImageDatabaseManager>(database_);
+}

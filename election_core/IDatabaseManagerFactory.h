@@ -11,6 +11,8 @@ class IImageDatabaseManager;
 class ELECTIONCORESHARED_EXPORT IDatabaseManagerFactory
 {
 public:
+    virtual ~IDatabaseManagerFactory() = default;
+
     virtual std::shared_ptr<IConstituencyDatabaseManager> 
         createConstituencyDatabaseManager() const = 0;
     virtual std::shared_ptr<IPollResultDatabaseManager>

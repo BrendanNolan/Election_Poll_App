@@ -11,7 +11,7 @@ class IImageDatabaseManager;
 
 class QSqlDatabase;
 
-class SqlDatabaseManagerfactory : public IDatabaseManagerFactory
+class SqlDatabaseManagerFactory : public IDatabaseManagerFactory
 {
 public:
     std::shared_ptr<IConstituencyDatabaseManager>

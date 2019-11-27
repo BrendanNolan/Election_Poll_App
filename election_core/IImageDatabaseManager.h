@@ -3,7 +3,8 @@
 
 class IImageDatabaseManager
 {
-
+public:
+    virtual ~IImageDatabaseManager() = default;
 };
 
 #endif // IIMAGEDATABASEMANAGER_H

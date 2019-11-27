@@ -12,7 +12,8 @@ class QSqlDatabase;
 class SqlConstituencyDatabaseManager : public IConstituencyDatabaseManager
 {
 public:
-    explicit SqlConstituencyDatabaseManager(std::shared_ptr<QSqlDatabase> database);
+    explicit SqlConstituencyDatabaseManager(
+        std::shared_ptr<QSqlDatabase> database);
     
     void init() const override;
     void addConstituency(Constituency& constituency) const override;

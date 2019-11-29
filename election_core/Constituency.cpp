@@ -23,3 +23,10 @@ void Constituency::setName(const QString& name)
 {
     name_ = name;
 }
+
+bool Constituency::isValid() const
+{
+    if (id_ < 0 || latitude_ < 0 || longitude < 0 || name_ == "")
+        return false;
+    return true;
+}

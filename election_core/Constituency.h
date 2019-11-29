@@ -15,10 +15,13 @@ public:
     void setId(int id);
     QString name() const;
     void setName(const QString& name);
+    bool isValid() const;
 
 private:
     int id_ = -1;
     QString name_ = QString("");
+    int latitude_ = -1;
+    int longitude = -1;
 };
 
 #endif // CONSTITUENCY_H

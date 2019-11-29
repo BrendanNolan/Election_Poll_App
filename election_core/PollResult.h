@@ -1,6 +1,7 @@
 #ifndef POLLRESULT_H
 #define POLLRESULT_H
 
+#include <QDateTime>
 #include <QHash>
 
 class PollResult
@@ -19,6 +20,7 @@ private:
     int id_;
     QHash<QString, int> histogram_;
     QString source_;
+    QDateTime dateTime_;
 };
 
 #endif // POLLRESULT_H

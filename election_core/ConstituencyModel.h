@@ -22,13 +22,19 @@ public:
         CurrentMPRole
     };
 
+    int rowCount() const;
     QVariant data(
         const QModelIndex &index, int role = Qt::DisplayRole) const override;
-    int rowCount() const;
+    bool setData(
+        const QModelIndex& index,
+        const QVariant& value,
+        int role) override;
+    bool removeRows(int row, int count, const QModelIndex& parent) override;
+    QHash<int, QByteArray> roleNames() const override;
 
     void addConstituency();
     void refreshConstituency();
-    void loadConstituencies();
+    void refreshConstituencies();
 
 private:
     std::vector<Constituency> constituencies_;

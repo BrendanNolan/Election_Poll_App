@@ -1,5 +1,10 @@
 #include "ConstituencyModel.h"
 
+int ConstituencyModel::rowCount() const
+{
+    return constituencies_.size();
+}
+
 QVariant ConstituencyModel::data(const QModelIndex &index, int role) const
 {
     auto row = index.row();
@@ -12,32 +17,29 @@ QVariant ConstituencyModel::data(const QModelIndex &index, int role) const
         }
         case LatitudeRole:
         {
-            return constituency
+            return constituency.latitude();
         }
         case LongitudeRole:
         {
-
+            return constituency.longitude();
         }
         case NameRole:
         {
-
+            return constituency.name();
         }
         case CurrentPartyRole:
         {
-
+            return constituency.mp().party_;
         }
         case CurrentMPRole:
         {
-
+            return constituency.mp().name_;
         }
         default:
         {
-
+            return QVariant();
         }
     }
 }
 
-int ConstituencyModel::rowCount() const
-{
-    return constituencies_.size();
-}
+

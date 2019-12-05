@@ -15,6 +15,7 @@ public:
     virtual void addConstituency(Constituency& constituency) const = 0;
     virtual void updateConstituency(const Constituency& constituency) const = 0;
     virtual void removeConstituency(int id) const = 0;
+    virtual std::unique_ptr<Constituency> constituency(int id) const = 0;
     virtual std::vector<std::unique_ptr<Constituency>> 
         constituencies() const = 0;
 };

@@ -19,6 +19,7 @@ public:
     void addConstituency(Constituency& constituency) const override;
     void updateConstituency(const Constituency& constituency) const override;
     void removeConstituency(int id) const override;
+    std::unique_ptr<Constituency> constituency(int id) const override;
     std::vector<std::unique_ptr<Constituency>>
         constituencies() const override;
 

@@ -28,9 +28,13 @@ public:
     QString name() const;
     void setName(const QString& name);
     QUrl pictoralRepresentation() const;
+    void setPictoralRepresentation(const QUrl& pic);
     int latitude() const;
+    void setLatitude(int latitude);
     int longitude() const;
+    void setLongitude(int longitude);
     MemberOfParliament mp() const;
+    void setMp(const MemberOfParliament& mp);
     bool isValid() const;
 
 private:

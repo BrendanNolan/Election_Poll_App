@@ -2,17 +2,25 @@
 #define CONSTITUENCYMODEL_H
 
 #include <QAbstractTableModel>
+#include <QModelIndex>
 
+#include <memory>
 #include <vector>
 
 #include "Constituency.h"
 
+class IConstituencyDatabaseManager;
+class IDatabaseManagerFactory;
 
 class ConstituencyModel : public QAbstractListModel
 {
     Q_OBJECT
 
 public:
+    explicit ConstituencyModel(
+        const IDatabaseManagerFactory&,
+        QObject *parent = nullptr);
+    ~ConstituencyModel();
     enum Role
     {
         LatitudeRole = Qt::UserRole + 1,
@@ -32,12 +40,15 @@ public:
     bool removeRows(int row, int count, const QModelIndex& parent) override;
     QHash<int, QByteArray> roleNames() const override;
 
-    void addConstituency();
-    void refreshConstituency();
-    void refreshConstituencies();
+    QModelIndex addConstituency(const Constituency& constituency);
 
 private:
-    std::vector<Constituency> constituencies_;
+    void refreshConstituency(int id);
+    void loadConstituencies();
+
+private:
+    std::vector<std::unique_ptr<Constituency>> constituencies_;
+    std::shared_ptr<IConstituencyDatabaseManager> manager_;
 };
 
 #endif // CONSTITUENCYMODEL_H

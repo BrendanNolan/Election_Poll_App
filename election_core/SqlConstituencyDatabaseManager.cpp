@@ -89,9 +89,7 @@ vector<unique_ptr<Constituency>> SqlConstituencyDatabaseManager::
     QSqlQuery query("SELECT * FROM constituencies", *database_);
     query.exec();
     while (query.next())
-    {
         ret.push_back(sqlQueryToConstituency(query));
-    }
 
     return ret;
 }
@@ -105,5 +103,12 @@ namespace
             return nullptr;
         constituency->setId(query.value("id").toInt());
         constituency->setName(query.value("name").toString());
+        MemberOfParliament mp;
+        mp.name_ = query.value("mp_name").toString();
+        mp.party_ = query.value("mp_party").toString();
+        // Needs image.
+        constituency->setMp(mp);
+
+        return constituency;
     }
 }

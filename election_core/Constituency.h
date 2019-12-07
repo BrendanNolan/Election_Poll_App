@@ -6,12 +6,7 @@
 
 #include "election_core_global.h"
 
-struct MemberOfParliament
-{
-    QString name_;
-    QString party_;
-    QUrl image_;
-};
+#include "MP.h"
 
 class ELECTIONCORESHARED_EXPORT Constituency
 {
@@ -33,8 +28,8 @@ public:
     void setLatitude(int latitude);
     int longitude() const;
     void setLongitude(int longitude);
-    MemberOfParliament mp() const;
-    void setMp(const MemberOfParliament& mp);
+    const MP& mp() const;
+    void setMp(const MP& mp);
     bool isValid() const;
 
 private:
@@ -43,7 +38,7 @@ private:
     int latitude_ = -1;
     int longitude_ = -1;
     QUrl pictoralRepresentationUrl_;
-    MemberOfParliament mp_;
+    MP mp_;
 };
 
 #endif // CONSTITUENCY_H

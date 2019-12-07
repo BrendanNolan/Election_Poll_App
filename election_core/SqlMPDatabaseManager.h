@@ -1,5 +1,5 @@
-#ifndef SQLIMAGEDATABASEMANAGER_H
-#define SQLIMAGEDATABASEMANAGER_H
+#ifndef SQLMPDATABASEMANAGER_H
+#define SQLMPDATABASEMANAGER_H
 
 #include <memory>
 #include <vector>
@@ -17,4 +17,4 @@ private:
     std::shared_ptr<QSqlDatabase> database_;
 };
 
-#endif // SQLIMAGEDATABASEMANAGER_H
+#endif // SQLMPDATABASEMANAGER_H

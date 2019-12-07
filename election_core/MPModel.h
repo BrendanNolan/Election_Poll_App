@@ -1,9 +1,9 @@
-#ifndef IMAGEMODEL_H
-#define IMAGEMODEL_H
+#ifndef MPMODEL_H
+#define MPMODEL_H
 
 class MPModel
 {
 
 };
 
-#endif // IMAGEMODEL_H
+#endif // MPMODEL_H

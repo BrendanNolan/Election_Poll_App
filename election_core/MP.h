@@ -1,5 +1,5 @@
-#ifndef IMAGE_H
-#define IMAGE_H
+#ifndef MP_H
+#define MP_H
 
 #include <QUrl>
 
@@ -21,4 +21,4 @@ private:
     int parentId_;
 };
 
-#endif // IMAGE_H
+#endif // MP_H

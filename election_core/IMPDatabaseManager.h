@@ -1,5 +1,5 @@
-#ifndef IIMAGEDATABASEMANAGER_H
-#define IIMAGEDATABASEMANAGER_H
+#ifndef IMPDATABASEMANAGER_H
+#define IMPDATABASEMANAGER_H
 
 class IMPDatabaseManager
 {
@@ -7,4 +7,4 @@ public:
     virtual ~IMPDatabaseManager() = default;
 };
 
-#endif // IIMAGEDATABASEMANAGER_H
+#endif // IMPDATABASEMANAGER_H

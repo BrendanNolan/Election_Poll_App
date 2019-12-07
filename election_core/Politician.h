@@ -1,12 +1,12 @@
-#ifndef MP_H
-#define MP_H
+#ifndef POLITICIAN_H
+#define POLITICIAN_H
 
 #include <QUrl>
 
-class MP
+class Politician
 {
-    MP(const QString& filePath = "");
-    MP(const QUrl& fileUrl);
+    Politician(const QString& filePath = "");
+    Politician(const QUrl& fileUrl);
 
     int id() const;
     void setId(int id);
@@ -21,4 +21,4 @@ private:
     int parentId_;
 };
 
-#endif // MP_H
+#endif // POLITICIAN_H

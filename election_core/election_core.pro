@@ -2,7 +2,7 @@ QT += sql
 QT -= gui
 
 TARGET = election_core
-TEMPLATE = lib
+TEPoliticianLATE = lib
 CONFIG += shared
 
 DEFINES += ELECTIONCORE_LIBRARY
@@ -11,13 +11,13 @@ SOURCES += \
     SqlConstituencyDatabaseManager.cpp \
     Constituency.cpp \
     ConstituencyModel.cpp \
-    MPModel.cpp \
+    PoliticianModel.cpp \
     PollResultModel.cpp \
     SqlDatabaseManagerFactory.cpp \
-    MP.cpp \
+    Politician.cpp \
     PollResult.cpp \
     SqlPollResultDatabaseManager.cpp \
-    SqlMPDatabaseManager.cpp
+    SqlPoliticianDatabaseManager.cpp
 
 HEADERS += \
     election_core_global.h \
@@ -25,13 +25,13 @@ HEADERS += \
     SqlConstituencyDatabaseManager.h \
     Constituency.h \
     ConstituencyModel.h \
-    MPModel.h \
+    PoliticianModel.h \
     PollResultModel.h \
     IPollResultDatabaseManager.h \
-    IMPDatabaseManager.h \
+    IPoliticianDatabaseManager.h \
     IDatabaseManagerFactory.h \
     SqlDatabaseManagerFactory.h \
-    MP.h \
+    Politician.h \
     PollResult.h \
     SqlPollResultDatabaseManager.h \
-    SqlMPDatabaseManager.h
+    SqlPoliticianDatabaseManager.h

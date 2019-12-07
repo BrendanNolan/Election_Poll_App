@@ -7,7 +7,7 @@
 
 class IConstituencyDatabaseManager;
 class IPollResultDatabaseManager;
-class IMPDatabaseManager;
+class IPoliticianDatabaseManager;
 
 class QSqlDatabase;
 
@@ -18,8 +18,8 @@ public:
         createConstituencyDatabaseManager() const override;
     std::shared_ptr<IPollResultDatabaseManager>
         createPollResultDatabaseManager() const override;
-    std::shared_ptr<IMPDatabaseManager>
-        createMPDatabaseManager() const override;
+    std::shared_ptr<IPoliticianDatabaseManager>
+        createPoliticianDatabaseManager() const override;
 
 private:
     static std::shared_ptr<QSqlDatabase> database_;

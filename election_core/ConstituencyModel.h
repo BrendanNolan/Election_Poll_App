@@ -26,7 +26,7 @@ public:
         LongitudeRole,
         NameRole,
         CurrentPartyRole,
-        CurrentMPRole
+        CurrentPoliticianRole
     };
 
     int rowCount() const;

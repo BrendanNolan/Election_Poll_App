@@ -1,7 +1,7 @@
 #include "SqlDatabaseManagerfactory.h"
 
 #include "SqlConstituencyDatabaseManager.h"
-#include "SqlMPDatabaseManager.h"
+#include "SqlPoliticianDatabaseManager.h"
 #include "SqlPollResultDatabaseManager.h"
 
 std::shared_ptr<QSqlDatabase> SqlDatabaseManagerfactory::database_ 
@@ -19,8 +19,8 @@ SqlDatabaseManagerfactory::createPollResultDatabaseManager() const
     return std::make_shared<SqlPollResultDatabaseManager>(database_);
 }
 
-std::shared_ptr<IMPDatabaseManager>
-SqlDatabaseManagerfactory::createMPDatabaseManager() const
+std::shared_ptr<IPoliticianDatabaseManager>
+SqlDatabaseManagerfactory::createPoliticianDatabaseManager() const
 {
-    return std::make_shared<SqlMPDatabaseManager>(database_);
+    return std::make_shared<SqlPoliticianDatabaseManager>(database_);
 }

@@ -48,7 +48,7 @@ QVariant ConstituencyModel::data(const QModelIndex &index, int role) const
         {
             return constituency.mp().party_;
         }
-        case CurrentMPRole:
+        case CurrentPoliticianRole:
         {
             return constituency.mp().name_;
         }

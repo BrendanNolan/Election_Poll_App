@@ -6,7 +6,7 @@
 
 #include "election_core_global.h"
 
-#include "MP.h"
+#include "Politician.h"
 
 class ELECTIONCORESHARED_EXPORT Constituency
 {
@@ -28,8 +28,8 @@ public:
     void setLatitude(int latitude);
     int longitude() const;
     void setLongitude(int longitude);
-    const MP& mp() const;
-    void setMp(const MP& mp);
+    const Politician& mp() const;
+    void setMp(const Politician& mp);
     bool isValid() const;
 
 private:
@@ -38,7 +38,7 @@ private:
     int latitude_ = -1;
     int longitude_ = -1;
     QUrl pictoralRepresentationUrl_;
-    MP mp_;
+    Politician mp_;
 };
 
 #endif // CONSTITUENCY_H

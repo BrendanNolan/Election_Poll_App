@@ -4,14 +4,14 @@
 #include <memory>
 #include <vector>
 
-#include "IImageDatabaseManager.h"
+#include "IMPDatabaseManager.h"
 
 class QSqlDatabase;
 
-class SqlImageDatabaseManager : public IImageDatabaseManager
+class SqlMPDatabaseManager : public IMPDatabaseManager
 {
 public:
-    explicit SqlImageDatabaseManager(std::shared_ptr<QSqlDatabase> database);
+    explicit SqlMPDatabaseManager(std::shared_ptr<QSqlDatabase> database);
 
 private:
     std::shared_ptr<QSqlDatabase> database_;

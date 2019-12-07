@@ -1,10 +1,10 @@
 #ifndef IIMAGEDATABASEMANAGER_H
 #define IIMAGEDATABASEMANAGER_H
 
-class IImageDatabaseManager
+class IMPDatabaseManager
 {
 public:
-    virtual ~IImageDatabaseManager() = default;
+    virtual ~IMPDatabaseManager() = default;
 };
 
 #endif // IIMAGEDATABASEMANAGER_H

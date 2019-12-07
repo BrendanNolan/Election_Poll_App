@@ -6,7 +6,7 @@
 
 class IConstituencyDatabaseManager;
 class IPollResultDatabaseManager;
-class IImageDatabaseManager;
+class IMPDatabaseManager;
 
 class ELECTIONCORESHARED_EXPORT IDatabaseManagerFactory
 {
@@ -17,8 +17,8 @@ public:
         createConstituencyDatabaseManager() const = 0;
     virtual std::shared_ptr<IPollResultDatabaseManager>
         createPollResultDatabaseManager() const = 0;
-    virtual std::shared_ptr<IImageDatabaseManager>
-        createImageDatabaseManager() const = 0;
+    virtual std::shared_ptr<IMPDatabaseManager>
+        createMPDatabaseManager() const = 0;
 };
 
 #endif //IDATABASEMANAGERFACTORY_H

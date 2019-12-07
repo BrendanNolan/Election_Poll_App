@@ -3,10 +3,10 @@
 
 #include <QUrl>
 
-class Image
+class MP
 {
-    Image(const QString& filePath = "");
-    Image(const QUrl& fileUrl);
+    MP(const QString& filePath = "");
+    MP(const QUrl& fileUrl);
 
     int id() const;
     void setId(int id);

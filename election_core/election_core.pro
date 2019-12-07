@@ -21,6 +21,7 @@ SOURCES += \
 
 HEADERS += \
     election_core_global.h \
+    election_core_definitions.h \
     IConstituencyDatabaseManager.h \
     SqlConstituencyDatabaseManager.h \
     Constituency.h \

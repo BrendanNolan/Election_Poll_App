@@ -1,3 +1,2 @@
-May need an MPModel rather than an ImageModel. An MP object should have a name, party, and image I guess. 
-Something like a class which is a beefed up version of the MemberOfParliament struct defined in Constituency.h
-at the moment. 
+A constituency view should probably have two PolicicianModels - one for current 
+MPs and one for candidates in upcoming election. 

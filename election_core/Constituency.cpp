@@ -1,7 +1,12 @@
 #include "Constituency.h"
 
-Constituency::Constituency(const QString& name)
+Constituency::Constituency(
+    const QString& name,
+    int latitude,
+    int longitude)
     : name_(name)
+    , latitude_(latitude)
+    , longitude_(longitude)
 {}
 
 int Constituency::id() const
@@ -22,9 +27,4 @@ QString Constituency::name() const
 void Constituency::setName(const QString& name)
 {
     name_ = name;
-}
-
-QUrl Constituency::pictoralRepresentation() const
-{
-    return pictoralRepresentationUrl_;
 }

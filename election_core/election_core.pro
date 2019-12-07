@@ -2,7 +2,7 @@ QT += sql
 QT -= gui
 
 TARGET = election_core
-TEPoliticianLATE = lib
+TEMPLATE = lib
 CONFIG += shared
 
 DEFINES += ELECTIONCORE_LIBRARY

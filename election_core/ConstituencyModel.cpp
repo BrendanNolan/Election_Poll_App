@@ -17,9 +17,6 @@ ConstituencyModel::ConstituencyModel(
     loadConstituencies();
 }
 
-ConstituencyModel::~ConstituencyModel()
-{}
-
 int ConstituencyModel::rowCount() const
 {
     return constituencies_.size();

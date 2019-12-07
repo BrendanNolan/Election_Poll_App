@@ -22,11 +22,11 @@ public:
         QObject *parent = nullptr);
     enum Role
     {
-        LatitudeRole = Qt::UserRole + 1,
+        NameRole = Qt::UserRole + 1,
+        LatitudeRole,
         LongitudeRole,
-        NameRole,
-        CurrentPartyRole,
-        CurrentPoliticianRole
+        IDRole, 
+        DisplayRole
     };
 
     int rowCount() const;

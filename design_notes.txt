@@ -1,2 +1,6 @@
 A constituency view should probably have two PolicicianModels - one for current 
 MPs and one for candidates in upcoming election. 
+
+Constituency objects will probably have to have 
+current mp data and this will need to be considered for the 
+DisplayROle of the constituency.

@@ -1,9 +1,14 @@
 #include "ConstituencyModel.h"
 
-#include "IConstituencyDatabaseManager.h"
-#include "IDatabaseManagerFactory.h"
+#include <QMap>
+#include <QString>
 
 #include <algorithm>
+#include <map>
+
+#include "IConstituencyDatabaseManager.h"
+#include "IDatabaseManagerFactory.h"
+#include "IPoliticianDatabaseManager.h"
 
 using namespace std;
 
@@ -30,7 +35,15 @@ QVariant ConstituencyModel::data(const QModelIndex &index, int role) const
         const auto& constituency = *(constituencies_[row]);
         case Qt::DisplayRole:
         {
-            return constituency.pictoralRepresentation().fileName();
+            // Not quite working but should be fixable.
+            const auto mps = politicianManager_->mpsForConstituency(
+                constituency.id());
+            map<QString, QVariant> displayVals;
+            for (const auto& mp : mps)
+            {
+                ++displayVals[mp.party().name_];
+            }
+            return QMap<QString, int>(displayVals);
         }
         case LatitudeRole:
         {

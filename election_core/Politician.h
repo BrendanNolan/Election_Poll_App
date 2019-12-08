@@ -3,8 +3,23 @@
 
 #include <QUrl>
 
+enum class Colour
+{
+    Red,
+    Green,
+    Blue,
+    Yellow
+};
+
+struct Party
+{
+    QString name_;
+    Colour colour_;
+};
+
 class Politician
 {
+public:
     Politician(const QString& filePath = "");
     Politician(const QUrl& fileUrl);
 
@@ -14,11 +29,14 @@ class Politician
     void setParentId(int id);
     QString fileUrl() const;
     void setFileUrl(const QString& fileUrl);
+    const Party& party() const;
+    void setParty(const Party& party);
 
 private:
     QUrl fileurl_;
     int id_;
     int parentId_;
+    Party party_;
 };
 
 #endif // POLITICIAN_H

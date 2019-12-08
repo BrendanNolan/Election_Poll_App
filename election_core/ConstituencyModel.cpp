@@ -11,9 +11,9 @@ ConstituencyModel::ConstituencyModel(
     const IDatabaseManagerFactory& factory,
     QObject* parent = nullptr)
     : QAbstractListModel(parent)
-    , manager_(factory.createConstituencyDatabaseManager())
+    , constituencyManager_(factory.createConstituencyDatabaseManager())
 {
-    manager_->init();
+    constituencyManager_->init();
     loadConstituencies();
 }
 
@@ -65,7 +65,7 @@ QModelIndex ConstituencyModel::addConstituency(const Constituency& constituency)
 
     beginInsertRows(QModelIndex(), row, row);
     unique_ptr<Constituency> newConstituency(new Constituency(constituency));
-    manager_->addConstituency(*newConstituency);
+    constituencyManager_->addConstituency(*newConstituency);
     constituencies_.push_back(move(newConstituency));
     endInsertRows();
 
@@ -84,13 +84,13 @@ void ConstituencyModel::refreshConstituency(int id)
         return;
     auto row = static_cast<int>(toUpdate - constituencies_.begin());
     auto& ptr = *toUpdate;
-    ptr = move(manager_->constituency(id));
+    ptr = move(constituencyManager_->constituency(id));
     emit dataChanged(index(row), index(row));
 }
 
 void ConstituencyModel::loadConstituencies()
 {
     beginResetModel();
-    constituencies_ = manager_->constituencies();
+    constituencies_ = constituencyManager_->constituencies();
     endResetModel();
 }

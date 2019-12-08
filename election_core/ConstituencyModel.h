@@ -10,6 +10,7 @@
 #include "Constituency.h"
 
 class IConstituencyDatabaseManager;
+class IPoliticianDatabaseManager;
 class IDatabaseManagerFactory;
 
 class ConstituencyModel : public QAbstractListModel
@@ -47,7 +48,8 @@ private:
 
 private:
     std::vector<std::unique_ptr<Constituency>> constituencies_;
-    std::shared_ptr<IConstituencyDatabaseManager> manager_;
+    std::shared_ptr<IConstituencyDatabaseManager> constituencyManager_;
+    std::shared_ptr<IPoliticianDatabaseManager> politicianManager_;
 };
 
 #endif // CONSTITUENCYMODEL_H

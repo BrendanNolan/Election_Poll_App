@@ -17,8 +17,10 @@ ConstituencyModel::ConstituencyModel(
     QObject* parent = nullptr)
     : QAbstractListModel(parent)
     , constituencyManager_(factory.createConstituencyDatabaseManager())
+    , politicianManager_(factory.createPoliticianDatabaseManager())
 {
     constituencyManager_->init();
+    politicianManager_->init();
     loadConstituencies();
 }
 

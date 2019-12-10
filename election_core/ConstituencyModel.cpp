@@ -95,8 +95,7 @@ void ConstituencyModel::refreshConstituency(int id)
     if (toUpdate == constituencies_.end())
         return;
     auto row = static_cast<int>(toUpdate - constituencies_.begin());
-    auto& ptr = *toUpdate;
-    ptr = move(constituencyManager_->constituency(id));
+    *toUpdate = move(constituencyManager_->constituency(id));
     emit dataChanged(index(row), index(row));
 }
 

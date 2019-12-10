@@ -43,7 +43,7 @@ public:
     QModelIndex addConstituency(const Constituency& constituency);
 
 private:
-    void refreshConstituency(int id);
+    void refreshConstituency(int id); // O(rowCount()) complexity
     void loadConstituencies();
 
 private:

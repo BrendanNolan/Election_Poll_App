@@ -38,12 +38,15 @@ QVariant ConstituencyModel::data(const QModelIndex &index, int role) const
             // Not quite working but should be fixable.
             const auto mps = politicianManager_->mpsForConstituency(
                 constituency.id());
-            map<QString, QVariant> displayVals;
+            map<QString, int> displayVals;
             for (const auto& mp : mps)
             {
                 ++displayVals[mp.party().name_];
             }
-            return QMap<QString, int>(displayVals);
+            QMap<QString, QVariant> ret;
+            for (const auto& keyValuePair : displayVals)
+                ret[keyValuePair.first] = keyValuePair.second;
+            return ret;
         }
         case LatitudeRole:
         {
@@ -57,13 +60,9 @@ QVariant ConstituencyModel::data(const QModelIndex &index, int role) const
         {
             return constituency.name();
         }
-        case CurrentPartyRole:
+        case IDRole:
         {
-            return constituency.mp().party_;
-        }
-        case CurrentPoliticianRole:
-        {
-            return constituency.mp().name_;
+            return constituency.id();
         }
         default:
         {

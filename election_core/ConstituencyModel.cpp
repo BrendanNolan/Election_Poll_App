@@ -60,7 +60,7 @@ QVariant ConstituencyModel::data(const QModelIndex &index, int role) const
         {
             return constituency.name();
         }
-        case IDRole:
+        case IdRole:
         {
             return constituency.id();
         }
@@ -69,6 +69,15 @@ QVariant ConstituencyModel::data(const QModelIndex &index, int role) const
             return QVariant();
         }
     }
+}
+
+QHash<int, QByteArray> ConstituencyModel::roleNames() const
+{
+    QHash<int, QByteArray> ret;
+    ret[LatitudeRole] = "Latitude";
+    ret[LongitudeRole] = "Longitude";
+    ret[NameRole] = "Name";
+    ret[IdRole] = "Id";
 }
 
 QModelIndex ConstituencyModel::addConstituency(const Constituency& constituency)

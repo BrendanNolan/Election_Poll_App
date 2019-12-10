@@ -27,7 +27,7 @@ public:
         LatitudeRole,
         LongitudeRole,
         NameRole,
-        IDRole
+        IdRole
     };
 
     int rowCount() const;

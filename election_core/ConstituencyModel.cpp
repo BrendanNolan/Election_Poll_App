@@ -78,8 +78,6 @@ bool ConstituencyModel::setData(
     auto& constituency = *(constituencies_[index.row()]);
     switch (role)
     {
-        case Qt::DisplayRole: // This one could be tricky
-                              break;
         case LatitudeRole: constituency.setLatitude(value.toInt());
                            break;
         case LongitudeRole: constituency.setLongitude(value.toInt());

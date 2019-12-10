@@ -45,6 +45,7 @@ public:
 private:
     void refreshConstituency(int id); // O(rowCount()) complexity
     void loadConstituencies();
+    bool isIndexValid(const QModelIndex& index) const;
 
 private:
     std::vector<std::unique_ptr<Constituency>> constituencies_;

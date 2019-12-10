@@ -29,9 +29,11 @@ int ConstituencyModel::rowCount() const
 
 QVariant ConstituencyModel::data(const QModelIndex &index, int role) const
 {
-    const auto& constituency = *(constituencies_[index.row()]);
+    if (!isIndexValid(index))
+        return false;
     switch (role)
     {
+        const auto& constituency = *(constituencies_[index.row()]);
         case Qt::DisplayRole:
         {
             // Not quite working but should be fixable.
@@ -47,26 +49,16 @@ QVariant ConstituencyModel::data(const QModelIndex &index, int role) const
                 ret[keyValuePair.first] = keyValuePair.second;
             return ret;
         }
-        case LatitudeRole:
-        {
+        case LatitudeRole: 
             return constituency.latitude();
-        }
-        case LongitudeRole:
-        {
+        case LongitudeRole: 
             return constituency.longitude();
-        }
-        case NameRole:
-        {
+        case NameRole: 
             return constituency.name();
-        }
-        case IdRole:
-        {
+        case IdRole: 
             return constituency.id();
-        }
-        default:
-        {
+        default: 
             return QVariant();
-        }
     }
 }
 
@@ -75,18 +67,49 @@ bool ConstituencyModel::setData(
     const QVariant& value,
     int role)
 {
+    if (!isIndexValid(index))
+        return false;
+
     auto& constituency = *(constituencies_[index.row()]);
     switch (role)
     {
-        case LatitudeRole: constituency.setLatitude(value.toInt());
-                           break;
-        case LongitudeRole: constituency.setLongitude(value.toInt());
-                           break;
-        case NameRole: constituency.setName(value.toString());
-                       break;
-        default: return false;
+        case LatitudeRole: 
+            constituency.setLatitude(value.toInt());
+            break;
+        case LongitudeRole: 
+            constituency.setLongitude(value.toInt());
+            break;
+        case NameRole: 
+            constituency.setName(value.toString());
+            break;
+        default: 
+            return false;
     }
     constituencyManager_->updateConstituency(constituency);
+    emit dataChanged(index, index);
+    return true;
+}
+
+bool ConstituencyModel::removeRows(
+    int row, 
+    int count, 
+    const QModelIndex& /*parent*/)
+{
+    if (row < 0 || count < 0 || row + count > rowCount())
+        return false;
+
+    beginRemoveRows(QModelIndex(), row, row + count);
+    auto rowsLeftToRemove = count;
+    while (rowsLeftToRemove > 0)
+    {
+        constituencyManager_->removeConstituency(
+            constituencies_[row + rowsLeftToRemove - 1]->id());
+        --rowsLeftToRemove;
+    }
+    constituencies_.erase(
+        constituencies_.begin() + row, 
+        constituencies_.begin() + row + count);
+    endRemoveRows();
     return true;
 }
 
@@ -132,4 +155,12 @@ void ConstituencyModel::loadConstituencies()
     beginResetModel();
     constituencies_ = constituencyManager_->constituencies();
     endResetModel();
+}
+
+bool ConstituencyModel::isIndexValid(const QModelIndex& index) const
+{
+    auto row = index.row();
+    if (row < 0 || row >= rowCount() || !index.isValid())
+        return false;
+    return true;
 }

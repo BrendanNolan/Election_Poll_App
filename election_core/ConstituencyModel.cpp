@@ -29,10 +29,9 @@ int ConstituencyModel::rowCount() const
 
 QVariant ConstituencyModel::data(const QModelIndex &index, int role) const
 {
-    auto row = index.row();
+    const auto& constituency = *(constituencies_[index.row()]);
     switch (role)
     {
-        const auto& constituency = *(constituencies_[row]);
         case Qt::DisplayRole:
         {
             // Not quite working but should be fixable.
@@ -69,6 +68,28 @@ QVariant ConstituencyModel::data(const QModelIndex &index, int role) const
             return QVariant();
         }
     }
+}
+
+bool ConstituencyModel::setData(
+    const QModelIndex& index,
+    const QVariant& value,
+    int role)
+{
+    auto& constituency = *(constituencies_[index.row()]);
+    switch (role)
+    {
+        case Qt::DisplayRole: // This one could be tricky
+                              break;
+        case LatitudeRole: constituency.setLatitude(value.toInt());
+                           break;
+        case LongitudeRole: constituency.setLongitude(value.toInt());
+                           break;
+        case NameRole: constituency.setName(value.toString());
+                       break;
+        default: return false;
+    }
+    constituencyManager_->updateConstituency(constituency);
+    return true;
 }
 
 QHash<int, QByteArray> ConstituencyModel::roleNames() const

@@ -1,5 +1,4 @@
 QT += sql
-QT -= gui
 
 TARGET = election_core
 TEMPLATE = lib

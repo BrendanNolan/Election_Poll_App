@@ -1,7 +1,7 @@
 #ifndef IPOLITICIANDATABASEMANAGER_H
 #define IPOLITICIANDATABASEMANAGER_H
 
-#include <QPixmap>
+#include <Qurl>
 
 #include <memory>
 #include <vector>
@@ -19,7 +19,7 @@ public:
         int constituencyId) const = 0;
     virtual std::vector<std::unique_ptr<Politician>> candidatesForConstituency(
         int constituencyId) const = 0;
-    virtual QPixmap pixmapForPolitician(int politicianId) const = 0;
+    virtual QUrl imageUrlForPolitician(int politicianId) const = 0;
     virtual void addPoliticianToConstituency(int politicianId) const = 0;
     virtual void updatePolitician(int politicianId) const = 0;
     virtual void removePolitician(int politicianId) const = 0;

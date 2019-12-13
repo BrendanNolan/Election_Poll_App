@@ -44,7 +44,7 @@ QVariant ConstituencyModel::data(const QModelIndex &index, int role) const
             map<QString, int> displayVals;
             for (const auto& mp : mps)
             {
-                ++displayVals[mp.party().name_];
+                ++displayVals[mp->partyDetails().name_];
             }
             QMap<QString, QVariant> ret;
             for (const auto& keyValuePair : displayVals)
@@ -137,7 +137,7 @@ QModelIndex ConstituencyModel::addConstituency(const Constituency& constituency)
     return index(row);
 }
 
-void ConstituencyModel::refreshConstituency(int id)
+bool ConstituencyModel::refreshConstituency(int id)
 {
     auto toUpdate = find_if(
         constituencies_.begin(),
@@ -146,10 +146,11 @@ void ConstituencyModel::refreshConstituency(int id)
             return c->id() == id; 
         });
     if (toUpdate == constituencies_.end())
-        return;
+        return false;
     auto row = static_cast<int>(toUpdate - constituencies_.begin());
     *toUpdate = move(constituencyManager_->constituency(id));
     emit dataChanged(index(row), index(row));
+    return true;
 }
 
 void ConstituencyModel::loadConstituencies()

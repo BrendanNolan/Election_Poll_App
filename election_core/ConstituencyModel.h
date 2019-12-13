@@ -23,8 +23,7 @@ public:
         QObject *parent = nullptr);
     enum Role
     {
-        DisplayRole = Qt::UserRole + 1,
-        LatitudeRole,
+        LatitudeRole = Qt::UserRole + 1,
         LongitudeRole,
         NameRole,
         IdRole
@@ -44,7 +43,7 @@ public:
     QModelIndex addConstituency(const Constituency& constituency);
 
 private:
-    void refreshConstituency(int id); // O(rowCount()) complexity
+    bool refreshConstituency(int id); // O(rowCount()) complexity
     void loadConstituencies();
     bool isIndexValid(const QModelIndex& index) const;
 

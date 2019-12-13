@@ -1,18 +1,18 @@
 #ifndef POLITICIAN_H
 #define POLITICIAN_H
 
-// #include <QUrl>
-
-enum class Colour
-{
-    Red,
-    Green,
-    Blue,
-    Yellow
-};
+#include <QUrl>
 
 struct PartyDetails
 {
+    enum Colour
+    {
+        Red,
+        Green,
+        Blue,
+        Yellow
+    };
+
     QString name_;
     Colour colour_;
 };
@@ -28,13 +28,13 @@ public:
     void setConstituencyId(int id);
     QString name() const;
     void setName(const QString& name);
-    // QString fileUrl() const;
-    // void setFileUrl(const QString& fileUrl);
+    QString imageUrl() const;
+    void setImageUrl(const QString& imageUrl);
     PartyDetails partyDetails() const;
     void setPartyDetails(const PartyDetails& party);
 
 private:
-    // QUrl fileurl_;
+    QUrl imageUrl_;
     QString name_;
     int id_;
     int constituencyId_;

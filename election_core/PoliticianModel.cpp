@@ -57,6 +57,16 @@ bool PoliticianModel::setData(
     auto& politician = *(politicianCache_[index.row()]);
 }
 
+QHash<int, QByteArray> PoliticianModel::roleNames() const
+{
+    QHash<int, QByteArray> ret;
+    ret[NameRole] = "Name";
+    ret[ConstituencyIdRole] = "Constituency Id";
+    ret[IdRole] = "Id";
+    ret[PartyNameRole] = "Party Name";
+    return ret;
+}
+
 QModelIndex PoliticianModel::addPolitician(unique_ptr<Politician> politician)
 {
     auto row = rowCount();
@@ -89,6 +99,19 @@ void PoliticianModel::setConstituency(int id)
     constituencyId_ = id;
     loadPoliticianCache();
     endResetModel();
+}
+
+bool PoliticianModel::refreshCachedPolitician(int id)
+{
+    auto toUpdate = find_if(
+        politicianCache_.begin(),
+        politicianCache_.end(),
+        [id](const unique_ptr<Politician>& c) {
+            return c->id() == id;
+        });
+    if (toUpdate == politicianCache_.end())
+        return false;
+    // More required
 }
 
 void PoliticianModel::loadPoliticianCache()

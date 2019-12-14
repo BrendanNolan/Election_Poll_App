@@ -3,18 +3,17 @@
 
 #include <QUrl>
 
+struct RGBValue
+{
+    int red_;
+    int green_;
+    int blue_;
+};
+
 struct PartyDetails
 {
-    enum Colour
-    {
-        Red,
-        Green,
-        Blue,
-        Yellow
-    };
-
     QString name_;
-    Colour colour_;
+    RGBValue colour_;
 };
 
 class Politician

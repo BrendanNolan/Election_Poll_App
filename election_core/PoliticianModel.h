@@ -41,12 +41,11 @@ public:
     QModelIndex addPolitician(const Politician& politician);
 
 private:
-    bool refreshPolitician(int id); // O(rowCount()) complexity
-    void loadPoliticians();
-    bool isIndexValid(const QModelIndex& index) const;
+    bool refreshCachedPolitician(int id); // O(rowCount()) complexity
+    void loadPoliticianCache();
 
 private:
-    std::vector<std::shared_ptr<Politician>> politicians_;
+    std::vector<std::shared_ptr<Politician>> politicianCache_;
     std::shared_ptr<IPoliticianDatabaseManager> manager_;
 };
 

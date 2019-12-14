@@ -10,6 +10,8 @@
 #include "IDatabaseManagerFactory.h"
 #include "IPoliticianDatabaseManager.h"
 
+#include "ListModelFunctions.h"
+
 using namespace std;
 
 ConstituencyModel::ConstituencyModel(
@@ -21,21 +23,21 @@ ConstituencyModel::ConstituencyModel(
 {
     constituencyManager_->init();
     politicianManager_->init();
-    loadConstituencies();
+    loadConstituencyCache();
 }
 
 int ConstituencyModel::rowCount() const
 {
-    return constituencies_.size();
+    return constituencyCache_.size();
 }
 
 QVariant ConstituencyModel::data(const QModelIndex &index, int role) const
 {
-    if (!isIndexValid(index))
+    if (!isIndexValid(index, *this))
         return false;
     switch (role)
     {
-        const auto& constituency = *(constituencies_[index.row()]);
+        const auto& constituency = *(constituencyCache_[index.row()]);
         case Qt::DisplayRole:
         {
             // Not quite working but should be fixable.
@@ -69,10 +71,10 @@ bool ConstituencyModel::setData(
     const QVariant& value,
     int role)
 {
-    if (!isIndexValid(index))
+    if (!isIndexValid(index, *this))
         return false;
 
-    auto& constituency = *(constituencies_[index.row()]);
+    auto& constituency = *(constituencyCache_[index.row()]);
     switch (role)
     {
         case LatitudeRole: 
@@ -105,12 +107,12 @@ bool ConstituencyModel::removeRows(
     while (rowsLeftToRemove > 0)
     {
         constituencyManager_->removeConstituency(
-            constituencies_[row + rowsLeftToRemove - 1]->id());
+            constituencyCache_[row + rowsLeftToRemove - 1]->id());
         --rowsLeftToRemove;
     }
-    constituencies_.erase(
-        constituencies_.begin() + row, 
-        constituencies_.begin() + row + count);
+    constituencyCache_.erase(
+        constituencyCache_.begin() + row, 
+        constituencyCache_.begin() + row + count);
     endRemoveRows();
     return true;
 }
@@ -131,39 +133,31 @@ QModelIndex ConstituencyModel::addConstituency(const Constituency& constituency)
     beginInsertRows(QModelIndex(), row, row);
     unique_ptr<Constituency> newConstituency(new Constituency(constituency));
     constituencyManager_->addConstituency(*newConstituency);
-    constituencies_.push_back(move(newConstituency));
+    constituencyCache_.push_back(move(newConstituency));
     endInsertRows();
 
     return index(row);
 }
 
-bool ConstituencyModel::refreshConstituency(int id)
+bool ConstituencyModel::refreshCachedConstituency(int id)
 {
     auto toUpdate = find_if(
-        constituencies_.begin(),
-        constituencies_.end(),
+        constituencyCache_.begin(),
+        constituencyCache_.end(),
         [id](const unique_ptr<Constituency>& c) { 
             return c->id() == id; 
         });
-    if (toUpdate == constituencies_.end())
+    if (toUpdate == constituencyCache_.end())
         return false;
-    auto row = static_cast<int>(toUpdate - constituencies_.begin());
+    auto row = static_cast<int>(toUpdate - constituencyCache_.begin());
     *toUpdate = move(constituencyManager_->constituency(id));
     emit dataChanged(index(row), index(row));
     return true;
 }
 
-void ConstituencyModel::loadConstituencies()
+void ConstituencyModel::loadConstituencyCache()
 {
     beginResetModel();
-    constituencies_ = constituencyManager_->constituencies();
+    constituencyCache_ = constituencyManager_->constituencies();
     endResetModel();
-}
-
-bool ConstituencyModel::isIndexValid(const QModelIndex& index) const
-{
-    auto row = index.row();
-    if (row < 0 || row >= rowCount() || !index.isValid())
-        return false;
-    return true;
 }

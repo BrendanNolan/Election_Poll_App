@@ -16,7 +16,8 @@ SOURCES += \
     Politician.cpp \
     PollResult.cpp \
     SqlPollResultDatabaseManager.cpp \
-    SqlPoliticianDatabaseManager.cpp
+    SqlPoliticianDatabaseManager.cpp \
+    ListModelFunctions.cpp
 
 HEADERS += \
     election_core_global.h \
@@ -33,4 +34,5 @@ HEADERS += \
     Politician.h \
     PollResult.h \
     SqlPollResultDatabaseManager.h \
-    SqlPoliticianDatabaseManager.h
+    SqlPoliticianDatabaseManager.h \
+    ListModelFunctions.h

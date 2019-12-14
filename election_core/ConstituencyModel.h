@@ -43,12 +43,11 @@ public:
     QModelIndex addConstituency(const Constituency& constituency);
 
 private:
-    bool refreshConstituency(int id); // O(rowCount()) complexity
-    void loadConstituencies();
-    bool isIndexValid(const QModelIndex& index) const;
+    bool refreshCachedConstituency(int id); // O(rowCount()) complexity
+    void loadConstituencyCache();
 
 private:
-    std::vector<std::unique_ptr<Constituency>> constituencies_;
+    std::vector<std::unique_ptr<Constituency>> constituencyCache_;
     std::shared_ptr<IConstituencyDatabaseManager> constituencyManager_;
     std::shared_ptr<IPoliticianDatabaseManager> politicianManager_;
 };

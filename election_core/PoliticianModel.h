@@ -14,17 +14,22 @@ class IPoliticianDatabaseManager;
 class PoliticianModel : public QAbstractListModel
 {
 public:
+    enum class ElectoralStatus
+    {
+        SITTING,
+        CANDIDATE
+    };
     explicit PoliticianModel(
-        const IDatabaseManagerFactory&,
+        ElectoralStatus status,
+        const IDatabaseManagerFactory& factory,
         QObject *parent = nullptr);
     enum Role
     {
-        ImageUrlRole = Qt::UserRole + 1,
-        NameRole,
+        NameRole = Qt::UserRole + 1,
         ConstituencyIdRole,
         IdRole,
-        PartyNameRole,
-        PartyColourRole
+        PartyNameRole/*,
+        PartyColourRole*/
     };
 
     int rowCount() const;
@@ -39,14 +44,20 @@ public:
     QHash<int, QByteArray> roleNames() const override;
 
     QModelIndex addPolitician(const Politician& politician);
+    ElectoralStatus electoralStatus() const;
+    void setElectoralStatus(ElectoralStatus status);
+    void setConstituency(int id);
+    // int constituencyId() const;
 
 private:
     bool refreshCachedPolitician(int id); // O(rowCount()) complexity
     void loadPoliticianCache();
 
 private:
-    std::vector<std::shared_ptr<Politician>> politicianCache_;
+    std::vector<std::unique_ptr<Politician>> politicianCache_;
     std::shared_ptr<IPoliticianDatabaseManager> manager_;
+    ElectoralStatus electoralStatus_;
+    int constituencyId_;
 };
 
 #endif // POLITICIANMODEL_H

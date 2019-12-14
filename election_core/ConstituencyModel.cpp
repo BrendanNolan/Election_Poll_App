@@ -38,31 +38,31 @@ QVariant ConstituencyModel::data(const QModelIndex &index, int role) const
     switch (role)
     {
         const auto& constituency = *(constituencyCache_[index.row()]);
-        case Qt::DisplayRole:
+    case Qt::DisplayRole:
+    {
+        // Not quite working but should be fixable.
+        const auto mps = politicianManager_->mpsForConstituency(
+            constituency.id());
+        map<QString, int> displayVals;
+        for (const auto& mp : mps)
         {
-            // Not quite working but should be fixable.
-            const auto mps = politicianManager_->mpsForConstituency(
-                constituency.id());
-            map<QString, int> displayVals;
-            for (const auto& mp : mps)
-            {
-                ++displayVals[mp->partyDetails().name_];
-            }
-            QMap<QString, QVariant> ret;
-            for (const auto& keyValuePair : displayVals)
-                ret[keyValuePair.first] = keyValuePair.second;
-            return ret;
+            ++displayVals[mp->partyDetails().name_];
         }
-        case LatitudeRole: 
-            return constituency.latitude();
-        case LongitudeRole: 
-            return constituency.longitude();
-        case NameRole: 
-            return constituency.name();
-        case IdRole: 
-            return constituency.id();
-        default: 
-            return QVariant();
+        QMap<QString, QVariant> ret;
+        for (const auto& keyValuePair : displayVals)
+            ret[keyValuePair.first] = keyValuePair.second;
+        return ret;
+    }
+    case LatitudeRole: 
+        return constituency.latitude();
+    case LongitudeRole: 
+        return constituency.longitude();
+    case NameRole: 
+        return constituency.name();
+    case IdRole: 
+        return constituency.id();
+    default: 
+        return QVariant();
     }
 }
 
@@ -157,7 +157,5 @@ bool ConstituencyModel::refreshCachedConstituency(int id)
 
 void ConstituencyModel::loadConstituencyCache()
 {
-    beginResetModel();
     constituencyCache_ = constituencyManager_->constituencies();
-    endResetModel();
 }

@@ -43,7 +43,7 @@ public:
     bool removeRows(int row, int count, const QModelIndex& parent) override;
     QHash<int, QByteArray> roleNames() const override;
 
-    QModelIndex addPolitician(const Politician& politician);
+    QModelIndex addPolitician(std::unique_ptr<Politician> politician);
     ElectoralStatus electoralStatus() const;
     void setElectoralStatus(ElectoralStatus status);
     void setConstituency(int id);

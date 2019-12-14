@@ -41,7 +41,7 @@ public:
     bool removeRows(int row, int count, const QModelIndex& parent) override;
     QHash<int, QByteArray> roleNames() const override;
 
-    QModelIndex addConstituency(const Constituency& constituency);
+    QModelIndex addConstituency(std::unique_ptr<Constituency> constituency);
 
 private:
     bool refreshCachedConstituency(int id); // O(rowCount()) complexity

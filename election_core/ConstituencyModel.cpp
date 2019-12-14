@@ -127,14 +127,14 @@ QHash<int, QByteArray> ConstituencyModel::roleNames() const
     ret[IdRole] = "Id";
 }
 
-QModelIndex ConstituencyModel::addConstituency(const Constituency& constituency)
+QModelIndex ConstituencyModel::addConstituency(
+    unique_ptr<Constituency> constituency)
 {
     auto row = rowCount();
 
     beginInsertRows(QModelIndex(), row, row);
-    unique_ptr<Constituency> newConstituency(new Constituency(constituency));
-    constituencyManager_->addConstituency(*newConstituency);
-    constituencyCache_.push_back(move(newConstituency));
+    constituencyManager_->addConstituency(*constituency);
+    constituencyCache_.push_back(move(constituency));
     endInsertRows();
 
     return index(row);

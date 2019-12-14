@@ -5,6 +5,8 @@
 
 #include "ListModelFunctions.h"
 
+using namespace std;
+
 PoliticianModel::PoliticianModel(
     ElectoralStatus status,
     const IDatabaseManagerFactory& factory,
@@ -53,6 +55,30 @@ bool PoliticianModel::setData(
     if (!isIndexValid(index, *this))
         return false;
     auto& politician = *(politicianCache_[index.row()]);
+}
+
+QModelIndex PoliticianModel::addPolitician(unique_ptr<Politician> politician)
+{
+    auto row = rowCount();
+    beginInsertRows(QModelIndex(), row, row);
+    manager_->addPoliticianToConstituency(*politician, constituencyId_);
+    politicianCache_.push_back(move(politician));
+    endInsertRows();
+
+    return index(row);
+}
+
+PoliticianModel::ElectoralStatus PoliticianModel::electoralStatus() const
+{
+    return electoralStatus_;
+}
+
+void PoliticianModel::setElectoralStatus(ElectoralStatus status)
+{
+    beginResetModel();
+    electoralStatus_ = status;
+    loadPoliticianCache();
+    endResetModel();
 }
 
 void PoliticianModel::setConstituency(int id)

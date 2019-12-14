@@ -28,10 +28,9 @@ QVariant PoliticianModel::data(
 {
     if (!isIndexValid(index, *this))
         return QVariant();
-    auto row = index.row();
     switch (role)
     {
-        const auto& politician = *(politicianCache_[row]);
+        const auto& politician = *(politicianCache_[index.row()]);
     case Qt::DisplayRole:
         return politician.imageUrl();
     case ConstituencyIdRole:
@@ -45,8 +44,21 @@ QVariant PoliticianModel::data(
     }
 }
 
+bool PoliticianModel::setData(
+    const QModelIndex& index,
+    const QVariant& value,
+    int role)
+{
+
+    if (!isIndexValid(index, *this))
+        return false;
+    auto& politician = *(politicianCache_[index.row()]);
+}
+
 void PoliticianModel::setConstituency(int id)
 {
+    if (id == constituencyId_)
+        return;
     beginResetModel();
     constituencyId_ = id;
     loadPoliticianCache();

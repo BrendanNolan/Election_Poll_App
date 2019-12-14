@@ -66,6 +66,7 @@ QVariant ConstituencyModel::data(const QModelIndex &index, int role) const
     }
 }
 
+/* MIGHT NOT WANT TO IMPLEMENT THIS
 bool ConstituencyModel::setData(
     const QModelIndex& index,
     const QVariant& value,
@@ -92,7 +93,7 @@ bool ConstituencyModel::setData(
     constituencyManager_->updateConstituency(constituency);
     emit dataChanged(index, index);
     return true;
-}
+}*/
 
 bool ConstituencyModel::removeRows(
     int row, 

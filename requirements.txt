@@ -14,3 +14,5 @@ Requirements:
         on-disk database or something). The real-world disk database should be 
         able to refresh itself by scraping web data (if this web-scraping task
         isn't too annoying to implement).
+    (5) The user shoud be able to draw a moustache (or whatever) on the display photo of 
+        any politician.

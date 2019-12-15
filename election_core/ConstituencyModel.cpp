@@ -103,7 +103,7 @@ bool ConstituencyModel::removeRows(
     if (row < 0 || count < 0 || row + count > rowCount())
         return false;
 
-    beginRemoveRows(QModelIndex(), row, row + count);
+    beginRemoveRows(QModelIndex(), row, row + count - 1);
     auto rowsLeftToRemove = count;
     while (rowsLeftToRemove > 0)
     {

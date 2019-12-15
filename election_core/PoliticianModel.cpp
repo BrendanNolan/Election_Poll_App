@@ -51,10 +51,47 @@ bool PoliticianModel::setData(
     const QVariant& value,
     int role)
 {
-
+    if (role != Qt::DisplayRole && role != PartyNameRole)
+        return false;
     if (!isIndexValid(index, *this))
         return false;
     auto& politician = *(politicianCache_[index.row()]);
+    switch (role)
+    {
+    case Qt::DisplayRole: 
+        politician.setImageUrl(value.toString());
+        break;
+    case PartyNameRole:
+        politician.setName(value.toString());
+        break;
+    default:
+        return false;
+    }
+    manager_->updatePolitician(politician);
+    emit dataChanged(index, index);
+    return true;
+}
+
+bool PoliticianModel::removeRows(
+    int row, 
+    int count, 
+    const QModelIndex& parent)
+{
+    if (row < 0 || count < 0 || row + count > rowCount())
+        return false;
+    beginRemoveRows(QModelIndex(), row, row + count - 1);
+    auto rowsLeftToRemove = count;
+    while (rowsLeftToRemove > 0)
+    {
+        manager_->removePolitician(
+            politicianCache_[row + rowsLeftToRemove - 1]->id());
+        --rowsLeftToRemove;
+    }
+    politicianCache_.erase(
+        politicianCache_.begin() + row,
+        politicianCache_.begin() + row + count);
+    endRemoveRows();
+    return true;
 }
 
 QHash<int, QByteArray> PoliticianModel::roleNames() const
@@ -111,7 +148,10 @@ bool PoliticianModel::refreshCachedPolitician(int id)
         });
     if (toUpdate == politicianCache_.end())
         return false;
-    // More required
+    auto row = static_cast<int>(toUpdate - politicianCache_.begin());
+    *toUpdate = move(manager_->politician(id));
+    emit dataChanged(index(row), index(row));
+    return true;
 }
 
 void PoliticianModel::loadPoliticianCache()

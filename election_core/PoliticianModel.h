@@ -13,13 +13,15 @@ class IPoliticianDatabaseManager;
 
 class PoliticianModel : public QAbstractListModel
 {
+    Q_OBJECT
+
 public:
     enum class ElectoralStatus
     {
         SITTING,
         CANDIDATE
     };
-    explicit PoliticianModel(
+    PoliticianModel(
         ElectoralStatus status,
         const IDatabaseManagerFactory& factory,
         QObject *parent = nullptr);

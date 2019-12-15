@@ -8,7 +8,7 @@ class PollResult
 {
 public:
     PollResult() = default;
-    explicit PollResult(
+    PollResult(
         const QString& source, 
         const QHash<QString, int>& results,
         const QDateTime& dateTime,

@@ -18,9 +18,9 @@ class ConstituencyModel : public QAbstractListModel
     Q_OBJECT
 
 public:
-    explicit ConstituencyModel(
+    ConstituencyModel(
         const IDatabaseManagerFactory&,
-        QObject *parent = nullptr);
+        QObject* parent = nullptr);
     enum Role
     {
         LatitudeRole = Qt::UserRole + 1,

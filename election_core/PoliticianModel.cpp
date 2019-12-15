@@ -107,6 +107,7 @@ QHash<int, QByteArray> PoliticianModel::roleNames() const
 QModelIndex PoliticianModel::addPolitician(unique_ptr<Politician> politician)
 {
     auto row = rowCount();
+
     beginInsertRows(QModelIndex(), row, row);
     manager_->addPoliticianToConstituency(*politician, constituencyId_);
     politicianCache_.push_back(move(politician));
@@ -156,6 +157,8 @@ bool PoliticianModel::refreshCachedPolitician(int id)
 
 void PoliticianModel::loadPoliticianCache()
 {
+    if (constituencyId_ == -1)
+        politicianCache_.clear();
     switch (electoralStatus_)
     {
     case ElectoralStatus::SITTING:

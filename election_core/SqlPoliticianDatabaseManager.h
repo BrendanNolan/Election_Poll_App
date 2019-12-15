@@ -11,7 +11,8 @@ class QSqlDatabase;
 class SqlPoliticianDatabaseManager : public IPoliticianDatabaseManager
 {
 public:
-    explicit SqlPoliticianDatabaseManager(std::shared_ptr<QSqlDatabase> database);
+    explicit SqlPoliticianDatabaseManager(
+        std::shared_ptr<QSqlDatabase> database);
 
 private:
     std::shared_ptr<QSqlDatabase> database_;

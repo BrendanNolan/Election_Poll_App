@@ -10,7 +10,7 @@ class ELECTIONCORESHARED_EXPORT Constituency
 {
 public:
     Constituency() = default;
-    explicit Constituency(
+    Constituency(
         const QString& name,
         int latitude,
         int longitude);

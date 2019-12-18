@@ -4,3 +4,9 @@ MPs and one for candidates in upcoming election.
 Constituency objects will probably have to have 
 current mp data and this will need to be considered for the 
 DisplayROle of the constituency.
+
+I need to think about what loadCache methods - in particular, 
+do these call QAbstractItenModel::resetModel() or do their callers 
+do this? I feel like their callers should do this. It should be public functions that 
+call model QAbstractItenModel::resetModel() and QAbstractItenModel::dataChanged() methods 
+etc. 

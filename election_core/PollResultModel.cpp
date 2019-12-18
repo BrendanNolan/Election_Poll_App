@@ -45,6 +45,52 @@ QVariant PollResultModel::data(const QModelIndex & index, int role) const
     }
 }
 
+bool PollResultModel::setData(
+    const QModelIndex& index, 
+    const QVariant& value, 
+    int role)
+{
+    if (!isIndexValid(index, *this))
+        return false;
+    if (role != Qt::DisplayRole)
+        return false;
+
+    switch (role)
+    {
+        auto& pollData = *(pollResultCache_[index.row()]);
+    case Qt::DisplayRole:
+        pollData.setHistogram(value.value<QHash<QString, QVariant>>());
+        return true;
+    default:
+        return false;
+    }
+
+    emit dataChanged(index, index);
+}
+
+bool PollResultModel::removeRows(
+    int row, 
+    int count, 
+    const QModelIndex& /*parent*/)
+{
+    if (row < 0 || count < 0 || row + count > rowCount())
+        return false;
+
+    beginRemoveRows(QModelIndex(), row, row + count - 1);
+    auto rowsLeftToRemove = count;
+    while (rowsLeftToRemove > 0)
+    {
+        const auto& pollResultToRemove =
+            *(pollResultCache_[row + rowsLeftToRemove - 1]);
+        manager_->removePollResult(pollResultToRemove.id());
+    }
+    pollResultCache_.erase(
+        pollResultCache_.begin() + row,
+        pollResultCache_.end() + row + count);
+    endRemoveRows();
+    return true;
+}
+
 QModelIndex PollResultModel::addPollresult(unique_ptr<PollResult> pollResult)
 {
     auto row = rowCount();

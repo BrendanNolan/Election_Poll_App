@@ -10,15 +10,15 @@ public:
     PollResult() = default;
     PollResult(
         const QString& source, 
-        const QHash<QString, int>& results,
+        const QHash<QString, QVariant>& results,
         const QDateTime& dateTime,
         int constituencyId);
     
     void append(const QString& name, int value);
     int value(const QString& name) const;
     
-    QHash<QString, int> histogram() const;
-    void setHistogram(const QHash<QString, int>& histogram);
+    QHash<QString, QVariant> histogram() const;
+    void setHistogram(const QHash<QString, QVariant>& histogram);
     int id() const;
     void setId(int id);
     int constituencyId() const;
@@ -29,7 +29,7 @@ public:
 private:
     int constituencyId_ = -1;
     int id_ = -1;
-    QHash<QString, int> histogram_;
+    QHash<QString, QVariant> histogram_;
     QString source_ = "Unknown";
     QDateTime dateTime_ = QDateTime();
 };

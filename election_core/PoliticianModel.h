@@ -21,6 +21,8 @@ public:
         SITTING,
         CANDIDATE
     };
+
+public:
     PoliticianModel(
         ElectoralStatus status,
         const IDatabaseManagerFactory& factory,

@@ -30,8 +30,8 @@ public:
     enum Role
     {
         NameRole = Qt::UserRole + 1,
-        ConstituencyIdRole,
-        IdRole,
+        ConstituencyIdRole, // might want to get rid of this
+        IdRole, // might want to get rid of this
         PartyNameRole/*,
         PartyColourRole*/
     };

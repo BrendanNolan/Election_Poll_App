@@ -23,7 +23,10 @@ ConstituencyModel::ConstituencyModel(
 {
     constituencyManager_->init();
     politicianManager_->init();
+
+    beginResetModel();
     loadConstituencyCache();
+    endResetModel();
 }
 
 int ConstituencyModel::rowCount() const

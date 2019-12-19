@@ -16,7 +16,10 @@ PollResultModel::PollResultModel(
     , manager_(factory.createPollResultDatabaseManager())
 {
     manager_->init();
+
+    beginResetModel();
     loadPollResultCache();
+    endResetModel();
 }
 
 int PollResultModel::rowCount() const
@@ -91,6 +94,14 @@ bool PollResultModel::removeRows(
     return true;
 }
 
+QHash<int, QByteArray> PollResultModel::roleNames() const
+{
+    QHash<int, QByteArray> ret;
+    ret[SourceRole] = "Source";
+    ret[DateTimeRole] = "DateTime";
+    return ret;
+}
+
 QModelIndex PollResultModel::addPollresult(unique_ptr<PollResult> pollResult)
 {
     auto row = rowCount();
@@ -101,4 +112,11 @@ QModelIndex PollResultModel::addPollresult(unique_ptr<PollResult> pollResult)
     endInsertRows();
 
     return index(row);
+}
+
+void PollResultModel::loadPollResultCache()
+{
+    if (constituencyId_ == -1)
+        pollResultCache_.clear();
+    pollResultCache_ = manager_->pollResultsForConstituency(constituencyId_);
 }

@@ -16,7 +16,10 @@ PoliticianModel::PoliticianModel(
     , manager_(factory.createPoliticianDatabaseManager())
 {
     manager_->init();
+
+    beginResetModel();
     loadPoliticianCache();
+    endResetModel();
 }
 
 int PoliticianModel::rowCount() const

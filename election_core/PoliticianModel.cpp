@@ -11,12 +11,10 @@ PoliticianModel::PoliticianModel(
     ElectoralStatus status,
     const IDatabaseManagerFactory& factory,
     QObject* parent)
-    : electoralStatus_(status)
-    , QAbstractListModel(parent)
+    : QAbstractListModel(parent)
+    , electoralStatus_(status)
     , manager_(factory.createPoliticianDatabaseManager())
 {
-    manager_->init();
-
     beginResetModel();
     loadPoliticianCache();
     endResetModel();

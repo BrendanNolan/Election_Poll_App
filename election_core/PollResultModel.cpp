@@ -15,8 +15,6 @@ PollResultModel::PollResultModel(
     : QAbstractListModel(parent)
     , manager_(factory.createPollResultDatabaseManager())
 {
-    manager_->init();
-
     beginResetModel();
     loadPollResultCache();
     endResetModel();

@@ -1,26 +1,42 @@
 #include "SqlDatabaseManagerfactory.h"
 
+#include <QSqlDatabase>
+
 #include "SqlConstituencyDatabaseManager.h"
 #include "SqlPoliticianDatabaseManager.h"
 #include "SqlPollResultDatabaseManager.h"
 
-std::shared_ptr<QSqlDatabase> SqlDatabaseManagerfactory::database_ 
-= std::make_shared<QSqlDatabase>();
+using namespace std;
 
-std::shared_ptr<IConstituencyDatabaseManager> 
-SqlDatabaseManagerfactory::createConstituencyDatabaseManager() const
+shared_ptr<QSqlDatabase> SqlDatabaseManagerFactory::database_ = 
+    make_shared<QSqlDatabase>(QSqlDatabase::addDatabase("QSQLITE"));
+
+SqlDatabaseManagerFactory::SqlDatabaseManagerFactory(const QString& name)
 {
-    return std::make_shared<SqlConstituencyDatabaseManager>(database_);
+    database_->setDatabaseName(name);
+    database_->open();
 }
 
-std::shared_ptr<IPollResultDatabaseManager>
-SqlDatabaseManagerfactory::createPollResultDatabaseManager() const
+shared_ptr<IConstituencyDatabaseManager> 
+SqlDatabaseManagerFactory::createConstituencyDatabaseManager() const
 {
-    return std::make_shared<SqlPollResultDatabaseManager>(database_);
+    auto manager = make_shared<SqlConstituencyDatabaseManager>(database_);
+    manager->init();
+    return manager;
 }
 
-std::shared_ptr<IPoliticianDatabaseManager>
-SqlDatabaseManagerfactory::createPoliticianDatabaseManager() const
+shared_ptr<IPollResultDatabaseManager>
+SqlDatabaseManagerFactory::createPollResultDatabaseManager() const
 {
-    return std::make_shared<SqlPoliticianDatabaseManager>(database_);
+    auto manager = make_shared<SqlPollResultDatabaseManager>(database_);
+    manager->init();
+    return manager;
+}
+
+shared_ptr<IPoliticianDatabaseManager>
+SqlDatabaseManagerFactory::createPoliticianDatabaseManager() const
+{
+    auto manager = make_shared<SqlPoliticianDatabaseManager>(database_);
+    manager->init();
+    return manager;
 }

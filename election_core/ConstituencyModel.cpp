@@ -21,9 +21,6 @@ ConstituencyModel::ConstituencyModel(
     , constituencyManager_(factory.createConstituencyDatabaseManager())
     , politicianManager_(factory.createPoliticianDatabaseManager())
 {
-    constituencyManager_->init();
-    politicianManager_->init();
-
     beginResetModel();
     loadConstituencyCache();
     endResetModel();

@@ -1,6 +1,8 @@
 #ifndef SQLDATABASEMANAGERFACTORY_H
 #define SQLDATABASEMANAGERFACTORY_H
 
+#include <QString>
+
 #include <memory>
 
 #include "IDatabaseManagerFactory.h"
@@ -14,6 +16,8 @@ class QSqlDatabase;
 class SqlDatabaseManagerFactory : public IDatabaseManagerFactory
 {
 public:
+    SqlDatabaseManagerFactory(const QString& name = "election_database.db");
+
     std::shared_ptr<IConstituencyDatabaseManager>
         createConstituencyDatabaseManager() const override;
     std::shared_ptr<IPollResultDatabaseManager>

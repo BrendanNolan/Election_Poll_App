@@ -6,6 +6,7 @@
 #include <Qvariant>
 
 #include "Constituency.h"
+#include "Politician.h"
 
 using namespace std;
 
@@ -99,16 +100,10 @@ namespace
     unique_ptr<Constituency> sqlQueryToConstituency(const QSqlQuery& query)
     {
         unique_ptr<Constituency> constituency(new Constituency);
-        if (!constituency)
-            return nullptr;
         constituency->setId(query.value("id").toInt());
         constituency->setName(query.value("name").toString());
-        MemberOfParliament mp;
-        mp.name_ = query.value("mp_name").toString();
-        mp.party_ = query.value("mp_party").toString();
-        // Needs image.
-        constituency->setMp(mp);
-
+        constituency->setLatitude(query.value("latitude").toInt());
+        constituency->setLongitude(query.value("longitude").toInt());
         return constituency;
     }
 }

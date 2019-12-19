@@ -1,10 +1,17 @@
 #ifndef POLITICIAN_H
 #define POLITICIAN_H
 
+#include <QString>
 #include <QUrl>
 
 struct RGBValue
 {
+    RGBValue(int red, int green, int blue)
+        : red_(red)
+        , green_(green)
+        , blue_(blue)
+    {}
+
     int red_;
     int green_;
     int blue_;
@@ -19,6 +26,7 @@ struct PartyDetails
 class Politician
 {
 public:
+    Politician() = default;
     Politician(const QString& name, const PartyDetails& partyDetails);
 
     int id() const;
@@ -27,8 +35,8 @@ public:
     void setConstituencyId(int id);
     QString name() const;
     void setName(const QString& name);
-    QString imageUrl() const;
-    void setImageUrl(const QString& imageUrl);
+    QUrl imageUrl() const;
+    void setImageUrl(const QUrl& imageUrl);
     PartyDetails partyDetails() const;
     void setPartyDetails(const PartyDetails& party);
 

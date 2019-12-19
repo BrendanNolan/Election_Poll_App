@@ -142,6 +142,7 @@ void PoliticianModel::setConstituency(int id)
     endResetModel();
 }
 
+/*
 bool PoliticianModel::refreshCachedPolitician(int id)
 {
     auto toUpdate = find_if(
@@ -157,6 +158,7 @@ bool PoliticianModel::refreshCachedPolitician(int id)
     emit dataChanged(index(row), index(row));
     return true;
 }
+*/
 
 void PoliticianModel::loadPoliticianCache()
 {

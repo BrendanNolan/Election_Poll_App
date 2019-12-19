@@ -54,7 +54,7 @@ public:
     // int constituencyId() const;
 
 private:
-    bool refreshCachedPolitician(int id); // O(rowCount()) complexity
+    // bool refreshCachedPolitician(int id); // O(rowCount()) complexity
     void loadPoliticianCache();
 
 private:

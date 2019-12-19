@@ -14,16 +14,15 @@ class PollResultModel : public QAbstractListModel
     Q_OBJECT
 
 public:
+    PollResultModel(
+        const IDatabaseManagerFactory& factory,
+        QObject* parent);
+
     enum Role
     {
         SourceRole = Qt::UserRole + 1,
         DateTimeRole
     };
-
-public:
-    PollResultModel(
-        const IDatabaseManagerFactory& factory,
-        QObject* parent);
 
     int rowCount() const;
     QVariant data(

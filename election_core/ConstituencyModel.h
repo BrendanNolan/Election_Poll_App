@@ -21,6 +21,7 @@ public:
     ConstituencyModel(
         const IDatabaseManagerFactory&,
         QObject* parent = nullptr);
+
     enum Role
     {
         LatitudeRole = Qt::UserRole + 1,

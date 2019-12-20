@@ -30,10 +30,8 @@ public:
     enum Role
     {
         NameRole = Qt::UserRole + 1,
-        ConstituencyIdRole, // might want to get rid of this
-        IdRole, // might want to get rid of this
-        PartyNameRole/*,
-        PartyColourRole*/
+        PartyNameRole, 
+        PartyColourRole
     };
 
     int rowCount() const;
@@ -47,7 +45,8 @@ public:
     bool removeRows(int row, int count, const QModelIndex& parent) override;
     QHash<int, QByteArray> roleNames() const override;
 
-    QModelIndex addPolitician(std::unique_ptr<Politician> politician);
+    QModelIndex addPolitician(
+        std::unique_ptr<Politician> politician);
     ElectoralStatus electoralStatus() const;
     void setElectoralStatus(ElectoralStatus status);
     void setConstituency(int id);

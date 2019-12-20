@@ -36,14 +36,21 @@ QVariant PoliticianModel::data(
         const auto& politician = *(politicianCache_[index.row()]);
     case Qt::DisplayRole:
         return politician.imageUrl();
-    case ConstituencyIdRole:
-        return politician.constituencyId();
-    case IdRole:
-        return politician.id();
+    case NameRole:
+        return politician.name();
     case PartyNameRole:
         return politician.partyDetails().name_;
-    /*case PartyColourRole:
-        return;*/
+    case PartyColourRole:
+    {
+        QHash<QString, QVariant> hash;
+        auto rgb = politician.partyDetails().colour_;
+        hash["red"] = rgb.red_;
+        hash["green"] = rgb.green_;
+        hash["blue"] = rgb.blue_;
+        return hash;
+    }
+    default: 
+        return QVariant();
     }
 }
 
@@ -52,7 +59,7 @@ bool PoliticianModel::setData(
     const QVariant& value,
     int role)
 {
-    if (role != Qt::DisplayRole && role != PartyNameRole)
+    if (role != Qt::DisplayRole && role != PartyDetailsRole)
         return false;
     if (!isIndexValid(index, *this))
         return false;
@@ -62,9 +69,21 @@ bool PoliticianModel::setData(
     case Qt::DisplayRole: 
         politician.setImageUrl(value.toString());
         break;
+    case NameRole:
+        politician.setName(value.toString());
     case PartyNameRole:
         politician.setName(value.toString());
+    case PartyColourRole:
+    {
+        auto hash = value.value<QHash<QString, QVariant>>();
+        auto details = politician.partyDetails();
+        details.colour_ = RGBValue(
+            hash["rgb_red"].toInt(),
+            hash["rgb_green"].toInt(),
+            hash["rgb_blue"].toInt());
+        politician.setPartyDetails(details);
         break;
+    }
     default:
         return false;
     }
@@ -99,9 +118,8 @@ QHash<int, QByteArray> PoliticianModel::roleNames() const
 {
     QHash<int, QByteArray> ret;
     ret[NameRole] = "Name";
-    ret[ConstituencyIdRole] = "Constituency Id";
-    ret[IdRole] = "Id";
     ret[PartyNameRole] = "Party Name";
+    ret[PartyColourRole] = "Party Colour";
     return ret;
 }
 

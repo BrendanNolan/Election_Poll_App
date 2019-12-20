@@ -19,6 +19,12 @@ struct RGBValue
 
 struct PartyDetails
 {
+    PartyDetails() = default;
+    PartyDetails(const QString& name, const RGBValue& rgb)
+        : name_(name)
+        , colour_(rgb)
+    {}
+
     QString name_;
     RGBValue colour_;
 };
@@ -27,7 +33,6 @@ class Politician
 {
 public:
     Politician() = default;
-    Politician(const QString& name, const PartyDetails& partyDetails);
 
     int id() const;
     void setId(int id);
@@ -39,6 +44,10 @@ public:
     void setImageUrl(const QUrl& imageUrl);
     PartyDetails partyDetails() const;
     void setPartyDetails(const PartyDetails& party);
+    bool elected() const;
+    void setElected(bool elected);
+    bool candidate() const;
+    void setCandidate(bool candidate);
 
 private:
     QUrl imageUrl_;
@@ -46,6 +55,8 @@ private:
     int id_;
     int constituencyId_;
     PartyDetails partyDetails_;
+    bool elected_;
+    bool candidate_;
 };
 
 #endif // POLITICIAN_H

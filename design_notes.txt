@@ -10,3 +10,6 @@ do these call QAbstractItenModel::resetModel() or do their callers
 do this? I feel like their callers should do this. It should be public functions that 
 call model QAbstractItenModel::resetModel() and QAbstractItenModel::dataChanged() methods 
 etc. 
+
+Do I need two politician tables? One for elected and one for candidates? Or do I just need 
+two bool columns called elected and candidate. Probably the latter - that's what I've gone with.

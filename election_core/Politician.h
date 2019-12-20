@@ -6,7 +6,7 @@
 
 struct RGBValue
 {
-    RGBValue(int red, int green, int blue)
+    RGBValue(int red = 0, int green = 0, int blue = 0)
         : red_(red)
         , green_(green)
         , blue_(blue)

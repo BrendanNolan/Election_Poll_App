@@ -8,7 +8,6 @@ class IPollResultDatabaseManager
 public:
     virtual ~IPollResultDatabaseManager() = default;
 
-    virtual void init() const = 0;
     virtual void addPollResultInConstituency(
         PollResult& result,
         int constituencyId) const = 0;

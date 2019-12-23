@@ -18,9 +18,6 @@ namespace
 SqlConstituencyDatabaseManager::SqlConstituencyDatabaseManager(
     shared_ptr<QSqlDatabase> database)
     : database_(move(database))
-{}
-
-void SqlConstituencyDatabaseManager::init() const
 {
     if (!database_ || database_->tables().contains("constituencies"))
         return;

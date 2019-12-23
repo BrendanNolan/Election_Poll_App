@@ -15,8 +15,6 @@ public:
         std::shared_ptr<QSqlDatabase> database);
     ~SqlPoliticianDatabaseManager() = default;
 
-    void init() const override;
-
     std::vector<std::unique_ptr<Politician>> mpsForConstituency(
         int constituencyId) const override;
     std::vector<std::unique_ptr<Politician>> candidatesForConstituency(

@@ -15,7 +15,6 @@ public:
     explicit SqlConstituencyDatabaseManager(
         std::shared_ptr<QSqlDatabase> database);
     
-    void init() const override;
     void addConstituency(Constituency& constituency) const override;
     void updateConstituency(const Constituency& constituency) const override;
     void removeConstituency(int id) const override;

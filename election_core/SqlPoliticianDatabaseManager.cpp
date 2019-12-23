@@ -17,9 +17,6 @@ namespace
 SqlPoliticianDatabaseManager::SqlPoliticianDatabaseManager(
     shared_ptr<QSqlDatabase> database)
     : database_(move(database))
-{}
-
-void SqlPoliticianDatabaseManager::init() const
 {
     if (database_->tables().contains("politicians"))
         return;

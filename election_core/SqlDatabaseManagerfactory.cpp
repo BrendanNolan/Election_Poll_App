@@ -21,7 +21,6 @@ shared_ptr<IConstituencyDatabaseManager>
 SqlDatabaseManagerFactory::createConstituencyDatabaseManager() const
 {
     auto manager = make_shared<SqlConstituencyDatabaseManager>(database_);
-    manager->init();
     return manager;
 }
 
@@ -29,7 +28,6 @@ shared_ptr<IPollResultDatabaseManager>
 SqlDatabaseManagerFactory::createPollResultDatabaseManager() const
 {
     auto manager = make_shared<SqlPollResultDatabaseManager>(database_);
-    manager->init();
     return manager;
 }
 
@@ -37,6 +35,5 @@ shared_ptr<IPoliticianDatabaseManager>
 SqlDatabaseManagerFactory::createPoliticianDatabaseManager() const
 {
     auto manager = make_shared<SqlPoliticianDatabaseManager>(database_);
-    manager->init();
     return manager;
 }

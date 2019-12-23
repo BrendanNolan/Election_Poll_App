@@ -13,8 +13,6 @@ class IPoliticianDatabaseManager
 public:
     virtual ~IPoliticianDatabaseManager() = default;
 
-    virtual void init() const = 0;
-    
     virtual std::vector<std::unique_ptr<Politician>> mpsForConstituency(
         int constituencyId) const = 0;
     virtual std::vector<std::unique_ptr<Politician>> candidatesForConstituency(

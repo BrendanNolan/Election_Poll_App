@@ -87,28 +87,32 @@ void SqlPoliticianDatabaseManager::addPoliticianToConstituency(
     Politician& thePolitician,
     int constituencyId) const
 {
-    int elected = thePolitician.elected();
-    int candidate = thePolitician.candidate();
-    QSqlQuery query(*database_);
-    // The below would be more readable if it was done with QSqlQuery::prepare()
-    query.exec(
-        QString(
-            "INSERT INTO politicians"
-            " (constituency_id, image_url, name, elected, candidate,"
-            " party_name, party_rgb_red, party_rgb_green, party_rgb_blue)"
-            " VALUES (")
-        + QString::number(thePolitician.constituencyId())
-        + thePolitician.imageUrl().toString()
-        + thePolitician.name()
-        + QString::number(elected)
-        + QString::number(candidate)
-        + thePolitician.partyDetails().name_
-        + QString::number(thePolitician.partyDetails().colour_.red_)
-        + QString::number(thePolitician.partyDetails().colour_.green_)
-        + QString::number(thePolitician.partyDetails().colour_.blue_)
-        + ")");
-    thePolitician.setId(query.lastInsertId().toInt());
     thePolitician.setConstituencyId(constituencyId);
+
+    QSqlQuery query(*database_);
+    query.prepare(
+        "INSERT INTO politicians "
+        "(constituency_id, image_url, name, elected, candidate, "
+        "party_name, party_rgb_red, party_rgb_green, party_rgb_blue)"
+        " VALUES "
+        "(:constituency_id, :image_url, :name, :elected, :candidate, "
+        ":party_name, :party_rgb_red, :party_rgb_green, :party_rgb_blue)");
+    query.bindValue(":constituency_id", thePolitician.constituencyId());
+    query.bindValue(":image_url", thePolitician.imageUrl().toString());
+    query.bindValue(":name", thePolitician.name());
+    query.bindValue(":elected", static_cast<int>(thePolitician.elected()));
+    query.bindValue(":candidate", static_cast<int>(thePolitician.candidate()));
+    query.bindValue(":party_name", thePolitician.partyDetails().name_);
+    query.bindValue(
+        ":party_rgb_red", 
+        thePolitician.partyDetails().colour_.red_);
+    query.bindValue(
+        ":party_rgb_green", 
+        thePolitician.partyDetails().colour_.green_);
+    query.bindValue(
+        ":party_rgb_blue", 
+        thePolitician.partyDetails().colour_.blue_);
+    thePolitician.setId(query.lastInsertId().toInt());
 }
 
 void SqlPoliticianDatabaseManager::updatePolitician(

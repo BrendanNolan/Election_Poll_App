@@ -24,7 +24,7 @@ SqlConstituencyDatabaseManager::SqlConstituencyDatabaseManager(
 
     QSqlQuery query(*database_);
     query.exec("CREATE TABLE constituencies" 
-        "(if INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT)");
+        "(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT)");
 }
 
 void SqlConstituencyDatabaseManager::addConstituency(
@@ -86,8 +86,8 @@ vector<unique_ptr<Constituency>> SqlConstituencyDatabaseManager::
     if (!database_)
         return ret;
 
-    QSqlQuery query("SELECT * FROM constituencies", *database_);
-    query.exec();
+    QSqlQuery query(*database_);
+    query.exec("SELECT * FROM constituencies");
     while (query.next())
         ret.push_back(sqlQueryToConstituency(query));
 

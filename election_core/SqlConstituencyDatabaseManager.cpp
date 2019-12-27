@@ -34,8 +34,12 @@ void SqlConstituencyDatabaseManager::addConstituency(
         return;
 
     QSqlQuery query(*database_);
-    query.prepare("INSERT INTO constituencies (name) VALUES (:name)");
-    query.bindValue("name", constituency.name());
+    query.prepare(
+        "INSERT INTO constituencies (name, latitude, longitude) VALUES" 
+        "(:name, :latitude, :longitude)");
+    query.bindValue(":name", constituency.name());
+    query.bindValue(":latitude", constituency.latitude());
+    query.bindValue(":longitude", constituency.longitude());
     query.exec();
     constituency.setId(query.lastInsertId().toInt());
 }
@@ -59,9 +63,8 @@ void SqlConstituencyDatabaseManager::removeConstituency(int id) const
         return;
 
     QSqlQuery query(*database_);
-    query.prepare("DELETE FROM comstituencies WHERE id = (:id)");
-    query.bindValue(":id", id);
-    query.exec();
+    query.exec(
+        "DELETE FROM comstituencies WHERE id = " + QString::number(id));
 }
 
 unique_ptr<Constituency> SqlConstituencyDatabaseManager::
@@ -71,9 +74,8 @@ unique_ptr<Constituency> SqlConstituencyDatabaseManager::
         return nullptr;
 
     QSqlQuery query(*database_);
-    query.prepare("SELECT FROM comstituencies WHERE id = (:id)");
-    query.bindValue(":id", id);
-    query.exec();
+    query.exec(
+        "SELECT FROM comstituencies WHERE id = " + QString::number(id));
     return sqlQueryToConstituency(query);
 }
 

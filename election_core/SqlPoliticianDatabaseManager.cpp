@@ -90,6 +90,7 @@ void SqlPoliticianDatabaseManager::addPoliticianToConstituency(
     int elected = thePolitician.elected();
     int candidate = thePolitician.candidate();
     QSqlQuery query(*database_);
+    // The below would be more readable if it was done with QSqlQuery::prepare()
     query.exec(
         QString(
             "INSERT INTO politicians"

@@ -110,6 +110,62 @@ void SqlPoliticianDatabaseManager::addPoliticianToConstituency(
     thePolitician.setConstituencyId(constituencyId);
 }
 
+void SqlPoliticianDatabaseManager::updatePolitician(
+    const Politician & politician) const
+{
+    if (!database_)
+        return;
+
+    QSqlQuery query(*database_);
+    query.prepare(
+        "UPDATE politicians SET ("
+        "image_url = (:image_url)"
+        "name = (:name)"
+        "constituency_id = (:constituency_id)"
+        "party_rgb_red = (:party_rgb_red)"
+        "party_rgb_green = (:party_rgb_green)"
+        "party_rgb_blue = (:party_rgb_blue)"
+        "party_name = (:party_name)"
+        "elected = (:elected)"
+        "candidate = (:candidate)"
+        ") WHERE id = (:id)");
+    query.bindValue(":image_url", politician.imageUrl());
+    query.bindValue(":name", politician.name());
+    query.bindValue(":constituency_id", politician.constituencyId());
+    query.bindValue(":party_rgb_red", politician.partyDetails().colour_.red_);
+    query.bindValue(
+        ":party_rgb_green", 
+        politician.partyDetails().colour_.green_);
+    query.bindValue(":party_rgb_blue", politician.partyDetails().colour_.blue_);
+    query.bindValue(":party_name", politician.partyDetails().name_);
+    query.bindValue(":elected", static_cast<int>(politician.elected()));
+    query.bindValue(":candidate", static_cast<int>(politician.candidate()));
+    query.bindValue(":id", politician.id());
+    query.exec();
+}
+
+void SqlPoliticianDatabaseManager::removePolitician(int politicianId) const
+{
+    if (!database_)
+        return;
+
+    QSqlQuery query(*database_);
+    query.exec(
+        "DELETE FROM politicians WHERE id = " + QString::number(politicianId));
+}
+
+void SqlPoliticianDatabaseManager::clearPoliticiansFromConstituency(
+    int constituencyId) const
+{
+    if (!database_)
+        return;
+
+    QSqlQuery query(*database_);
+    query.exec(
+        "DELETE FROM politicians WHERE constituency_id = " 
+        + QString::number(constituencyId));
+}
+
 namespace 
 {
     unique_ptr<Politician> sqlQueryToPolitician(const QSqlQuery& query)

@@ -2,7 +2,6 @@
 
 #include <QSqlDatabase>
 #include <QSqlQuery>
-#include <QStringList>
 #include <Qvariant>
 
 #include "Constituency.h"

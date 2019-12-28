@@ -1,7 +1,7 @@
 #include "SqlPoliticianDatabaseManager.h"
 
-#include <QSqlQuery>
 #include <QSqlDatabase>
+#include <QSqlQuery>
 #include <QUrl>
 #include <QVariant>
 

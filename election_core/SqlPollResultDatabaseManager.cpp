@@ -3,6 +3,8 @@
 #include <QSqlDatabase>
 #include <QSqlQuery>
 
+#include "PollResult.h"
+
 using namespace std;
 
 SqlPollResultDatabaseManager::SqlPollResultDatabaseManager(
@@ -15,15 +17,41 @@ SqlPollResultDatabaseManager::SqlPollResultDatabaseManager(
     query.exec(
         "CREATE TABLE poll_results "
         "("
-        "id INTEGER PRIMARY KEY AUTOINCREMENT, "
         "constituency_id INTEGER, "
-        "image_url TEXT, "
-        "name TEXT, "
-        "elected INTEGER, " // 0 for false 1 for true
-        "candidate INTEGER, " // 0 for false 1 for true
-        "party_name TEXT, "
-        "party_rgb_red TEXT, "
-        "party_rgb_green TEXT, "
-        "party_rgb_blue TEXT"
+        "source TEXT, "
+        "date_time DATETIME, "
+        "politician_name TEXT, "
+        "poll_value INT"
         ")");
+}
+
+void SqlPollResultDatabaseManager::addPollResultInConstituency(
+    PollResult& result, 
+    int constituencyId) const
+{
+
+}
+
+void SqlPollResultDatabaseManager::updatePollResult(
+    const PollResult& result) const
+{
+
+}
+
+void SqlPollResultDatabaseManager::removePollResult(
+    const QString& source, 
+    int constituencyId) const
+{
+
+}
+
+vector<unique_ptr<PollResult>> 
+SqlPollResultDatabaseManager::pollResultsForConstituency(int id) const
+{
+    vector<unique_ptr<PollResult>> ret;
+    if (!database_)
+        return ret;
+
+
+    return ret;
 }

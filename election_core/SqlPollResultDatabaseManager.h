@@ -17,7 +17,9 @@ public:
         PollResult& result,
         int constituencyId) const override;
     void updatePollResult(const PollResult& result) const override;
-    void removePollResult(int id) const override;
+    void removePollResult(
+        const QString& source,
+        int constituencyId) const override;
     std::vector<std::unique_ptr<PollResult>>
         pollResultsForConstituency(int id) const override;
 

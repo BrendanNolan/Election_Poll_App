@@ -29,7 +29,6 @@ public:
 
 private:
     int constituencyId_ = -1;
-    int id_ = -1;
     QHash<QString, QVariant> histogram_;
     QString source_ = "Unknown";
     QDateTime dateTime_ = QDateTime();

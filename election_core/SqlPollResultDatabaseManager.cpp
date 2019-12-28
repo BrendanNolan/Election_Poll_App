@@ -25,11 +25,22 @@ SqlPollResultDatabaseManager::SqlPollResultDatabaseManager(
         ")");
 }
 
-void SqlPollResultDatabaseManager::addPollResultInConstituency(
-    PollResult& result, 
-    int constituencyId) const
+void SqlPollResultDatabaseManager::addPollResult(const PollResult& result) const
 {
+    if (!database_)
+        return;
 
+    QSqlQuery query(*database_);
+    query.prepare(
+        "INSERT INTO poll_results "
+        "("
+        "constituency_id, source, date_time, politician_name, poll_value"
+        ") "
+        "VALUES "
+        "("
+        ":constituency_id, :source, :date_time, :politician_name, :poll_value"
+        ")");
+    auto histogram = result.histogram();
 }
 
 void SqlPollResultDatabaseManager::updatePollResult(
@@ -39,8 +50,7 @@ void SqlPollResultDatabaseManager::updatePollResult(
 }
 
 void SqlPollResultDatabaseManager::removePollResult(
-    const QString& source, 
-    int constituencyId) const
+    const PollResult& result) const
 {
 
 }

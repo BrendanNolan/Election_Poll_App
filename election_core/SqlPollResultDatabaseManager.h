@@ -13,13 +13,9 @@ public:
     explicit SqlPollResultDatabaseManager(
         std::shared_ptr<QSqlDatabase> database);
 
-    void addPollResultInConstituency(
-        PollResult& result,
-        int constituencyId) const override;
+    void addPollResult(const PollResult& result) const override;
     void updatePollResult(const PollResult& result) const override;
-    void removePollResult(
-        const QString& source,
-        int constituencyId) const override;
+    void removePollResult(const PollResult& result) const override;
     std::vector<std::unique_ptr<PollResult>>
         pollResultsForConstituency(int id) const override;
 

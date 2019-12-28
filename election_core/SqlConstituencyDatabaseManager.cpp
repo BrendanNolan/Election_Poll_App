@@ -23,8 +23,14 @@ SqlConstituencyDatabaseManager::SqlConstituencyDatabaseManager(
         return;
 
     QSqlQuery query(*database_);
-    query.exec("CREATE TABLE constituencies" 
-        "(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT)");
+    query.exec(
+        "CREATE TABLE constituencies " 
+        "("
+        "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+        "name TEXT, "
+        "latitude INTEGER, "
+        "longitude INTEGER"
+        ")");
 }
 
 void SqlConstituencyDatabaseManager::addConstituency(
@@ -35,7 +41,9 @@ void SqlConstituencyDatabaseManager::addConstituency(
 
     QSqlQuery query(*database_);
     query.prepare(
-        "INSERT INTO constituencies (name, latitude, longitude) VALUES" 
+        "INSERT INTO constituencies "
+        "(name, latitude, longitude) "
+        "VALUES " 
         "(:name, :latitude, :longitude)");
     query.bindValue(":name", constituency.name());
     query.bindValue(":latitude", constituency.latitude());
@@ -51,8 +59,16 @@ void SqlConstituencyDatabaseManager::
         return;
 
     QSqlQuery query(*database_);
-    query.prepare("UPDATE constituencies SET name = (:name) WHERE id = (:id)");
+    query.prepare(
+        "UPDATE constituencies SET "
+        "name = (:name) "
+        "latitude = (:latitude)"
+        "longitude = (:longitude)"
+        "WHERE "
+        "id = (:id)");
     query.bindValue(":name", constituency.name());
+    query.bindValue(":latitude", constituency.latitude());
+    query.bindValue(":longitude", constituency.longitude());
     query.bindValue(":id", constituency.id());
     query.exec();
 }
@@ -75,7 +91,7 @@ unique_ptr<Constituency> SqlConstituencyDatabaseManager::
 
     QSqlQuery query(*database_);
     query.exec(
-        "SELECT FROM comstituencies WHERE id = " + QString::number(id));
+        "SELECT * FROM comstituencies WHERE id = " + QString::number(id));
     return sqlQueryToConstituency(query);
 }
 

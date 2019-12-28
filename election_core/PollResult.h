@@ -3,6 +3,7 @@
 
 #include <QDateTime>
 #include <QHash>
+#include <Qvariant>
 
 class PollResult
 {

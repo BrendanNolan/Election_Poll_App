@@ -1,6 +1,8 @@
 #ifndef IPOLLRESULTDATABASEMANAGER_H
 #define IPOLLRESULTDATABASEMANAGER_H
 
+#include <vector>
+
 class PollResult;
 
 class IPollResultDatabaseManager

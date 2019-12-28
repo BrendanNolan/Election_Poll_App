@@ -21,30 +21,41 @@ SqlPoliticianDatabaseManager::SqlPoliticianDatabaseManager(
     if (database_->tables().contains("politicians"))
         return;
     QSqlQuery query(*database_);
-    query.exec(QString("CREATE TABLE politicians")
-        + " (id INTEGER PRIMARY KEY AUTOINCREMENT, "
-        + "constituency_id INTEGER, "
-        + "image_url TEXT,"
-        + "name TEXT,"
-        + "elected INTEGER," // 0 for false 1 for true
-        + "candidate INTEGER," // 0 for false 1 for true
-        + "party_name TEXT,"
-        + "party_rgb_red TEXT,"
-        + "party_rgb_green TEXT,"
-        + "party_rgb_blue TEXT)");
+    query.exec(
+        "CREATE TABLE politicians "
+        "("
+        "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+        "constituency_id INTEGER, "
+        "image_url TEXT, "
+        "name TEXT, "
+        "elected INTEGER, " // 0 for false 1 for true
+        "candidate INTEGER, " // 0 for false 1 for true
+        "party_name TEXT, "
+        "party_rgb_red TEXT, "
+        "party_rgb_green TEXT, "
+        "party_rgb_blue TEXT"
+        ")");
 }
 
 vector<unique_ptr<Politician>> SqlPoliticianDatabaseManager::mpsForConstituency(
     int constituencyId) const
 {
+    vector<unique_ptr<Politician>> ret;
+    if (!database_)
+        return ret;
+
     QSqlQuery query(*database_);
     query.prepare(
-        "SELECT * FROM politicians WHERE (constituency_id = (:constituency_id)"
-        " AND elected = (:elected))");
+        "SELECT * FROM politicians "
+        "WHERE "
+        "("
+        "constituency_id = (:constituency_id) "
+        "AND "
+        "elected = (:elected)"
+        ")");
     query.bindValue(":constituency_id", constituencyId);
     query.bindValue(":elected", 1);
     query.exec();
-    vector<unique_ptr<Politician>> ret;
     while (query.next())
         ret.push_back(sqlQueryToPolitician(query));
     return ret;
@@ -54,14 +65,21 @@ vector<unique_ptr<Politician>>
 SqlPoliticianDatabaseManager::candidatesForConstituency(
     int constituencyId) const
 {
+    vector<unique_ptr<Politician>> ret;
+    if (!database_)
+        return ret;
     QSqlQuery query(*database_);
     query.prepare(
-        "SELECT * FROM politicians WHERE (constituency_id = (:constituency_id)"
-        " AND elected = (:elected))");
+        "SELECT * FROM politicians "
+        "WHERE "
+        "("
+        "constituency_id = (:constituency_id) "
+        "AND "
+        "candidate = (:candidate)"
+        ")");
     query.bindValue(":constituency_id", constituencyId);
     query.bindValue(":candidate", 1);
     query.exec();
-    vector<unique_ptr<Politician>> ret;
     while (query.next())
         ret.push_back(sqlQueryToPolitician(query));
     return ret;
@@ -92,11 +110,15 @@ void SqlPoliticianDatabaseManager::addPoliticianToConstituency(
     QSqlQuery query(*database_);
     query.prepare(
         "INSERT INTO politicians "
-        "(constituency_id, image_url, name, elected, candidate, "
-        "party_name, party_rgb_red, party_rgb_green, party_rgb_blue)"
-        " VALUES "
-        "(:constituency_id, :image_url, :name, :elected, :candidate, "
-        ":party_name, :party_rgb_red, :party_rgb_green, :party_rgb_blue)");
+        "("
+        "constituency_id, image_url, name, elected, candidate, "
+        "party_name, party_rgb_red, party_rgb_green, party_rgb_blue"
+        ") "
+        "VALUES "
+        "("
+        ":constituency_id, :image_url, :name, :elected, :candidate, "
+        ":party_name, :party_rgb_red, :party_rgb_green, :party_rgb_blue"
+        ")");
     query.bindValue(":constituency_id", thePolitician.constituencyId());
     query.bindValue(":image_url", thePolitician.imageUrl().toString());
     query.bindValue(":name", thePolitician.name());
@@ -123,7 +145,8 @@ void SqlPoliticianDatabaseManager::updatePolitician(
 
     QSqlQuery query(*database_);
     query.prepare(
-        "UPDATE politicians SET ("
+        "UPDATE politicians SET "
+        "("
         "image_url = (:image_url)"
         "name = (:name)"
         "constituency_id = (:constituency_id)"
@@ -133,7 +156,8 @@ void SqlPoliticianDatabaseManager::updatePolitician(
         "party_name = (:party_name)"
         "elected = (:elected)"
         "candidate = (:candidate)"
-        ") WHERE id = (:id)");
+        ") "
+        "WHERE id = (:id)");
     query.bindValue(":image_url", politician.imageUrl());
     query.bindValue(":name", politician.name());
     query.bindValue(":constituency_id", politician.constituencyId());

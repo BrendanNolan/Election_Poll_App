@@ -15,13 +15,11 @@ public:
         const QDateTime& dateTime,
         int constituencyId);
     
-    void append(const QString& name, int value);
+    void appendToHistogram(const QString& name, int value);
     int value(const QString& name) const;
     
     QHash<QString, QVariant> histogram() const;
     void setHistogram(const QHash<QString, QVariant>& histogram);
-    int id() const;
-    void setId(int id);
     int constituencyId() const;
     void setConstituencyId(int constituencyId);
     QString source() const;

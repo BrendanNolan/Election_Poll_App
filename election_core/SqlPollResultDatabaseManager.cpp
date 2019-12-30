@@ -121,14 +121,41 @@ SqlPollResultDatabaseManager::pollResultsForConstituency(int id) const
 
     QSqlQuery query(*database_);
     query.prepare(
-        "SELECT (politician_name, poll_value) "
-        "FROM poll_results "
-        "WHERE constituency_id = (:constituency_id)"
-        "GROUP BY (source, date_time)");
+        "SELECT * FROM poll_results "
+        "WHERE constituency_id = (:constituency_id) "
+        "ORDER BY (date_time, source)");
     query.bindValue(":constitucney_id", id);
     query.exec();
+    auto source = query.value("source").toString();
+    auto dateTime = query.value("date_time").toDateTime();
+    unique_ptr<PollResult> pollResult(new PollResult(
+        source,
+        QHash<QString, QVariant>(),
+        dateTime,
+        id));
     while (query.next())
-        ret.push_back(sqlQueryToPollResult(query));
+    {
+        auto nextSource = query.value("source").toString();
+        auto nextDateTime = query.value("date_time").toDateTime();
+        if (nextSource != source || nextDateTime != dateTime)
+        {
+            ret.push_back(move(pollResult));
+            
+            source = nextSource;
+            dateTime = nextDateTime;
+            pollResult = unique_ptr<PollResult>(new PollResult(
+                source,
+                QHash<QString, QVariant>(),
+                dateTime,
+                id));
+        }
+        else
+        {
+            pollResult->appendToHistogram(
+                query.value("politician_name").toString(),
+                query.value("poll_value").toInt());
+        }
+    }
 
     return ret;
 }

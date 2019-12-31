@@ -83,7 +83,7 @@ bool PollResultModel::removeRows(
     {
         const auto& pollResultToRemove =
             *(pollResultCache_[row + rowsLeftToRemove - 1]);
-        manager_->removePollResult(pollResultToRemove.id());
+        manager_->removePollResult(pollResultToRemove);
     }
     pollResultCache_.erase(
         pollResultCache_.begin() + row,
@@ -105,7 +105,7 @@ QModelIndex PollResultModel::addPollresult(unique_ptr<PollResult> pollResult)
     auto row = rowCount();
 
     beginInsertRows(QModelIndex(), row, row);
-    manager_->addPollResultInConstituency(*pollResult, constituencyId_);
+    manager_->addPollResult(*pollResult);
     pollResultCache_.push_back(move(pollResult));
     endInsertRows();
 

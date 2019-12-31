@@ -7,11 +7,6 @@
 
 using namespace std;
 
-namespace
-{
-    unique_ptr<PollResult> sqlQueryToPollResult(QSqlQuery& query);
-}
-
 SqlPollResultDatabaseManager::SqlPollResultDatabaseManager(
     std::shared_ptr<QSqlDatabase> database)
     : database_(move(database))
@@ -130,7 +125,6 @@ SqlPollResultDatabaseManager::pollResultsForConstituency(int id) const
     auto dateTime = query.value("date_time").toDateTime();
     unique_ptr<PollResult> pollResult(new PollResult(
         source,
-        QHash<QString, QVariant>(),
         dateTime,
         id));
     while (query.next())
@@ -141,13 +135,12 @@ SqlPollResultDatabaseManager::pollResultsForConstituency(int id) const
         {
             ret.push_back(move(pollResult));
             
+            pollResult = unique_ptr<PollResult>(new PollResult(
+                nextSource,
+                nextDateTime,
+                id));
             source = nextSource;
             dateTime = nextDateTime;
-            pollResult = unique_ptr<PollResult>(new PollResult(
-                source,
-                QHash<QString, QVariant>(),
-                dateTime,
-                id));
         }
         else
         {
@@ -158,21 +151,4 @@ SqlPollResultDatabaseManager::pollResultsForConstituency(int id) const
     }
 
     return ret;
-}
-
-namespace
-{
-    unique_ptr<PollResult> sqlQueryToPollResult(QSqlQuery& query)
-    {
-        unique_ptr<PollResult> ret(new PollResult(
-            query.value("source").toString(),
-            QHash<QString, QVariant>(),
-            query.value("date_time").toDateTime(),
-            query.value("constituency_id").toInt()));
-        while (query.next())
-            ret->appendToHistogram(
-                query.value("politician_name").toString(),
-                query.value("poll_value").toInt());
-        return ret;
-    }
 }

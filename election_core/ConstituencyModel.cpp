@@ -16,7 +16,7 @@ using namespace std;
 
 ConstituencyModel::ConstituencyModel(
     const IDatabaseManagerFactory& factory,
-    QObject* parent = nullptr)
+    QObject* parent)
     : QAbstractListModel(parent)
     , constituencyManager_(factory.createConstituencyDatabaseManager())
     , politicianManager_(factory.createPoliticianDatabaseManager())

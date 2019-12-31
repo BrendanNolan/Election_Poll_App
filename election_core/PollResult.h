@@ -11,9 +11,9 @@ public:
     PollResult() = default;
     PollResult(
         const QString& source, 
-        const QHash<QString, QVariant>& results,
         const QDateTime& dateTime,
-        int constituencyId);
+        int constituencyId,
+        const QHash<QString, QVariant>& results = QHash<QString, QVariant>());
     
     void appendToHistogram(const QString& name, int value);
     int value(const QString& name) const;

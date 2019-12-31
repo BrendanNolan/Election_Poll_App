@@ -23,7 +23,6 @@ public:
     void setLatitude(int latitude);
     int longitude() const;
     void setLongitude(int longitude);
-    bool isValid() const;
 
 private:
     int id_ = -1;

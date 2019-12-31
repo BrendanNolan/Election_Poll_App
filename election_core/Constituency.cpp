@@ -28,3 +28,23 @@ void Constituency::setName(const QString& name)
 {
     name_ = name;
 }
+
+int Constituency::latitude() const
+{
+    return latitude_;
+}
+
+void Constituency::setLatitude(int latitude)
+{
+    latitude_ = latitude;
+}
+
+int Constituency::longitude() const
+{
+    return longitude_;
+}
+
+void Constituency::setLongitude(int longitude)
+{
+    longitude_ = longitude;
+}

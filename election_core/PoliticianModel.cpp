@@ -27,13 +27,13 @@ int PoliticianModel::rowCount() const
 
 QVariant PoliticianModel::data(
     const QModelIndex& index,
-    int role = Qt::DisplayRole) const
+    int role) const
 {
     if (!isIndexValid(index, *this))
         return QVariant();
+    const auto& politician = *(politicianCache_[index.row()]);
     switch (role)
     {
-        const auto& politician = *(politicianCache_[index.row()]);
     case Qt::DisplayRole:
         return politician.imageUrl();
     case NameRole:
@@ -59,8 +59,6 @@ bool PoliticianModel::setData(
     const QVariant& value,
     int role)
 {
-    if (role != Qt::DisplayRole && role != PartyDetailsRole)
-        return false;
     if (!isIndexValid(index, *this))
         return false;
     auto& politician = *(politicianCache_[index.row()]);

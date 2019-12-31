@@ -32,9 +32,9 @@ QVariant PollResultModel::data(const QModelIndex & index, int role) const
     if (role != Qt::DisplayRole && role != SourceRole && role != DateTimeRole)
         return QVariant();
 
+    const auto& pollResult = *(pollResultCache_[index.row()]);
     switch (role)
     {
-        const auto& pollResult = *(pollResultCache_[index.row()]);
     case Qt::DisplayPropertyRole:
         return pollResult.histogram();
     case SourceRole:
@@ -56,9 +56,9 @@ bool PollResultModel::setData(
     if (role != Qt::DisplayRole)
         return false;
 
+    auto& pollData = *(pollResultCache_[index.row()]);
     switch (role)
     {
-        auto& pollData = *(pollResultCache_[index.row()]);
     case Qt::DisplayRole:
         pollData.setHistogram(value.value<QHash<QString, QVariant>>());
         return true;

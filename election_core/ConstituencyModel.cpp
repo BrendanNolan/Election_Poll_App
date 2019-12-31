@@ -35,9 +35,9 @@ QVariant ConstituencyModel::data(const QModelIndex &index, int role) const
 {
     if (!isIndexValid(index, *this))
         return false;
+    const auto& constituency = *(constituencyCache_[index.row()]);
     switch (role)
     {
-        const auto& constituency = *(constituencyCache_[index.row()]);
     case Qt::DisplayRole:
     {
         // Not quite working but should be fixable.
@@ -125,6 +125,7 @@ QHash<int, QByteArray> ConstituencyModel::roleNames() const
     ret[LongitudeRole] = "Longitude";
     ret[NameRole] = "Name";
     ret[IdRole] = "Id";
+    return ret;
 }
 
 QModelIndex ConstituencyModel::addConstituency(

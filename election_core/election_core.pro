@@ -4,6 +4,8 @@ TARGET = election_core
 TEMPLATE = lib
 CONFIG += shared
 
+CONFIG += warn_on
+
 DEFINES += ELECTIONCORE_LIBRARY
 
 SOURCES += \

@@ -93,7 +93,7 @@ bool PoliticianModel::setData(
 bool PoliticianModel::removeRows(
     int row, 
     int count, 
-    const QModelIndex& parent)
+    const QModelIndex& /*parent*/)
 {
     if (row < 0 || count < 0 || row + count > rowCount())
         return false;

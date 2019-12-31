@@ -51,21 +51,11 @@ bool PollResultModel::setData(
     const QVariant& value, 
     int role)
 {
-    if (!isIndexValid(index, *this))
-        return false;
-    if (role != Qt::DisplayRole)
+    if (!isIndexValid(index, *this) || role != Qt::DisplayRole)
         return false;
 
-    auto& pollData = *(pollResultCache_[index.row()]);
-    switch (role)
-    {
-    case Qt::DisplayRole:
-        pollData.setHistogram(value.value<QHash<QString, QVariant>>());
-        return true;
-    default:
-        return false;
-    }
-
+    pollResultCache_[index.row()]->setHistogram(
+        value.value<QHash<QString, QVariant>>());
     emit dataChanged(index, index);
 }
 

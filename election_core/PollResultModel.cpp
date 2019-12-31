@@ -57,6 +57,7 @@ bool PollResultModel::setData(
     pollResultCache_[index.row()]->setHistogram(
         value.value<QHash<QString, QVariant>>());
     emit dataChanged(index, index);
+    return true;
 }
 
 bool PollResultModel::removeRows(

@@ -13,7 +13,7 @@ public:
         const QString& source, 
         const QDateTime& dateTime,
         int constituencyId,
-        const QHash<QString, QVariant>& results = QHash<QString, QVariant>());
+        const QHash<QString, QVariant>& histogram = QHash<QString, QVariant>());
     
     void appendToHistogram(const QString& name, int value);
     int value(const QString& name) const;

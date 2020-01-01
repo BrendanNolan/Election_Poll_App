@@ -21,3 +21,7 @@ at some point, with a line like
 Then, hopefully, whenever a SqlDatabaseManagerFactory is default constructed, the default constrctor's
 call to QSqlDatabase::database() (with no arguments) will return a QSqlDatabase that's connected to 
 blablabla.db.
+
+Maybe no class should be composed of a QSqlDatabase or an owning pointer to such (see the warning in 
+the documentation of QSqlDatabase). Perhaps the database managers' methods should just call 
+QSqlDatabase::database() whenever they want to access the database. Not sure. 

@@ -11,13 +11,13 @@ using namespace std;
 SqlDatabaseManagerFactory::SqlDatabaseManagerFactory(
     shared_ptr<QSqlDatabase> database,
     const QString& name,
-    const QString& sqlFlavour)
+    const QString& type)
     : database_(move(database))
 {
     if (!database_)
     {
         database_ = make_shared<QSqlDatabase>(QSqlDatabase::addDatabase(
-            sqlFlavour));
+            type));
     }
     database_->setDatabaseName(name);
     database_->open();

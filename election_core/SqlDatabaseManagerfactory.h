@@ -19,7 +19,7 @@ public:
     SqlDatabaseManagerFactory(
         std::shared_ptr<QSqlDatabase> database = nullptr,
         const QString& name = "election_database.db",
-        const QString& sqlFlavour = "QSQLITE");
+        const QString& type = "QSQLITE");
 
     std::shared_ptr<IConstituencyDatabaseManager>
         createConstituencyDatabaseManager() const override;

@@ -8,11 +8,17 @@
 
 using namespace std;
 
-shared_ptr<QSqlDatabase> SqlDatabaseManagerFactory::database_ = 
-    make_shared<QSqlDatabase>(QSqlDatabase::addDatabase("QSQLITE"));
-
-SqlDatabaseManagerFactory::SqlDatabaseManagerFactory(const QString& name)
+SqlDatabaseManagerFactory::SqlDatabaseManagerFactory(
+    shared_ptr<QSqlDatabase> database,
+    const QString& name,
+    const QString& sqlFlavour)
+    : database_(move(database))
 {
+    if (!database_)
+    {
+        database_ = make_shared<QSqlDatabase>(QSqlDatabase::addDatabase(
+            sqlFlavour));
+    }
     database_->setDatabaseName(name);
     database_->open();
 }
@@ -36,4 +42,9 @@ SqlDatabaseManagerFactory::createPoliticianDatabaseManager() const
 {
     auto manager = make_shared<SqlPoliticianDatabaseManager>(database_);
     return manager;
+}
+
+SqlDatabaseManagerFactory* SqlDatabaseManagerFactory::clone() const
+{
+    return new SqlDatabaseManagerFactory(*this);
 }

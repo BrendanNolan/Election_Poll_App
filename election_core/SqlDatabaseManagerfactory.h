@@ -16,7 +16,10 @@ class QSqlDatabase;
 class SqlDatabaseManagerFactory : public IDatabaseManagerFactory
 {
 public:
-    SqlDatabaseManagerFactory(const QString& name = "election_database.db");
+    SqlDatabaseManagerFactory(
+        std::shared_ptr<QSqlDatabase> database = nullptr,
+        const QString& name = "election_database.db",
+        const QString& sqlFlavour = "QSQLITE");
 
     std::shared_ptr<IConstituencyDatabaseManager>
         createConstituencyDatabaseManager() const override;
@@ -25,8 +28,10 @@ public:
     std::shared_ptr<IPoliticianDatabaseManager>
         createPoliticianDatabaseManager() const override;
 
+    SqlDatabaseManagerFactory* clone() const override;
+
 private:
-    static std::shared_ptr<QSqlDatabase> database_;
+    std::shared_ptr<QSqlDatabase> database_;
 };
 
 #endif // SQLDATABASEMANAGERFACTORY_H

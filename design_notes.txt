@@ -13,3 +13,11 @@ etc.
 
 Do I need two politician tables? One for elected and one for candidates? Or do I just need 
 two bool columns called elected and candidate. Probably the latter - that's what I've gone with.
+
+The python script should scrape the web and created the initial database, whose path 
+will be, say, blablabla.db. The main function should initialise make the database connection
+at some point, with a line like 
+    QSqlDatabase::addDatabase("SQLITE", "blablabla.db");
+Then, hopefully, whenever a SqlDatabaseManagerFactory is default constructed, the default constrctor's
+call to QSqlDatabase::database() (with no arguments) will return a QSqlDatabase that's connected to 
+blablabla.db.

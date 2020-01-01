@@ -10,9 +10,7 @@ using namespace std;
 
 SqlDatabaseManagerFactory::SqlDatabaseManagerFactory()
     : database_(make_shared<QSqlDatabase>(QSqlDatabase::database()))
-{
-    database_->open();
-}
+{}
 
 SqlDatabaseManagerFactory::SqlDatabaseManagerFactory(
     shared_ptr<QSqlDatabase> database)

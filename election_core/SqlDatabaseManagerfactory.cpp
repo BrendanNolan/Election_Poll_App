@@ -9,17 +9,16 @@
 using namespace std;
 
 SqlDatabaseManagerFactory::SqlDatabaseManagerFactory(
-    shared_ptr<QSqlDatabase> database,
-    const QString& name,
-    const QString& type)
+    shared_ptr<QSqlDatabase> database)
     : database_(move(database))
 {
     if (!database_)
     {
         database_ = make_shared<QSqlDatabase>(QSqlDatabase::addDatabase(
-            type));
+            "SQLITE"));
+        database_->setDatabaseName("election_database.db");
     }
-    database_->setDatabaseName(name);
+    
     database_->open();
 }
 

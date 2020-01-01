@@ -16,10 +16,7 @@ class QSqlDatabase;
 class SqlDatabaseManagerFactory : public IDatabaseManagerFactory
 {
 public:
-    SqlDatabaseManagerFactory(
-        std::shared_ptr<QSqlDatabase> database = nullptr,
-        const QString& name = "election_database.db",
-        const QString& type = "QSQLITE");
+    explicit SqlDatabaseManagerFactory(std::shared_ptr<QSqlDatabase> database);
 
     std::shared_ptr<IConstituencyDatabaseManager>
         createConstituencyDatabaseManager() const override;

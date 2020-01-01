@@ -1,4 +1,4 @@
-#include "SqlDatabaseManagerfactory.h"
+#include "SqlDatabaseManagerFactory.h"
 
 #include <QSqlDatabase>
 

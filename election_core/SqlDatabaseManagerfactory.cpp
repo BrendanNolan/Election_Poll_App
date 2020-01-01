@@ -8,6 +8,12 @@
 
 using namespace std;
 
+SqlDatabaseManagerFactory::SqlDatabaseManagerFactory()
+    : database_(make_shared<QSqlDatabase>(QSqlDatabase::database()))
+{
+    database_->open();
+}
+
 SqlDatabaseManagerFactory::SqlDatabaseManagerFactory(
     shared_ptr<QSqlDatabase> database)
     : database_(move(database))
@@ -19,6 +25,15 @@ SqlDatabaseManagerFactory::SqlDatabaseManagerFactory(
         database_->setDatabaseName("election_database.db");
     }
     
+    database_->open();
+}
+
+SqlDatabaseManagerFactory::SqlDatabaseManagerFactory(
+    const QString& databaseName, 
+    const QString& type)
+{
+    database_ = make_shared<QSqlDatabase>(QSqlDatabase::addDatabase(type));
+    database_->setDatabaseName(databaseName);
     database_->open();
 }
 

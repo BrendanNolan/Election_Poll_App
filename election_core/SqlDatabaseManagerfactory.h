@@ -16,8 +16,8 @@ class QSqlDatabase;
 class SqlDatabaseManagerFactory : public IDatabaseManagerFactory
 {
 public:
-    SqlDatabaseManagerFactory();
-    explicit SqlDatabaseManagerFactory(std::shared_ptr<QSqlDatabase> database);
+    explicit SqlDatabaseManagerFactory(
+        std::shared_ptr<QSqlDatabase> database = nullptr);
     SqlDatabaseManagerFactory(const QString& databaseName, const QString& type);
 
     std::shared_ptr<IConstituencyDatabaseManager>

@@ -18,7 +18,9 @@ SqlConstituencyDatabaseManager::SqlConstituencyDatabaseManager(
     shared_ptr<QSqlDatabase> database)
     : database_(move(database))
 {
-    if (!database_ || database_->tables().contains("constituencies"))
+    if (!database_)
+        database_ = make_shared<QSqlDatabase>(QSqlDatabase::database());
+    if (database_->tables().contains("constituencies"))
         return;
 
     QSqlQuery query(*database_);

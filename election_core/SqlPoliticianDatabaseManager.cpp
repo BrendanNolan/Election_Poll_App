@@ -18,6 +18,8 @@ SqlPoliticianDatabaseManager::SqlPoliticianDatabaseManager(
     shared_ptr<QSqlDatabase> database)
     : database_(move(database))
 {
+    if (!database_)
+        database_ = make_shared<QSqlDatabase>(QSqlDatabase::database());
     if (database_->tables().contains("politicians"))
         return;
     QSqlQuery query(*database_);

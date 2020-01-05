@@ -11,7 +11,9 @@ SqlPollResultDatabaseManager::SqlPollResultDatabaseManager(
     std::shared_ptr<QSqlDatabase> database)
     : database_(move(database))
 {
-    if (!database_ || database_->tables().contains("poll_results"))
+    if (!database_)
+        database_ = make_shared<QSqlDatabase>(QSqlDatabase::database());
+    if (database_->tables().contains("poll_results"))
         return;
     QSqlQuery query(*database_);
     query.exec(

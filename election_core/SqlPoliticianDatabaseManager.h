@@ -12,7 +12,7 @@ class SqlPoliticianDatabaseManager : public IPoliticianDatabaseManager
 {
 public:
     explicit SqlPoliticianDatabaseManager(
-        std::shared_ptr<QSqlDatabase> database);
+        std::shared_ptr<QSqlDatabase> database = nullptr);
     ~SqlPoliticianDatabaseManager() = default;
 
     std::vector<std::unique_ptr<Politician>> mpsForConstituency(

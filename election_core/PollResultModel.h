@@ -16,7 +16,7 @@ class PollResultModel : public QAbstractListModel
 public:
     PollResultModel(
         const IDatabaseManagerFactory& factory,
-        QObject* parent);
+        QObject* parent = nullptr);
 
     enum Role
     {

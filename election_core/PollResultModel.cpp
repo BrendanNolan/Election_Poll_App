@@ -6,8 +6,13 @@
 #include "IPollResultDatabaseManager.h"
 #include "ListModelFunctions.h"
 #include "PollResult.h"
+#include "SqlDatabaseManagerFactory.h"
 
 using namespace std;
+
+PollResultModel::PollResultModel(QObject* parent)
+    : PollResultModel(SqlDatabaseManagerFactory(), parent)
+{}
 
 PollResultModel::PollResultModel(
     const IDatabaseManagerFactory& factory,

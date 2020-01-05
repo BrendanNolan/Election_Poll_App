@@ -9,10 +9,15 @@
 #include "IConstituencyDatabaseManager.h"
 #include "IDatabaseManagerFactory.h"
 #include "IPoliticianDatabaseManager.h"
+#include "SqlDatabaseManagerFactory.h"
 
 #include "ListModelFunctions.h"
 
 using namespace std;
+
+ConstituencyModel::ConstituencyModel(QObject* parent)
+    : ConstituencyModel(SqlDatabaseManagerFactory(), parent)
+{}
 
 ConstituencyModel::ConstituencyModel(
     const IDatabaseManagerFactory& factory,

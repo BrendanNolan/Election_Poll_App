@@ -18,6 +18,7 @@ class ConstituencyModel : public QAbstractListModel
     Q_OBJECT
 
 public:
+    ConstituencyModel(QObject* parent = nullptr);
     ConstituencyModel(
         const IDatabaseManagerFactory&,
         QObject* parent = nullptr);

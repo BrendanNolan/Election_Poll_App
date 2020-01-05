@@ -2,10 +2,14 @@
 
 #include "IDatabaseManagerFactory.h"
 #include "IPoliticianDatabaseManager.h"
-
 #include "ListModelFunctions.h"
+#include "SqlDatabaseManagerFactory.h"
 
 using namespace std;
+
+PoliticianModel::PoliticianModel(ElectoralStatus status, QObject* parent)
+    : PoliticianModel(status, SqlDatabaseManagerFactory(), parent)
+{}
 
 PoliticianModel::PoliticianModel(
     ElectoralStatus status,

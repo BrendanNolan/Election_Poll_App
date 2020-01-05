@@ -14,6 +14,7 @@ class PollResultModel : public QAbstractListModel
     Q_OBJECT
 
 public:
+    PollResultModel(QObject* parent = nullptr);
     PollResultModel(
         const IDatabaseManagerFactory& factory,
         QObject* parent = nullptr);

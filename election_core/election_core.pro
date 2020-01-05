@@ -2,7 +2,7 @@ QT += sql
 
 TARGET = election_core
 TEMPLATE = lib
-CONFIG += static
+CONFIG += shared
 
 DEFINES += ELECTIONCORE_LIBRARY
 

@@ -23,11 +23,13 @@ public:
     };
 
 public:
-    PoliticianModel(ElectoralStatus status, QObject *parent = nullptr);
     PoliticianModel(
-        ElectoralStatus status,
+        QObject* parent = nullptr, 
+        ElectoralStatus status = ElectoralStatus::SITTING);
+    PoliticianModel(
         const IDatabaseManagerFactory& factory,
-        QObject *parent = nullptr);
+        QObject* parent = nullptr,
+        ElectoralStatus status = ElectoralStatus::SITTING);
     enum Role
     {
         NameRole = Qt::UserRole + 1,
@@ -35,7 +37,7 @@ public:
         PartyColourRole
     };
 
-    int rowCount() const;
+    int rowCount(const QModelIndex& parent = QModelIndex()) const override;
     QVariant data(
         const QModelIndex &index,
         int role = Qt::DisplayRole) const override;

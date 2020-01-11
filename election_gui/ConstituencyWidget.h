@@ -5,7 +5,8 @@
 
 #include "ui_ConstituencyWidget.h"
 
-class ConstituencyWidgetView;
+class ConstituencyModel;
+class QItemSelectionModel;
 
 namespace Ui
 {
@@ -15,11 +16,27 @@ namespace Ui
 class ConstituencyWidget : public QWidget
 {
 public:
-    explicit ConstituencyWidget(QWidget* parent = nullptr);
+    explicit ConstituencyWidget(
+        QWidget* parent = nullptr,
+        Qt::WindowFlags flags = Qt::WindowFlags());
+
+    void setModel(ConstituencyModel* constituencyModel);
+    void setSelectionModel(QItemSelectionModel* selectionModel);
+
+signals:
+    void clicked(const QModelIndex& index);
+
+protected:
+    void mousePressEvent(QMouseEvent* event) override;
 
 private:
+    void loadWidgetColours();
+
+private:
+    ConstituencyModel* constituencyModel_;
+    QItemSelectionModel* constituencySelectionModel_;
+
     Ui::ConstituencyWidget* ui_;
-    ConstituencyWidgetView* view_;
 };
 
 #endif // CONSTITUENCYWIDGET_H

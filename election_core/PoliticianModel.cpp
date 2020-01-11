@@ -7,14 +7,14 @@
 
 using namespace std;
 
-PoliticianModel::PoliticianModel(ElectoralStatus status, QObject* parent)
-    : PoliticianModel(status, SqlDatabaseManagerFactory(), parent)
+PoliticianModel::PoliticianModel(QObject* parent, ElectoralStatus status)
+    : PoliticianModel(SqlDatabaseManagerFactory(), parent, status)
 {}
 
 PoliticianModel::PoliticianModel(
-    ElectoralStatus status,
     const IDatabaseManagerFactory& factory,
-    QObject* parent)
+    QObject* parent,
+    ElectoralStatus status)
     : QAbstractListModel(parent)
     , electoralStatus_(status)
     , manager_(factory.createPoliticianDatabaseManager())
@@ -24,7 +24,7 @@ PoliticianModel::PoliticianModel(
     endResetModel();
 }
 
-int PoliticianModel::rowCount() const
+int PoliticianModel::rowCount(const QModelIndex& /*parent*/) const
 {
     return politicianCache_.size();
 }

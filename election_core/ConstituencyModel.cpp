@@ -31,7 +31,7 @@ ConstituencyModel::ConstituencyModel(
     endResetModel();
 }
 
-int ConstituencyModel::rowCount() const
+int ConstituencyModel::rowCount(const QModelIndex& /*parent*/) const
 {
     return constituencyCache_.size();
 }

@@ -25,7 +25,7 @@ PollResultModel::PollResultModel(
     endResetModel();
 }
 
-int PollResultModel::rowCount() const
+int PollResultModel::rowCount(const QModelIndex& /*parent*/) const
 {
     return pollResultCache_.size();
 }

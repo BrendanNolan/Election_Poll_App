@@ -16,22 +16,22 @@ PoliticianListWidget::PoliticianListWidget(QWidget* parent, Qt::WindowFlags flag
     ui_->mpsRadioButton->setChecked(true);
     ui_->candidatesRadioButton->setChecked(false);
 
-    connect(ui_->mpsRadioButton, QRadioButton::toggled,
+    connect(ui_->mpsRadioButton, &QRadioButton::toggled,
         [this](bool checked) { 
             ui_->candidatesRadioButton->setChecked(!checked); 
         });
-    connect(ui_->candidatesRadioButton, QRadioButton::toggled,
+    connect(ui_->candidatesRadioButton, &QRadioButton::toggled,
         [this](bool checked) {
         ui_->mpsRadioButton->setChecked(!checked);
     });
-    connect(ui_->mpsRadioButton, QRadioButton::toggled,
+    connect(ui_->mpsRadioButton, &QRadioButton::toggled,
         [this](bool checked) {
             if (!checked)
                 return;
             politicianModel_->setElectoralStatus(
                 PoliticianModel::ElectoralStatus::SITTING);
         });
-    connect(ui_->candidatesRadioButton, QRadioButton::toggled,
+    connect(ui_->candidatesRadioButton, &QRadioButton::toggled,
         [this](bool checked) {
         if (!checked)
             return;

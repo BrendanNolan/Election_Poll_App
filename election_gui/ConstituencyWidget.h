@@ -3,15 +3,8 @@
 
 #include <QWidget>
 
-#include "ui_ConstituencyWidget.h"
-
 class ConstituencyModel;
 class QItemSelectionModel;
-
-namespace Ui
-{
-    class ConstituencyWidget;
-}
 
 class ConstituencyWidget : public QWidget
 {
@@ -35,8 +28,6 @@ private:
 private:
     ConstituencyModel* constituencyModel_;
     QItemSelectionModel* constituencySelectionModel_;
-
-    Ui::ConstituencyWidget* ui_;
 };
 
 #endif // CONSTITUENCYWIDGET_H

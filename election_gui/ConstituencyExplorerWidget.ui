@@ -6,19 +6,43 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>522</width>
+    <height>452</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout">
+  <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="PoliticianListWidget" name="politicianListWidget" native="true"/>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QTextEdit" name="constituencySearchtextEdit"/>
+     </item>
+    </layout>
    </item>
    <item>
-    <widget class="ConstituencyWidget" name="constituencyWidget" native="true"/>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="PoliticianListWidget" name="politicianListWidget" native="true"/>
+     </item>
+     <item>
+      <widget class="ConstituencyWidget" name="constituencyWidget" native="true"/>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>

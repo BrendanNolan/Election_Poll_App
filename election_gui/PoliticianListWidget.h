@@ -21,7 +21,7 @@ public:
     ~PoliticianListWidget();
 
 signals:
-    void clicked(const QModelIndex& index);
+    void politicianClicked(const QModelIndex& index);
 
 private:
     PoliticianModel* politicianModel_;

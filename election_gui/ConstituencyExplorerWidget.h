@@ -3,7 +3,11 @@
 
 #include <QWidget>
 
+class ConstituencyModel;
 class ConstituencyWidget;
+class PoliticianModel;
+class QItemSelectionModel;
+class QModelIndex;
 
 namespace Ui
 {
@@ -13,12 +17,22 @@ namespace Ui
 class ConstituencyExplorerWidget : public QWidget
 {
     ConstituencyExplorerWidget(QWidget* parent);
+    ~ConstituencyExplorerWidget();
 
-signals:
-    void politicianClicked(const QModelIndex& index);
+    void setConstituencyModel(ConstituencyModel* model);
+    void setConstituencySelectionModel(QItemSelectionModel* selectionModel);
+    void setPoliticianModel(PoliticianModel* model);
+    void setPoliticianSelectionModel(QItemSelectionModel* selectionModel);
+
+private slots:
+    void onConstituencyClicked(const QModelIndex& index);
 
 private:
-    ConstituencyWidget* constituencyWidget_;
+    ConstituencyModel* constituencyModel_;
+    QItemSelectionModel* constituencySelectionModel_;
+    PoliticianModel* politicianModel_;
+    QItemSelectionModel* politicianSelectionModel_;
+
     Ui::ConstituencyExplorerWidget* ui_;
 };
 

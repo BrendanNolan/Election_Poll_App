@@ -44,3 +44,8 @@ PoliticianListWidget::~PoliticianListWidget()
 {
     delete ui_;
 }
+
+void PoliticianListWidget::setConstituency(int constituencyId)
+{
+    politicianModel_->setConstituency(constituencyId);
+}

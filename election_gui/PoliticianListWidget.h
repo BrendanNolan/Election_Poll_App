@@ -20,8 +20,14 @@ public:
         Qt::WindowFlags flags = Qt::WindowFlags());
     ~PoliticianListWidget();
 
+    void setModel(PoliticianModel* model);
+    void setSelectionModel(QItemSelectionModel* selectionModel);
+
 signals:
     void politicianClicked(const QModelIndex& index);
+
+public slots:
+    void setConstituency(int constituencyId);
 
 private:
     PoliticianModel* politicianModel_;

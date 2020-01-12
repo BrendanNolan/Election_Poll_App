@@ -17,7 +17,7 @@ public:
     void setSelectionModel(QItemSelectionModel* selectionModel);
 
 signals:
-    void clicked(const QModelIndex& index);
+    void constituencyClicked(const QModelIndex& index);
 
 protected:
     void mousePressEvent(QMouseEvent* event) override;

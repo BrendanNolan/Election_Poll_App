@@ -1,20 +1,20 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef PoliticianListWidget_H
+#define PoliticianListWidget_H
 
-#include <QMainWindow>
+#include <QWidget>
 
 class ConstituencyWidget;
 class PoliticianModel;
 
 namespace Ui
 {
-    class MainWindow;
+    class PoliticianListWidget;
 }
 
-class MainWindow : public QMainWindow
+class PoliticianListWidget : public QWidget
 {
 public:
-    MainWindow(
+    PoliticianListWidget(
         QWidget* parent = nullptr,
         Qt::WindowFlags flags = Qt::WindowFlags());
 
@@ -23,9 +23,7 @@ signals:
 
 private:
     PoliticianModel* politicianModel_;
-
-    ConstituencyWidget* constituencyWidget_;
-    Ui::MainWindow* ui_;
+    Ui::PoliticianListWidget* ui_;
 };
 
-#endif // MAINWINDOW_H
+#endif // PoliticianListWidget_H

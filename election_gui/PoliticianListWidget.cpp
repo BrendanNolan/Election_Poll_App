@@ -1,5 +1,5 @@
-#include "MainWindow.h"
-#include "ui_MainWindow.h"
+#include "PoliticianListWidget.h"
+#include "ui_PoliticianListWidget.h"
 
 #include <QItemSelectionModel>
 #include <QRadioButton>
@@ -9,9 +9,9 @@
 
 #include "ConstituencyWidget.h"
 
-MainWindow::MainWindow(QWidget* parent, Qt::WindowFlags flags)
-    : QMainWindow(parent, flags)
-    , ui_(new Ui::MainWindow)
+PoliticianListWidget::PoliticianListWidget(QWidget* parent, Qt::WindowFlags flags)
+    : QWidget(parent, flags)
+    , ui_(new Ui::PoliticianListWidget)
 {
     constituencyWidget_ = new ConstituencyWidget(this);
     auto constituencyModel = new ConstituencyModel(this);

@@ -14,7 +14,6 @@ SOURCES += \
     ConstituencyExplorerWidget.cpp
 
 FORMS += \
-    ConstituencyWidget.ui \
     PoliticianListWidget.ui \
     ConstituencyExplorerWidget.ui
 

@@ -1,10 +1,12 @@
 #ifndef PoliticianListWidget_H
 #define PoliticianListWidget_H
 
+#include <QModelIndex>
 #include <QWidget>
 
 class ConstituencyWidget;
 class PoliticianModel;
+class QItemSelection;
 class QItemSelectionModel;
 
 namespace Ui
@@ -23,15 +25,24 @@ public:
     void setModel(PoliticianModel* model);
     void setSelectionModel(QItemSelectionModel* selectionModel);
 
+    QModelIndexList	selectedPoliticians() const;
+
 signals:
-    void politicianClicked(const QModelIndex& index);
+    void dataChanged(
+        const QModelIndex& topLeft, const QModelIndex& bottomRight);
+    void politicianActivated(const QModelIndex& index);
+    void currentChanged(
+        const QModelIndex& current, const QModelIndex& previous);
+    void selectionChanged(
+        const QItemSelection& selected, const QItemSelection& deselected);
+
 
 public slots:
     void setConstituency(int constituencyId);
 
 private:
     PoliticianModel* politicianModel_;
-    QItemSelectionModel* politicianSelectionModel_; // May not need to keep this here. May end up just giving the selection model to ui_->politicianListView
+    QItemSelectionModel* politicianSelectionModel_;
     Ui::PoliticianListWidget* ui_;
 };
 

@@ -17,8 +17,8 @@ ConstituencyExplorerWidget::ConstituencyExplorerWidget(QWidget* parent)
 {
     ui_->setupUi(this);
     
-    connect(ui_->constituencyWidget, &ConstituencyWidget::constituencyClicked,
-        this, &ConstituencyExplorerWidget::onConstituencyClicked);
+    connect(ui_->constituencyWidget, &ConstituencyWidget::constituencyActivated,
+        this, &ConstituencyExplorerWidget::onConstituencyActivated);
 }
 
 ConstituencyExplorerWidget::~ConstituencyExplorerWidget()
@@ -52,7 +52,7 @@ void ConstituencyExplorerWidget::setPoliticianSelectionModel(
     ui_->politicianListWidget->setSelectionModel(selectionModel);
 }
 
-void ConstituencyExplorerWidget::onConstituencyClicked(const QModelIndex& index)
+void ConstituencyExplorerWidget::onConstituencyActivated(const QModelIndex& index)
 {
     auto constituencyId = constituencyModel_->data(
         index, ConstituencyModel::IdRole).toInt();

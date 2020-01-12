@@ -1,6 +1,8 @@
 #include "ConstituencyWidget.h"
 
 #include <QItemSelectionModel>
+#include <QPoint>
+#include <QRect>
 
 #include "ConstituencyModel.h"
 
@@ -9,6 +11,7 @@ ConstituencyWidget::ConstituencyWidget(QWidget* parent, Qt::WindowFlags flags)
     , constituencyModel_(nullptr)
     , constituencySelectionModel_(nullptr)
 {
+
 }
 
 void ConstituencyWidget::setModel(ConstituencyModel* constituencyModel)

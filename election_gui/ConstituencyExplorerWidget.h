@@ -25,7 +25,7 @@ class ConstituencyExplorerWidget : public QWidget
     void setPoliticianSelectionModel(QItemSelectionModel* selectionModel);
 
 private slots:
-    void onConstituencyClicked(const QModelIndex& index);
+    void onConstituencyActivated(const QModelIndex& index);
 
 private:
     ConstituencyModel* constituencyModel_;

@@ -5,15 +5,18 @@ TEMPLATE = app
 
 HEADERS += \
     ConstituencyWidget.h \
-    MainWindow.h
+    PoliticianListWidget.h \
+    ConstituencyExplorerWidget.h
 
 SOURCES += \
     ConstituencyWidget.cpp \
-    MainWindow.cpp
+    PoliticianListWidget.cpp \
+    ConstituencyExplorerWidget.cpp
 
 FORMS += \
     ConstituencyWidget.ui \
-    MainWindow.ui
+    PoliticianListWidget.ui \
+    ConstituencyExplorerWidget.ui
 
 INCLUDEPATH += \
     $$PWD/../election_core

@@ -51,6 +51,8 @@ public:
     QModelIndex addPolitician(
         std::unique_ptr<Politician> politician);
     ElectoralStatus electoralStatus() const;
+
+public slots:
     void setElectoralStatus(ElectoralStatus status);
     void setConstituency(int id);
     // int constituencyId() const;

@@ -1,0 +1,9 @@
+#ifndef CONSTITUENCYEXPLORERWIDGET_H
+#define CONSTITUENCYEXPLORERWIDGET_H
+
+class ConstituencyExplorerWidget
+{
+
+};
+
+#endif // CONSTITUENCYEXPLORERWIDGET_H

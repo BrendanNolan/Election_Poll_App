@@ -27,10 +27,26 @@ MainWindow::MainWindow(QWidget* parent, Qt::WindowFlags flags)
     ui_->mpsRadioButton->setChecked(true);
     ui_->candidatesRadioButton->setChecked(false);
 
-    // Below here needs work
     connect(ui_->mpsRadioButton, QRadioButton::toggled,
-        [this, checked]() { ui_->candidatesRadioButton->setChecked(!checked); });
+        [this](bool checked) { 
+            ui_->candidatesRadioButton->setChecked(!checked); 
+        });
     connect(ui_->candidatesRadioButton, QRadioButton::toggled,
-        [this]() { ui_->mpsRadioButton->toggle(); });
-    connect(ui_-);
+        [this](bool checked) {
+        ui_->mpsRadioButton->setChecked(!checked);
+    });
+    connect(ui_->mpsRadioButton, QRadioButton::toggled,
+        [this](bool checked) {
+            if (!checked)
+                return;
+            politicianModel_->setElectoralStatus(
+                PoliticianModel::ElectoralStatus::SITTING);
+        });
+    connect(ui_->candidatesRadioButton, QRadioButton::toggled,
+        [this](bool checked) {
+        if (!checked)
+            return;
+        politicianModel_->setElectoralStatus(
+            PoliticianModel::ElectoralStatus::CANDIDATE);
+    });
 }

@@ -13,12 +13,12 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
+  <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
-    <widget class="QTextEdit" name="constituencySearchTextEdit"/>
+    <widget class="QWidget" name="widget" native="true"/>
    </item>
    <item>
-    <widget class="ConstituencyWidget" name="constituencyWidget" native="true"/>
+    <widget class="ConstituencyWidget" name="widget_2" native="true"/>
    </item>
   </layout>
  </widget>

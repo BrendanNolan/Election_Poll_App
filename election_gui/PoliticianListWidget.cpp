@@ -4,25 +4,14 @@
 #include <QItemSelectionModel>
 #include <QRadioButton>
 
-#include "ConstituencyModel.h"
 #include "PoliticianModel.h"
-
-#include "ConstituencyWidget.h"
 
 PoliticianListWidget::PoliticianListWidget(QWidget* parent, Qt::WindowFlags flags)
     : QWidget(parent, flags)
     , ui_(new Ui::PoliticianListWidget)
+    , politicianModel_(new PoliticianModel(this))
 {
-    constituencyWidget_ = new ConstituencyWidget(this);
-    auto constituencyModel = new ConstituencyModel(this);
-    auto constituencySelectionModel = 
-        new QItemSelectionModel(constituencyModel, this);
-    constituencyWidget_->setModel(constituencyModel);
-    constituencyWidget_->setSelectionModel(constituencySelectionModel);
-
-    auto politicianModel = new PoliticianModel(this);
-    auto politcianSelectionModel =
-        new QItemSelectionModel(politicianModel, this);
+    politicianSelectionModel_ = new QItemSelectionModel(politicianModel_, this);
 
     ui_->mpsRadioButton->setChecked(true);
     ui_->candidatesRadioButton->setChecked(false);
@@ -49,4 +38,9 @@ PoliticianListWidget::PoliticianListWidget(QWidget* parent, Qt::WindowFlags flag
         politicianModel_->setElectoralStatus(
             PoliticianModel::ElectoralStatus::CANDIDATE);
     });
+}
+
+PoliticianListWidget::~PoliticianListWidget()
+{
+    delete ui_;
 }

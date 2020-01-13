@@ -28,7 +28,8 @@ public:
         LatitudeRole = Qt::UserRole + 1,
         LongitudeRole,
         NameRole,
-        IdRole
+        IdRole,
+        AreaRole
     };
 
     int rowCount(const QModelIndex& parent = QModelIndex()) const override;

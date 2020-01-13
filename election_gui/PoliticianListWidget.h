@@ -16,6 +16,8 @@ namespace Ui
 
 class PoliticianListWidget : public QWidget
 {
+    Q_OBJECT
+
 public:
     PoliticianListWidget(
         QWidget* parent = nullptr,

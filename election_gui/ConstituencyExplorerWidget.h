@@ -16,6 +16,9 @@ namespace Ui
 
 class ConstituencyExplorerWidget : public QWidget
 {
+    Q_OBJECT
+
+public:
     ConstituencyExplorerWidget(QWidget* parent);
     ~ConstituencyExplorerWidget();
 

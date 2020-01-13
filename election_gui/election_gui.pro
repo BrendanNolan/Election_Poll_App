@@ -6,12 +6,14 @@ TEMPLATE = app
 HEADERS += \
     ConstituencyWidget.h \
     PoliticianListWidget.h \
-    ConstituencyExplorerWidget.h
+    ConstituencyExplorerWidget.h \
+    RectanglePositionCalculator.h
 
 SOURCES += \
     ConstituencyWidget.cpp \
     PoliticianListWidget.cpp \
-    ConstituencyExplorerWidget.cpp
+    ConstituencyExplorerWidget.cpp \
+    RectanglePositionCalculator.cpp
 
 FORMS += \
     PoliticianListWidget.ui \

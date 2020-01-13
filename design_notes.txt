@@ -39,3 +39,5 @@ Politicians should probably be displayed as thumbnails. You should have the opti
 then to press a button to display more details about the selected politicians (the selection model should know which politicians).
 This should perhaps shring the ConstituencyWidget and put a Widget displaying the politician details beside it (or just pop up
 a new widget).
+
+A constituency needs to have an area data member.

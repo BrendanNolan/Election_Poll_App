@@ -1,7 +1,6 @@
 #ifndef SQLDATABASEMANAGERFACTORY_H
 #define SQLDATABASEMANAGERFACTORY_H
 
-#include <QString>
 
 #include <memory>
 
@@ -12,12 +11,11 @@ class IPollResultDatabaseManager;
 class IPoliticianDatabaseManager;
 
 class QSqlDatabase;
+class QString;
 
 class SqlDatabaseManagerFactory : public IDatabaseManagerFactory
 {
 public:
-    explicit SqlDatabaseManagerFactory(
-        std::shared_ptr<QSqlDatabase> database = nullptr);
     SqlDatabaseManagerFactory(const QString& databaseName, const QString& type);
 
     std::shared_ptr<IConstituencyDatabaseManager>

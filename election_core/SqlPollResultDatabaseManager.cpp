@@ -1,8 +1,10 @@
 #include "SqlPollResultDatabaseManager.h"
 
+#include <QFileInfo>
 #include <QSqlDatabase>
 #include <QSqlQuery>
 
+#include "ElectionCoreFunctions.h"
 #include "PollResult.h"
 
 using namespace std;
@@ -11,13 +13,7 @@ SqlPollResultDatabaseManager::SqlPollResultDatabaseManager(
     const QFileInfo& databaseFileInfo)
     : databaseFileInfo_(databaseFileInfo)
 {
-    auto database = QSqlDatabase::database(databaseFileInfo.absoluteFilePath());
-    if (!database.isValid())
-    {
-        database = QSqlDatabase::addDatabase("QSQLITE");
-        database.setDatabaseName(databaseFileInfo.absoluteFilePath());
-        database.open();
-    }
+    auto database = getOrCreateDatabase(databaseFileInfo_);
     if (database.tables().contains("poll_results"))
         return;
     QSqlQuery query(database);
@@ -34,10 +30,12 @@ SqlPollResultDatabaseManager::SqlPollResultDatabaseManager(
 
 void SqlPollResultDatabaseManager::addPollResult(const PollResult& result) const
 {
-    if (!database_)
+    auto database = QSqlDatabase::database(
+        databaseFileInfo_.absoluteFilePath());
+    if (!database.isValid())
         return;
 
-    QSqlQuery query(*database_);
+    QSqlQuery query(database);
     query.prepare(
         "INSERT INTO poll_results "
         "("
@@ -65,10 +63,12 @@ void SqlPollResultDatabaseManager::addPollResult(const PollResult& result) const
 void SqlPollResultDatabaseManager::updatePollResult(
     const PollResult& result) const
 {
-    if (!database_)
+    auto database = QSqlDatabase::database(
+        databaseFileInfo_.absoluteFilePath());
+    if (!database.isValid())
         return;
 
-    QSqlQuery query(*database_);
+    QSqlQuery query(database);
     query.prepare(
         "UPDATE poll_results SET "
         "poll_value = (:poll_value) "
@@ -97,10 +97,12 @@ void SqlPollResultDatabaseManager::updatePollResult(
 void SqlPollResultDatabaseManager::removePollResult(
     const PollResult& result) const
 {
-    if (!database_)
+    auto database = QSqlDatabase::database(
+        databaseFileInfo_.absoluteFilePath());
+    if (!database.isValid())
         return;
 
-    QSqlQuery query(*database_);
+    QSqlQuery query(database);
     query.prepare(
         "DELETE FROM poll_results WHERE "
         "("
@@ -118,10 +120,12 @@ vector<unique_ptr<PollResult>>
 SqlPollResultDatabaseManager::pollResultsForConstituency(int id) const
 {
     vector<unique_ptr<PollResult>> ret;
-    if (!database_)
+    auto database = QSqlDatabase::database(
+        databaseFileInfo_.absoluteFilePath());
+    if (!database.isValid())
         return ret;
 
-    QSqlQuery query(*database_);
+    QSqlQuery query(database);
     query.prepare(
         "SELECT * FROM poll_results "
         "WHERE constituency_id = (:constituency_id) "

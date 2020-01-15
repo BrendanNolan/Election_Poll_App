@@ -1,9 +1,9 @@
-#ifndef LISTMODELFUNCTIONS_H
-#define LISTMODELFUNCTIONS_H
+#ifndef ELECTIONCOREFUNCTIONS_H
+#define ELECTIONCOREFUNCTIONS_H
 
 class QAbstractListModel;
 class QModelIndex;
 
 bool isIndexValid(const QModelIndex& index, const QAbstractListModel& model);
 
-#endif
+#endif // ELECTIONCOREFUNCTIONS_H

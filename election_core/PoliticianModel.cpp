@@ -2,7 +2,7 @@
 
 #include "IDatabaseManagerFactory.h"
 #include "IPoliticianDatabaseManager.h"
-#include "ListModelFunctions.h"
+#include "ElectionCoreFunctions.h"
 #include "SqlDatabaseManagerFactory.h"
 
 using namespace std;

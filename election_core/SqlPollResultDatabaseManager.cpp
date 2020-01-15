@@ -8,14 +8,19 @@
 using namespace std;
 
 SqlPollResultDatabaseManager::SqlPollResultDatabaseManager(
-    std::shared_ptr<QSqlDatabase> database)
-    : database_(move(database))
+    const QFileInfo& databaseFileInfo)
+    : databaseFileInfo_(databaseFileInfo)
 {
-    if (!database_)
-        database_ = make_shared<QSqlDatabase>(QSqlDatabase::database());
-    if (database_->tables().contains("poll_results"))
+    auto database = QSqlDatabase::database(databaseFileInfo.absoluteFilePath());
+    if (!database.isValid())
+    {
+        database = QSqlDatabase::addDatabase("QSQLITE");
+        database.setDatabaseName(databaseFileInfo.absoluteFilePath());
+        database.open();
+    }
+    if (database.tables().contains("poll_results"))
         return;
-    QSqlQuery query(*database_);
+    QSqlQuery query(database);
     query.exec(
         "CREATE TABLE poll_results "
         "("

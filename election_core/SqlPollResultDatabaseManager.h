@@ -1,17 +1,14 @@
 #ifndef SQLPOLLRESULTDATABASEMANAGER_H
 #define SQLPOLLRESULTDATABASEMANAGER_H
 
-#include <memory>
+#include <QFileInfo>
 
 #include "IPollResultDatabaseManager.h"
-
-class QSqlDatabase;
 
 class SqlPollResultDatabaseManager : public IPollResultDatabaseManager
 {
 public:
-    explicit SqlPollResultDatabaseManager(
-        std::shared_ptr<QSqlDatabase> database = nullptr);
+    explicit SqlPollResultDatabaseManager(const QFileInfo& databaseFileInfo);
 
     void addPollResult(const PollResult& result) const override;
     void updatePollResult(const PollResult& result) const override;
@@ -20,7 +17,7 @@ public:
         pollResultsForConstituency(int id) const override;
 
 private:
-    std::shared_ptr<QSqlDatabase> database_;
+    QFileInfo databaseFileInfo_;
 };
 
 #endif // SQLPOLLRESULTDATABASEMANAGER_H

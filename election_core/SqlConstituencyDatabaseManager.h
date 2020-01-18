@@ -1,6 +1,8 @@
 #ifndef SQLCONSTITUENCYDATABASEMANAGER_H
 #define SQLCONSTITUENCYDATABASEMANAGER_H
 
+#include <QFileInfo>
+
 #include <memory>
 #include <vector>
 
@@ -12,8 +14,7 @@ class QSqlDatabase;
 class SqlConstituencyDatabaseManager : public IConstituencyDatabaseManager
 {
 public:
-    explicit SqlConstituencyDatabaseManager(
-        std::shared_ptr<QSqlDatabase> database = nullptr);
+    explicit SqlConstituencyDatabaseManager(const QFileInfo& databaseFileInfo);
     
     void addConstituency(Constituency& constituency) const override;
     void updateConstituency(const Constituency& constituency) const override;
@@ -23,7 +24,7 @@ public:
         constituencies() const override;
 
 private:
-    std::shared_ptr<QSqlDatabase> database_;
+    QFileInfo databaseFileInfo_;
 };
 
 #endif // SQLCONSTITUENCYDATABASEMANAGER_H

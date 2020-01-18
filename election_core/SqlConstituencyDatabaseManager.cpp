@@ -5,6 +5,7 @@
 #include <Qvariant>
 
 #include "Constituency.h"
+#include "ElectionCoreFunctions.h"
 #include "Politician.h"
 
 using namespace std;
@@ -15,15 +16,13 @@ namespace
 }
 
 SqlConstituencyDatabaseManager::SqlConstituencyDatabaseManager(
-    shared_ptr<QSqlDatabase> database)
-    : database_(move(database))
+    const QFileInfo& databaseFileInfo)
+    : databaseFileInfo_(databaseFileInfo)
 {
-    if (!database_)
-        database_ = make_shared<QSqlDatabase>(QSqlDatabase::database());
-    if (database_->tables().contains("constituencies"))
+    auto database = makeSqlDatabaseConnection(databaseFileInfo_);
+    if (database.tables().contains("constituencies"))
         return;
-
-    QSqlQuery query(*database_);
+    QSqlQuery query(database);
     query.exec(
         "CREATE TABLE constituencies " 
         "("
@@ -37,10 +36,11 @@ SqlConstituencyDatabaseManager::SqlConstituencyDatabaseManager(
 void SqlConstituencyDatabaseManager::addConstituency(
     Constituency& constituency) const
 {
-    if (!database_)
+    auto database = QSqlDatabase::database(
+        databaseFileInfo_.absoluteFilePath());
+    if (!database.isValid())
         return;
-
-    QSqlQuery query(*database_);
+    QSqlQuery query(database);
     query.prepare(
         "INSERT INTO constituencies "
         "(name, latitude, longitude) "
@@ -56,10 +56,11 @@ void SqlConstituencyDatabaseManager::addConstituency(
 void SqlConstituencyDatabaseManager::
     updateConstituency(const Constituency& constituency) const
 {
-    if (!database_)
+    auto database = QSqlDatabase::database(
+        databaseFileInfo_.absoluteFilePath());
+    if (!database.isValid())
         return;
-
-    QSqlQuery query(*database_);
+    QSqlQuery query(database);
     query.prepare(
         "UPDATE constituencies SET "
         "name = (:name) "
@@ -76,10 +77,11 @@ void SqlConstituencyDatabaseManager::
 
 void SqlConstituencyDatabaseManager::removeConstituency(int id) const
 {
-    if (!database_)
+    auto database = QSqlDatabase::database(
+        databaseFileInfo_.absoluteFilePath());
+    if (!database.isValid())
         return;
-
-    QSqlQuery query(*database_);
+    QSqlQuery query(database);
     query.exec(
         "DELETE FROM comstituencies WHERE id = " + QString::number(id));
 }
@@ -87,10 +89,11 @@ void SqlConstituencyDatabaseManager::removeConstituency(int id) const
 unique_ptr<Constituency> SqlConstituencyDatabaseManager::
     constituency(int id) const
 {
-    if (!database_)
+    auto database = QSqlDatabase::database(
+        databaseFileInfo_.absoluteFilePath());
+    if (!database.isValid())
         return nullptr;
-
-    QSqlQuery query(*database_);
+    QSqlQuery query(database);
     query.exec(
         "SELECT * FROM comstituencies WHERE id = " + QString::number(id));
     return sqlQueryToConstituency(query);
@@ -100,10 +103,11 @@ vector<unique_ptr<Constituency>> SqlConstituencyDatabaseManager::
     constituencies() const
 {
     vector<unique_ptr<Constituency>> ret;
-    if (!database_)
+    auto database = QSqlDatabase::database(
+        databaseFileInfo_.absoluteFilePath());
+    if (!database.isValid())
         return ret;
-
-    QSqlQuery query(*database_);
+    QSqlQuery query(database);
     query.exec("SELECT * FROM constituencies");
     while (query.next())
         ret.push_back(sqlQueryToConstituency(query));

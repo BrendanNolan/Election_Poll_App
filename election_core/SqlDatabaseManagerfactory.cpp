@@ -13,27 +13,40 @@ SqlDatabaseManagerFactory::SqlDatabaseManagerFactory(
     const QFileInfo& databaseFileInfo)
     : databaseFileInfo_(databaseFileInfo)
 {
-    conditionallyCreateSqlDatabase(databaseFileInfo_.absoluteFilePath());
+    conditionallyCreateSqlDatabase(databaseFileInfo_);
 }
 
 shared_ptr<IConstituencyDatabaseManager> 
 SqlDatabaseManagerFactory::createConstituencyDatabaseManager() const
 {
-    auto manager = make_shared<SqlConstituencyDatabaseManager>(database_);
+    auto database = QSqlDatabase::database(
+        databaseFileInfo_.absoluteFilePath());
+    if (!database.isValid())
+        return nullptr;
+    auto manager = make_shared<SqlConstituencyDatabaseManager>(
+        databaseFileInfo_);
     return manager;
 }
 
 shared_ptr<IPollResultDatabaseManager>
 SqlDatabaseManagerFactory::createPollResultDatabaseManager() const
 {
-    auto manager = make_shared<SqlPollResultDatabaseManager>(database_);
+    auto database = QSqlDatabase::database(
+        databaseFileInfo_.absoluteFilePath());
+    if (!database.isValid())
+        return nullptr;
+    auto manager = make_shared<SqlPollResultDatabaseManager>(databaseFileInfo_);
     return manager;
 }
 
 shared_ptr<IPoliticianDatabaseManager>
 SqlDatabaseManagerFactory::createPoliticianDatabaseManager() const
 {
-    auto manager = make_shared<SqlPoliticianDatabaseManager>(database_);
+    auto database = QSqlDatabase::database(
+        databaseFileInfo_.absoluteFilePath());
+    if (!database.isValid())
+        return nullptr;
+    auto manager = make_shared<SqlPoliticianDatabaseManager>(databaseFileInfo_);
     return manager;
 }
 

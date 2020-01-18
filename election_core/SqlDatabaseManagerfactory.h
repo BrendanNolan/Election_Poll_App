@@ -17,7 +17,8 @@ class QString;
 class SqlDatabaseManagerFactory : public IDatabaseManagerFactory
 {
 public:
-    SqlDatabaseManagerFactory(const QFileInfo& databaseFileInfo);
+    explicit SqlDatabaseManagerFactory(
+        const QFileInfo& databaseFileInfo = QFileInfo());
     SqlDatabaseManagerFactory* clone() const override;
 
     std::shared_ptr<IConstituencyDatabaseManager>

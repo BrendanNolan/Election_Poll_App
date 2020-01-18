@@ -12,9 +12,7 @@ using namespace std;
 SqlDatabaseManagerFactory::SqlDatabaseManagerFactory(
     const QFileInfo& databaseFileInfo)
     : databaseFileInfo_(databaseFileInfo)
-{
-    conditionallyCreateSqlDatabase(databaseFileInfo_);
-}
+{}
 
 SqlDatabaseManagerFactory* SqlDatabaseManagerFactory::clone() const
 {
@@ -24,33 +22,17 @@ SqlDatabaseManagerFactory* SqlDatabaseManagerFactory::clone() const
 shared_ptr<IConstituencyDatabaseManager> 
 SqlDatabaseManagerFactory::createConstituencyDatabaseManager() const
 {
-    auto database = QSqlDatabase::database(
-        databaseFileInfo_.absoluteFilePath());
-    if (!database.isValid())
-        return nullptr;
-    auto manager = make_shared<SqlConstituencyDatabaseManager>(
-        databaseFileInfo_);
-    return manager;
+    return make_shared<SqlConstituencyDatabaseManager>(databaseFileInfo_);
 }
 
 shared_ptr<IPollResultDatabaseManager>
 SqlDatabaseManagerFactory::createPollResultDatabaseManager() const
 {
-    auto database = QSqlDatabase::database(
-        databaseFileInfo_.absoluteFilePath());
-    if (!database.isValid())
-        return nullptr;
-    auto manager = make_shared<SqlPollResultDatabaseManager>(databaseFileInfo_);
-    return manager;
+    return make_shared<SqlPollResultDatabaseManager>(databaseFileInfo_);
 }
 
 shared_ptr<IPoliticianDatabaseManager>
 SqlDatabaseManagerFactory::createPoliticianDatabaseManager() const
 {
-    auto database = QSqlDatabase::database(
-        databaseFileInfo_.absoluteFilePath());
-    if (!database.isValid())
-        return nullptr;
-    auto manager = make_shared<SqlPoliticianDatabaseManager>(databaseFileInfo_);
-    return manager;
+    return make_shared<SqlPoliticianDatabaseManager>(databaseFileInfo_);
 }

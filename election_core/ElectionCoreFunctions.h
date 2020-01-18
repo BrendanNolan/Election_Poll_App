@@ -10,10 +10,10 @@ class QString;
 
 bool isIndexValid(const QModelIndex& index, const QAbstractListModel& model);
 
-// If the database file exists, then this function returns an open connection
-// to the database, first adding a database connection to the file if necessary.
-// If the file does not exist, then this function simply returns the default 
-// connection, which may ne invalid.
+// Returns a connection to the database file if the file exists, otherwise
+// returns the default connection; in either case, the returned connection 
+// may be invalid, for example if the connection has not been added with
+// QSqlDatabase::addDatabase().
 QSqlDatabase connectToSqlDatabase(
     const QFileInfo& databaseFileInfo = QFileInfo());
 

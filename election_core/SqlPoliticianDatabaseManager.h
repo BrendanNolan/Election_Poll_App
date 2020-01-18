@@ -1,6 +1,8 @@
 #ifndef SQLPOLITICIANDATABASEMANAGER_H
 #define SQLPOLITICIANDATABASEMANAGER_H
 
+#include <QFileInfo>
+
 #include <memory>
 #include <vector>
 
@@ -11,9 +13,7 @@ class QSqlDatabase;
 class SqlPoliticianDatabaseManager : public IPoliticianDatabaseManager
 {
 public:
-    explicit SqlPoliticianDatabaseManager(
-        std::shared_ptr<QSqlDatabase> database = nullptr);
-    ~SqlPoliticianDatabaseManager() = default;
+    explicit SqlPoliticianDatabaseManager(const QFileInfo& databaseFileInfo);
 
     std::vector<std::unique_ptr<Politician>> mpsForConstituency(
         int constituencyId) const override;
@@ -29,7 +29,7 @@ public:
     void clearPoliticiansFromConstituency(int constituencyId) const override;
 
 private:
-    std::shared_ptr<QSqlDatabase> database_;
+    QFileInfo databaseFileInfo_;
 };
 
 #endif // SQLPOLITICIANDATABASEMANAGER_H

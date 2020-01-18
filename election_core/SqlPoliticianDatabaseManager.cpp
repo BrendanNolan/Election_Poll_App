@@ -5,6 +5,7 @@
 #include <QUrl>
 #include <QVariant>
 
+#include "ElectionCoreFunctions.h"
 #include "Politician.h"
 
 using namespace std;
@@ -15,14 +16,12 @@ namespace
 }
 
 SqlPoliticianDatabaseManager::SqlPoliticianDatabaseManager(
-    shared_ptr<QSqlDatabase> database)
-    : database_(move(database))
+    const QFileInfo& databaseFileInfo)
 {
-    if (!database_)
-        database_ = make_shared<QSqlDatabase>(QSqlDatabase::database());
-    if (database_->tables().contains("politicians"))
+    auto database = getOrCreateDatabase(databaseFileInfo_);
+    if (database.tables().contains("politicians"))
         return;
-    QSqlQuery query(*database_);
+    QSqlQuery query(database);
     query.exec(
         "CREATE TABLE politicians "
         "("
@@ -43,10 +42,12 @@ vector<unique_ptr<Politician>> SqlPoliticianDatabaseManager::mpsForConstituency(
     int constituencyId) const
 {
     vector<unique_ptr<Politician>> ret;
-    if (!database_)
+    auto database = QSqlDatabase::database(
+        databaseFileInfo_.absoluteFilePath());
+    if (!database.isValid())
         return ret;
 
-    QSqlQuery query(*database_);
+    QSqlQuery query(database);
     query.prepare(
         "SELECT * FROM politicians "
         "WHERE "
@@ -68,9 +69,11 @@ SqlPoliticianDatabaseManager::candidatesForConstituency(
     int constituencyId) const
 {
     vector<unique_ptr<Politician>> ret;
-    if (!database_)
+    auto database = QSqlDatabase::database(
+        databaseFileInfo_.absoluteFilePath());
+    if (!database.isValid())
         return ret;
-    QSqlQuery query(*database_);
+    QSqlQuery query(database);
     query.prepare(
         "SELECT * FROM politicians "
         "WHERE "
@@ -89,14 +92,22 @@ SqlPoliticianDatabaseManager::candidatesForConstituency(
 
 unique_ptr<Politician> SqlPoliticianDatabaseManager::politician(int id) const
 {
-    QSqlQuery query(*database_);
+    auto database = QSqlDatabase::database(
+        databaseFileInfo_.absoluteFilePath());
+    if (!database.isValid())
+        return nullptr;
+    QSqlQuery query(database);
     query.exec("SELECT * FROM politicians WHERE id = " + QString::number(id));
     return sqlQueryToPolitician(query);
 }
 
 QUrl SqlPoliticianDatabaseManager::imageUrlForPolitician(int politicianId) const
 {
-    QSqlQuery query(*database_);
+    auto database = QSqlDatabase::database(
+        databaseFileInfo_.absoluteFilePath());
+    if (!database.isValid())
+        return QUrl();
+    QSqlQuery query(database);
     query.exec(
         "SELECT image_url FROM politicians WHERE id = " 
         + QString::number(politicianId));
@@ -107,9 +118,13 @@ void SqlPoliticianDatabaseManager::addPoliticianToConstituency(
     Politician& thePolitician,
     int constituencyId) const
 {
-    thePolitician.setConstituencyId(constituencyId);
+    auto database = QSqlDatabase::database(
+        databaseFileInfo_.absoluteFilePath());
+    if (!database.isValid())
+        return;
 
-    QSqlQuery query(*database_);
+    thePolitician.setConstituencyId(constituencyId);
+    QSqlQuery query(database);
     query.prepare(
         "INSERT INTO politicians "
         "("
@@ -142,10 +157,12 @@ void SqlPoliticianDatabaseManager::addPoliticianToConstituency(
 void SqlPoliticianDatabaseManager::updatePolitician(
     const Politician & politician) const
 {
-    if (!database_)
+    auto database = QSqlDatabase::database(
+        databaseFileInfo_.absoluteFilePath());
+    if (!database.isValid())
         return;
 
-    QSqlQuery query(*database_);
+    QSqlQuery query(database);
     query.prepare(
         "UPDATE politicians SET "
         "("
@@ -177,10 +194,12 @@ void SqlPoliticianDatabaseManager::updatePolitician(
 
 void SqlPoliticianDatabaseManager::removePolitician(int politicianId) const
 {
-    if (!database_)
+    auto database = QSqlDatabase::database(
+        databaseFileInfo_.absoluteFilePath());
+    if (!database.isValid())
         return;
 
-    QSqlQuery query(*database_);
+    QSqlQuery query(database);
     query.exec(
         "DELETE FROM politicians WHERE id = " + QString::number(politicianId));
 }
@@ -188,10 +207,12 @@ void SqlPoliticianDatabaseManager::removePolitician(int politicianId) const
 void SqlPoliticianDatabaseManager::clearPoliticiansFromConstituency(
     int constituencyId) const
 {
-    if (!database_)
+    auto database = QSqlDatabase::database(
+        databaseFileInfo_.absoluteFilePath());
+    if (!database.isValid())
         return;
 
-    QSqlQuery query(*database_);
+    QSqlQuery query(database);
     query.exec(
         "DELETE FROM politicians WHERE constituency_id = " 
         + QString::number(constituencyId));

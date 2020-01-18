@@ -24,9 +24,6 @@ public:
 
 public:
     PoliticianModel(
-        QObject* parent = nullptr, 
-        ElectoralStatus status = ElectoralStatus::SITTING);
-    PoliticianModel(
         const IDatabaseManagerFactory& factory,
         QObject* parent = nullptr,
         ElectoralStatus status = ElectoralStatus::SITTING);

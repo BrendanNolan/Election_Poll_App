@@ -7,10 +7,6 @@
 
 using namespace std;
 
-PoliticianModel::PoliticianModel(QObject* parent, ElectoralStatus status)
-    : PoliticianModel(SqlDatabaseManagerFactory(), parent, status)
-{}
-
 PoliticianModel::PoliticianModel(
     const IDatabaseManagerFactory& factory,
     QObject* parent,

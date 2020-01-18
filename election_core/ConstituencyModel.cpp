@@ -1,6 +1,7 @@
 #include "ConstituencyModel.h"
 
 #include <QMap>
+#include <QSqlDatabase>
 #include <QString>
 
 #include <algorithm>
@@ -11,13 +12,9 @@
 #include "IPoliticianDatabaseManager.h"
 #include "SqlDatabaseManagerFactory.h"
 
-#include "ListModelFunctions.h"
+#include "ElectionCoreFunctions.h"
 
 using namespace std;
-
-ConstituencyModel::ConstituencyModel(QObject* parent)
-    : ConstituencyModel(SqlDatabaseManagerFactory(), parent)
-{}
 
 ConstituencyModel::ConstituencyModel(
     const IDatabaseManagerFactory& factory,

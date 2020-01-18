@@ -19,9 +19,10 @@ SqlConstituencyDatabaseManager::SqlConstituencyDatabaseManager(
     const QFileInfo& databaseFileInfo)
     : databaseFileInfo_(databaseFileInfo)
 {
-    auto database = makeSqlDatabaseConnection(databaseFileInfo_);
-    if (database.tables().contains("constituencies"))
+    auto database = connectToSqlDatabase(databaseFileInfo_);
+    if (!database.isValid() || database.tables().contains("constituencies"))
         return;
+    
     QSqlQuery query(database);
     query.exec(
         "CREATE TABLE constituencies " 
@@ -41,10 +42,10 @@ SqlConstituencyDatabaseManager* SqlConstituencyDatabaseManager::clone() const
 void SqlConstituencyDatabaseManager::addConstituency(
     Constituency& constituency) const
 {
-    auto database = QSqlDatabase::database(
-        databaseFileInfo_.absoluteFilePath());
+    auto database = connectToSqlDatabase(databaseFileInfo_);
     if (!database.isValid())
         return;
+    
     QSqlQuery query(database);
     query.prepare(
         "INSERT INTO constituencies "
@@ -61,10 +62,10 @@ void SqlConstituencyDatabaseManager::addConstituency(
 void SqlConstituencyDatabaseManager::
     updateConstituency(const Constituency& constituency) const
 {
-    auto database = QSqlDatabase::database(
-        databaseFileInfo_.absoluteFilePath());
+    auto database = connectToSqlDatabase(databaseFileInfo_);
     if (!database.isValid())
         return;
+    
     QSqlQuery query(database);
     query.prepare(
         "UPDATE constituencies SET "
@@ -82,10 +83,10 @@ void SqlConstituencyDatabaseManager::
 
 void SqlConstituencyDatabaseManager::removeConstituency(int id) const
 {
-    auto database = QSqlDatabase::database(
-        databaseFileInfo_.absoluteFilePath());
+    auto database = connectToSqlDatabase(databaseFileInfo_);
     if (!database.isValid())
         return;
+    
     QSqlQuery query(database);
     query.exec(
         "DELETE FROM comstituencies WHERE id = " + QString::number(id));
@@ -94,10 +95,10 @@ void SqlConstituencyDatabaseManager::removeConstituency(int id) const
 unique_ptr<Constituency> SqlConstituencyDatabaseManager::
     constituency(int id) const
 {
-    auto database = QSqlDatabase::database(
-        databaseFileInfo_.absoluteFilePath());
+    auto database = connectToSqlDatabase(databaseFileInfo_);
     if (!database.isValid())
         return nullptr;
+    
     QSqlQuery query(database);
     query.exec(
         "SELECT * FROM comstituencies WHERE id = " + QString::number(id));
@@ -107,11 +108,11 @@ unique_ptr<Constituency> SqlConstituencyDatabaseManager::
 vector<unique_ptr<Constituency>> SqlConstituencyDatabaseManager::
     constituencies() const
 {
-    vector<unique_ptr<Constituency>> ret;
-    auto database = QSqlDatabase::database(
-        databaseFileInfo_.absoluteFilePath());
+    auto database = connectToSqlDatabase(databaseFileInfo_);
     if (!database.isValid())
-        return ret;
+        return vector<unique_ptr<Constituency>>();
+
+    vector<unique_ptr<Constituency>> ret;
     QSqlQuery query(database);
     query.exec("SELECT * FROM constituencies");
     while (query.next())

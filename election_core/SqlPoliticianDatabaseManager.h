@@ -13,7 +13,8 @@ class QSqlDatabase;
 class SqlPoliticianDatabaseManager : public IPoliticianDatabaseManager
 {
 public:
-    explicit SqlPoliticianDatabaseManager(const QFileInfo& databaseFileInfo);
+    explicit SqlPoliticianDatabaseManager(
+        const QFileInfo& databaseFileInfo = QFileInfo());
     SqlPoliticianDatabaseManager* clone() const override;
 
     std::vector<std::unique_ptr<Politician>> mpsForConstituency(

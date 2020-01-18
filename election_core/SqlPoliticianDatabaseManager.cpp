@@ -19,9 +19,10 @@ SqlPoliticianDatabaseManager::SqlPoliticianDatabaseManager(
     const QFileInfo& databaseFileInfo)
     : databaseFileInfo_(databaseFileInfo)
 {
-    auto database = makeSqlDatabaseConnection(databaseFileInfo_);
-    if (database.tables().contains("politicians"))
+    auto database = connectToSqlDatabase(databaseFileInfo_);
+    if (!database.isValid() || database.tables().contains("politicians"))
         return;
+
     QSqlQuery query(database);
     query.exec(
         "CREATE TABLE politicians "
@@ -47,12 +48,11 @@ SqlPoliticianDatabaseManager* SqlPoliticianDatabaseManager::clone() const
 vector<unique_ptr<Politician>> SqlPoliticianDatabaseManager::mpsForConstituency(
     int constituencyId) const
 {
-    vector<unique_ptr<Politician>> ret;
-    auto database = QSqlDatabase::database(
-        databaseFileInfo_.absoluteFilePath());
+    auto database = connectToSqlDatabase(databaseFileInfo_);
     if (!database.isValid())
-        return ret;
+        return vector<unique_ptr<Politician>>();
 
+    vector<unique_ptr<Politician>> ret;
     QSqlQuery query(database);
     query.prepare(
         "SELECT * FROM politicians "
@@ -74,11 +74,11 @@ vector<unique_ptr<Politician>>
 SqlPoliticianDatabaseManager::candidatesForConstituency(
     int constituencyId) const
 {
-    vector<unique_ptr<Politician>> ret;
-    auto database = QSqlDatabase::database(
-        databaseFileInfo_.absoluteFilePath());
+    auto database = connectToSqlDatabase(databaseFileInfo_);
     if (!database.isValid())
-        return ret;
+        return vector<unique_ptr<Politician>>();
+
+    vector<unique_ptr<Politician>> ret;
     QSqlQuery query(database);
     query.prepare(
         "SELECT * FROM politicians "
@@ -98,10 +98,10 @@ SqlPoliticianDatabaseManager::candidatesForConstituency(
 
 unique_ptr<Politician> SqlPoliticianDatabaseManager::politician(int id) const
 {
-    auto database = QSqlDatabase::database(
-        databaseFileInfo_.absoluteFilePath());
+    auto database = connectToSqlDatabase(databaseFileInfo_);
     if (!database.isValid())
         return nullptr;
+    
     QSqlQuery query(database);
     query.exec("SELECT * FROM politicians WHERE id = " + QString::number(id));
     return sqlQueryToPolitician(query);
@@ -109,10 +109,10 @@ unique_ptr<Politician> SqlPoliticianDatabaseManager::politician(int id) const
 
 QUrl SqlPoliticianDatabaseManager::imageUrlForPolitician(int politicianId) const
 {
-    auto database = QSqlDatabase::database(
-        databaseFileInfo_.absoluteFilePath());
+    auto database = connectToSqlDatabase(databaseFileInfo_);
     if (!database.isValid())
         return QUrl();
+    
     QSqlQuery query(database);
     query.exec(
         "SELECT image_url FROM politicians WHERE id = " 
@@ -124,8 +124,7 @@ void SqlPoliticianDatabaseManager::addPoliticianToConstituency(
     Politician& thePolitician,
     int constituencyId) const
 {
-    auto database = QSqlDatabase::database(
-        databaseFileInfo_.absoluteFilePath());
+    auto database = connectToSqlDatabase(databaseFileInfo_);
     if (!database.isValid())
         return;
 
@@ -163,8 +162,7 @@ void SqlPoliticianDatabaseManager::addPoliticianToConstituency(
 void SqlPoliticianDatabaseManager::updatePolitician(
     const Politician & politician) const
 {
-    auto database = QSqlDatabase::database(
-        databaseFileInfo_.absoluteFilePath());
+    auto database = connectToSqlDatabase(databaseFileInfo_);
     if (!database.isValid())
         return;
 
@@ -200,8 +198,7 @@ void SqlPoliticianDatabaseManager::updatePolitician(
 
 void SqlPoliticianDatabaseManager::removePolitician(int politicianId) const
 {
-    auto database = QSqlDatabase::database(
-        databaseFileInfo_.absoluteFilePath());
+    auto database = connectToSqlDatabase(databaseFileInfo_);
     if (!database.isValid())
         return;
 
@@ -213,8 +210,7 @@ void SqlPoliticianDatabaseManager::removePolitician(int politicianId) const
 void SqlPoliticianDatabaseManager::clearPoliticiansFromConstituency(
     int constituencyId) const
 {
-    auto database = QSqlDatabase::database(
-        databaseFileInfo_.absoluteFilePath());
+    auto database = connectToSqlDatabase(databaseFileInfo_);
     if (!database.isValid())
         return;
 

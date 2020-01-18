@@ -41,3 +41,6 @@ This should perhaps shring the ConstituencyWidget and put a Widget displaying th
 a new widget).
 
 A constituency needs to have an area data member.
+
+It's probably not ideal but the convention in this projecvt is that connections to a database on 
+file shall be named by the file's absolute file path.

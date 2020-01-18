@@ -13,7 +13,7 @@ SqlDatabaseManagerFactory::SqlDatabaseManagerFactory(
     const QFileInfo& databaseFileInfo)
     : databaseFileInfo_(databaseFileInfo)
 {
-    createSqlDatabase(databaseFileInfo_.absoluteFilePath());
+    conditionallyCreateSqlDatabase(databaseFileInfo_.absoluteFilePath());
 }
 
 shared_ptr<IConstituencyDatabaseManager> 

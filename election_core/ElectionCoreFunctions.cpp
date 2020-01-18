@@ -12,7 +12,7 @@ bool isIndexValid(const QModelIndex& index, const QAbstractListModel& model)
     return true;
 }
 
-void createSqlDatabase(
+void conditionallyCreateSqlDatabase(
     const QFileInfo& databaseFileInfo,
     const QString& type)
 {
@@ -27,6 +27,6 @@ QSqlDatabase makeSqlDatabaseConnection(
     const QFileInfo& databaseFileInfo,
     const QString& type)
 {
-    createSqlDatabase(databaseFileInfo, type);
+    conditionallyCreateSqlDatabase(databaseFileInfo, type);
     return QSqlDatabase::database(databaseFileInfo.absoluteFilePath());
 }

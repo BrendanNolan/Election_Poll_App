@@ -19,7 +19,7 @@ SqlPoliticianDatabaseManager::SqlPoliticianDatabaseManager(
     const QFileInfo& databaseFileInfo)
     : databaseFileInfo_(databaseFileInfo)
 {
-    auto database = makeDatabaseConnection(databaseFileInfo_);
+    auto database = makeSqlDatabaseConnection(databaseFileInfo_);
     if (database.tables().contains("politicians"))
         return;
     QSqlQuery query(database);

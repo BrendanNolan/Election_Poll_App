@@ -13,7 +13,7 @@ bool isIndexValid(const QModelIndex& index, const QAbstractListModel& model);
 // Creates a database of type `type` at the given file location if there is no
 // database there. If there is a database at the given file location, this
 // function does nothing.
-void createSqlDatabase(
+void conditionallyCreateSqlDatabase(
     const QFileInfo& databaseFileInfo, 
     const QString& type = "QSQLITE");
 

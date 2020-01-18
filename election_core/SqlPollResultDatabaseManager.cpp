@@ -28,6 +28,11 @@ SqlPollResultDatabaseManager::SqlPollResultDatabaseManager(
         ")");
 }
 
+SqlPollResultDatabaseManager* SqlPollResultDatabaseManager::clone() const
+{
+    return new SqlPollResultDatabaseManager(*this);
+}
+
 void SqlPollResultDatabaseManager::addPollResult(const PollResult& result) const
 {
     auto database = QSqlDatabase::database(

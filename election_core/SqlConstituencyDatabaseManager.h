@@ -15,7 +15,8 @@ class SqlConstituencyDatabaseManager : public IConstituencyDatabaseManager
 {
 public:
     explicit SqlConstituencyDatabaseManager(const QFileInfo& databaseFileInfo);
-    
+    SqlConstituencyDatabaseManager* clone() const override;
+
     void addConstituency(Constituency& constituency) const override;
     void updateConstituency(const Constituency& constituency) const override;
     void removeConstituency(int id) const override;

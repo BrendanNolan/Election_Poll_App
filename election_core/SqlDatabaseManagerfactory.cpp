@@ -16,6 +16,11 @@ SqlDatabaseManagerFactory::SqlDatabaseManagerFactory(
     conditionallyCreateSqlDatabase(databaseFileInfo_);
 }
 
+SqlDatabaseManagerFactory* SqlDatabaseManagerFactory::clone() const
+{
+    return new SqlDatabaseManagerFactory(*this);
+}
+
 shared_ptr<IConstituencyDatabaseManager> 
 SqlDatabaseManagerFactory::createConstituencyDatabaseManager() const
 {
@@ -48,9 +53,4 @@ SqlDatabaseManagerFactory::createPoliticianDatabaseManager() const
         return nullptr;
     auto manager = make_shared<SqlPoliticianDatabaseManager>(databaseFileInfo_);
     return manager;
-}
-
-SqlDatabaseManagerFactory* SqlDatabaseManagerFactory::clone() const
-{
-    return new SqlDatabaseManagerFactory(*this);
 }

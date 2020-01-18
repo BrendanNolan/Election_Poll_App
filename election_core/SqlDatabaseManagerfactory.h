@@ -18,6 +18,7 @@ class SqlDatabaseManagerFactory : public IDatabaseManagerFactory
 {
 public:
     SqlDatabaseManagerFactory(const QFileInfo& databaseFileInfo);
+    SqlDatabaseManagerFactory* clone() const override;
 
     std::shared_ptr<IConstituencyDatabaseManager>
         createConstituencyDatabaseManager() const override;
@@ -25,8 +26,6 @@ public:
         createPollResultDatabaseManager() const override;
     std::shared_ptr<IPoliticianDatabaseManager>
         createPoliticianDatabaseManager() const override;
-
-    SqlDatabaseManagerFactory* clone() const override;
 
 private:
     QFileInfo databaseFileInfo_;

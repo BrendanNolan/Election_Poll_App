@@ -33,6 +33,11 @@ SqlConstituencyDatabaseManager::SqlConstituencyDatabaseManager(
         ")");
 }
 
+SqlConstituencyDatabaseManager* SqlConstituencyDatabaseManager::clone() const
+{
+    return new SqlConstituencyDatabaseManager(*this);
+}
+
 void SqlConstituencyDatabaseManager::addConstituency(
     Constituency& constituency) const
 {

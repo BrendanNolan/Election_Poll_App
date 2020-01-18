@@ -39,6 +39,11 @@ SqlPoliticianDatabaseManager::SqlPoliticianDatabaseManager(
         ")");
 }
 
+SqlPoliticianDatabaseManager* SqlPoliticianDatabaseManager::clone() const
+{
+    return new SqlPoliticianDatabaseManager(*this);
+}
+
 vector<unique_ptr<Politician>> SqlPoliticianDatabaseManager::mpsForConstituency(
     int constituencyId) const
 {

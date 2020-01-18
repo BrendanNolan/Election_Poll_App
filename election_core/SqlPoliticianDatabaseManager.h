@@ -14,6 +14,7 @@ class SqlPoliticianDatabaseManager : public IPoliticianDatabaseManager
 {
 public:
     explicit SqlPoliticianDatabaseManager(const QFileInfo& databaseFileInfo);
+    SqlPoliticianDatabaseManager* clone() const override;
 
     std::vector<std::unique_ptr<Politician>> mpsForConstituency(
         int constituencyId) const override;

@@ -2,6 +2,7 @@
 
 #include <QSqlDatabase>
 
+#include "ElectionCoreFunctions.h"
 #include "SqlConstituencyDatabaseManager.h"
 #include "SqlPoliticianDatabaseManager.h"
 #include "SqlPollResultDatabaseManager.h"
@@ -9,22 +10,10 @@
 using namespace std;
 
 SqlDatabaseManagerFactory::SqlDatabaseManagerFactory(
-    shared_ptr<QSqlDatabase> database)
-    : database_(move(database))
+    const QFileInfo& databaseFileInfo)
+    : databaseFileInfo_(databaseFileInfo)
 {
-    if (!database_)
-        database_ = make_shared<QSqlDatabase>(QSqlDatabase::database());
-    
-    database_->open();
-}
-
-SqlDatabaseManagerFactory::SqlDatabaseManagerFactory(
-    const QString& databaseName, 
-    const QString& type)
-{
-    database_ = make_shared<QSqlDatabase>(QSqlDatabase::addDatabase(type));
-    database_->setDatabaseName(databaseName);
-    database_->open();
+    createSqlDatabase(databaseFileInfo_.absoluteFilePath());
 }
 
 shared_ptr<IConstituencyDatabaseManager> 

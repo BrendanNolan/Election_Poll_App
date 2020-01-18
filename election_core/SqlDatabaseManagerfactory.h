@@ -1,6 +1,7 @@
 #ifndef SQLDATABASEMANAGERFACTORY_H
 #define SQLDATABASEMANAGERFACTORY_H
 
+#include <QFileInfo>
 
 #include <memory>
 
@@ -16,7 +17,7 @@ class QString;
 class SqlDatabaseManagerFactory : public IDatabaseManagerFactory
 {
 public:
-    SqlDatabaseManagerFactory(const QString& databaseName, const QString& type);
+    SqlDatabaseManagerFactory(const QFileInfo& databaseFileInfo);
 
     std::shared_ptr<IConstituencyDatabaseManager>
         createConstituencyDatabaseManager() const override;
@@ -28,7 +29,7 @@ public:
     SqlDatabaseManagerFactory* clone() const override;
 
 private:
-    std::shared_ptr<QSqlDatabase> database_;
+    QFileInfo databaseFileInfo_;
 };
 
 #endif // SQLDATABASEMANAGERFACTORY_H

@@ -13,7 +13,7 @@ SqlPollResultDatabaseManager::SqlPollResultDatabaseManager(
     const QFileInfo& databaseFileInfo)
     : databaseFileInfo_(databaseFileInfo)
 {
-    auto database = getOrCreateDatabase(databaseFileInfo_);
+    auto database = makeDatabaseConnection(databaseFileInfo_);
     if (database.tables().contains("poll_results"))
         return;
     QSqlQuery query(database);

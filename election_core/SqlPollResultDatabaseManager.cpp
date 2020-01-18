@@ -13,9 +13,10 @@ SqlPollResultDatabaseManager::SqlPollResultDatabaseManager(
     const QFileInfo& databaseFileInfo)
     : databaseFileInfo_(databaseFileInfo)
 {
-    auto database = makeSqlDatabaseConnection(databaseFileInfo_);
-    if (database.tables().contains("poll_results"))
+    auto database = connectToSqlDatabase(databaseFileInfo_);
+    if (!database.isValid() || database.tables().contains("poll_results"))
         return;
+
     QSqlQuery query(database);
     query.exec(
         "CREATE TABLE poll_results "
@@ -35,8 +36,7 @@ SqlPollResultDatabaseManager* SqlPollResultDatabaseManager::clone() const
 
 void SqlPollResultDatabaseManager::addPollResult(const PollResult& result) const
 {
-    auto database = QSqlDatabase::database(
-        databaseFileInfo_.absoluteFilePath());
+    auto database = connectToSqlDatabase(databaseFileInfo_);
     if (!database.isValid())
         return;
 
@@ -68,8 +68,7 @@ void SqlPollResultDatabaseManager::addPollResult(const PollResult& result) const
 void SqlPollResultDatabaseManager::updatePollResult(
     const PollResult& result) const
 {
-    auto database = QSqlDatabase::database(
-        databaseFileInfo_.absoluteFilePath());
+    auto database = connectToSqlDatabase(databaseFileInfo_);
     if (!database.isValid())
         return;
 
@@ -102,8 +101,7 @@ void SqlPollResultDatabaseManager::updatePollResult(
 void SqlPollResultDatabaseManager::removePollResult(
     const PollResult& result) const
 {
-    auto database = QSqlDatabase::database(
-        databaseFileInfo_.absoluteFilePath());
+    auto database = connectToSqlDatabase(databaseFileInfo_);
     if (!database.isValid())
         return;
 
@@ -124,12 +122,11 @@ void SqlPollResultDatabaseManager::removePollResult(
 vector<unique_ptr<PollResult>> 
 SqlPollResultDatabaseManager::pollResultsForConstituency(int id) const
 {
-    vector<unique_ptr<PollResult>> ret;
-    auto database = QSqlDatabase::database(
-        databaseFileInfo_.absoluteFilePath());
+    auto database = connectToSqlDatabase(databaseFileInfo_);
     if (!database.isValid())
-        return ret;
+        return vector<unique_ptr<PollResult>>();
 
+    vector<unique_ptr<PollResult>> ret;
     QSqlQuery query(database);
     query.prepare(
         "SELECT * FROM poll_results "

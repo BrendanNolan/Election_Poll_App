@@ -8,7 +8,8 @@
 class SqlPollResultDatabaseManager : public IPollResultDatabaseManager
 {
 public:
-    explicit SqlPollResultDatabaseManager(const QFileInfo& databaseFileInfo);
+    explicit SqlPollResultDatabaseManager(
+        const QFileInfo& databaseFileInfo = QFileInfo());
     SqlPollResultDatabaseManager* clone() const override;
 
     void addPollResult(const PollResult& result) const override;

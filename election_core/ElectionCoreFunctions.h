@@ -1,25 +1,20 @@
 #ifndef ELECTIONCOREFUNCTIONS_H
 #define ELECTIONCOREFUNCTIONS_H
 
+#include <QFileInfo>
 #include <QSqlDatabase>
 
 class QAbstractListModel;
-class QFileInfo;
 class QModelIndex;
 class QString;
 
 bool isIndexValid(const QModelIndex& index, const QAbstractListModel& model);
 
-// Creates a database of type `type` at the given file location if there is no
-// database there. If there is a database at the given file location, this
-// function does nothing.
-void conditionallyCreateSqlDatabase(
-    const QFileInfo& databaseFileInfo, 
-    const QString& type = "QSQLITE");
-
-// Need to check if what you get when you call this function will still be open.
-QSqlDatabase makeSqlDatabaseConnection(
-    const QFileInfo& databaseFileInfo,
-    const QString& type = "QSQLITE");
+// If the database file exists, then this function returns an open connection
+// to the database, first adding a database connection to the file if necessary.
+// If the file does not exist, then this function simply returns the default 
+// connection, which may ne invalid.
+QSqlDatabase connectToSqlDatabase(
+    const QFileInfo& databaseFileInfo = QFileInfo());
 
 #endif // ELECTIONCOREFUNCTIONS_H

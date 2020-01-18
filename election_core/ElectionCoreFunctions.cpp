@@ -12,21 +12,19 @@ bool isIndexValid(const QModelIndex& index, const QAbstractListModel& model)
     return true;
 }
 
-void conditionallyCreateSqlDatabase(
-    const QFileInfo& databaseFileInfo,
-    const QString& type)
+QSqlDatabase connectToSqlDatabase(const QFileInfo& databaseFileInfo)
 {
-    auto database = QSqlDatabase::database(databaseFileInfo.absoluteFilePath());
-    if (database.isValid())
-        return;
-    database = QSqlDatabase::addDatabase(type);
-    database.setDatabaseName(databaseFileInfo.absoluteFilePath());
-}
+    if (!databaseFileInfo.exists())
+    {
+        if (QSqlDatabase::database().isValid())
+            return QSqlDatabase::database();
+        QSqlDatabase::addDatabase("QSQLITE");
+        return QSqlDatabase::database();
+    }
 
-QSqlDatabase makeSqlDatabaseConnection(
-    const QFileInfo& databaseFileInfo,
-    const QString& type)
-{
-    conditionallyCreateSqlDatabase(databaseFileInfo, type);
-    return QSqlDatabase::database(databaseFileInfo.absoluteFilePath());
+    auto path = databaseFileInfo.absoluteFilePath();
+    if (QSqlDatabase::database(path).isValid())
+        return QSqlDatabase::database(path);
+    QSqlDatabase::addDatabase("QSQLITE").setDatabaseName(path);
+    return QSqlDatabase::database(path);
 }

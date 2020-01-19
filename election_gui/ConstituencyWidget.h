@@ -10,7 +10,6 @@
 #include "Constituency.h"
 
 class ConstituencyModel;
-class ConstituencyScene;
 class QGraphicsItem;
 class QGraphicsScene;
 class QItemSelectionModel;
@@ -22,19 +21,23 @@ class ConstituencyWidget : public QGraphicsView
     Q_OBJECT
 
 public:
-    ConstituencyWidget(ConstituencyScene* scene, QWidget* parent = nullptr);
+    ConstituencyWidget(QGraphicsScene* scene, QWidget* parent = nullptr);
     explicit ConstituencyWidget(QWidget* parent = nullptr);
 
     void setModel(ConstituencyModel* constituencyModel);
     void setSelectionModel(QItemSelectionModel* selectionModel);
-    void setScene(ConstituencyScene* scene);
+    void setScene(QGraphicsScene* scene);
 
 signals:
     void constituencyActivated(const QModelIndex& index);
 
 private slots:
-    void loadIndexRectCache(); // Lots of constituencyModel_'s signals should be connected to this, like QAbstractItemModel::rowsAdded, QAbstractItemModel::rowsRemoved,  
-    void onSceneItemActivated(QGraphicsItem* item);
+    /* 
+       Lots of constituencyModel_'s signals should be connected to this, 
+       like QAbstractItemModel::rowsAdded, QAbstractItemModel::rowsRemoved,  
+    */
+    void loadIndexItemCache();
+    void activateSelectedConstituency();
 
 private:
     void loadWidgetColours();
@@ -44,7 +47,7 @@ private:
 private:
     ConstituencyModel* constituencyModel_;
     QItemSelectionModel* constituencySelectionModel_;
-    ConstituencyScene* constituencyScene_;
+    QGraphicsScene* scene_;
     QHash<QModelIndex, QGraphicsItem*> indexItemCache_;
 };
 

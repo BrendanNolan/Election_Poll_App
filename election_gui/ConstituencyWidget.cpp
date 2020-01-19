@@ -6,16 +6,18 @@
 #include <QRect>
 
 #include "ConstituencyModel.h"
-#include "ConstituencyScene.h"
 #include "RectanglePositionCalculator.h"
 
-ConstituencyWidget::ConstituencyWidget(ConstituencyScene* scene, QWidget* parent)
+ConstituencyWidget::ConstituencyWidget(
+    QGraphicsScene* scene, 
+    QWidget* parent)
     : QGraphicsView(scene, parent)
     , constituencyModel_(nullptr)
     , constituencySelectionModel_(nullptr)
-    , constituencyScene_(scene)
+    , scene_(scene)
 {
     makeConnections();
+    activateSelectedConstituency();
 }
 
 ConstituencyWidget::ConstituencyWidget(QWidget* parent)
@@ -37,15 +39,15 @@ void ConstituencyWidget::setSelectionModel(QItemSelectionModel* selectionModel)
     constituencySelectionModel_ = selectionModel;
 }
 
-void ConstituencyWidget::setScene(ConstituencyScene* scene)
+void ConstituencyWidget::setScene(QGraphicsScene* scene)
 {
     QGraphicsView::setScene(scene);
-    constituencyScene_ = scene;
-    connect(constituencyScene_, &ConstituencyScene::activated,
-        this, &ConstituencyWidget::onSceneItemActivated);
+    scene_ = scene;
+    connect(scene_, &QGraphicsScene::selectionChanged,
+        this, &ConstituencyWidget::activateSelectedConstituency);
 }
 
-void ConstituencyWidget::loadIndexRectCache()
+void ConstituencyWidget::loadIndexItemCache()
 {
     auto rows = constituencyModel_->rowCount();
     QHash<QModelIndex, QRect> roughHash;
@@ -59,14 +61,23 @@ void ConstituencyWidget::loadIndexRectCache()
 
 }
 
+void ConstituencyWidget::activateSelectedConstituency()
+{
+    // Calculate the index of the selected constituency and call it index
+    auto selectedItem = scene_->selectedItems().first();
+    auto index = indexItemCache_[selectedItem];
+    if (index.isValid())
+        emit constituencyActivated(index);
+}
+
 void ConstituencyWidget::makeConnections()
 {
     connect(constituencyModel_, &QAbstractItemModel::modelReset,
-        this, &ConstituencyWidget::loadIndexRectCache);
+        this, &ConstituencyWidget::loadIndexItemCache);
     connect(constituencyModel_, &QAbstractItemModel::rowsInserted,
-        this, &ConstituencyWidget::loadIndexRectCache);
+        this, &ConstituencyWidget::loadIndexItemCache);
     connect(constituencyModel_, &QAbstractItemModel::rowsRemoved,
-        this, &ConstituencyWidget::loadIndexRectCache);
-    connect(constituencyScene_, &ConstituencyScene::activated,
-        this, &ConstituencyWidget::onSceneItemActivated);
+        this, &ConstituencyWidget::loadIndexItemCache);
+    connect(scene_, &QGraphicsScene::selectionChanged,
+        this, &ConstituencyWidget::activateSelectedConstituency);
 }

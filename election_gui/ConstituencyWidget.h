@@ -32,23 +32,19 @@ signals:
     void constituencyActivated(const QModelIndex& index);
 
 private slots:
-    /* 
-       Lots of constituencyModel_'s signals should be connected to this, 
-       like QAbstractItemModel::rowsAdded, QAbstractItemModel::rowsRemoved,  
-    */
-    void loadIndexItemCache();
     void activateSelectedConstituency();
+    void setSceneConstituencies();
 
 private:
     void loadWidgetColours();
-    QModelIndex indexAtPoint(const QPoint& point) const;
-    void makeConnections();
+    void makeModelConnections();
+    void loadModel();
 
 private:
     ConstituencyModel* constituencyModel_;
     QItemSelectionModel* constituencySelectionModel_;
     QGraphicsScene* scene_;
-    QHash<QModelIndex, QGraphicsItem*> indexItemCache_;
+    QHash<QGraphicsItem*, QModelIndex> indexItemCache_;
 };
 
 #endif // CONSTITUENCYWIDGET_H

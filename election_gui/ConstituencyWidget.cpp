@@ -1,9 +1,9 @@
 #include "ConstituencyWidget.h"
 
+#include <QGraphicsrectItem>
 #include <QGraphicsScene>
 #include <QItemSelectionModel>
-#include <QPoint>
-#include <QRect>
+#include <QPointF>
 
 #include "ConstituencyModel.h"
 #include "RectanglePositionCalculator.h"
@@ -16,8 +16,9 @@ ConstituencyWidget::ConstituencyWidget(
     , constituencySelectionModel_(nullptr)
     , scene_(scene)
 {
-    makeConnections();
-    activateSelectedConstituency();
+    connect(scene_, &QGraphicsScene::selectionChanged,
+        this, &ConstituencyWidget::activateSelectedConstituency);
+    loadModel();
 }
 
 ConstituencyWidget::ConstituencyWidget(QWidget* parent)
@@ -25,7 +26,9 @@ ConstituencyWidget::ConstituencyWidget(QWidget* parent)
     , constituencyModel_(nullptr)
     , constituencySelectionModel_(nullptr)
 {
-    makeConnections();
+    connect(scene_, &QGraphicsScene::selectionChanged,
+        this, &ConstituencyWidget::activateSelectedConstituency);
+    loadModel();
 }
 
 void ConstituencyWidget::setModel(ConstituencyModel* constituencyModel)
@@ -47,37 +50,62 @@ void ConstituencyWidget::setScene(QGraphicsScene* scene)
         this, &ConstituencyWidget::activateSelectedConstituency);
 }
 
-void ConstituencyWidget::loadIndexItemCache()
+void ConstituencyWidget::setSceneConstituencies()
 {
+    scene_->clear();
+
     auto rows = constituencyModel_->rowCount();
-    QHash<QModelIndex, QRect> roughHash;
+    QHash<QGraphicsItem*, QModelIndex> roughHash;
     indexItemCache_.clear();
     for (auto row = 0; row < rows; ++row)
     {
         auto index = constituencyModel_->index(row);
-        roughHash[index] = constituencyModel_->data(
-            index, ConstituencyModel::AreaRole).toRect();
+        QPointF constituencyPosition(
+            constituencyModel_->data(
+                index, 
+                ConstituencyModel::LongitudeRole).toInt(),
+            constituencyModel_->data(
+                index,
+                ConstituencyModel::LatitudeRole).toInt());
+        auto rectItem = new QGraphicsRectItem(
+            QRectF(constituencyPosition, QSizeF(10, 10)));
+        scene_->addItem(rectItem);
+        roughHash[rectItem] = index;
     }
-
+    /*
+        The following line is temporary. Eventually a 
+        RectanglePositionCalculator will calculate new sizes and positions
+        for the QRectItems.
+    */
+    indexItemCache_ = roughHash;
 }
 
 void ConstituencyWidget::activateSelectedConstituency()
 {
-    // Calculate the index of the selected constituency and call it index
     auto selectedItem = scene_->selectedItems().first();
     auto index = indexItemCache_[selectedItem];
     if (index.isValid())
         emit constituencyActivated(index);
 }
 
-void ConstituencyWidget::makeConnections()
+void ConstituencyWidget::loadWidgetColours()
+{
+    // NEEDS TO BE IMPLEMENTED
+}
+
+void ConstituencyWidget::makeModelConnections()
 {
     connect(constituencyModel_, &QAbstractItemModel::modelReset,
-        this, &ConstituencyWidget::loadIndexItemCache);
+        this, &ConstituencyWidget::setSceneConstituencies);
     connect(constituencyModel_, &QAbstractItemModel::rowsInserted,
-        this, &ConstituencyWidget::loadIndexItemCache);
+        this, &ConstituencyWidget::setSceneConstituencies);
     connect(constituencyModel_, &QAbstractItemModel::rowsRemoved,
-        this, &ConstituencyWidget::loadIndexItemCache);
-    connect(scene_, &QGraphicsScene::selectionChanged,
-        this, &ConstituencyWidget::activateSelectedConstituency);
+        this, &ConstituencyWidget::setSceneConstituencies);
+}
+
+void ConstituencyWidget::loadModel()
+{
+    makeModelConnections();
+    setSceneConstituencies();
+    activateSelectedConstituency();
 }

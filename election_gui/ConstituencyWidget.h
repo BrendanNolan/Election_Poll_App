@@ -1,27 +1,28 @@
 #ifndef CONSTITUENCYWIDGET_H
 #define CONSTITUENCYWIDGET_H
 
+#include <QGraphicsView>
 #include <QHash>
 #include <QModelIndex>
 #include <QRect>
 #include <QVector>
-#include <QWidget>
 
 #include "Constituency.h"
 
 class ConstituencyModel;
+class QGraphicsItem;
+class QGraphicsScene;
 class QItemSelectionModel;
 class QPoint;
 class QRect;
 
-class ConstituencyWidget : public QWidget
+class ConstituencyWidget : public QGraphicsView
 {
     Q_OBJECT
 
 public:
-    explicit ConstituencyWidget(
-        QWidget* parent = nullptr,
-        Qt::WindowFlags flags = Qt::WindowFlags());
+    ConstituencyWidget(QGraphicsScene* scene, QWidget* parent = nullptr);
+    explicit ConstituencyWidget(QWidget* parent = nullptr);
 
     void setModel(ConstituencyModel* constituencyModel);
     void setSelectionModel(QItemSelectionModel* selectionModel);
@@ -40,12 +41,12 @@ private slots:
 private:
     void loadWidgetColours();
     QModelIndex indexAtPoint(const QPoint& point) const;
+    void makeConnections();
 
 private:
     ConstituencyModel* constituencyModel_;
     QItemSelectionModel* constituencySelectionModel_;
-    QVector<QRect> constituencyRectangles_;
-    QHash<QModelIndex, QRect> indexRectCache_;
+    QHash<QModelIndex, QGraphicsItem*> indexRectCache_;
 };
 
 #endif // CONSTITUENCYWIDGET_H

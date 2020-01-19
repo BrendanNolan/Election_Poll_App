@@ -1,5 +1,6 @@
 #include "ConstituencyWidget.h"
 
+#include <QGraphicsScene>
 #include <QItemSelectionModel>
 #include <QPoint>
 #include <QRect>
@@ -7,17 +8,20 @@
 #include "ConstituencyModel.h"
 #include "RectanglePositionCalculator.h"
 
-ConstituencyWidget::ConstituencyWidget(QWidget* parent, Qt::WindowFlags flags)
-    : QWidget(parent, flags)
+ConstituencyWidget::ConstituencyWidget(QGraphicsScene* scene, QWidget* parent)
+    : QGraphicsView(scene, parent)
     , constituencyModel_(nullptr)
     , constituencySelectionModel_(nullptr)
 {
-    connect(constituencyModel_, &QAbstractItemModel::modelReset,
-        this, &ConstituencyWidget::loadIndexRectCache);
-    connect(constituencyModel_, &QAbstractItemModel::rowsInserted,
-        this, &ConstituencyWidget::loadIndexRectCache);
-    connect(constituencyModel_, &QAbstractItemModel::rowsRemoved,
-        this, &ConstituencyWidget::loadIndexRectCache);
+    makeConnections();
+}
+
+ConstituencyWidget::ConstituencyWidget(QWidget* parent)
+    : QGraphicsView(parent)
+    , constituencyModel_(nullptr)
+    , constituencySelectionModel_(nullptr)
+{
+    makeConnections();
 }
 
 void ConstituencyWidget::setModel(ConstituencyModel* constituencyModel)
@@ -43,4 +47,14 @@ void ConstituencyWidget::loadIndexRectCache()
             index, ConstituencyModel::AreaRole).toRect();
     }
 
+}
+
+void ConstituencyWidget::makeConnections()
+{
+    connect(constituencyModel_, &QAbstractItemModel::modelReset,
+        this, &ConstituencyWidget::loadIndexRectCache);
+    connect(constituencyModel_, &QAbstractItemModel::rowsInserted,
+        this, &ConstituencyWidget::loadIndexRectCache);
+    connect(constituencyModel_, &QAbstractItemModel::rowsRemoved,
+        this, &ConstituencyWidget::loadIndexRectCache);
 }

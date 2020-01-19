@@ -4,9 +4,7 @@
 #include <QUrl>
 #include <QString>
 
-#include "election_core_global.h"
-
-class ELECTIONCORESHARED_EXPORT Constituency
+class Constituency
 {
 public:
     Constituency() = default;

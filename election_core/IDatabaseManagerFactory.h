@@ -1,14 +1,13 @@
 #ifndef IDATABASEMANAGERFACTORY_H
 #define IDATABASEMANAGERFACTORY_H
 
-#include "election_core_global.h"
 #include <memory>
 
 class IConstituencyDatabaseManager;
 class IPollResultDatabaseManager;
 class IPoliticianDatabaseManager;
 
-class ELECTIONCORESHARED_EXPORT IDatabaseManagerFactory
+class IDatabaseManagerFactory
 {
 public:
     virtual ~IDatabaseManagerFactory() = default;

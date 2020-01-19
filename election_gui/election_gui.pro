@@ -1,4 +1,4 @@
-QT += core gui widgets
+QT += core gui widgets sql
 
 TARGET = election_gui
 TEMPLATE = app

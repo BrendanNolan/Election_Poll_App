@@ -34,7 +34,7 @@ ConstituencyWidget::ConstituencyWidget(QWidget* parent)
 void ConstituencyWidget::setModel(ConstituencyModel* constituencyModel)
 {
     constituencyModel_ = constituencyModel;
-    loadWidgetColours();
+    loadModel();
 }
 
 void ConstituencyWidget::setSelectionModel(QItemSelectionModel* selectionModel)
@@ -107,5 +107,6 @@ void ConstituencyWidget::loadModel()
 {
     makeModelConnections();
     setSceneConstituencies();
+    loadWidgetColours();
     activateSelectedConstituency();
 }

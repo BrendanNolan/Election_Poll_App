@@ -10,6 +10,7 @@
 #include "Constituency.h"
 
 class ConstituencyModel;
+class ConstituencyScene;
 class QGraphicsItem;
 class QGraphicsScene;
 class QItemSelectionModel;
@@ -21,22 +22,19 @@ class ConstituencyWidget : public QGraphicsView
     Q_OBJECT
 
 public:
-    ConstituencyWidget(QGraphicsScene* scene, QWidget* parent = nullptr);
+    ConstituencyWidget(ConstituencyScene* scene, QWidget* parent = nullptr);
     explicit ConstituencyWidget(QWidget* parent = nullptr);
 
     void setModel(ConstituencyModel* constituencyModel);
     void setSelectionModel(QItemSelectionModel* selectionModel);
+    void setScene(ConstituencyScene* scene);
 
 signals:
     void constituencyActivated(const QModelIndex& index);
 
-protected:
-    void mousePressEvent(QMouseEvent* event) override;
-    void mouseDoubleClickEvent(QMouseEvent* event) override;
-    void keyPressEvent(QKeyEvent* event) override;
-
 private slots:
     void loadIndexRectCache(); // Lots of constituencyModel_'s signals should be connected to this, like QAbstractItemModel::rowsAdded, QAbstractItemModel::rowsRemoved,  
+    void onSceneItemActivated(QGraphicsItem* item);
 
 private:
     void loadWidgetColours();
@@ -46,7 +44,8 @@ private:
 private:
     ConstituencyModel* constituencyModel_;
     QItemSelectionModel* constituencySelectionModel_;
-    QHash<QModelIndex, QGraphicsItem*> indexRectCache_;
+    ConstituencyScene* constituencyScene_;
+    QHash<QModelIndex, QGraphicsItem*> indexItemCache_;
 };
 
 #endif // CONSTITUENCYWIDGET_H

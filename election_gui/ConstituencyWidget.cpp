@@ -12,23 +12,17 @@ ConstituencyWidget::ConstituencyWidget(
     QGraphicsScene* scene, 
     QWidget* parent)
     : QGraphicsView(scene, parent)
-    , constituencyModel_(nullptr)
-    , constituencySelectionModel_(nullptr)
     , scene_(scene)
 {
     connect(scene_, &QGraphicsScene::selectionChanged,
         this, &ConstituencyWidget::activateSelectedConstituency);
-    loadModel();
 }
 
 ConstituencyWidget::ConstituencyWidget(QWidget* parent)
     : QGraphicsView(parent)
-    , constituencyModel_(nullptr)
-    , constituencySelectionModel_(nullptr)
 {
     connect(scene_, &QGraphicsScene::selectionChanged,
         this, &ConstituencyWidget::activateSelectedConstituency);
-    loadModel();
 }
 
 void ConstituencyWidget::setModel(ConstituencyModel* constituencyModel)
@@ -105,6 +99,8 @@ void ConstituencyWidget::makeModelConnections()
 
 void ConstituencyWidget::loadModel()
 {
+    if (!constituencyModel_)
+        return;
     makeModelConnections();
     setSceneConstituencies();
     loadWidgetColours();

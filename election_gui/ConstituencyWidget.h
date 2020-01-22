@@ -41,8 +41,8 @@ private:
     void loadModel();
 
 private:
-    ConstituencyModel* constituencyModel_;
-    QItemSelectionModel* constituencySelectionModel_;
+    ConstituencyModel* constituencyModel_ = nullptr;
+    QItemSelectionModel* constituencySelectionModel_ = nullptr;
     QGraphicsScene* scene_;
     QHash<QGraphicsItem*, QModelIndex> indexItemCache_;
 };

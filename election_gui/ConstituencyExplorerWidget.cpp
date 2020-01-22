@@ -52,7 +52,8 @@ void ConstituencyExplorerWidget::setPoliticianSelectionModel(
     ui_->politicianListWidget->setSelectionModel(selectionModel);
 }
 
-void ConstituencyExplorerWidget::onConstituencyActivated(const QModelIndex& index)
+void ConstituencyExplorerWidget::onConstituencyActivated(
+    const QModelIndex& index)
 {
     auto constituencyId = constituencyModel_->data(
         index, ConstituencyModel::IdRole).toInt();

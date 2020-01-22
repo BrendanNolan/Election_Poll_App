@@ -4,8 +4,10 @@
 #include <QtGlobal>
 
 #include <QItemSelectionModel>
+#include <QListView>
 #include <QRadioButton>
 
+#include "ConstituencyModel.h"
 #include "PoliticianModel.h"
 
 PoliticianListWidget::PoliticianListWidget(QWidget* parent, Qt::WindowFlags flags)
@@ -33,7 +35,7 @@ PoliticianListWidget::~PoliticianListWidget()
     delete ui_;
 }
 
-void PoliticianListWidget::setModel(PoliticianModel* model)
+void PoliticianListWidget::setPoliticianModel(PoliticianModel* model)
 {
     politicianModel_ = model;
 
@@ -56,21 +58,11 @@ void PoliticianListWidget::setModel(PoliticianModel* model)
         });
 }
 
-void PoliticianListWidget::setSelectionModel(
+void PoliticianListWidget::setPoliticianSelectionModel(
     QItemSelectionModel* selectionModel)
 {
-    auto model = selectionModel->model();
-    Q_ASSERT(model == politicianModel_);
-
-    politicianSelectionModel_ = selectionModel;
-    politicianSelectionModel_->clear();
-
-    connect(ui_->politicianListView, &QListView::activated,
-        this, &PoliticianListWidget::politicianActivated);
-    connect(politicianSelectionModel_, &QItemSelectionModel::currentChanged,
-        this, &PoliticianListWidget::currentChanged);
-    connect(politicianSelectionModel_, &QItemSelectionModel::selectionChanged,
-        this, &PoliticianListWidget::selectionChanged);
+    Q_ASSERT(selectionModel->model() == politicianModel_);
+    ui_->politicianListView->setSelectionModel(selectionModel);
 }
 
 QModelIndexList PoliticianListWidget::selectedPoliticians() const

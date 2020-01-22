@@ -5,6 +5,7 @@
 #include <QWidget>
 
 class ConstituencyWidget;
+class ConstituencyModel;
 class PoliticianModel;
 class QItemSelection;
 class QItemSelectionModel;
@@ -24,27 +25,24 @@ public:
         Qt::WindowFlags flags = Qt::WindowFlags());
     ~PoliticianListWidget();
 
-    void setModel(PoliticianModel* model);
-    void setSelectionModel(QItemSelectionModel* selectionModel);
+    void setPoliticianModel(PoliticianModel* model);
+    void setPoliticianSelectionModel(QItemSelectionModel* selectionModel);
+    void setConstituencyModel(ConstituencyModel* model);
+    void setConstituencySelectionModel(QItemSelectionModel* selectionModel);
 
     QModelIndexList	selectedPoliticians() const;
 
 signals:
     void dataChanged(
         const QModelIndex& topLeft, const QModelIndex& bottomRight);
-    void politicianActivated(const QModelIndex& index);
-    void currentChanged(
-        const QModelIndex& current, const QModelIndex& previous);
-    void selectionChanged(
-        const QItemSelection& selected, const QItemSelection& deselected);
-
 
 public slots:
     void setConstituency(int constituencyId);
 
 private:
     PoliticianModel* politicianModel_;
-    QItemSelectionModel* politicianSelectionModel_;
+    ConstituencyModel* constituencyModel_;
+    QItemSelectionModel* constituencySelectionModel_;
     Ui::PoliticianListWidget* ui_;
 };
 

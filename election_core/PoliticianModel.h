@@ -52,6 +52,7 @@ public:
 public slots:
     void setElectoralStatus(ElectoralStatus status);
     void setConstituency(int id);
+    void reload();
     // int constituencyId() const;
 
 private:

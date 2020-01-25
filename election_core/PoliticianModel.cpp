@@ -156,6 +156,11 @@ void PoliticianModel::setConstituency(int id)
     endResetModel();
 }
 
+void PoliticianModel::reload()
+{
+    loadPoliticianCache();
+}
+
 /*
 bool PoliticianModel::refreshCachedPolitician(int id)
 {

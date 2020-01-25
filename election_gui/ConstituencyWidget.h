@@ -28,11 +28,8 @@ public:
     void setSelectionModel(QItemSelectionModel* selectionModel);
     void setScene(QGraphicsScene* scene);
 
-signals:
-    void constituencyActivated(const QModelIndex& index);
-
 private slots:
-    void activateSelectedConstituency();
+    void selectConstituencyInModel();
     void setSceneConstituencies();
 
 private:

@@ -15,14 +15,14 @@ ConstituencyWidget::ConstituencyWidget(
     , scene_(scene)
 {
     connect(scene_, &QGraphicsScene::selectionChanged,
-        this, &ConstituencyWidget::activateSelectedConstituency);
+        this, &ConstituencyWidget::selectConstituencyInModel);
 }
 
 ConstituencyWidget::ConstituencyWidget(QWidget* parent)
     : QGraphicsView(parent)
 {
     connect(scene_, &QGraphicsScene::selectionChanged,
-        this, &ConstituencyWidget::activateSelectedConstituency);
+        this, &ConstituencyWidget::selectConstituencyInModel);
 }
 
 void ConstituencyWidget::setModel(ConstituencyModel* constituencyModel)
@@ -41,7 +41,7 @@ void ConstituencyWidget::setScene(QGraphicsScene* scene)
     QGraphicsView::setScene(scene);
     scene_ = scene;
     connect(scene_, &QGraphicsScene::selectionChanged,
-        this, &ConstituencyWidget::activateSelectedConstituency);
+        this, &ConstituencyWidget::selectConstituencyInModel);
 }
 
 void ConstituencyWidget::setSceneConstituencies()
@@ -74,12 +74,17 @@ void ConstituencyWidget::setSceneConstituencies()
     indexItemCache_ = roughHash;
 }
 
-void ConstituencyWidget::activateSelectedConstituency()
+void ConstituencyWidget::selectConstituencyInModel()
 {
+    if (!constituencySelectionModel_)
+        return;
     auto selectedItem = scene_->selectedItems().first();
     auto index = indexItemCache_[selectedItem];
-    if (index.isValid())
-        emit constituencyActivated(index);
+    if (!index.isValid())
+        return;
+    constituencySelectionModel_->select(
+        index, 
+        QItemSelectionModel::ClearAndSelect);
 }
 
 void ConstituencyWidget::loadWidgetColours()
@@ -104,5 +109,5 @@ void ConstituencyWidget::loadModel()
     makeModelConnections();
     setSceneConstituencies();
     loadWidgetColours();
-    activateSelectedConstituency();
+    selectConstituencyInModel();
 }

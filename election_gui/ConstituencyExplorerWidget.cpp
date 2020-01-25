@@ -10,15 +10,12 @@
 ConstituencyExplorerWidget::ConstituencyExplorerWidget(QWidget* parent)
     : QWidget(parent)
     , ui_(new Ui::ConstituencyExplorerWidget)
-    , constituencyModel_(nullptr)
-    , constituencySelectionModel_(nullptr)
-    , politicianModel_(nullptr)
-    , politicianSelectionModel_(nullptr)
 {
     ui_->setupUi(this);
-    
-    connect(ui_->constituencyWidget, &ConstituencyWidget::constituencyActivated,
-        this, &ConstituencyExplorerWidget::onConstituencyActivated);
+    connect(ui_->politicianListWidget, &PoliticianListWidget::pictureActivated,
+        this, &ConstituencyExplorerWidget::pictureActivated);
+    connect(ui_->politicianListWidget, &PoliticianListWidget::picturesActivated,
+        this, &ConstituencyExplorerWidget::picturesActivated);
 }
 
 ConstituencyExplorerWidget::~ConstituencyExplorerWidget()
@@ -28,34 +25,24 @@ ConstituencyExplorerWidget::~ConstituencyExplorerWidget()
 
 void ConstituencyExplorerWidget::setConstituencyModel(ConstituencyModel* model)
 {
-    constituencyModel_ = model;
     ui_->constituencyWidget->setModel(model);
+    ui_->politicianListWidget->setConstituencyModel(model);
 }
 
 void ConstituencyExplorerWidget::setConstituencySelectionModel(
     QItemSelectionModel* selectionModel)
 {
-    constituencySelectionModel_ = selectionModel;
     ui_->constituencyWidget->setSelectionModel(selectionModel);
+    ui_->politicianListWidget->setConstituencySelectionModel(selectionModel);
 }
 
 void ConstituencyExplorerWidget::setPoliticianModel(PoliticianModel* model)
 {
-    politicianModel_ = model;
-    ui_->politicianListWidget->setModel(model);
+    ui_->politicianListWidget->setPoliticianModel(model);
 }
 
 void ConstituencyExplorerWidget::setPoliticianSelectionModel(
     QItemSelectionModel* selectionModel)
 {
-    politicianSelectionModel_ = selectionModel;
-    ui_->politicianListWidget->setSelectionModel(selectionModel);
-}
-
-void ConstituencyExplorerWidget::onConstituencyActivated(
-    const QModelIndex& index)
-{
-    auto constituencyId = constituencyModel_->data(
-        index, ConstituencyModel::IdRole).toInt();
-    politicianModel_->setConstituency(constituencyId);
+    ui_->politicianListWidget->setPoliticianSelectionModel(selectionModel);
 }

@@ -27,15 +27,11 @@ public:
     void setPoliticianModel(PoliticianModel* model);
     void setPoliticianSelectionModel(QItemSelectionModel* selectionModel);
 
-private slots:
-    void onConstituencyActivated(const QModelIndex& index);
+signals:
+    void pictureActivated(const QModelIndex& pictureIndex);
+    void picturesActivated(const QModelIndexList& pictureIndexes);
 
 private:
-    ConstituencyModel* constituencyModel_;
-    QItemSelectionModel* constituencySelectionModel_;
-    PoliticianModel* politicianModel_;
-    QItemSelectionModel* politicianSelectionModel_;
-
     Ui::ConstituencyExplorerWidget* ui_;
 };
 

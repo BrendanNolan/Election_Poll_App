@@ -30,17 +30,19 @@ public:
     void setConstituencyModel(ConstituencyModel* model);
     void setConstituencySelectionModel(QItemSelectionModel* selectionModel);
 
+private slots:
+    void onconstituencyDataChanged(
+        const QModelIndex& topLeft, 
+        const QModelIndex& bottomRight);
+
+private:
     QModelIndexList	selectedPoliticians() const;
-
-signals:
-    void dataChanged(
-        const QModelIndex& topLeft, const QModelIndex& bottomRight);
-
-public slots:
-    void setConstituency(int constituencyId);
+    QModelIndex currentConstituency() const;
+    void loadConstituency();
 
 private:
     PoliticianModel* politicianModel_;
+    QItemSelectionModel* politicianSelectionModel_;
     ConstituencyModel* constituencyModel_;
     QItemSelectionModel* constituencySelectionModel_;
     Ui::PoliticianListWidget* ui_;

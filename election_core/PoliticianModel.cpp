@@ -29,7 +29,7 @@ QVariant PoliticianModel::data(
     const QModelIndex& index,
     int role) const
 {
-    if (!isIndexValid(index, *this))
+    if (!core::isIndexValid(index, *this))
         return QVariant();
     const auto& politician = *(politicianCache_[index.row()]);
     switch (role)
@@ -59,7 +59,7 @@ bool PoliticianModel::setData(
     const QVariant& value,
     int role)
 {
-    if (!isIndexValid(index, *this))
+    if (!core::isIndexValid(index, *this))
         return false;
     auto& politician = *(politicianCache_[index.row()]);
     switch (role)

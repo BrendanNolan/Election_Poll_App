@@ -8,6 +8,9 @@ class QAbstractListModel;
 class QModelIndex;
 class QString;
 
+namespace core
+{
+
 bool isIndexValid(const QModelIndex& index, const QAbstractListModel& model);
 
 // Returns a connection to the database file if the file exists, otherwise
@@ -17,4 +20,5 @@ bool isIndexValid(const QModelIndex& index, const QAbstractListModel& model);
 QSqlDatabase connectToSqlDatabase(
     const QFileInfo& databaseFileInfo = QFileInfo());
 
+}
 #endif // ELECTIONCOREFUNCTIONS_H

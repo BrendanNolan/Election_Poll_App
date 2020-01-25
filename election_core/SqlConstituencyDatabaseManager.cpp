@@ -19,7 +19,7 @@ SqlConstituencyDatabaseManager::SqlConstituencyDatabaseManager(
     const QFileInfo& databaseFileInfo)
     : databaseFileInfo_(databaseFileInfo)
 {
-    auto database = connectToSqlDatabase(databaseFileInfo_);
+    auto database = core::connectToSqlDatabase(databaseFileInfo_);
     if (!database.isValid() || database.tables().contains("constituencies"))
         return;
     
@@ -42,7 +42,7 @@ SqlConstituencyDatabaseManager* SqlConstituencyDatabaseManager::clone() const
 void SqlConstituencyDatabaseManager::addConstituency(
     Constituency& constituency) const
 {
-    auto database = connectToSqlDatabase(databaseFileInfo_);
+    auto database = core::connectToSqlDatabase(databaseFileInfo_);
     if (!database.isValid())
         return;
     
@@ -62,7 +62,7 @@ void SqlConstituencyDatabaseManager::addConstituency(
 void SqlConstituencyDatabaseManager::
     updateConstituency(const Constituency& constituency) const
 {
-    auto database = connectToSqlDatabase(databaseFileInfo_);
+    auto database = core::connectToSqlDatabase(databaseFileInfo_);
     if (!database.isValid())
         return;
     
@@ -83,7 +83,7 @@ void SqlConstituencyDatabaseManager::
 
 void SqlConstituencyDatabaseManager::removeConstituency(int id) const
 {
-    auto database = connectToSqlDatabase(databaseFileInfo_);
+    auto database = core::connectToSqlDatabase(databaseFileInfo_);
     if (!database.isValid())
         return;
     
@@ -95,7 +95,7 @@ void SqlConstituencyDatabaseManager::removeConstituency(int id) const
 unique_ptr<Constituency> SqlConstituencyDatabaseManager::
     constituency(int id) const
 {
-    auto database = connectToSqlDatabase(databaseFileInfo_);
+    auto database = core::connectToSqlDatabase(databaseFileInfo_);
     if (!database.isValid())
         return nullptr;
     
@@ -108,7 +108,7 @@ unique_ptr<Constituency> SqlConstituencyDatabaseManager::
 vector<unique_ptr<Constituency>> SqlConstituencyDatabaseManager::
     constituencies() const
 {
-    auto database = connectToSqlDatabase(databaseFileInfo_);
+    auto database = core::connectToSqlDatabase(databaseFileInfo_);
     if (!database.isValid())
         return vector<unique_ptr<Constituency>>();
 

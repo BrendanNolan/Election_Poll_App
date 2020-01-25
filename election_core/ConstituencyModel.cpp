@@ -35,7 +35,7 @@ int ConstituencyModel::rowCount(const QModelIndex& /*parent*/) const
 
 QVariant ConstituencyModel::data(const QModelIndex &index, int role) const
 {
-    if (!isIndexValid(index, *this))
+    if (!core::isIndexValid(index, *this))
         return false;
     const auto& constituency = *(constituencyCache_[index.row()]);
     switch (role)
@@ -74,7 +74,7 @@ bool ConstituencyModel::setData(
     const QVariant& value,
     int role)
 {
-    if (!isIndexValid(index, *this))
+    if (!core::isIndexValid(index, *this))
         return false;
 
     auto& constituency = *(constituencyCache_[index.row()]);

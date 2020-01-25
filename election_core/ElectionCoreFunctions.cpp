@@ -4,6 +4,9 @@
 #include <QFileInfo>
 #include <QModelIndex>
 
+namespace core
+{
+
 bool isIndexValid(const QModelIndex& index, const QAbstractListModel& model)
 {
     auto row = index.row();
@@ -17,13 +20,13 @@ QSqlDatabase connectToSqlDatabase(const QFileInfo& databaseFileInfo)
     auto database = databaseFileInfo.exists() ?
         QSqlDatabase::database(databaseFileInfo.absoluteFilePath())
         : QSqlDatabase::database();
-    
+
     if (database.isValid())
     {
         database.open();
         return database;
     }
-    
+
     database = databaseFileInfo.exists() ?
         QSqlDatabase::addDatabase(
             "QSQLITE",
@@ -31,4 +34,6 @@ QSqlDatabase connectToSqlDatabase(const QFileInfo& databaseFileInfo)
         : QSqlDatabase::addDatabase("QSQLITE");
     database.open();
     return database;
+}
+
 }

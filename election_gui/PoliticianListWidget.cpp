@@ -14,7 +14,6 @@ PoliticianListWidget::PoliticianListWidget(QWidget* parent, Qt::WindowFlags flag
     : QWidget(parent, flags)
     , ui_(new Ui::PoliticianListWidget)
     , politicianModel_(nullptr)
-    , politicianSelectionModel_(nullptr)
 {
     ui_->setupUi(this);
     ui_->mpsRadioButton->setChecked(true);
@@ -29,7 +28,7 @@ PoliticianListWidget::~PoliticianListWidget()
 void PoliticianListWidget::setPoliticianModel(PoliticianModel* model)
 {
     politicianModel_ = model;
-    ui_->politicianListView->setModel(politicianModel_);
+    ui_->politicianListView->setModel(model);
     loadConstituency();
 
     if (ui_->mpsRadioButton->isChecked())
@@ -62,25 +61,28 @@ void PoliticianListWidget::setPoliticianSelectionModel(
     QItemSelectionModel* selectionModel)
 {
     Q_ASSERT(selectionModel->model() == politicianModel_);
-    politicianSelectionModel_ = selectionModel;
     ui_->politicianListView->setSelectionModel(selectionModel);
 }
 
 void PoliticianListWidget::setConstituencyModel(ConstituencyModel* model)
 {
     constituencyModel_ = model;
+    loadConstituency();
     connect(model, &QAbstractItemModel::dataChanged,
-        this, &PoliticianListWidget::onconstituencyDataChanged);
+        this, &PoliticianListWidget::onConstituencyDataChanged);
 }
 
-void PoliticianListWidget::onconstituencyDataChanged(
+void PoliticianListWidget::onConstituencyDataChanged(
     const QModelIndex& topLeft,
     const QModelIndex& bottomRight)
 {
-    auto current = currentConstituency();
-    if (!current.isValid())
+    auto toDisplay = constituencyToDisplay();
+    if (!toDisplay.isValid())
+    {
+        setToInvalidState();
         return;
-    if (QItemSelectionRange(topLeft, bottomRight).contains(current))
+    }
+    if (QItemSelectionRange(topLeft, bottomRight).contains(toDisplay))
         loadConstituency();
 }
 
@@ -88,28 +90,62 @@ void PoliticianListWidget::setConstituencySelectionModel(
     QItemSelectionModel* selectionModel)
 {
     constituencySelectionModel_ = selectionModel;
+    loadConstituency();
     connect(selectionModel, &QItemSelectionModel::selectionChanged,
         [this]() { loadConstituency(); });
 }
 
 QModelIndexList PoliticianListWidget::selectedPoliticians() const
 {
-    return politicianSelectionModel_->selectedRows();
+    return ui_->politicianListView->selectionModel()->selectedRows();
 }
 
-QModelIndex PoliticianListWidget::currentConstituency() const
+QModelIndex PoliticianListWidget::constituencyToDisplay() const
 {
-    if (!constituencyModel_ || !constituencySelectionModel_)
+    if (!constituencyModel_) 
         return QModelIndex();
-    return constituencySelectionModel_->currentIndex();
+    if (!constituencySelectionModel_ || 
+        !(constituencySelectionModel_->selectedIndexes().first().isValid()))
+        return constituencyModel_->index(0);
+    return constituencySelectionModel_->selectedIndexes().first();
 }
 
 void PoliticianListWidget::loadConstituency()
 { 
-    auto constituencyIndex = currentConstituency();
-    if (!constituencyIndex.isValid())
+    auto constituencyIndex = constituencyToDisplay();
+    if (!constituencyIndex.isValid() || !politicianModel_)
+    {
+        setToInvalidState();
         return;
+    }
+
+    enableRadioButtons();
+    
+    auto constituencyName = constituencyModel_->data(
+        constituencyIndex, ConstituencyModel::NameRole).toString();
+    ui_->constituencyLabel->setText(constituencyName);
+
     auto constituencyId = constituencyModel_->data(
         constituencyIndex, ConstituencyModel::IdRole).toInt();
     politicianModel_->setConstituency(constituencyId);
+}
+
+void PoliticianListWidget::setToInvalidState()
+{
+    if (politicianModel_)
+        politicianModel_->setConstituency(-1);
+    ui_->constituencyLabel->setText("<Constituency Name>");
+    disableRadioButtons();
+}
+
+void PoliticianListWidget::enableRadioButtons()
+{
+    ui_->mpsRadioButton->setEnabled(true);
+    ui_->candidatesRadioButton->setEnabled(true);
+}
+
+void PoliticianListWidget::disableRadioButtons()
+{
+    ui_->mpsRadioButton->setDisabled(true);
+    ui_->candidatesRadioButton->setDisabled(true);
 }

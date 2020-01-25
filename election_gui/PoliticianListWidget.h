@@ -31,18 +31,20 @@ public:
     void setConstituencySelectionModel(QItemSelectionModel* selectionModel);
 
 private slots:
-    void onconstituencyDataChanged(
+    void onConstituencyDataChanged(
         const QModelIndex& topLeft, 
         const QModelIndex& bottomRight);
 
 private:
     QModelIndexList	selectedPoliticians() const;
-    QModelIndex currentConstituency() const;
+    QModelIndex constituencyToDisplay() const;
     void loadConstituency();
+    void setToInvalidState();
+    void enableRadioButtons();
+    void disableRadioButtons();
 
 private:
     PoliticianModel* politicianModel_;
-    QItemSelectionModel* politicianSelectionModel_;
     ConstituencyModel* constituencyModel_;
     QItemSelectionModel* constituencySelectionModel_;
     Ui::PoliticianListWidget* ui_;

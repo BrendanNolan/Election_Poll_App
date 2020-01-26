@@ -42,6 +42,7 @@ cursor.execute('''
         (?, ?, ?)
 ''', ("Wexford", 100, 100))
 db.commit()
+constituency_id = cursor.lastrowid
 
 cursor.execute('''
     INSERT INTO politicians 
@@ -51,5 +52,5 @@ cursor.execute('''
             ) 
             VALUES 
             (?, ?, ?, ?, ?, ?, ?, ?, ?)            
-''', (0, "C:\\Users\\Brendan\\Pictures\\Camera Roll\\pic.jpg", "Brendan", 1, 1, "Fianna Fail", 0, 200, 0))
+''', (constituency_id, "C:\\Users\\Brendan\\Pictures\\Camera Roll\\pic.jpg", "Brendan", 1, 1, "Fianna Fail", 0, 200, 0))
 db.commit()

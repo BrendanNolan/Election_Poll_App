@@ -55,9 +55,9 @@ void ConstituencyWidget::setSceneConstituencies()
             constituencyModel_->data(
                 index, 
                 ConstituencyModel::LongitudeRole).toInt(),
-            constituencyModel_->data(
+            -(constituencyModel_->data(
                 index,
-                ConstituencyModel::LatitudeRole).toInt());
+                ConstituencyModel::LatitudeRole).toInt()));
         auto rectItem = new QGraphicsRectItem(
             QRectF(constituencyPosition, QSizeF(10, 10)));
         scene()->addItem(rectItem);

@@ -14,8 +14,8 @@ MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent)
     , constituencyExplorerWidget_(new ConstituencyExplorerWidget(this))
 {
-    auto dbPath = databaseFiles::databasePath;
-    SqlDatabaseManagerFactory factory(QFileInfo(dbPath));
+    QFileInfo dbInfo(databaseFiles::databasePath);
+    SqlDatabaseManagerFactory factory(dbInfo);
     auto politicianModel = new PoliticianModel(factory, this);
     auto politicianSelectionModel = new QItemSelectionModel(politicianModel);
     auto constituencyModel = new ConstituencyModel(factory, this);

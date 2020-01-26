@@ -9,9 +9,9 @@
 #include "RectanglePositionCalculator.h"
 
 ConstituencyWidget::ConstituencyWidget(
-    QGraphicsScene* scene, 
+    QGraphicsScene* theScene, 
     QWidget* parent)
-    : QGraphicsView(scene, parent)
+    : QGraphicsView(theScene, parent)
 {
     connect(scene(), &QGraphicsScene::selectionChanged,
         this, &ConstituencyWidget::selectConstituencyInModel);

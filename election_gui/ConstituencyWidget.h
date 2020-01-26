@@ -21,7 +21,7 @@ class ConstituencyWidget : public QGraphicsView
     Q_OBJECT
 
 public:
-    ConstituencyWidget(QGraphicsScene* scene, QWidget* parent = nullptr);
+    ConstituencyWidget(QGraphicsScene* theScene, QWidget* parent = nullptr);
     explicit ConstituencyWidget(QWidget* parent = nullptr);
 
     void setModel(ConstituencyModel* constituencyModel);

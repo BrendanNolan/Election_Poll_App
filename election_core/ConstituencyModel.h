@@ -51,8 +51,9 @@ private:
 
 private:
     std::vector<std::unique_ptr<Constituency>> constituencyCache_;
-    std::shared_ptr<IConstituencyDatabaseManager> constituencyManager_;
-    std::shared_ptr<IPoliticianDatabaseManager> politicianManager_;
+    std::shared_ptr<IConstituencyDatabaseManager> constituencyManager_ = 
+        nullptr;
+    std::shared_ptr<IPoliticianDatabaseManager> politicianManager_ = nullptr;
 };
 
 #endif // CONSTITUENCYMODEL_H

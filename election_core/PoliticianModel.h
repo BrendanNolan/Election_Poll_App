@@ -61,9 +61,9 @@ private:
 
 private:
     std::vector<std::unique_ptr<Politician>> politicianCache_;
-    std::shared_ptr<IPoliticianDatabaseManager> manager_;
-    ElectoralStatus electoralStatus_;
-    int constituencyId_;
+    std::shared_ptr<IPoliticianDatabaseManager> manager_ = nullptr;
+    ElectoralStatus electoralStatus_ = ElectoralStatus::SITTING;
+    int constituencyId_ = -1;
 };
 
 #endif // POLITICIANMODEL_H

@@ -37,13 +37,16 @@ public:
 
     QModelIndex addPollresult(std::unique_ptr<PollResult> pollResult);
 
+public slots:
+    void setConstituency(int id);
+
 private:
     void loadPollResultCache();
 
 private:
     std::vector<std::unique_ptr<PollResult>> pollResultCache_;
-    std::shared_ptr<IPollResultDatabaseManager> manager_;
-    int constituencyId_;
+    std::shared_ptr<IPollResultDatabaseManager> manager_ = nullptr;
+    int constituencyId_ = -1;
 };
 
 #endif // POLLRESULTMODEL_H

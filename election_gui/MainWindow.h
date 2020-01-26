@@ -13,7 +13,7 @@ public:
     MainWindow(QWidget* parent = nullptr);
 
 private:
-    ConstituencyExplorerWidget* constituencyExplorerWidget_;
+    ConstituencyExplorerWidget* constituencyExplorerWidget_ = nullptr;
 };
 
 #endif // MAINWINDOW_H

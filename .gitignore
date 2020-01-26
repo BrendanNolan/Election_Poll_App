@@ -269,3 +269,5 @@ release/*
 ui_*.h
 *.sln
 *.db
+output.csv
+get_database_tables.py 

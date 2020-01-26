@@ -40,7 +40,6 @@ private:
 private:
     ConstituencyModel* constituencyModel_ = nullptr;
     QItemSelectionModel* constituencySelectionModel_ = nullptr;
-    QGraphicsScene* scene_;
     QHash<QGraphicsItem*, QModelIndex> indexItemCache_;
 };
 

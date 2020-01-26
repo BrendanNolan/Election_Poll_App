@@ -9,10 +9,7 @@ class PoliticianModel;
 class QItemSelectionModel;
 class QModelIndex;
 
-namespace Ui
-{
-    class ConstituencyExplorerWidget;
-}
+namespace Ui { class ConstituencyExplorerWidget; }
 
 class ConstituencyExplorerWidget : public QWidget
 {
@@ -28,8 +25,8 @@ public:
     void setPoliticianSelectionModel(QItemSelectionModel* selectionModel);
 
 signals:
-    void pictureActivated(const QModelIndex& pictureIndex);
-    void picturesActivated(const QModelIndexList& pictureIndexes);
+    void politicianActivated(const QModelIndex& politicianIndex);
+    void politiciansActivated(const QModelIndexList& politicianIndex);
 
 private:
     Ui::ConstituencyExplorerWidget* ui_;

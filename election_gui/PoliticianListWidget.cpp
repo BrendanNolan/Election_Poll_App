@@ -10,7 +10,9 @@
 #include "ConstituencyModel.h"
 #include "PoliticianModel.h"
 
-PoliticianListWidget::PoliticianListWidget(QWidget* parent, Qt::WindowFlags flags)
+PoliticianListWidget::PoliticianListWidget(
+    QWidget* parent, 
+    Qt::WindowFlags flags)
     : QWidget(parent, flags)
     , ui_(new Ui::PoliticianListWidget)
     , politicianModel_(nullptr)

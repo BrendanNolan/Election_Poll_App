@@ -12,16 +12,15 @@ ConstituencyWidget::ConstituencyWidget(
     QGraphicsScene* scene, 
     QWidget* parent)
     : QGraphicsView(scene, parent)
-    , scene_(scene)
 {
-    connect(scene_, &QGraphicsScene::selectionChanged,
+    connect(scene(), &QGraphicsScene::selectionChanged,
         this, &ConstituencyWidget::selectConstituencyInModel);
 }
 
 ConstituencyWidget::ConstituencyWidget(QWidget* parent)
     : QGraphicsView(parent)
 {
-    connect(scene_, &QGraphicsScene::selectionChanged,
+    connect(scene(), &QGraphicsScene::selectionChanged,
         this, &ConstituencyWidget::selectConstituencyInModel);
 }
 
@@ -34,23 +33,23 @@ void ConstituencyWidget::setModel(ConstituencyModel* constituencyModel)
 void ConstituencyWidget::setSelectionModel(QItemSelectionModel* selectionModel)
 {
     constituencySelectionModel_ = selectionModel;
+    selectConstituencyInModel();
 }
 
 void ConstituencyWidget::setScene(QGraphicsScene* scene)
 {
     QGraphicsView::setScene(scene);
-    scene_ = scene;
-    connect(scene_, &QGraphicsScene::selectionChanged,
+    connect(scene, &QGraphicsScene::selectionChanged,
         this, &ConstituencyWidget::selectConstituencyInModel);
 }
 
 void ConstituencyWidget::setSceneConstituencies()
 {
-    scene_->clear();
+    scene()->clear();
+    indexItemCache_.clear();
 
     auto rows = constituencyModel_->rowCount();
     QHash<QGraphicsItem*, QModelIndex> roughHash;
-    indexItemCache_.clear();
     for (auto row = 0; row < rows; ++row)
     {
         auto index = constituencyModel_->index(row);
@@ -63,7 +62,7 @@ void ConstituencyWidget::setSceneConstituencies()
                 ConstituencyModel::LatitudeRole).toInt());
         auto rectItem = new QGraphicsRectItem(
             QRectF(constituencyPosition, QSizeF(10, 10)));
-        scene_->addItem(rectItem);
+        scene()->addItem(rectItem);
         roughHash[rectItem] = index;
     }
     /*
@@ -78,7 +77,9 @@ void ConstituencyWidget::selectConstituencyInModel()
 {
     if (!constituencySelectionModel_)
         return;
-    auto selectedItem = scene_->selectedItems().first();
+    auto selectedItem = scene()->selectedItems().first();
+    if (!selectedItem)
+        selectedItem = scene()->items().first();
     auto index = indexItemCache_[selectedItem];
     if (!index.isValid())
         return;

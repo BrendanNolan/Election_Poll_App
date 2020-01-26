@@ -18,10 +18,8 @@ ConstituencyWidget::ConstituencyWidget(
 }
 
 ConstituencyWidget::ConstituencyWidget(QWidget* parent)
-    : QGraphicsView(parent)
+    : ConstituencyWidget(new QGraphicsScene(), parent)
 {
-    connect(scene(), &QGraphicsScene::selectionChanged,
-        this, &ConstituencyWidget::selectConstituencyInModel);
 }
 
 void ConstituencyWidget::setModel(ConstituencyModel* constituencyModel)

@@ -48,9 +48,9 @@ private:
     void disableRadioButtons();
 
 private:
-    PoliticianModel* politicianModel_;
-    ConstituencyModel* constituencyModel_;
-    QItemSelectionModel* constituencySelectionModel_;
+    PoliticianModel* politicianModel_ = nullptr;
+    ConstituencyModel* constituencyModel_ = nullptr;
+    QItemSelectionModel* constituencySelectionModel_ = nullptr;
 
     Ui::PoliticianListWidget* ui_;
 };

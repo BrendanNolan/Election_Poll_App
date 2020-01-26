@@ -35,4 +35,5 @@ HEADERS += \
     SqlPollResultDatabaseManager.h \
     SqlPoliticianDatabaseManager.h \
     ElectionCoreFunctions.h \
-    UnaryPredicate.h
+    UnaryPredicate.h \
+    ElectionDefinitions.h

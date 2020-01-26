@@ -7,13 +7,16 @@ HEADERS += \
     ConstituencyWidget.h \
     PoliticianListWidget.h \
     ConstituencyExplorerWidget.h \
-    RectanglePositionCalculator.h
+    RectanglePositionCalculator.h \
+    MainWindow.h
 
 SOURCES += \
     ConstituencyWidget.cpp \
     PoliticianListWidget.cpp \
     ConstituencyExplorerWidget.cpp \
-    RectanglePositionCalculator.cpp
+    RectanglePositionCalculator.cpp \
+    main.cpp \
+    MainWindow.cpp
 
 FORMS += \
     PoliticianListWidget.ui \

@@ -2,8 +2,6 @@
 
 #include "ui_ConstituencyExplorerWidget.h"
 
-#include <QModelIndex>
-
 #include "ConstituencyModel.h"
 #include "PoliticianModel.h"
 
@@ -13,9 +11,9 @@ ConstituencyExplorerWidget::ConstituencyExplorerWidget(QWidget* parent)
 {
     ui_->setupUi(this);
     connect(ui_->politicianListWidget, &PoliticianListWidget::pictureActivated,
-        this, &ConstituencyExplorerWidget::pictureActivated);
+        this, &ConstituencyExplorerWidget::politicianActivated);
     connect(ui_->politicianListWidget, &PoliticianListWidget::picturesActivated,
-        this, &ConstituencyExplorerWidget::picturesActivated);
+        this, &ConstituencyExplorerWidget::politiciansActivated);
 }
 
 ConstituencyExplorerWidget::~ConstituencyExplorerWidget()

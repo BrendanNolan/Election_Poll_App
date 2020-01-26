@@ -1,6 +1,8 @@
 #ifndef CONSTITUENCYEXPLORERWIDGET_H
 #define CONSTITUENCYEXPLORERWIDGET_H
 
+#include <QList>
+#include <QModelIndex>
 #include <QWidget>
 
 class ConstituencyModel;
@@ -26,7 +28,7 @@ public:
 
 signals:
     void politicianActivated(const QModelIndex& politicianIndex);
-    void politiciansActivated(const QModelIndexList& politicianIndex);
+    void politiciansActivated(const QList<QModelIndex>& politicianIndex);
 
 private:
     Ui::ConstituencyExplorerWidget* ui_;

@@ -106,10 +106,12 @@ QModelIndex PoliticianListWidget::constituencyToDisplay() const
 {
     if (!constituencyModel_) 
         return QModelIndex();
-    if (!constituencySelectionModel_ || 
-        !(constituencySelectionModel_->selectedIndexes().first().isValid()))
+    if (!constituencySelectionModel_)
         return constituencyModel_->index(0);
-    return constituencySelectionModel_->selectedIndexes().first();
+    auto indexList = constituencySelectionModel_->selectedIndexes(); 
+    if (indexList.isEmpty())
+        return constituencyModel_->index(0);
+    return indexList.first();
 }
 
 void PoliticianListWidget::loadConstituency()

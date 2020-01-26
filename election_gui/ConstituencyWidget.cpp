@@ -77,10 +77,15 @@ void ConstituencyWidget::selectConstituencyInModel()
 {
     if (!constituencySelectionModel_)
         return;
-    auto selectedItem = scene()->selectedItems().first();
-    if (!selectedItem)
-        selectedItem = scene()->items().first();
-    auto index = indexItemCache_[selectedItem];
+    auto itemList = scene()->selectedItems();
+    if (itemList.isEmpty())
+        itemList = scene()->items();
+    if (itemList.isEmpty())
+        return;
+    auto itemToSelect = itemList.first();
+    if (!itemToSelect)
+        return;
+    auto index = indexItemCache_[itemToSelect];
     if (!index.isValid())
         return;
     constituencySelectionModel_->select(

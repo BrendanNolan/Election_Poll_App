@@ -14,21 +14,15 @@ bool isIndexValid(const QModelIndex& index, const QAbstractListModel& model)
 
 QSqlDatabase connectToSqlDatabase(const QFileInfo& databaseFileInfo)
 {
-    auto database = databaseFileInfo.exists() ?
-        QSqlDatabase::database(databaseFileInfo.absoluteFilePath())
-        : QSqlDatabase::database();
+    if (!databaseFileInfo.exists())
+        return QSqlDatabase();
+
+    auto database = QSqlDatabase::addDatabase("QSQLITE");
+    database.setDatabaseName(databaseFileInfo.absoluteFilePath());
+
+    if (!database.isValid())
+        return QSqlDatabase();
     
-    if (database.isValid())
-    {
-        database.open();
-        return database;
-    }
-    
-    database = databaseFileInfo.exists() ?
-        QSqlDatabase::addDatabase(
-            "QSQLITE",
-            databaseFileInfo.absoluteFilePath())
-        : QSqlDatabase::addDatabase("QSQLITE");
     database.open();
     return database;
 }

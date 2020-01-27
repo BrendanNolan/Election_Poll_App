@@ -55,7 +55,7 @@ cursor.execute('''
             ) 
             VALUES 
             (?, ?, ?, ?, ?, ?, ?, ?, ?)            
-''', (constituency_id, "C:\\Users\\Brendan\\Pictures\\Camera Roll\\pic.jpg", "Brendan", 1, 1, "Fianna Fail", 0, 200, 0))
+''', (constituency_id, "C:\\Users\\Brendan\\Pictures\\TestPics\\pic.jpg", "Brendan", 1, 1, "Fianna Fail", 0, 200, 0))
 db.commit()
 
 print ("Exporting data into CSV............")

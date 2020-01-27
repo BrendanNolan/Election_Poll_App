@@ -66,5 +66,5 @@ for table_name in [str("constituencies"), str("politicians")]:
         csv_writer.writerow([i[0] for i in cursor.description])
         csv_writer.writerows(cursor)
 
-        dirpath = os.getcwd() + table_name + ".csv"
+        dirpath = os.getcwd() + '/' + table_name + ".csv"
         print("Data exported Successfully into {}".format(dirpath))

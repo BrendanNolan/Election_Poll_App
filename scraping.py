@@ -38,58 +38,59 @@ cursor.execute('''
 ''')
 db.commit()
 
-cursor.execute('''
-    INSERT INTO constituencies 
-        (name, latitude, longitude) 
-        VALUES  
-        (?, ?, ?)
-''', ("Wexford", 100, 100))
-db.commit()
-constituency_id = cursor.lastrowid
+for i in range(3):
+    cursor.execute('''
+        INSERT INTO constituencies 
+            (name, latitude, longitude) 
+            VALUES  
+            (?, ?, ?)
+    ''', ("Wexford", i * 20, i * 20))
+    db.commit()
+    constituency_id = cursor.lastrowid
 
-cursor.execute('''
-    INSERT INTO politicians 
-            (
-            constituency_id, image_url, name, elected, candidate, 
-            party_name, party_rgb_red, party_rgb_green, party_rgb_blue
-            ) 
-            VALUES 
-            (?, ?, ?, ?, ?, ?, ?, ?, ?)            
-''', (constituency_id, "C:\\Users\\Brendan\\Pictures\\TestPics\\pic.jpg", "Brendan", 1, 1, "Fianna Fail", 0, 200, 0))
-db.commit()
+    cursor.execute('''
+        INSERT INTO politicians 
+                (
+                constituency_id, image_url, name, elected, candidate, 
+                party_name, party_rgb_red, party_rgb_green, party_rgb_blue
+                ) 
+                VALUES 
+                (?, ?, ?, ?, ?, ?, ?, ?, ?)            
+    ''', (constituency_id, "C:\\Users\\Brendan\\Pictures\\TestPics\\pic" + str(i) + ".jpg", "Brendan", 1, i % 2, "Fianna Fail", 0, 200, 0))
+    db.commit()
 
-cursor.execute('''
-    INSERT INTO politicians 
-            (
-            constituency_id, image_url, name, elected, candidate, 
-            party_name, party_rgb_red, party_rgb_green, party_rgb_blue
-            ) 
-            VALUES 
-            (?, ?, ?, ?, ?, ?, ?, ?, ?)            
-''', (constituency_id, "C:\\Users\\Brendan\\Pictures\\TestPics\\pic.jpg", "Rory", 1, 1, "Fine gael", 0, 0, 200))
-db.commit()
+    cursor.execute('''
+        INSERT INTO politicians 
+                (
+                constituency_id, image_url, name, elected, candidate, 
+                party_name, party_rgb_red, party_rgb_green, party_rgb_blue
+                ) 
+                VALUES 
+                (?, ?, ?, ?, ?, ?, ?, ?, ?)            
+    ''', (constituency_id, "C:\\Users\\Brendan\\Pictures\\TestPics\\pic" + str(i) + ".jpg", "Rory", 1, i % 2, "Fine gael", 0, 0, 200))
+    db.commit()
 
-cursor.execute('''
-    INSERT INTO politicians 
-            (
-            constituency_id, image_url, name, elected, candidate, 
-            party_name, party_rgb_red, party_rgb_green, party_rgb_blue
-            ) 
-            VALUES 
-            (?, ?, ?, ?, ?, ?, ?, ?, ?)            
-''', (constituency_id, "C:\\Users\\Brendan\\Pictures\\TestPics\\pic.jpg", "David", 1, 1, "Fine gael", 0, 0, 200))
-db.commit()
+    cursor.execute('''
+        INSERT INTO politicians 
+                (
+                constituency_id, image_url, name, elected, candidate, 
+                party_name, party_rgb_red, party_rgb_green, party_rgb_blue
+                ) 
+                VALUES 
+                (?, ?, ?, ?, ?, ?, ?, ?, ?)            
+    ''', (constituency_id, "C:\\Users\\Brendan\\Pictures\\TestPics\\pic" + str(i) + ".jpg", "David", 0, i % 2, "Fine gael", 0, 0, 200))
+    db.commit()
 
-cursor.execute('''
-    INSERT INTO politicians 
-            (
-            constituency_id, image_url, name, elected, candidate, 
-            party_name, party_rgb_red, party_rgb_green, party_rgb_blue
-            ) 
-            VALUES 
-            (?, ?, ?, ?, ?, ?, ?, ?, ?)            
-''', (constituency_id, "C:\\Users\\Brendan\\Pictures\\TestPics\\pic.jpg", "Kate", 1, 1, "Fine gael", 0, 0, 200))
-db.commit()
+    cursor.execute('''
+        INSERT INTO politicians 
+                (
+                constituency_id, image_url, name, elected, candidate, 
+                party_name, party_rgb_red, party_rgb_green, party_rgb_blue
+                ) 
+                VALUES 
+                (?, ?, ?, ?, ?, ?, ?, ?, ?)            
+    ''', (constituency_id, "C:\\Users\\Brendan\\Pictures\\TestPics\\pic" + str(i) + ".jpg", "Kate", 0, i % 2, "Fine gael", 0, 0, 200))
+    db.commit()
 
 print ("Exporting data into CSV............")
 for table_name in [str("constituencies"), str("politicians")]:

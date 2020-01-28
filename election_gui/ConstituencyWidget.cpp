@@ -60,6 +60,7 @@ void ConstituencyWidget::setSceneConstituencies()
                 ConstituencyModel::LatitudeRole).toInt()));
         auto rectItem = new QGraphicsRectItem(
             QRectF(constituencyPosition, QSizeF(10, 10)));
+        rectItem->setFlag(QGraphicsItem::ItemIsSelectable);
         scene()->addItem(rectItem);
         roughHash[rectItem] = index;
     }

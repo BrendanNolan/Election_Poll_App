@@ -44,3 +44,8 @@ A constituency needs to have an area data member.
 
 It's probably not ideal but the convention in this projecvt is that connections to a database on 
 file shall be named by the file's absolute file path.
+
+Think about whether you want to cache IDs or model indices. Model indices seem most useful 
+but they are invalidated far more freuqntly than IDs; still, the best idea feels like caching 
+model indices and updating them where necessary - just make sure to keep all these shenanigans in 
+the class implementation. 

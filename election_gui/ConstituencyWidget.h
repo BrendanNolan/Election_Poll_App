@@ -2,7 +2,7 @@
 #define CONSTITUENCYWIDGET_H
 
 #include <QGraphicsView>
-#include <QHash>
+#include <QMap>
 #include <QModelIndex>
 #include <QRect>
 #include <QVector>
@@ -21,12 +21,10 @@ class ConstituencyWidget : public QGraphicsView
     Q_OBJECT
 
 public:
-    ConstituencyWidget(QGraphicsScene* theScene, QWidget* parent = nullptr);
     explicit ConstituencyWidget(QWidget* parent = nullptr);
 
     void setModel(ConstituencyModel* constituencyModel);
     void setSelectionModel(QItemSelectionModel* selectionModel);
-    void setScene(QGraphicsScene* scene);
 
 private slots:
     void selectConstituencyInModel();
@@ -40,7 +38,7 @@ private:
 private:
     ConstituencyModel* constituencyModel_ = nullptr;
     QItemSelectionModel* constituencySelectionModel_ = nullptr;
-    QHash<QGraphicsItem*, QModelIndex> indexItemCache_;
+    QMap<QGraphicsItem*, QModelIndex> indexItemCache_;
 };
 
 #endif // CONSTITUENCYWIDGET_H

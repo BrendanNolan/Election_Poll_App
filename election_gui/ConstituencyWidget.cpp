@@ -8,18 +8,12 @@
 #include "ConstituencyModel.h"
 #include "RectanglePositionCalculator.h"
 
-ConstituencyWidget::ConstituencyWidget(
-    QGraphicsScene* theScene, 
-    QWidget* parent)
-    : QGraphicsView(theScene, parent)
+ConstituencyWidget::ConstituencyWidget(QWidget* parent)
+    : QGraphicsView(parent)
 {
+    setScene(new QGraphicsScene(this));
     connect(scene(), &QGraphicsScene::selectionChanged,
         this, &ConstituencyWidget::selectConstituencyInModel);
-}
-
-ConstituencyWidget::ConstituencyWidget(QWidget* parent)
-    : ConstituencyWidget(new QGraphicsScene(), parent)
-{
 }
 
 void ConstituencyWidget::setModel(ConstituencyModel* constituencyModel)
@@ -34,20 +28,13 @@ void ConstituencyWidget::setSelectionModel(QItemSelectionModel* selectionModel)
     selectConstituencyInModel();
 }
 
-void ConstituencyWidget::setScene(QGraphicsScene* scene)
-{
-    QGraphicsView::setScene(scene);
-    connect(scene, &QGraphicsScene::selectionChanged,
-        this, &ConstituencyWidget::selectConstituencyInModel);
-}
-
 void ConstituencyWidget::setSceneConstituencies()
 {
     scene()->clear();
     indexItemCache_.clear();
 
     auto rows = constituencyModel_->rowCount();
-    QHash<QGraphicsItem*, QModelIndex> roughHash;
+    QMap<QGraphicsItem*, QModelIndex> roughHash;
     for (auto row = 0; row < rows; ++row)
     {
         auto index = constituencyModel_->index(row);

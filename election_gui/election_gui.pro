@@ -8,7 +8,9 @@ HEADERS += \
     PoliticianListWidget.h \
     ConstituencyExplorerWidget.h \
     RectanglePositionCalculator.h \
-    MainWindow.h
+    MainWindow.h \
+    PollGraphProxyModel.h \
+    PoliticianPictureProxyModel.h
 
 SOURCES += \
     ConstituencyWidget.cpp \
@@ -16,7 +18,9 @@ SOURCES += \
     ConstituencyExplorerWidget.cpp \
     RectanglePositionCalculator.cpp \
     main.cpp \
-    MainWindow.cpp
+    MainWindow.cpp \
+    PollGraphProxyModel.cpp \
+    PoliticianPictureProxyModel.cpp
 
 FORMS += \
     PoliticianListWidget.ui \

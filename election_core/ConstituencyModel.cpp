@@ -9,7 +9,6 @@
 
 #include "IConstituencyDatabaseManager.h"
 #include "IDatabaseManagerFactory.h"
-#include "IPoliticianDatabaseManager.h"
 #include "SqlDatabaseManagerFactory.h"
 
 #include "ElectionCoreFunctions.h"
@@ -21,7 +20,6 @@ ConstituencyModel::ConstituencyModel(
     QObject* parent)
     : QAbstractListModel(parent)
     , constituencyManager_(factory.createConstituencyDatabaseManager())
-    , politicianManager_(factory.createPoliticianDatabaseManager())
 {
     beginResetModel();
     loadConstituencyCache();
@@ -40,25 +38,11 @@ QVariant ConstituencyModel::data(const QModelIndex &index, int role) const
     const auto& constituency = *(constituencyCache_[index.row()]);
     switch (role)
     {
-    case Qt::DisplayRole:
-    {
-        // Not quite working but should be fixable.
-        const auto mps = politicianManager_->mpsForConstituency(
-            constituency.id());
-        map<QString, int> displayVals;
-        for (const auto& mp : mps)
-        {
-            ++displayVals[mp->partyDetails().name_];
-        }
-        QMap<QString, QVariant> ret;
-        for (const auto& keyValuePair : displayVals)
-            ret[keyValuePair.first] = keyValuePair.second;
-        return ret;
-    }
     case LatitudeRole: 
         return constituency.latitude();
     case LongitudeRole: 
         return constituency.longitude();
+    case Qt::DisplayRole:
     case NameRole: 
         return constituency.name();
     case IdRole: 

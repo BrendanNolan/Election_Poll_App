@@ -6,6 +6,7 @@
 #include <QPointF>
 
 #include "ConstituencyModel.h"
+#include "ConstituencyPixmapProxyModel.h"
 #include "RectanglePositionCalculator.h"
 
 ConstituencyWidget::ConstituencyWidget(QWidget* parent)
@@ -16,7 +17,8 @@ ConstituencyWidget::ConstituencyWidget(QWidget* parent)
         this, &ConstituencyWidget::selectConstituencyInModel);
 }
 
-void ConstituencyWidget::setModel(ConstituencyModel* constituencyModel)
+void ConstituencyWidget::setModel(
+    ConstituencyPixmapProxyModel* constituencyModel)
 {
     constituencyModel_ = constituencyModel;
     loadModel();
@@ -37,7 +39,7 @@ void ConstituencyWidget::refreshSceneConstituencies()
     QMap<QGraphicsItem*, QModelIndex> roughHash;
     for (auto row = 0; row < rows; ++row)
     {
-        auto index = constituencyModel_->index(row);
+        auto index = constituencyModel_->index(row, 0);
         QPointF constituencyPosition(
             constituencyModel_->data(
                 index, 

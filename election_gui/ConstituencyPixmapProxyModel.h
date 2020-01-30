@@ -13,8 +13,8 @@ class ConstituencyPixmapProxyModel : public QIdentityProxyModel
 public:
     // In this constructor, will probably need to connect politicianModel_ 
     // and sourceModel() signals to lambdas which just call
-    // ConstituencyPixmapProxyModel::loadConstituencyPixmapCache() and 
-    // ConstituencyPixmapProxyModel::reLoadConstituencyPixmapCache().
+    // ConstituencyPixmapProxyModel::partiallyRefreshPixmapCache() and 
+    // ConstituencyPixmapProxyModel::refreshConstituencyPixmapCache().
     ConstituencyPixmapProxyModel(
         QObject* parent = nullptr,
         PoliticianModel* politicianModel = nullptr);
@@ -28,8 +28,8 @@ public:
     ConstituencyModel* constituencyModel() const;
     
 private:
-    void loadConstituencyPixmapCache(const QModelIndex& startIndex, int count);
-    void reLoadConstituencyPixmapCache();
+    void partiallyRefreshPixmapCache(const QModelIndex& startIndex, int count);
+    void refreshConstituencyPixmapCache();
 
 private:
     PoliticianModel* politicianModel_ = nullptr;

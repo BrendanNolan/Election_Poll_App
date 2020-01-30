@@ -51,6 +51,7 @@ void ConstituencyWidget::refreshSceneConstituencies()
             constituencyModel_->data(index, Qt::DisplayRole).value<QPixmap>());
         pixmapItem->setFlag(QGraphicsItem::ItemIsSelectable);
         scene()->addItem(pixmapItem);
+        pixmapItem->setPos(constituencyPosition);
         roughMap[pixmapItem] = index;
     }
     /*

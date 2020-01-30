@@ -1,6 +1,6 @@
 #include "ConstituencyWidget.h"
 
-#include <QGraphicsrectItem>
+#include <QGraphicsPixmapItem>
 #include <QGraphicsScene>
 #include <QItemSelectionModel>
 #include <QPointF>
@@ -36,7 +36,7 @@ void ConstituencyWidget::refreshSceneConstituencies()
     indexItemCache_.clear();
 
     auto rows = constituencyModel_->rowCount();
-    QMap<QGraphicsItem*, QModelIndex> roughHash;
+    QMap<QGraphicsItem*, QModelIndex> roughMap;
     for (auto row = 0; row < rows; ++row)
     {
         auto index = constituencyModel_->index(row, 0);
@@ -47,18 +47,20 @@ void ConstituencyWidget::refreshSceneConstituencies()
             -(constituencyModel_->data(
                 index,
                 ConstituencyModel::LatitudeRole).toInt()));
-        auto rectItem = new QGraphicsRectItem(
+        auto pixmapItem = new QGraphicsPixmapItem(
             QRectF(constituencyPosition, QSizeF(10, 10)));
-        rectItem->setFlag(QGraphicsItem::ItemIsSelectable);
-        scene()->addItem(rectItem);
-        roughHash[rectItem] = index;
+        pixmapItem->setFlag(QGraphicsItem::ItemIsSelectable);
+        pixmapItem->setPixmap(
+            constituencyModel_->data(index, Qt::DisplayRole).value<QPixmap>());
+        scene()->addItem(pixmapItem);
+        roughMap[pixmapItem] = index;
     }
     /*
         The following line is temporary. Eventually a 
         RectanglePositionCalculator will calculate new sizes and positions
-        for the QRectItems.
+        for the QPixmapItems.
     */
-    indexItemCache_ = roughHash;
+    indexItemCache_ = roughMap;
 }
 
 void ConstituencyWidget::selectConstituencyInModel()

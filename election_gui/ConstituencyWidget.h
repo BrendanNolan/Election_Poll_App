@@ -4,7 +4,6 @@
 #include <QGraphicsView>
 #include <QMap>
 #include <QModelIndex>
-#include <QRect>
 #include <QVector>
 
 #include "Constituency.h"
@@ -14,7 +13,6 @@ class QGraphicsItem;
 class QGraphicsScene;
 class QItemSelectionModel;
 class QPoint;
-class QRect;
 
 class ConstituencyWidget : public QGraphicsView
 {

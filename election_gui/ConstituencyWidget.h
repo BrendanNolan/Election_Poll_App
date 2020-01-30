@@ -28,7 +28,7 @@ public:
 
 private slots:
     void selectConstituencyInModel();
-    void setSceneConstituencies();
+    void refreshSceneConstituencies();
 
 private:
     void loadWidgetColours();

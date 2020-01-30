@@ -28,7 +28,7 @@ void ConstituencyWidget::setSelectionModel(QItemSelectionModel* selectionModel)
     selectConstituencyInModel();
 }
 
-void ConstituencyWidget::setSceneConstituencies()
+void ConstituencyWidget::refreshSceneConstituencies()
 {
     scene()->clear();
     indexItemCache_.clear();
@@ -87,11 +87,11 @@ void ConstituencyWidget::loadWidgetColours()
 void ConstituencyWidget::makeModelConnections()
 {
     connect(constituencyModel_, &QAbstractItemModel::modelReset,
-        this, &ConstituencyWidget::setSceneConstituencies);
+        this, &ConstituencyWidget::refreshSceneConstituencies);
     connect(constituencyModel_, &QAbstractItemModel::rowsInserted,
-        this, &ConstituencyWidget::setSceneConstituencies);
+        this, &ConstituencyWidget::refreshSceneConstituencies);
     connect(constituencyModel_, &QAbstractItemModel::rowsRemoved,
-        this, &ConstituencyWidget::setSceneConstituencies);
+        this, &ConstituencyWidget::refreshSceneConstituencies);
 }
 
 void ConstituencyWidget::loadModel()
@@ -99,7 +99,7 @@ void ConstituencyWidget::loadModel()
     if (!constituencyModel_)
         return;
     makeModelConnections();
-    setSceneConstituencies();
+    refreshSceneConstituencies();
     loadWidgetColours();
     selectConstituencyInModel();
 }

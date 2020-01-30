@@ -6,6 +6,7 @@
 #include "ConstituencyExplorerWidget.h"
 
 #include "ConstituencyModel.h"
+#include "ConstituencyPixmapProxyModel.h"
 #include "ElectionDefinitions.h"
 #include "PoliticianModel.h"
 #include "SqlDatabaseManagerFactory.h"
@@ -18,14 +19,19 @@ MainWindow::MainWindow(QWidget* parent)
         databaseFiles::databasePath));
     auto politicianModel = new PoliticianModel(factory, this);
     auto politicianSelectionModel = new QItemSelectionModel(politicianModel);
+    
     auto constituencyModel = new ConstituencyModel(factory, this);
+    auto constituencyProxyModel = new ConstituencyPixmapProxyModel(
+        this, 
+        politicianModel);
+    constituencyProxyModel->setSourceModel(constituencyModel);
     auto constituencySelectionModel = new QItemSelectionModel(
-        constituencyModel);
+        constituencyProxyModel);
 
     constituencyExplorerWidget_->setPoliticianModel(politicianModel);
     constituencyExplorerWidget_->setPoliticianSelectionModel(
         politicianSelectionModel);
-    constituencyExplorerWidget_->setConstituencyModel(constituencyModel);
+    constituencyExplorerWidget_->setConstituencyModel(constituencyProxyModel);
     constituencyExplorerWidget_->setConstituencySelectionModel(
         constituencySelectionModel);
 }

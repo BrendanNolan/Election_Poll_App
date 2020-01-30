@@ -271,3 +271,6 @@ ui_*.h
 *.db
 output.csv
 get_database_tables.py 
+constituencies.csv
+politicians.csv
+

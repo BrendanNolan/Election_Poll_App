@@ -5,7 +5,7 @@
 #include <QModelIndex>
 #include <QWidget>
 
-class ConstituencyModel;
+class ConstituencyPixmapProxyModel;
 class ConstituencyWidget;
 class PoliticianModel;
 class QItemSelectionModel;
@@ -21,7 +21,7 @@ public:
     ConstituencyExplorerWidget(QWidget* parent);
     ~ConstituencyExplorerWidget();
 
-    void setConstituencyModel(ConstituencyModel* model);
+    void setConstituencyModel(ConstituencyPixmapProxyModel* model);
     void setConstituencySelectionModel(QItemSelectionModel* selectionModel);
     void setPoliticianModel(PoliticianModel* model);
     void setPoliticianSelectionModel(QItemSelectionModel* selectionModel);

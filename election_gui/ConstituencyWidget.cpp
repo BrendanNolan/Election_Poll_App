@@ -48,10 +48,8 @@ void ConstituencyWidget::refreshSceneConstituencies()
                 index,
                 ConstituencyModel::LatitudeRole).toInt()));
         auto pixmapItem = new QGraphicsPixmapItem(
-            QRectF(constituencyPosition, QSizeF(10, 10)));
-        pixmapItem->setFlag(QGraphicsItem::ItemIsSelectable);
-        pixmapItem->setPixmap(
             constituencyModel_->data(index, Qt::DisplayRole).value<QPixmap>());
+        pixmapItem->setFlag(QGraphicsItem::ItemIsSelectable);
         scene()->addItem(pixmapItem);
         roughMap[pixmapItem] = index;
     }

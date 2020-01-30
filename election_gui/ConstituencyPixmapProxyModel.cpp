@@ -68,5 +68,6 @@ void ConstituencyPixmapProxyModel::partiallyRefreshPixmapCache(
 
 void ConstituencyPixmapProxyModel::refreshConstituencyPixmapCache()
 {
-
+    constituencyPixmapCache_.clear();
+    partiallyRefreshPixmapCache(index(0, 0), rowCount());
 }

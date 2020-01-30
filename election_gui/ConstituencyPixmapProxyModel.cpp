@@ -2,6 +2,8 @@
 
 #include <QtGlobal>
 
+#include <QPainter>
+
 #include "ConstituencyModel.h"
 #include "PoliticianModel.h"
 
@@ -61,7 +63,8 @@ void ConstituencyPixmapProxyModel::partiallyRefreshPixmapCache(
     {
         auto pixmapUpdateIndex = index(startRow + i, 0);
         QPixmap pixmap(10, 10); // Will need to be more creative here in the end of course.
-        pixmap.fill(Qt::red);
+        QPainter painter(&pixmap);
+
         constituencyPixmapCache_[pixmapUpdateIndex] = pixmap;
     }
 }

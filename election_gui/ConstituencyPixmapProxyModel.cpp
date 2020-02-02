@@ -20,7 +20,7 @@ namespace
 
 ConstituencyPixmapProxyModel::ConstituencyPixmapProxyModel(
     QObject* parent, 
-    ConstituencyModel* sourceModel = nullptr,
+    ConstituencyModel* sourceModel,
     PoliticianModel* politicianModel)
     : QIdentityProxyModel(parent)
     , politicianModel_(politicianModel)

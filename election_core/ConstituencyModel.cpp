@@ -127,22 +127,6 @@ QModelIndex ConstituencyModel::addConstituency(
     return index(row);
 }
 
-bool ConstituencyModel::refreshCachedConstituency(int id)
-{
-    auto toUpdate = find_if(
-        constituencyCache_.begin(),
-        constituencyCache_.end(),
-        [id](const unique_ptr<Constituency>& c) { 
-            return c->id() == id; 
-        });
-    if (toUpdate == constituencyCache_.end())
-        return false;
-    auto row = static_cast<int>(toUpdate - constituencyCache_.begin());
-    *toUpdate = move(constituencyManager_->constituency(id));
-    emit dataChanged(index(row), index(row));
-    return true;
-}
-
 void ConstituencyModel::reloadConstituencyCache()
 {
     constituencyCache_ = constituencyManager_->constituencies();

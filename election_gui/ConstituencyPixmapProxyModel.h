@@ -17,6 +17,7 @@ public:
     // ConstituencyPixmapProxyModel::refreshConstituencyPixmapCache().
     ConstituencyPixmapProxyModel(
         QObject* parent = nullptr,
+        ConstituencyModel* sourceModel = nullptr,
         PoliticianModel* politicianModel = nullptr);
     
     QVariant data(

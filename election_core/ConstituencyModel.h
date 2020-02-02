@@ -46,7 +46,7 @@ public:
 
 private:
     bool refreshCachedConstituency(int id); // O(rowCount()) complexity
-    void loadConstituencyCache();
+    void reloadConstituencyCache();
 
 private:
     std::vector<std::unique_ptr<Constituency>> constituencyCache_;

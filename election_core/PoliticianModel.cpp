@@ -16,7 +16,7 @@ PoliticianModel::PoliticianModel(
     , manager_(factory.createPoliticianDatabaseManager())
 {
     beginResetModel();
-    loadPoliticianCache();
+    reloadPoliticianCache();
     endResetModel();
 }
 
@@ -142,7 +142,7 @@ void PoliticianModel::setElectoralStatus(ElectoralStatus status)
 {
     beginResetModel();
     electoralStatus_ = status;
-    loadPoliticianCache();
+    reloadPoliticianCache();
     endResetModel();
 }
 
@@ -152,7 +152,7 @@ void PoliticianModel::setConstituency(int id)
         return;
     beginResetModel();
     constituencyId_ = id;
-    loadPoliticianCache();
+    reloadPoliticianCache();
     endResetModel();
 }
 
@@ -174,7 +174,7 @@ bool PoliticianModel::refreshCachedPolitician(int id)
 }
 */
 
-void PoliticianModel::loadPoliticianCache()
+void PoliticianModel::reloadPoliticianCache()
 {
     if (constituencyId_ == -1)
         politicianCache_.clear();

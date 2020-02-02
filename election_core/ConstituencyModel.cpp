@@ -22,7 +22,7 @@ ConstituencyModel::ConstituencyModel(
     , constituencyManager_(factory.createConstituencyDatabaseManager())
 {
     beginResetModel();
-    loadConstituencyCache();
+    reloadConstituencyCache();
     endResetModel();
 }
 
@@ -143,7 +143,7 @@ bool ConstituencyModel::refreshCachedConstituency(int id)
     return true;
 }
 
-void ConstituencyModel::loadConstituencyCache()
+void ConstituencyModel::reloadConstituencyCache()
 {
     constituencyCache_ = constituencyManager_->constituencies();
 }

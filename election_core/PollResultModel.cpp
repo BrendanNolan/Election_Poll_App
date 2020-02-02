@@ -17,7 +17,7 @@ PollResultModel::PollResultModel(
     , manager_(factory.createPollResultDatabaseManager())
 {
     beginResetModel();
-    loadPollResultCache();
+    reloadPollResultCache();
     endResetModel();
 }
 
@@ -110,11 +110,11 @@ void PollResultModel::setConstituency(int id)
         return;
     beginResetModel();
     constituencyId_ = id;
-    loadPollResultCache();
+    reloadPollResultCache();
     endResetModel();
 }
 
-void PollResultModel::loadPollResultCache()
+void PollResultModel::reloadPollResultCache()
 {
     if (constituencyId_ == -1)
         pollResultCache_.clear();

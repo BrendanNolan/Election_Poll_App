@@ -56,7 +56,7 @@ public slots:
 
 private:
     // bool refreshCachedPolitician(int id); // O(rowCount()) complexity
-    void loadPoliticianCache();
+    void reloadPoliticianCache();
 
 private:
     std::vector<std::unique_ptr<Politician>> politicianCache_;

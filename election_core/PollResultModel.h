@@ -41,7 +41,7 @@ public slots:
     void setConstituency(int id);
 
 private:
-    void loadPollResultCache();
+    void reloadPollResultCache();
 
 private:
     std::vector<std::unique_ptr<PollResult>> pollResultCache_;

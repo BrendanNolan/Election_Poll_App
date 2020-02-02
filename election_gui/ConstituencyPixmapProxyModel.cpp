@@ -43,22 +43,22 @@ void ConstituencyPixmapProxyModel::setSourceModel(
     Q_ASSERT(qobject_cast<ConstituencyModel*>(sourceMod));
 
     QIdentityProxyModel::setSourceModel(sourceMod);
-    refreshConstituencyPixmapCache();
+    reloadCache();
     if (!sourceMod)
         return;
     
     connect(sourceMod, &QAbstractItemModel::modelReset,
-        this, &ConstituencyPixmapProxyModel::refreshConstituencyPixmapCache);
+        this, &ConstituencyPixmapProxyModel::reloadCache);
     connect(sourceMod, &QAbstractItemModel::rowsInserted,
         [this](const QModelIndex& /*parent*/, int first, int last) {
-        partiallyRefreshPixmapCache(index(first, 0), last - first + 1);
+        partiallyLoadCache(index(first, 0), last - first + 1);
     });
     connect(sourceMod, &QAbstractItemModel::dataChanged,
         [this](const QModelIndex& topLeft, const QModelIndex& bottomRight) {
         auto count = bottomRight.row() - topLeft.row();
         if (count <= 0)
             return;
-        partiallyRefreshPixmapCache(topLeft, count);
+        partiallyLoadCache(topLeft, count);
     });
 }
 
@@ -73,7 +73,7 @@ void ConstituencyPixmapProxyModel::setPoliticianModel(
 //    return qobject_cast<ConstituencyModel*>(sourceModel());
 //}
 
-void ConstituencyPixmapProxyModel::partiallyRefreshPixmapCache(
+void ConstituencyPixmapProxyModel::partiallyLoadCache(
     const QModelIndex& startIndex, 
     int count)
 {
@@ -120,12 +120,12 @@ void ConstituencyPixmapProxyModel::partiallyRefreshPixmapCache(
     }
 }
 
-void ConstituencyPixmapProxyModel::refreshConstituencyPixmapCache()
+void ConstituencyPixmapProxyModel::reloadCache()
 {
     constituencyPixmapCache_.clear();
     if (!sourceModel() || !politicianModel_)
         return;
-    partiallyRefreshPixmapCache(index(0, 0), rowCount());
+    partiallyLoadCache(index(0, 0), rowCount());
 }
 
 namespace

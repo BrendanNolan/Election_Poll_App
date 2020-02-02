@@ -29,8 +29,8 @@ public:
     // ConstituencyModel* constituencyModel() const;
     
 private:
-    void partiallyRefreshPixmapCache(const QModelIndex& startIndex, int count);
-    void refreshConstituencyPixmapCache();
+    void partiallyLoadCache(const QModelIndex& startIndex, int count);
+    void reloadCache();
 
 private:
     PoliticianModel* politicianModel_ = nullptr;

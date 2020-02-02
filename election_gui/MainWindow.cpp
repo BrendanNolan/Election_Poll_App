@@ -22,8 +22,7 @@ MainWindow::MainWindow(QWidget* parent)
     
     auto constituencyModel = new ConstituencyModel(factory, this);
     auto constituencyProxyModel = new ConstituencyPixmapProxyModel(
-        this, politicianModel);
-    constituencyProxyModel->setSourceModel(constituencyModel);
+        this, constituencyModel, politicianModel);
     auto constituencySelectionModel = new QItemSelectionModel(
         constituencyProxyModel);
 

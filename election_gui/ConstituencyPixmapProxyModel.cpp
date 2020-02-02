@@ -40,7 +40,8 @@ QVariant ConstituencyPixmapProxyModel::data(
 void ConstituencyPixmapProxyModel::setSourceModel(
     QAbstractItemModel* sourceMod)
 {
-    Q_ASSERT(qobject_cast<ConstituencyModel*>(sourceMod));
+    if (sourceMod)
+        Q_ASSERT(qobject_cast<ConstituencyModel*>(sourceMod));
 
     QIdentityProxyModel::setSourceModel(sourceMod);
     reloadCache();

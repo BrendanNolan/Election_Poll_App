@@ -91,7 +91,7 @@ void ConstituencyPixmapProxyModel::partiallyLoadCache(
         auto constituencyId = sourceMod->data(
             pixmapUpdateIndex, ConstituencyModel::IdRole).toInt();
         politicianModel_->setConstituency(constituencyId);
-        QMap<QColor, int> colourCounts;
+        QHash<QColor, int> colourCounts;
         auto politicianCount = politicianModel_->rowCount();
         for (auto row = 0; row < politicianCount; ++row)
         {

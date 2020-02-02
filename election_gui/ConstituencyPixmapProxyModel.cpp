@@ -98,7 +98,11 @@ void ConstituencyPixmapProxyModel::partiallyLoadCache(
             auto rgbHash = politicianModel_->data(
                 index(row, 0), PoliticianModel::PartyColourRole).
                     value<QHash<QString, QVariant>>();
-            colourCounts[hashToColour(rgbHash)]++;
+            auto colour = hashToColour(rgbHash);
+            if (colourCounts.contains(colour))
+                colourCounts[colour]++;
+            else
+                colourCounts.insert(colour, 1);
         }
         QPixmap pixmap(50, 50);
         auto pixmapWidth = pixmap.width();

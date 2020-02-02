@@ -25,7 +25,7 @@ public:
     void setSourceModel(QAbstractItemModel* sourceModel) override;
 
     void setPoliticianModel(PoliticianModel* politicianModel);
-    ConstituencyModel* constituencyModel() const;
+    // ConstituencyModel* constituencyModel() const;
     
 private:
     void partiallyRefreshPixmapCache(const QModelIndex& startIndex, int count);

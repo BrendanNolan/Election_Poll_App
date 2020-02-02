@@ -47,10 +47,10 @@ void ConstituencyPixmapProxyModel::setPoliticianModel(
     politicianModel_ = politicianModel;
 }
 
-ConstituencyModel* ConstituencyPixmapProxyModel::constituencyModel() const
-{
-    return qobject_cast<ConstituencyModel*>(sourceModel());
-}
+//ConstituencyModel* ConstituencyPixmapProxyModel::constituencyModel() const
+//{
+//    return qobject_cast<ConstituencyModel*>(sourceModel());
+//}
 
 void ConstituencyPixmapProxyModel::partiallyRefreshPixmapCache(
     const QModelIndex& startIndex, 

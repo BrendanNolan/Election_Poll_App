@@ -18,7 +18,7 @@ class ConstituencyExplorerWidget : public QWidget
     Q_OBJECT
 
 public:
-    ConstituencyExplorerWidget(QWidget* parent);
+    ConstituencyExplorerWidget(QWidget* parent = nullptr);
     ~ConstituencyExplorerWidget();
 
     void setConstituencyModel(ConstituencyPixmapProxyModel* model);

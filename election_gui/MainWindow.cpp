@@ -13,8 +13,10 @@
 
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent)
-    , constituencyExplorerWidget_(new ConstituencyExplorerWidget(this))
+    , constituencyExplorerWidget_(new ConstituencyExplorerWidget)
 {
+    setCentralWidget(constituencyExplorerWidget_);
+
     auto factory = SqlDatabaseManagerFactory(QFileInfo(
         databaseFiles::databasePath));
     auto politicianModel = new PoliticianModel(factory, this);

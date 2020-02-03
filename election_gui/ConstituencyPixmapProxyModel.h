@@ -29,7 +29,7 @@ public:
     ConstituencyModel* constituencyModel() const;
     
 private:
-    void partiallyLoadCache(const QModelIndex& startIndex, int count);
+    void partiallyReloadCache(const QModelIndex& startIndex, int count);
     void reloadCache();
 
 private:

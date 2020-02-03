@@ -31,7 +31,8 @@ public:
     {
         NameRole = Qt::UserRole + 1,
         PartyNameRole, 
-        PartyColourRole
+        PartyColourRole,
+        FilePathRole
     };
 
     int rowCount(const QModelIndex& parent = QModelIndex()) const override;

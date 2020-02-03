@@ -52,15 +52,15 @@ void ConstituencyPixmapProxyModel::setSourceModel(
         this, &ConstituencyPixmapProxyModel::reloadCache);
     connect(sourceMod, &QAbstractItemModel::rowsInserted,
         [this](const QModelIndex& /*parent*/, int first, int last) {
-        partiallyReloadCache(index(first, 0), last - first + 1);
-    });
+            partiallyReloadCache(index(first, 0), last - first + 1);
+        });
     connect(sourceMod, &QAbstractItemModel::dataChanged,
         [this](const QModelIndex& topLeft, const QModelIndex& bottomRight) {
-        auto count = bottomRight.row() - topLeft.row();
-        if (count <= 0)
-            return;
-        partiallyReloadCache(topLeft, count);
-    });
+            auto count = bottomRight.row() - topLeft.row();
+            if (count <= 0)
+                return;
+            partiallyReloadCache(topLeft, count);
+        });
 }
 
 void ConstituencyPixmapProxyModel::setPoliticianModel(
@@ -80,7 +80,7 @@ void ConstituencyPixmapProxyModel::partiallyReloadCache(
 {
     auto sourceMod = sourceModel();
     Q_ASSERT(qobject_cast<ConstituencyModel*>(sourceMod));
-    if (count <= 0 || !sourceModel() || !politicianModel_)
+    if (count <= 0 || !sourceMod || !politicianModel_)
         return;
     politicianModel_->setElectoralStatus(
         PoliticianModel::ElectoralStatus::SITTING);

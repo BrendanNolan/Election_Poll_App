@@ -1,5 +1,7 @@
 #include "PoliticianModel.h"
 
+#include <QFileInfo>
+
 #include "IDatabaseManagerFactory.h"
 #include "IPoliticianDatabaseManager.h"
 #include "ElectionCoreFunctions.h"
@@ -49,6 +51,8 @@ QVariant PoliticianModel::data(
         hash["blue"] = rgb.blue_;
         return hash;
     }
+    case FilePathRole:
+        return QFileInfo(politician.imageUrl().path()).absoluteFilePath();
     default: 
         return QVariant();
     }

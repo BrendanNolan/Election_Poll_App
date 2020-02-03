@@ -91,31 +91,22 @@ void ConstituencyPixmapProxyModel::partiallyLoadCache(
         auto constituencyId = sourceMod->data(
             pixmapUpdateIndex, ConstituencyModel::IdRole).toInt();
         politicianModel_->setConstituency(constituencyId);
-        QHash<QColor, int> colourCounts;
+        QVector<QColor> colours;
         auto politicianCount = politicianModel_->rowCount();
         for (auto row = 0; row < politicianCount; ++row)
         {
             auto rgbHash = politicianModel_->data(
                 index(row, 0), PoliticianModel::PartyColourRole).
                     value<QHash<QString, QVariant>>();
-            auto colour = hashToColour(rgbHash);
-            if (colourCounts.contains(colour))
-                colourCounts[colour]++;
-            else
-                colourCounts.insert(colour, 1);
+            colours.push_back(hashToColour(rgbHash));
         }
         QPixmap pixmap(50, 50);
-        auto pixmapWidth = pixmap.width();
+        auto sectionWidth = pixmap.width() / politicianCount;
         auto pixmapHeight = pixmap.height();
         QPainter painter(&pixmap);
         qreal currentDrawXValue = 0;
-        for (auto it = colourCounts.keyValueBegin(); 
-            it != colourCounts.keyValueEnd();
-            ++it)
+        for (const auto& colour : colours)
         {
-            auto colour = (*it).first;
-            auto sectionWidth = 
-                ((*it).second > 0) ? pixmapWidth / (*it).second : 0;
             QRectF rectToFill(currentDrawXValue, 0, sectionWidth, pixmapHeight);
             painter.fillRect(rectToFill, colour);
             currentDrawXValue += sectionWidth;

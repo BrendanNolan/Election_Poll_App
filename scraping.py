@@ -44,7 +44,7 @@ for i in range(3):
             (name, latitude, longitude) 
             VALUES  
             (?, ?, ?)
-    ''', ("Wexford", i * 20, i * 20))
+    ''', ("Wexford", i * 40, i * 40))
     db.commit()
     constituency_id = cursor.lastrowid
 
@@ -78,7 +78,7 @@ for i in range(3):
                 ) 
                 VALUES 
                 (?, ?, ?, ?, ?, ?, ?, ?, ?)            
-    ''', (constituency_id, "C:\\Users\\Brendan\\Pictures\\TestPics\\pic" + str(i) + ".jpg", "David", 0, i % 2, "Fine gael", 0, 0, 200))
+    ''', (constituency_id, "C:\\Users\\Brendan\\Pictures\\TestPics\\pic" + str(i) + ".jpg", "David", 0, i % 2, "Labour", 200, 0, 0))
     db.commit()
 
     cursor.execute('''
@@ -89,7 +89,7 @@ for i in range(3):
                 ) 
                 VALUES 
                 (?, ?, ?, ?, ?, ?, ?, ?, ?)            
-    ''', (constituency_id, "C:\\Users\\Brendan\\Pictures\\TestPics\\pic" + str(i) + ".jpg", "Kate", 0, i % 2, "Fine gael", 0, 0, 200))
+    ''', (constituency_id, "C:\\Users\\Brendan\\Pictures\\TestPics\\pic" + str(i) + ".jpg", "Kate", 1, i % 2, "Labour", 200, 0, 0))
     db.commit()
 
 print ("Exporting data into CSV............")

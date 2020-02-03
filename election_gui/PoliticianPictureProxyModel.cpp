@@ -2,6 +2,8 @@
 
 #include <QtGlobal>
 
+#include <QFileInfo>
+
 #include "PoliticianModel.h"
 
 PoliticianPictureProxyModel::PoliticianPictureProxyModel(
@@ -18,9 +20,9 @@ QVariant PoliticianPictureProxyModel::data(
         return QIdentityProxyModel::data(index, role);
     QFileInfo fileInfo(politicianModel()->data(
         index, PoliticianModel::FilePathRole).toString());
-    if (!pixmapCache_.contains(fileInfo))
+    if (!pixmapCache_.contains(fileInfo.absoluteFilePath()))
         return QPixmap();
-    return pixmapCache_[fileInfo];
+    return pixmapCache_[fileInfo.absoluteFilePath()];
 }
 
 void PoliticianPictureProxyModel::setSourceModel(QAbstractItemModel* source)
@@ -33,13 +35,13 @@ void PoliticianPictureProxyModel::setSourceModel(QAbstractItemModel* source)
     if (!source)
         return;
 
-    connect(sourceMod, &QAbstractItemModel::modelReset,
-        this, &ConstituencyPixmapProxyModel::reloadCache);
-    connect(sourceMod, &QAbstractItemModel::rowsInserted,
+    connect(source, &QAbstractItemModel::modelReset,
+        this, &PoliticianPictureProxyModel::reloadCache);
+    connect(source, &QAbstractItemModel::rowsInserted,
         [this](const QModelIndex& /*parent*/, int first, int last) {
         partiallyReloadCache(index(first, 0), last - first + 1);
     });
-    connect(sourceMod, &QAbstractItemModel::dataChanged,
+    connect(source, &QAbstractItemModel::dataChanged,
         [this](const QModelIndex& topLeft, const QModelIndex& bottomRight) {
         auto count = bottomRight.row() - topLeft.row();
         if (count <= 0)
@@ -67,8 +69,8 @@ void PoliticianPictureProxyModel::partiallyReloadCache(
         auto filePath = politicianMod.data(
             index(startIndex.row() + i, 0), PoliticianModel::FilePathRole).
                 toString();
-        auto fileInfo = QFileInfo(filePath);
-        pixmapCache_[fileInfo] = QPixmap(fileInfo.absoluteFilePath());
+        auto absFilePath = QFileInfo(filePath).absoluteFilePath();
+        pixmapCache_[absFilePath] = QPixmap(absFilePath);
     }
 }
 

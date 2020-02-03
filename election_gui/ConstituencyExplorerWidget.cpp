@@ -3,7 +3,7 @@
 #include "ui_ConstituencyExplorerWidget.h"
 
 #include "ConstituencyPixmapProxyModel.h"
-#include "PoliticianModel.h"
+#include "PoliticianPictureProxyModel.h"
 
 ConstituencyExplorerWidget::ConstituencyExplorerWidget(QWidget* parent)
     : QWidget(parent)
@@ -35,9 +35,10 @@ void ConstituencyExplorerWidget::setConstituencySelectionModel(
     ui_->politicianListWidget->setConstituencySelectionModel(selectionModel);
 }
 
-void ConstituencyExplorerWidget::setPoliticianModel(PoliticianModel* model)
+void ConstituencyExplorerWidget::setPoliticianModel(
+    PoliticianPictureProxyModel* model)
 {
-    ui_->politicianListWidget->setPoliticianModel(model);
+    ui_->politicianListWidget->setPoliticianPictureProxyModel(model);
 }
 
 void ConstituencyExplorerWidget::setPoliticianSelectionModel(

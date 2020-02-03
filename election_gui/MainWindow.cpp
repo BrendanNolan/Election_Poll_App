@@ -9,6 +9,7 @@
 #include "ConstituencyPixmapProxyModel.h"
 #include "ElectionDefinitions.h"
 #include "PoliticianModel.h"
+#include "PoliticianPictureProxyModel.h"
 #include "SqlDatabaseManagerFactory.h"
 
 MainWindow::MainWindow(QWidget* parent)
@@ -28,7 +29,10 @@ MainWindow::MainWindow(QWidget* parent)
     auto constituencySelectionModel = new QItemSelectionModel(
         constituencyProxyModel);
 
-    constituencyExplorerWidget_->setPoliticianModel(politicianModel);
+    auto politicianProxyModel = new PoliticianPictureProxyModel(
+        this, politicianModel);
+
+    constituencyExplorerWidget_->setPoliticianModel(politicianProxyModel);
     constituencyExplorerWidget_->setPoliticianSelectionModel(
         politicianSelectionModel);
     constituencyExplorerWidget_->setConstituencyModel(constituencyProxyModel);

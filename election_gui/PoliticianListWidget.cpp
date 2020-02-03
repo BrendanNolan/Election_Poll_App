@@ -9,13 +9,14 @@
 
 #include "ConstituencyModel.h"
 #include "PoliticianModel.h"
+#include "PoliticianPictureProxyModel.h"
 
 PoliticianListWidget::PoliticianListWidget(
     QWidget* parent, 
     Qt::WindowFlags flags)
     : QWidget(parent, flags)
     , ui_(new Ui::PoliticianListWidget)
-    , politicianModel_(nullptr)
+    , politicianProxyModel_(nullptr)
 {
     ui_->setupUi(this);
     ui_->mpsRadioButton->setChecked(true);
@@ -27,34 +28,35 @@ PoliticianListWidget::~PoliticianListWidget()
     delete ui_;
 }
 
-void PoliticianListWidget::setPoliticianModel(PoliticianModel* model)
+void PoliticianListWidget::setPoliticianPictureProxyModel(PoliticianPictureProxyModel* model)
 {
-    politicianModel_ = model;
+    politicianProxyModel_ = model;
     ui_->politicianListView->setModel(model);
     loadConstituency();
 
+    auto& politicianModel = *(politicianProxyModel_->politicianModel());
     if (ui_->mpsRadioButton->isChecked())
     {
-        politicianModel_->setElectoralStatus(
+        politicianModel.setElectoralStatus(
             PoliticianModel::ElectoralStatus::SITTING);
     }
     else if (ui_->candidatesRadioButton->isChecked())
     {
-        politicianModel_->setElectoralStatus(
+        politicianModel.setElectoralStatus(
             PoliticianModel::ElectoralStatus::CANDIDATE);
     }
     connect(ui_->mpsRadioButton, &QRadioButton::toggled,
         [this](bool checked) {
             if (!checked)
                 return;
-            politicianModel_->setElectoralStatus(
+            politicianProxyModel_->politicianModel()->setElectoralStatus(
                 PoliticianModel::ElectoralStatus::SITTING);
         });
     connect(ui_->candidatesRadioButton, &QRadioButton::toggled,
         [this](bool checked) {
             if (!checked)
                 return;
-            politicianModel_->setElectoralStatus(
+            politicianProxyModel_->politicianModel()->setElectoralStatus(
                 PoliticianModel::ElectoralStatus::CANDIDATE);
         });
 }
@@ -62,7 +64,7 @@ void PoliticianListWidget::setPoliticianModel(PoliticianModel* model)
 void PoliticianListWidget::setPoliticianSelectionModel(
     QItemSelectionModel* selectionModel)
 {
-    Q_ASSERT(selectionModel->model() == politicianModel_);
+    Q_ASSERT(selectionModel->model() == politicianProxyModel_);
     ui_->politicianListView->setSelectionModel(selectionModel);
 }
 
@@ -117,7 +119,7 @@ QModelIndex PoliticianListWidget::constituencyToDisplay() const
 void PoliticianListWidget::loadConstituency()
 { 
     auto constituencyIndex = constituencyToDisplay();
-    if (!constituencyIndex.isValid() || !politicianModel_)
+    if (!constituencyIndex.isValid() || !politicianProxyModel_)
     {
         setToInvalidState();
         return;
@@ -131,13 +133,13 @@ void PoliticianListWidget::loadConstituency()
 
     auto constituencyId = constituencyModel_->data(
         constituencyIndex, ConstituencyModel::IdRole).toInt();
-    politicianModel_->setConstituency(constituencyId);
+    politicianProxyModel_->politicianModel()->setConstituency(constituencyId);
 }
 
 void PoliticianListWidget::setToInvalidState()
 {
-    if (politicianModel_)
-        politicianModel_->setConstituency(-1);
+    if (politicianProxyModel_)
+        politicianProxyModel_->politicianModel()->setConstituency(-1);
     ui_->constituencyLabel->setText("<Constituency Name>");
     disableRadioButtons();
 }

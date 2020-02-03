@@ -6,7 +6,7 @@
 
 class ConstituencyWidget;
 class ConstituencyModel;
-class PoliticianModel;
+class PoliticianPictureProxyModel;
 class QItemSelection;
 class QItemSelectionModel;
 
@@ -25,7 +25,7 @@ public:
         Qt::WindowFlags flags = Qt::WindowFlags());
     ~PoliticianListWidget();
 
-    void setPoliticianModel(PoliticianModel* model);
+    void setPoliticianPictureProxyModel(PoliticianPictureProxyModel* model);
     void setPoliticianSelectionModel(QItemSelectionModel* selectionModel);
     void setConstituencyModel(ConstituencyModel* model);
     void setConstituencySelectionModel(QItemSelectionModel* selectionModel);
@@ -48,7 +48,7 @@ private:
     void disableRadioButtons();
 
 private:
-    PoliticianModel* politicianModel_ = nullptr;
+    PoliticianPictureProxyModel* politicianProxyModel_ = nullptr;
     ConstituencyModel* constituencyModel_ = nullptr;
     QItemSelectionModel* constituencySelectionModel_ = nullptr;
 

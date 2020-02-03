@@ -1,10 +1,10 @@
 #ifndef POLITICIANPICTUREPROXYMODEL_H
 #define POLITICIANPICTUREPROXYMODEL_H
 
-#include <QFileInfo>
 #include <QHash>
 #include <QIdentityProxyModel>
 #include <QPixmap>
+#include <QString>
 
 class PoliticianModel;
 
@@ -23,7 +23,7 @@ private:
     void reloadCache();
 
 private:
-    QHash<QFileInfo, QPixmap> pixmapCache_;
+    QHash<QString, QPixmap> pixmapCache_;
 };
 
 #endif // POLITICIANPICTUREPROXYMODEL_H

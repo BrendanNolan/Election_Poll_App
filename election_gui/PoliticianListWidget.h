@@ -25,7 +25,7 @@ public:
         Qt::WindowFlags flags = Qt::WindowFlags());
     ~PoliticianListWidget();
 
-    void setPoliticianPictureProxyModel(PoliticianPictureProxyModel* model);
+    void setPoliticianModel(PoliticianPictureProxyModel* model);
     void setPoliticianSelectionModel(QItemSelectionModel* selectionModel);
     void setConstituencyModel(ConstituencyModel* model);
     void setConstituencySelectionModel(QItemSelectionModel* selectionModel);

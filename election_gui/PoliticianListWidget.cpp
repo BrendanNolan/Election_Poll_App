@@ -28,7 +28,7 @@ PoliticianListWidget::~PoliticianListWidget()
     delete ui_;
 }
 
-void PoliticianListWidget::setPoliticianPictureProxyModel(PoliticianPictureProxyModel* model)
+void PoliticianListWidget::setPoliticianModel(PoliticianPictureProxyModel* model)
 {
     politicianProxyModel_ = model;
     ui_->politicianListView->setModel(model);

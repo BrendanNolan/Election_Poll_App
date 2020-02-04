@@ -38,7 +38,7 @@ void ConstituencyExplorerWidget::setConstituencySelectionModel(
 void ConstituencyExplorerWidget::setPoliticianModel(
     PoliticianPictureProxyModel* model)
 {
-    ui_->politicianListWidget->setPoliticianPictureProxyModel(model);
+    ui_->politicianListWidget->setPoliticianModel(model);
 }
 
 void ConstituencyExplorerWidget::setPoliticianSelectionModel(

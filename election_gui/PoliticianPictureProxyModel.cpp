@@ -16,7 +16,7 @@ PoliticianPictureProxyModel::PoliticianPictureProxyModel(
 QVariant PoliticianPictureProxyModel::data(
     const QModelIndex& index, int role) const
 {
-    if (role != Qt::DisplayRole)
+    if (role != Qt::DecorationRole)
         return QIdentityProxyModel::data(index, role);
     auto path = politicianModel()->data(
         index, PoliticianModel::FilePathRole).toString();

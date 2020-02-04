@@ -20,9 +20,8 @@ MainWindow::MainWindow(QWidget* parent)
 
     auto factory = SqlDatabaseManagerFactory(QFileInfo(
         databaseFiles::databasePath));
+
     auto politicianModel = new PoliticianModel(factory, this);
-    auto politicianSelectionModel = new QItemSelectionModel(politicianModel);
-    
     auto constituencyModel = new ConstituencyModel(factory, this);
     auto constituencyProxyModel = new ConstituencyPixmapProxyModel(
         this, constituencyModel, politicianModel);
@@ -31,6 +30,8 @@ MainWindow::MainWindow(QWidget* parent)
 
     auto politicianProxyModel = new PoliticianPictureProxyModel(
         this, politicianModel);
+    auto politicianSelectionModel = new QItemSelectionModel(
+        politicianProxyModel);
 
     constituencyExplorerWidget_->setPoliticianModel(politicianProxyModel);
     constituencyExplorerWidget_->setPoliticianSelectionModel(

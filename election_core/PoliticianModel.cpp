@@ -1,5 +1,6 @@
 #include "PoliticianModel.h"
 
+#include <QDir>
 #include <QFileInfo>
 
 #include "IDatabaseManagerFactory.h"
@@ -52,7 +53,8 @@ QVariant PoliticianModel::data(
         return hash;
     }
     case FilePathRole:
-        return QFileInfo(politician.imageUrl().path()).absoluteFilePath();
+        return QDir::toNativeSeparators(
+            QFileInfo(politician.imageUrl().path()).absoluteFilePath());
     default: 
         return QVariant();
     }

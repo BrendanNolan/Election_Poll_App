@@ -1,6 +1,7 @@
 #include "ElectionCoreFunctions.h"
 
 #include <QAbstractListModel>
+#include <QDir>
 #include <QFileInfo>
 #include <QModelIndex>
 
@@ -18,7 +19,8 @@ QSqlDatabase connectToSqlDatabase(const QFileInfo& databaseFileInfo)
         return QSqlDatabase();
 
     auto database = QSqlDatabase::addDatabase("QSQLITE");
-    database.setDatabaseName(databaseFileInfo.absoluteFilePath());
+    database.setDatabaseName(QDir::toNativeSeparators(
+        databaseFileInfo.absoluteFilePath()));
 
     if (!database.isValid())
         return QSqlDatabase();

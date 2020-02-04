@@ -18,11 +18,11 @@ QVariant PoliticianPictureProxyModel::data(
 {
     if (role != Qt::DisplayRole)
         return QIdentityProxyModel::data(index, role);
-    QFileInfo fileInfo(politicianModel()->data(
-        index, PoliticianModel::FilePathRole).toString());
-    if (!pixmapCache_.contains(fileInfo.absoluteFilePath()))
+    auto path = politicianModel()->data(
+        index, PoliticianModel::FilePathRole).toString();
+    if (!pixmapCache_.contains(path))
         return QPixmap();
-    return pixmapCache_[fileInfo.absoluteFilePath()];
+    return pixmapCache_[path];
 }
 
 void PoliticianPictureProxyModel::setSourceModel(QAbstractItemModel* source)
@@ -66,11 +66,10 @@ void PoliticianPictureProxyModel::partiallyReloadCache(
     const auto& politicianMod = *(politicianModel());
     for (auto i = 0; i < count; ++i)
     {
-        auto filePath = politicianMod.data(
+        auto path = politicianMod.data(
             index(startIndex.row() + i, 0), PoliticianModel::FilePathRole).
                 toString();
-        auto absFilePath = QFileInfo(filePath).absoluteFilePath();
-        pixmapCache_[absFilePath] = QPixmap(absFilePath);
+        pixmapCache_[path] = QPixmap(path);
     }
 }
 

@@ -8,6 +8,7 @@
 #include <QRadioButton>
 
 #include "ConstituencyModel.h"
+#include "PoliticianDelegate.h"
 #include "PoliticianModel.h"
 #include "PoliticianPictureProxyModel.h"
 
@@ -21,6 +22,7 @@ PoliticianListWidget::PoliticianListWidget(
     ui_->setupUi(this);
     ui_->mpsRadioButton->setChecked(true);
     ui_->candidatesRadioButton->setChecked(false);
+    ui_->politicianListView->setItemDelegate(new PoliticianDelegate(this));
 }
 
 PoliticianListWidget::~PoliticianListWidget()

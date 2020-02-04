@@ -1,12 +1,9 @@
 #include "PoliticianDelegate.h"
 
+#include <QAbstractItemModel>
+#include <QModelIndex>
 #include <QPainter>
-
-namespace
-{
-    const auto PREFERRED_WIDTH = 60;
-    const auto PREFERRED_HEIGHT = 60;
-}
+#include <QPixmap>
 
 PoliticianDelegate::PoliticianDelegate(QObject* parent)
     : QStyledItemDelegate(parent)
@@ -31,7 +28,8 @@ void PoliticianDelegate::paint(
 
 QSize PoliticianDelegate::sizeHint(
     const QStyleOptionViewItem& /*option*/,
-    const QModelIndex& /*index*/) const
+    const QModelIndex& index) const
 {
-    return QSize(PREFERRED_WIDTH, PREFERRED_HEIGHT);
+    return index.model()->data(index, Qt::DecorationRole)
+        .value<QPixmap>().size();
 }

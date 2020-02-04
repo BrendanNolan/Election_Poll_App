@@ -6,6 +6,12 @@
 
 #include "PoliticianModel.h"
 
+namespace
+{
+    const auto PREFERRED_WIDTH = 60;
+    const auto PREFERRED_HEIGHT = 60;
+}
+
 PoliticianPictureProxyModel::PoliticianPictureProxyModel(
     QObject* parent, PoliticianModel* politicianModel)
     : QIdentityProxyModel(parent)
@@ -69,7 +75,8 @@ void PoliticianPictureProxyModel::partiallyReloadCache(
         auto path = politicianMod.data(
             index(startIndex.row() + i, 0), PoliticianModel::FilePathRole).
                 toString();
-        pixmapCache_[path] = QPixmap(path);
+        pixmapCache_[path] = QPixmap(path).scaled(
+            PREFERRED_WIDTH, PREFERRED_HEIGHT);
     }
 }
 

@@ -22,7 +22,16 @@ void PoliticianDelegate::paint(
         option.rect.x(),
         option.rect.y(),
         pixmap);
-
+    if (option.state.testFlag(QStyle::State_Selected))
+    {
+        QPixmap littlePixmap(7, 7);
+        littlePixmap.fill(Qt::red);
+        painter->drawPixmap(
+            option.rect.x() + pixmap.width() - 10,
+            option.rect.top() + 3,
+            littlePixmap);
+    }
+    
     painter->restore();
 }
 

@@ -28,7 +28,6 @@ private slots:
     void refreshSceneConstituencies();
 
 private:
-    void loadWidgetColours();
     void makeModelConnections();
     void loadModel();
 

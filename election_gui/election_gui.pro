@@ -12,7 +12,8 @@ HEADERS += \
     PollGraphProxyModel.h \
     PoliticianPictureProxyModel.h \
     ConstituencyPixmapProxyModel.h \
-    PoliticianDelegate.h
+    PoliticianDelegate.h \
+    ConstituencyScene.h
 
 SOURCES += \
     ConstituencyWidget.cpp \
@@ -24,7 +25,8 @@ SOURCES += \
     PollGraphProxyModel.cpp \
     PoliticianPictureProxyModel.cpp \
     ConstituencyPixmapProxyModel.cpp \
-    PoliticianDelegate.cpp
+    PoliticianDelegate.cpp \
+    ConstituencyScene.cpp
 
 FORMS += \
     PoliticianListWidget.ui \

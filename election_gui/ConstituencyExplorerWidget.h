@@ -6,7 +6,6 @@
 #include <QWidget>
 
 class ConstituencyPixmapProxyModel;
-class ConstituencyWidget;
 class PoliticianPictureProxyModel;
 class QItemSelectionModel;
 class QModelIndex;

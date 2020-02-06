@@ -19,7 +19,7 @@ ConstituencyExplorerWidget::ConstituencyExplorerWidget(
         this, &ConstituencyExplorerWidget::politiciansActivated);
     if (!constituencyScene_)
         constituencyScene_ = new ConstituencyScene();
-    ui_->constituencyView->setScene(constituencyScene_);
+    ui_->constituencyGraphicsView->setScene(constituencyScene_);
 }
 
 ConstituencyExplorerWidget::~ConstituencyExplorerWidget()
@@ -37,7 +37,7 @@ void ConstituencyExplorerWidget::setConstituencyModel(
 void ConstituencyExplorerWidget::setConstituencyScene(ConstituencyScene* scene)
 {
     constituencyScene_ = scene;
-    ui_->constituencyView->setScene(constituencyScene_);
+    ui_->constituencyGraphicsView->setScene(constituencyScene_);
 }
 
 void ConstituencyExplorerWidget::setConstituencySelectionModel(

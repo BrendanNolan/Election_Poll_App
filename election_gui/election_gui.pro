@@ -4,6 +4,7 @@ TARGET = election_gui
 TEMPLATE = app
 
 HEADERS += \
+    ConstituencyWidget.h \
     PoliticianListWidget.h \
     ConstituencyExplorerWidget.h \
     RectanglePositionCalculator.h \
@@ -11,10 +12,10 @@ HEADERS += \
     PollGraphProxyModel.h \
     PoliticianPictureProxyModel.h \
     ConstituencyPixmapProxyModel.h \
-    PoliticianDelegate.h \
-    ConstituencyScene.h
+    PoliticianDelegate.h
 
 SOURCES += \
+    ConstituencyWidget.cpp \
     PoliticianListWidget.cpp \
     ConstituencyExplorerWidget.cpp \
     RectanglePositionCalculator.cpp \
@@ -23,8 +24,7 @@ SOURCES += \
     PollGraphProxyModel.cpp \
     PoliticianPictureProxyModel.cpp \
     ConstituencyPixmapProxyModel.cpp \
-    PoliticianDelegate.cpp \
-    ConstituencyScene.cpp
+    PoliticianDelegate.cpp
 
 FORMS += \
     PoliticianListWidget.ui \

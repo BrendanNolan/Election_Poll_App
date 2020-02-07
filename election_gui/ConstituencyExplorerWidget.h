@@ -6,7 +6,7 @@
 #include <QWidget>
 
 class ConstituencyPixmapProxyModel;
-class ConstituencyScene;
+class ConstituencyWidget;
 class PoliticianPictureProxyModel;
 class QItemSelectionModel;
 class QModelIndex;
@@ -18,13 +18,10 @@ class ConstituencyExplorerWidget : public QWidget
     Q_OBJECT
 
 public:
-    ConstituencyExplorerWidget(
-        QWidget* parent = nullptr, 
-        ConstituencyScene* constituencyScene = nullptr);
+    ConstituencyExplorerWidget(QWidget* parent = nullptr);
     ~ConstituencyExplorerWidget();
 
     void setConstituencyModel(ConstituencyPixmapProxyModel* model);
-    void setConstituencyScene(ConstituencyScene* scene);
     void setConstituencySelectionModel(QItemSelectionModel* selectionModel);
     void setPoliticianModel(PoliticianPictureProxyModel* model);
     void setPoliticianSelectionModel(QItemSelectionModel* selectionModel);
@@ -35,7 +32,6 @@ signals:
 
 private:
     Ui::ConstituencyExplorerWidget* ui_;
-    ConstituencyScene* constituencyScene_ = nullptr;
 };
 
 #endif // CONSTITUENCYEXPLORERWIDGET_H

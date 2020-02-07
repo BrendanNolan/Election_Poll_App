@@ -3,13 +3,10 @@
 #include "ui_ConstituencyExplorerWidget.h"
 
 #include "ConstituencyPixmapProxyModel.h"
-#include "ConstituencyScene.h"
 #include "PoliticianPictureProxyModel.h"
 
-ConstituencyExplorerWidget::ConstituencyExplorerWidget(
-    QWidget* parent, ConstituencyScene* constituencyScene)
+ConstituencyExplorerWidget::ConstituencyExplorerWidget(QWidget* parent)
     : QWidget(parent)
-    , constituencyScene_(constituencyScene)
     , ui_(new Ui::ConstituencyExplorerWidget)
 {
     ui_->setupUi(this);
@@ -17,9 +14,6 @@ ConstituencyExplorerWidget::ConstituencyExplorerWidget(
         this, &ConstituencyExplorerWidget::politicianActivated);
     connect(ui_->politicianListWidget, &PoliticianListWidget::picturesActivated,
         this, &ConstituencyExplorerWidget::politiciansActivated);
-    if (!constituencyScene_)
-        constituencyScene_ = new ConstituencyScene();
-    ui_->constituencyGraphicsView->setScene(constituencyScene_);
 }
 
 ConstituencyExplorerWidget::~ConstituencyExplorerWidget()
@@ -30,20 +24,14 @@ ConstituencyExplorerWidget::~ConstituencyExplorerWidget()
 void ConstituencyExplorerWidget::setConstituencyModel(
     ConstituencyPixmapProxyModel* model)
 {
-    constituencyScene_->setModel(model);
+    ui_->constituencyWidget->setModel(model);
     ui_->politicianListWidget->setConstituencyModel(model->constituencyModel());
-}
-
-void ConstituencyExplorerWidget::setConstituencyScene(ConstituencyScene* scene)
-{
-    constituencyScene_ = scene;
-    ui_->constituencyGraphicsView->setScene(constituencyScene_);
 }
 
 void ConstituencyExplorerWidget::setConstituencySelectionModel(
     QItemSelectionModel* selectionModel)
 {
-    constituencyScene_->setSelectionModel(selectionModel);
+    ui_->constituencyWidget->setSelectionModel(selectionModel);
     ui_->politicianListWidget->setConstituencySelectionModel(selectionModel);
 }
 

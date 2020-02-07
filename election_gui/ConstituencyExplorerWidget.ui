@@ -62,13 +62,26 @@
       </widget>
      </item>
      <item>
-      <widget class="QGraphicsView" name="constituencyGraphicsView"/>
+      <widget class="ConstituencyWidget" name="constituencyWidget" native="true">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
   </layout>
  </widget>
  <customwidgets>
+  <customwidget>
+   <class>ConstituencyWidget</class>
+   <extends>QWidget</extends>
+   <header>ConstituencyWidget.h</header>
+   <container>1</container>
+  </customwidget>
   <customwidget>
    <class>PoliticianListWidget</class>
    <extends>QWidget</extends>

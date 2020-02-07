@@ -4,6 +4,7 @@
 #include <QModelIndex>
 #include <QWidget>
 
+class ConstituencyWidget;
 class ConstituencyModel;
 class PoliticianPictureProxyModel;
 class QItemSelection;

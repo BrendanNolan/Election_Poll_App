@@ -1,7 +1,7 @@
-#ifndef CONSTITUENCYSCENE_H
-#define CONSTITUENCYSCENE_H
+#ifndef CONSTITUENCYWIDGET_H
+#define CONSTITUENCYWIDGET_H
 
-#include <QGraphicsScene>
+#include <QGraphicsView>
 #include <QMap>
 #include <QModelIndex>
 #include <QVector>
@@ -10,15 +10,16 @@
 
 class ConstituencyPixmapProxyModel;
 class QGraphicsItem;
+class QGraphicsScene;
 class QItemSelectionModel;
 class QPoint;
 
-class ConstituencyScene : public QGraphicsScene
+class ConstituencyWidget : public QGraphicsView
 {
     Q_OBJECT
 
 public:
-    explicit ConstituencyScene(QObject* parent = nullptr);
+    explicit ConstituencyWidget(QWidget* parent = nullptr);
 
     void setModel(ConstituencyPixmapProxyModel* constituencyModel);
     void setSelectionModel(QItemSelectionModel* selectionModel);
@@ -28,6 +29,7 @@ private slots:
     void refreshSceneConstituencies();
 
 private:
+    void loadWidgetColours();
     void makeModelConnections();
     void loadModel();
 
@@ -37,4 +39,4 @@ private:
     QMap<QGraphicsItem*, QModelIndex> indexItemCache_;
 };
 
-#endif // CONSTITUENCYSCENE_H
+#endif // CONSTITUENCYWIDGET_H

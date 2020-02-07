@@ -1,4 +1,4 @@
-#include "ConstituencyScene.h"
+#include "ConstituencyWidget.h"
 
 #include <QGraphicsPixmapItem>
 #include <QGraphicsScene>
@@ -9,29 +9,30 @@
 #include "ConstituencyPixmapProxyModel.h"
 #include "RectanglePositionCalculator.h"
 
-ConstituencyScene::ConstituencyScene(QObject* parent)
-    : QGraphicsScene(parent)
+ConstituencyWidget::ConstituencyWidget(QWidget* parent)
+    : QGraphicsView(parent)
 {
-    connect(this, &QGraphicsScene::selectionChanged,
-        this, &ConstituencyScene::selectConstituencyInModel);
+    setScene(new QGraphicsScene(this));
+    connect(scene(), &QGraphicsScene::selectionChanged,
+        this, &ConstituencyWidget::selectConstituencyInModel);
 }
 
-void ConstituencyScene::setModel(
+void ConstituencyWidget::setModel(
     ConstituencyPixmapProxyModel* constituencyModel)
 {
     constituencyModel_ = constituencyModel;
     loadModel();
 }
 
-void ConstituencyScene::setSelectionModel(QItemSelectionModel* selectionModel)
+void ConstituencyWidget::setSelectionModel(QItemSelectionModel* selectionModel)
 {
     constituencySelectionModel_ = selectionModel;
     selectConstituencyInModel();
 }
 
-void ConstituencyScene::refreshSceneConstituencies()
+void ConstituencyWidget::refreshSceneConstituencies()
 {
-    clear();
+    scene()->clear();
     indexItemCache_.clear();
 
     auto rows = constituencyModel_->rowCount();
@@ -50,7 +51,7 @@ void ConstituencyScene::refreshSceneConstituencies()
             constituencyModel_->data(index, Qt::DisplayRole).value<QPixmap>().
                 scaled(20, 20, Qt::KeepAspectRatio));
         pixmapItem->setFlag(QGraphicsItem::ItemIsSelectable);
-        addItem(pixmapItem);
+        scene()->addItem(pixmapItem);
         pixmapItem->setPos(constituencyPosition);
         roughMap[pixmapItem] = index;
     }
@@ -62,13 +63,13 @@ void ConstituencyScene::refreshSceneConstituencies()
     indexItemCache_ = roughMap;
 }
 
-void ConstituencyScene::selectConstituencyInModel()
+void ConstituencyWidget::selectConstituencyInModel()
 {
     if (!constituencySelectionModel_)
         return;
-    auto itemList = selectedItems();
+    auto itemList = scene()->selectedItems();
     if (itemList.isEmpty())
-        itemList = items();
+        itemList = scene()->items();
     if (itemList.isEmpty())
         return;
     auto itemToSelect = itemList.first();
@@ -82,21 +83,27 @@ void ConstituencyScene::selectConstituencyInModel()
         QItemSelectionModel::ClearAndSelect);
 }
 
-void ConstituencyScene::makeModelConnections()
+void ConstituencyWidget::loadWidgetColours()
 {
-    connect(constituencyModel_, &QAbstractItemModel::modelReset,
-        this, &ConstituencyScene::refreshSceneConstituencies);
-    connect(constituencyModel_, &QAbstractItemModel::rowsInserted,
-        this, &ConstituencyScene::refreshSceneConstituencies);
-    connect(constituencyModel_, &QAbstractItemModel::rowsRemoved,
-        this, &ConstituencyScene::refreshSceneConstituencies);
+    // NEEDS TO BE IMPLEMENTED
 }
 
-void ConstituencyScene::loadModel()
+void ConstituencyWidget::makeModelConnections()
+{
+    connect(constituencyModel_, &QAbstractItemModel::modelReset,
+        this, &ConstituencyWidget::refreshSceneConstituencies);
+    connect(constituencyModel_, &QAbstractItemModel::rowsInserted,
+        this, &ConstituencyWidget::refreshSceneConstituencies);
+    connect(constituencyModel_, &QAbstractItemModel::rowsRemoved,
+        this, &ConstituencyWidget::refreshSceneConstituencies);
+}
+
+void ConstituencyWidget::loadModel()
 {
     if (!constituencyModel_)
         return;
     makeModelConnections();
     refreshSceneConstituencies();
+    loadWidgetColours();
     selectConstituencyInModel();
 }

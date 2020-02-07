@@ -9,7 +9,6 @@ HEADERS += \
     ConstituencyExplorerWidget.h \
     RectanglePositionCalculator.h \
     MainWindow.h \
-    PollGraphProxyModel.h \
     PoliticianPictureProxyModel.h \
     ConstituencyPixmapProxyModel.h \
     PoliticianDelegate.h
@@ -21,7 +20,6 @@ SOURCES += \
     RectanglePositionCalculator.cpp \
     main.cpp \
     MainWindow.cpp \
-    PollGraphProxyModel.cpp \
     PoliticianPictureProxyModel.cpp \
     ConstituencyPixmapProxyModel.cpp \
     PoliticianDelegate.cpp

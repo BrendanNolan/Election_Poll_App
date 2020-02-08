@@ -57,8 +57,9 @@ void MainWindow::doAsynchronousDataRefresh()
     auto scriptPath = paths::scraperScript.toStdString().c_str();
     auto scriptFilePtr = fopen(scriptPath, "r");
 
-    // asynchronously run python script
-    // Py_SetProgramName(static_cast<const wchar_t*>("scraper"));  /* optional but recommended */
+    // Not yet asynchronous but needs to be
+    auto scraper = L"scraper";
+    Py_SetProgramName(scraper);
     Py_Initialize();
     PyRun_SimpleFile(scriptFilePtr, scriptPath);
     Py_Finalize();

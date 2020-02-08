@@ -1,3 +1,6 @@
+Possible problem: it is possible that models will load their caches from the database while the database
+is in the process of being uodated. Mutex(es) required?
+
 It seems to work well to have form widgets keep pointers to non-gui components in general 
 (like models and selection models); you can access the gui components through the ui_ member.
 

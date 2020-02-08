@@ -6,7 +6,6 @@
 class ConstituencyModel;
 class ConstituencyExplorerWidget;
 class PoliticianModel;
-class QPushButton;
 
 class MainWindow : public QMainWindow
 {
@@ -23,7 +22,6 @@ private :
 
 private:
     ConstituencyExplorerWidget* constituencyExplorerWidget_ = nullptr;
-    QPushButton* refreshDataButton_;
 
     ConstituencyModel* constituencyModel_;
     PoliticianModel* politicianModel_;

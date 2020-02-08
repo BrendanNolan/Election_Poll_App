@@ -43,9 +43,9 @@ MainWindow::MainWindow(QWidget* parent)
     constituencyExplorerWidget_->setConstituencySelectionModel(
         constituencySelectionModel);
 
-    refreshDataButton_ = new QPushButton("Refresh Data");
-    constituencyExplorerWidget_->buttonLayout()->addWidget(refreshDataButton_);
-    connect(refreshDataButton_, &QPushButton::clicked,
+    auto refreshDataButton = new QPushButton("Refresh Data");
+    constituencyExplorerWidget_->buttonLayout()->addWidget(refreshDataButton);
+    connect(refreshDataButton, &QPushButton::clicked,
         this, &MainWindow::doAsynchronousDataRefresh);
 }
 

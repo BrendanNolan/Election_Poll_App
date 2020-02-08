@@ -3,7 +3,7 @@ import os
 import sqlite3
 
 
-primary_database_path = "C:\\CPP_Stuff\Election_Poll_App\primary_database.db"
+primary_database_path = "C:\\CPP_Stuff\\\Election_Poll_App\\primary_database.db"
 primary_database = open(primary_database_path, 'w')
 primary_database.close()
 
@@ -56,7 +56,7 @@ for i in range(3):
                 ) 
                 VALUES 
                 (?, ?, ?, ?, ?, ?, ?, ?, ?)            
-    ''', (constituency_id, os.path.abspath("Pictures\\pic" + str(i) + ".jpg").replace("/mnt/c/", "C:/"), "Brendan", 1, i % 2, "Fianna Fail", 0, 200, 0))
+    ''', (constituency_id, os.path.abspath("Pictures\\pic" + str(i) + ".jpg"), "Brendan", 1, i % 2, "Fianna Fail", 0, 200, 0))
     db.commit()
 
     cursor.execute('''
@@ -67,7 +67,7 @@ for i in range(3):
                 ) 
                 VALUES 
                 (?, ?, ?, ?, ?, ?, ?, ?, ?)            
-    ''', (constituency_id, os.path.abspath("Pictures\\pic" + str(i) + ".jpg").replace("/mnt/c/", "C:/"), "Rory", 1, i % 2, "Fine gael", 0, 0, 200))
+    ''', (constituency_id, os.path.abspath("Pictures\\pic" + str(i) + ".jpg"), "Rory", 1, i % 2, "Fine gael", 0, 0, 200))
     db.commit()
 
     cursor.execute('''
@@ -78,7 +78,7 @@ for i in range(3):
                 ) 
                 VALUES 
                 (?, ?, ?, ?, ?, ?, ?, ?, ?)            
-    ''', (constituency_id, os.path.abspath("Pictures\\pic" + str(i) + ".jpg").replace("/mnt/c/", "C:/"), "David", 0, i % 2, "Labour", 200, 0, 0))
+    ''', (constituency_id, os.path.abspath("Pictures\\pic" + str(i) + ".jpg"), "David", 0, i % 2, "Labour", 200, 0, 0))
     db.commit()
 
     cursor.execute('''
@@ -89,7 +89,7 @@ for i in range(3):
                 ) 
                 VALUES 
                 (?, ?, ?, ?, ?, ?, ?, ?, ?)            
-    ''', (constituency_id, os.path.abspath("Pictures\\pic" + str(i) + ".jpg").replace("/mnt/c/", "C:/"), "Kate", 1, i % 2, "Labour", 200, 0, 0))
+    ''', (constituency_id, os.path.abspath("Pictures\\pic" + str(i) + ".jpg"), "Kate", 1, i % 2, "Labour", 200, 0, 0))
     db.commit()
 
 print ("Exporting data into CSV............")
@@ -100,5 +100,5 @@ for table_name in [str("constituencies"), str("politicians")]:
         csv_writer.writerow([i[0] for i in cursor.description])
         csv_writer.writerows(cursor)
 
-        dirpath = os.getcwd() + '/' + table_name + ".csv"
+        dirpath = os.getcwd() + '\\' + table_name + ".csv"
         print("Data exported Successfully into {}".format(dirpath))

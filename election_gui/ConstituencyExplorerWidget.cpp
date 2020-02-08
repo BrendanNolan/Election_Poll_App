@@ -46,3 +46,8 @@ void ConstituencyExplorerWidget::setPoliticianSelectionModel(
 {
     ui_->politicianListWidget->setPoliticianSelectionModel(selectionModel);
 }
+
+QHBoxLayout* ConstituencyExplorerWidget::buttonLayout()
+{
+    return ui_->buttonLayout;
+}

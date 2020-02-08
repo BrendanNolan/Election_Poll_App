@@ -8,6 +8,7 @@
 class ConstituencyPixmapProxyModel;
 class ConstituencyWidget;
 class PoliticianPictureProxyModel;
+class QHBoxLayout;
 class QItemSelectionModel;
 class QModelIndex;
 
@@ -25,6 +26,8 @@ public:
     void setConstituencySelectionModel(QItemSelectionModel* selectionModel);
     void setPoliticianModel(PoliticianPictureProxyModel* model);
     void setPoliticianSelectionModel(QItemSelectionModel* selectionModel);
+
+    QHBoxLayout* buttonLayout();
 
 signals:
     void politicianActivated(const QModelIndex& politicianIndex);

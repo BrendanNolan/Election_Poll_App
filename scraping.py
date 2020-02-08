@@ -3,7 +3,7 @@ import os
 import sqlite3
 
 
-primary_database_path = "C:\\CPP_Stuff\\\Election_Poll_App\\primary_database.db"
+primary_database_path = "C:\\CPP_Stuff\\Election_Poll_App\\primary_database.db"
 primary_database = open(primary_database_path, 'w')
 primary_database.close()
 

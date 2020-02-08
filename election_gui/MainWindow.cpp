@@ -1,5 +1,3 @@
-#include <Python.h>
-
 #include "MainWindow.h"
 
 #include <QFileInfo>
@@ -8,12 +6,12 @@
 #include <QPushButton>
 
 #include <future>
-#include <stdio.h>
 
 #include "ConstituencyExplorerWidget.h"
 #include "ConstituencyModel.h"
 #include "ConstituencyPixmapProxyModel.h"
 #include "ElectionDefinitions.h"
+#include "ElectionGuiFunctions.h"
 #include "PoliticianModel.h"
 #include "PoliticianPictureProxyModel.h"
 #include "SqlDatabaseManagerFactory.h"
@@ -54,16 +52,7 @@ MainWindow::MainWindow(QWidget* parent)
 
 void MainWindow::doAsynchronousDataRefresh()
 {
-    const auto scriptPathAsStdString = paths::scraperScript.toStdString();
-    auto scriptPathAsCString = scriptPathAsStdString.c_str();
-
-    auto scriptFilePtr = fopen(scriptPathAsCString, "r");
-    // Not yet asynchronous but needs to be
-    Py_Initialize();
-    PyRun_SimpleFile(scriptFilePtr, scriptPathAsCString);
-    Py_Finalize();
-    fclose(scriptFilePtr);
-
+    election_gui_functions::runPythonScript(QFileInfo(paths::scraperScript));
     refreshModels();
 }
 

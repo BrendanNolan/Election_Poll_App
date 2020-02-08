@@ -54,13 +54,15 @@ MainWindow::MainWindow(QWidget* parent)
 
 void MainWindow::doAsynchronousDataRefresh()
 {
-    auto scriptPath = paths::scraperScript.toStdString().c_str();
-    auto scriptFilePtr = fopen(scriptPath, "r");
+    const auto scriptPathAsStdString = paths::scraperScript.toStdString();
+    auto scriptPathAsCString = scriptPathAsStdString.c_str();
 
+    auto scriptFilePtr = fopen(scriptPathAsCString, "r");
     // Not yet asynchronous but needs to be
     Py_Initialize();
-    PyRun_SimpleFile(scriptFilePtr, scriptPath);
+    PyRun_SimpleFile(scriptFilePtr, scriptPathAsCString);
     Py_Finalize();
+    fclose(scriptFilePtr);
 
     refreshModels();
 }

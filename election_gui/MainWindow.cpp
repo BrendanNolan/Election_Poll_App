@@ -58,8 +58,6 @@ void MainWindow::doAsynchronousDataRefresh()
     auto scriptFilePtr = fopen(scriptPath, "r");
 
     // Not yet asynchronous but needs to be
-    auto scraper = L"scraper";
-    Py_SetProgramName(scraper);
     Py_Initialize();
     PyRun_SimpleFile(scriptFilePtr, scriptPath);
     Py_Finalize();

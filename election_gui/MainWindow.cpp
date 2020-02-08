@@ -1,3 +1,5 @@
+#include <Python.h>
+
 #include "MainWindow.h"
 
 #include <QFileInfo>
@@ -6,6 +8,7 @@
 #include <QPushButton>
 
 #include <future>
+#include <stdio.h>
 
 #include "ConstituencyExplorerWidget.h"
 #include "ConstituencyModel.h"
@@ -22,7 +25,7 @@ MainWindow::MainWindow(QWidget* parent)
     setCentralWidget(constituencyExplorerWidget_);
 
     auto factory = SqlDatabaseManagerFactory(QFileInfo(
-        databaseFiles::databasePath));
+        paths::databasePath));
 
     politicianModel_ = new PoliticianModel(factory, this);
     constituencyModel_ = new ConstituencyModel(factory, this);
@@ -51,7 +54,15 @@ MainWindow::MainWindow(QWidget* parent)
 
 void MainWindow::doAsynchronousDataRefresh()
 {
+    auto scriptPath = paths::scraperScript.toStdString().c_str();
+    auto scriptFilePtr = fopen(scriptPath, "r");
+
     // asynchronously run python script
+    // Py_SetProgramName(static_cast<const wchar_t*>("scraper"));  /* optional but recommended */
+    Py_Initialize();
+    PyRun_SimpleFile(scriptFilePtr, scriptPath);
+    Py_Finalize();
+
     refreshModels();
 }
 

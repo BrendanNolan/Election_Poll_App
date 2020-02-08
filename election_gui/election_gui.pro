@@ -58,5 +58,5 @@ win32:CONFIG(release, debug|release) {
     QMAKE_POST_LINK += cp $$(PYTHON_38_STUFF)/python38.dll $$OUT_PWD/../election_gui/release/
 }
 else:win32:CONFIG(debug, debug|release) {
-    QMAKE_POST_LINK += cp $$(PYTHON_38_STUFF)/python38.dll $$OUT_PWD/../election_gui/debug/
+    QMAKE_POST_LINK += cp $$(PYTHON_38_STUFF)/python38_d.dll $$OUT_PWD/../election_gui/debug/
 }

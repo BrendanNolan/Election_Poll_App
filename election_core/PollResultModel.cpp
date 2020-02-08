@@ -16,9 +16,7 @@ PollResultModel::PollResultModel(
     : QAbstractListModel(parent)
     , manager_(factory.createPollResultDatabaseManager())
 {
-    beginResetModel();
-    reloadPollResultCache();
-    endResetModel();
+    refresh();
 }
 
 int PollResultModel::rowCount(const QModelIndex& /*parent*/) const
@@ -102,6 +100,13 @@ QModelIndex PollResultModel::addPollresult(unique_ptr<PollResult> pollResult)
     endInsertRows();
 
     return index(row);
+}
+
+void PollResultModel::refresh()
+{
+    beginResetModel();
+    reloadPollResultCache();
+    endResetModel();
 }
 
 void PollResultModel::setConstituency(int id)

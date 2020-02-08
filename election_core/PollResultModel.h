@@ -37,6 +37,8 @@ public:
 
     QModelIndex addPollresult(std::unique_ptr<PollResult> pollResult);
 
+    void refresh();
+
 public slots:
     void setConstituency(int id);
 

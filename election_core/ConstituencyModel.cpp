@@ -21,9 +21,7 @@ ConstituencyModel::ConstituencyModel(
     : QAbstractListModel(parent)
     , constituencyManager_(factory.createConstituencyDatabaseManager())
 {
-    beginResetModel();
-    reloadConstituencyCache();
-    endResetModel();
+    refresh();
 }
 
 int ConstituencyModel::rowCount(const QModelIndex& /*parent*/) const
@@ -125,6 +123,13 @@ QModelIndex ConstituencyModel::addConstituency(
     endInsertRows();
 
     return index(row);
+}
+
+void ConstituencyModel::refresh()
+{
+    beginResetModel();
+    reloadConstituencyCache();
+    endResetModel();
 }
 
 void ConstituencyModel::reloadConstituencyCache()

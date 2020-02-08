@@ -50,6 +50,8 @@ public:
         std::unique_ptr<Politician> politician);
     ElectoralStatus electoralStatus() const;
 
+    void refresh();
+
 public slots:
     void setElectoralStatus(ElectoralStatus status);
     void setConstituency(int id);

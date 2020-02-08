@@ -44,6 +44,8 @@ public:
 
     QModelIndex addConstituency(std::unique_ptr<Constituency> constituency);
 
+    void refresh();
+
 private:
     void reloadConstituencyCache();
 

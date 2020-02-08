@@ -18,9 +18,7 @@ PoliticianModel::PoliticianModel(
     , electoralStatus_(status)
     , manager_(factory.createPoliticianDatabaseManager())
 {
-    beginResetModel();
-    reloadPoliticianCache();
-    endResetModel();
+    refresh();
 }
 
 int PoliticianModel::rowCount(const QModelIndex& /*parent*/) const
@@ -142,6 +140,13 @@ QModelIndex PoliticianModel::addPolitician(unique_ptr<Politician> politician)
 PoliticianModel::ElectoralStatus PoliticianModel::electoralStatus() const
 {
     return electoralStatus_;
+}
+
+void PoliticianModel::refresh()
+{
+    beginResetModel();
+    reloadPoliticianCache();
+    endResetModel();
 }
 
 void PoliticianModel::setElectoralStatus(ElectoralStatus status)

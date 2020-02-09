@@ -2,6 +2,7 @@ import csv
 import os
 import sqlite3
 
+path_to_pictures = "C:\\CPP_Stuff\\Election_Poll_App\\Pictures\\"
 
 primary_database_path = "C:\\CPP_Stuff\\Election_Poll_App\\primary_database.db"
 primary_database = open(primary_database_path, 'w')
@@ -56,7 +57,7 @@ for i in range(3):
                 ) 
                 VALUES 
                 (?, ?, ?, ?, ?, ?, ?, ?, ?)            
-    ''', (constituency_id, os.path.abspath("Pictures\\pic" + str(i) + ".jpg"), "Brendan", 1, i % 2, "Fianna Fail", 0, 200, 0))
+    ''', (constituency_id, path_to_pictures + "pic" + str(i) + ".jpg", "Brendan", 1, i % 2, "Fianna Fail", 0, 200, 0))
     db.commit()
 
     cursor.execute('''
@@ -67,7 +68,7 @@ for i in range(3):
                 ) 
                 VALUES 
                 (?, ?, ?, ?, ?, ?, ?, ?, ?)            
-    ''', (constituency_id, os.path.abspath("Pictures\\pic" + str(i) + ".jpg"), "Rory", 1, i % 2, "Fine gael", 0, 0, 200))
+    ''', (constituency_id, path_to_pictures + "pic" + str(i) + ".jpg", "Rory", 1, i % 2, "Fine gael", 0, 0, 200))
     db.commit()
 
     cursor.execute('''
@@ -78,7 +79,7 @@ for i in range(3):
                 ) 
                 VALUES 
                 (?, ?, ?, ?, ?, ?, ?, ?, ?)            
-    ''', (constituency_id, os.path.abspath("Pictures\\pic" + str(i) + ".jpg"), "David", 0, i % 2, "Labour", 200, 0, 0))
+    ''', (constituency_id, path_to_pictures + "pic" + str(i) + ".jpg", "David", 0, i % 2, "Labour", 200, 0, 0))
     db.commit()
 
     cursor.execute('''
@@ -89,5 +90,5 @@ for i in range(3):
                 ) 
                 VALUES 
                 (?, ?, ?, ?, ?, ?, ?, ?, ?)            
-    ''', (constituency_id, os.path.abspath("Pictures\\pic" + str(i) + ".jpg"), "Kate", 1, i % 2, "Labour", 200, 0, 0))
+    ''', (constituency_id, path_to_pictures + "pic" + str(i) + ".jpg", "Kate", 1, i % 2, "Labour", 200, 0, 0))
     db.commit()

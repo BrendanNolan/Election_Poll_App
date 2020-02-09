@@ -8,7 +8,7 @@ class MWDataRefreshThread : public QThread
     Q_OBJECT
 
 public:
-    DataRefreshThread(MainWindow& mainWindow);
+    MWDataRefreshThread(MainWindow& mainWindow);
 
 signals:
     void resultReady();

@@ -10,6 +10,7 @@
 #include "ConstituencyPixmapProxyModel.h"
 #include "ElectionDefinitions.h"
 #include "ElectionGuiFunctions.h"
+#include "MWDataRefreshThread.h"
 #include "PoliticianModel.h"
 #include "PoliticianPictureProxyModel.h"
 #include "RotatingItemsWidget.h"
@@ -71,14 +72,14 @@ void MainWindow::asynchronouslyRefreshData()
 {
     rotatingItemsWidget_->show();
     
-    auto workerThread = new DataRefreshThread(*this);
+    auto workerThread = new MWDataRefreshThread(*this);
     connect(
         workerThread, 
-        &DataRefreshThread::resultReady, 
+        &MWDataRefreshThread::resultReady, 
         [this]() {
             rotatingItemsWidget_->hide();
         });
-    connect(workerThread, &DataRefreshThread::finished, 
+    connect(workerThread, &MWDataRefreshThread::finished, 
         workerThread, &QObject::deleteLater);
     workerThread->start(QThread::HighestPriority);
 }

@@ -1,3 +1,6 @@
+I need a naming convention about refreshing and loading. There should
+be a consistent and clear distinction between functions called load... reload..., and refresh...
+
 Possible problem: it is possible that models will load their caches from the database while the database
 is in the process of being uodated. Mutex(es) required?
 

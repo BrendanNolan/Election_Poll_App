@@ -21,7 +21,9 @@ ConstituencyModel::ConstituencyModel(
     : QAbstractListModel(parent)
     , constituencyManager_(factory.createConstituencyDatabaseManager())
 {
-    refresh();
+    beginResetModel();
+    reloadConstituencyCache();
+    endResetModel();
 }
 
 int ConstituencyModel::rowCount(const QModelIndex& /*parent*/) const
@@ -50,58 +52,6 @@ QVariant ConstituencyModel::data(const QModelIndex &index, int role) const
     }
 }
 
-/* MIGHT NOT WANT TO IMPLEMENT THIS
-bool ConstituencyModel::setData(
-    const QModelIndex& index,
-    const QVariant& value,
-    int role)
-{
-    if (!isIndexValid(index, *this))
-        return false;
-
-    auto& constituency = *(constituencyCache_[index.row()]);
-    switch (role)
-    {
-        case LatitudeRole: 
-            constituency.setLatitude(value.toInt());
-            break;
-        case LongitudeRole: 
-            constituency.setLongitude(value.toInt());
-            break;
-        case NameRole: 
-            constituency.setName(value.toString());
-            break;
-        default: 
-            return false;
-    }
-    constituencyManager_->updateConstituency(constituency);
-    emit dataChanged(index, index);
-    return true;
-}*/
-
-bool ConstituencyModel::removeRows(
-    int row, 
-    int count, 
-    const QModelIndex& /*parent*/)
-{
-    if (row < 0 || count < 0 || row + count > rowCount())
-        return false;
-
-    beginRemoveRows(QModelIndex(), row, row + count - 1);
-    auto rowsLeftToRemove = count;
-    while (rowsLeftToRemove > 0)
-    {
-        constituencyManager_->removeConstituency(
-            constituencyCache_[row + rowsLeftToRemove - 1]->id());
-        --rowsLeftToRemove;
-    }
-    constituencyCache_.erase(
-        constituencyCache_.begin() + row, 
-        constituencyCache_.begin() + row + count);
-    endRemoveRows();
-    return true;
-}
-
 QHash<int, QByteArray> ConstituencyModel::roleNames() const
 {
     QHash<int, QByteArray> ret;
@@ -127,9 +77,8 @@ QModelIndex ConstituencyModel::addConstituency(
 
 void ConstituencyModel::refresh()
 {
-    beginResetModel();
     reloadConstituencyCache();
-    endResetModel();
+    emit dataChanged(index(0), index(rowCount()));
 }
 
 void ConstituencyModel::reloadConstituencyCache()

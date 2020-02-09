@@ -34,17 +34,14 @@ public:
     QVariant data(
         const QModelIndex &index, 
         int role = Qt::DisplayRole) const override;
-    /*MIGHT NOT WANT TO IMPLEMENT THIS 
-    bool setData(
-        const QModelIndex& index,
-        const QVariant& value,
-        int role) override;*/
-    bool removeRows(int row, int count, const QModelIndex& parent) override;
     QHash<int, QByteArray> roleNames() const override;
-
     QModelIndex addConstituency(std::unique_ptr<Constituency> constituency);
 
-    void refresh();
+    // Does not emit QAbstractItemModel::modelReset(). The rationalse is that
+    // constituencies don't come and go like politicians and poll results.
+    // This is why I am not reimplementing QAbstractItemModel::removeRows()
+    // or QAbstractItemModel::setData().
+    void refresh(); 
 
 private:
     void reloadConstituencyCache();

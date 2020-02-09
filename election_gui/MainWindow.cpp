@@ -54,8 +54,16 @@ MainWindow::MainWindow(QWidget* parent)
 
 void MainWindow::doAsynchronousDataRefresh()
 {
+    // Stuff between lines should be asynchronous. While it's happening,
+    // the application should display a loading screen, which should be 
+    // reasonably interesting and not just a progress bar. This screen can
+    // probably be a child of MainWindow and can probably just be deleted when 
+    // the asynchronous task is complete.
+    // -------------------------------------------------------------------------
     election_gui_functions::runPythonScript(QFileInfo(paths::scraperScript));
     refreshModels();
+    // -------------------------------------------------------------------------
+
 }
 
 void MainWindow::refreshModels()

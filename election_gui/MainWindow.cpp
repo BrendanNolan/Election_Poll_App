@@ -4,7 +4,6 @@
 #include <QHBoxLayout>
 #include <QItemSelectionModel>
 #include <QPushButton>
-#include <QTimer>
 
 #include <chrono>
 #include <future>
@@ -22,7 +21,11 @@
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent)
     , constituencyExplorerWidget_(new ConstituencyExplorerWidget)
+    , rotatingItemsWidget_(new RotatingItemsWidget(this))
 {
+    rotatingItemsWidget_->hide();
+    connect(this, &MainWindow::dataRefreshed,
+        [this]() { rotatingItemsWidget_->hide(); });
     setCentralWidget(constituencyExplorerWidget_);
 
     election_gui_functions::runPythonScript(QFileInfo(paths::scraperScript));
@@ -67,26 +70,13 @@ void MainWindow::refreshData()
 {
     election_gui_functions::runPythonScript(QFileInfo(paths::scraperScript));
     refreshModels();
+    emit dataRefreshed();
 }
 
 void MainWindow::asynchronouslyRefreshData()
 {
-    auto fut = std::async(std::launch::async, &MainWindow::refreshData, this);
-    auto rotatingItemsWidget = new RotatingItemsWidget(this);
-    rotatingItemsWidget->show();
-    QTimer timer;
-    timer.setInterval(std::chrono::milliseconds(1000));
-    auto futureReady = false;
-    connect(&timer, &QTimer::timeout,
-        [&fut, &futureReady]() {
-            auto status = fut.wait_for(std::chrono::milliseconds(0));
-            if (status == std::future_status::ready)
-                futureReady = true;
-        });
-    timer.start();
-    while (!futureReady)
-        continue;
-    delete rotatingItemsWidget;
+    rotatingItemsWidget_->show();
+    std::async(std::launch::async, &MainWindow::refreshData, this);
 }
 
 

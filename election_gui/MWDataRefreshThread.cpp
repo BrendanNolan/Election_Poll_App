@@ -1,5 +1,7 @@
 #include "MWDataRefreshThread.h"
 
+#include "MainWindow.h"
+
 MWDataRefreshThread::MWDataRefreshThread(MainWindow& mainWindow)
     : QThread(&mainWindow)
     , mainWindow_(&mainWindow)

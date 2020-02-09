@@ -91,14 +91,3 @@ for i in range(3):
                 (?, ?, ?, ?, ?, ?, ?, ?, ?)            
     ''', (constituency_id, os.path.abspath("Pictures\\pic" + str(i) + ".jpg"), "Kate", 1, i % 2, "Labour", 200, 0, 0))
     db.commit()
-
-print ("Exporting data into CSV............")
-for table_name in [str("constituencies"), str("politicians")]:
-    cursor.execute("select * from " + table_name)
-    with open(table_name + ".csv", "w") as csv_file:
-        csv_writer = csv.writer(csv_file, delimiter=",")
-        csv_writer.writerow([i[0] for i in cursor.description])
-        csv_writer.writerows(cursor)
-
-        dirpath = os.getcwd() + '\\' + table_name + ".csv"
-        print("Data exported Successfully into {}".format(dirpath))

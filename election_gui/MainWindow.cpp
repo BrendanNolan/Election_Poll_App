@@ -4,9 +4,7 @@
 #include <QHBoxLayout>
 #include <QItemSelectionModel>
 #include <QPushButton>
-
-#include <chrono>
-#include <future>
+#include <QThread>
 
 #include "ConstituencyExplorerWidget.h"
 #include "ConstituencyModel.h"
@@ -18,14 +16,42 @@
 #include "RotatingItemsWidget.h"
 #include "SqlDatabaseManagerFactory.h"
 
+namespace
+{
+
+class DataRefreshThread : public QThread
+{
+    Q_OBJECT
+
+public:    
+    DataRefreshThread(MainWindow& mainWindow)
+        : QThread(this)
+        , mainWindow_(&mainWindow)
+    {}
+
+signals:
+    void resultReady();
+
+private:
+    void run() override 
+    {
+        if (mainWindow_)
+            mainWindow_->refreshData();
+        emit resultReady();
+    }
+
+private:
+    MainWindow* mainWindow_;
+};
+
+}
+
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent)
     , constituencyExplorerWidget_(new ConstituencyExplorerWidget)
     , rotatingItemsWidget_(new RotatingItemsWidget(this))
 {
     rotatingItemsWidget_->hide();
-    connect(this, &MainWindow::dataRefreshed,
-        [this]() { rotatingItemsWidget_->hide(); });
     setCentralWidget(constituencyExplorerWidget_);
 
     election_gui_functions::runPythonScript(QFileInfo(paths::scraperScript));
@@ -70,13 +96,22 @@ void MainWindow::refreshData()
 {
     election_gui_functions::runPythonScript(QFileInfo(paths::scraperScript));
     refreshModels();
-    emit dataRefreshed();
 }
 
 void MainWindow::asynchronouslyRefreshData()
 {
     rotatingItemsWidget_->show();
-    std::async(std::launch::async, &MainWindow::refreshData, this);
+    
+    auto workerThread = new DataRefreshThread(*this);
+    connect(
+        workerThread, 
+        &DataRefreshThread::resultReady, 
+        [this]() {
+            rotatingItemsWidget_->hide();
+        });
+    connect(workerThread, &DataRefreshThread::finished, 
+        workerThread, &QObject::deleteLater);
+    workerThread->start(QThread::HighestPriority);
 }
 
 

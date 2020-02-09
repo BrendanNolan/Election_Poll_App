@@ -18,9 +18,6 @@ public:
 public:
     void refreshData();
 
-signals:
-    void dataRefreshed();
-
 private slots:
     void asynchronouslyRefreshData();
 

@@ -10,8 +10,6 @@ class RotatingItemsWidget : public QGraphicsView
 public:
     RotatingItemsWidget(QWidget* parent = nullptr);
 
-private:
-
 };
 
 #endif // ROTATINGITEMSWIDGET_H

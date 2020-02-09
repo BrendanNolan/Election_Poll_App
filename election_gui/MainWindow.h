@@ -14,8 +14,11 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget* parent = nullptr);
 
+public:
+    void refreshData();
+
 private slots:
-    void doAsynchronousDataRefresh();
+    void asynchronouslyRefreshData();
 
 private :
     void refreshModels();

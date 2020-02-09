@@ -14,7 +14,6 @@ HEADERS += \
     PoliticianDelegate.h \
     PollGraphDelegate.h \
     ElectionGuiFunctions.h \
-    RotatingFacesWidget.h \
     RotatingItemsWidget.h
 
 SOURCES += \
@@ -29,7 +28,6 @@ SOURCES += \
     PoliticianDelegate.cpp \
     PollGraphDelegate.cpp \
     ElectionGuiFunctions.cpp \
-    RotatingFacesWidget.cpp \
     RotatingItemsWidget.cpp
 
 FORMS += \

@@ -4,7 +4,6 @@
 #include <QHBoxLayout>
 #include <QItemSelectionModel>
 #include <QPushButton>
-#include <QThread>
 
 #include "ConstituencyExplorerWidget.h"
 #include "ConstituencyModel.h"
@@ -15,31 +14,6 @@
 #include "PoliticianPictureProxyModel.h"
 #include "RotatingItemsWidget.h"
 #include "SqlDatabaseManagerFactory.h"
-
-class MainWindow::DataRefreshThread : public QThread
-{
-    Q_OBJECT
-
-public:    
-    DataRefreshThread(MainWindow& mainWindow)
-        : QThread(&mainWindow)
-        , mainWindow_(&mainWindow)
-    {}
-
-signals:
-    void resultReady();
-
-private:
-    void run() override 
-    {
-        if (mainWindow_)
-            mainWindow_->refreshData();
-        emit resultReady();
-    }
-
-private:
-    MainWindow* mainWindow_;
-};
 
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent)
@@ -108,5 +82,3 @@ void MainWindow::asynchronouslyRefreshData()
         workerThread, &QObject::deleteLater);
     workerThread->start(QThread::HighestPriority);
 }
-
-

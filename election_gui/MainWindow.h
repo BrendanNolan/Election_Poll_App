@@ -25,9 +25,6 @@ private :
     void refreshModels();
 
 private:
-    class DataRefreshThread;
-
-private:
     ConstituencyExplorerWidget* constituencyExplorerWidget_ = nullptr;
     RotatingItemsWidget* rotatingItemsWidget_;
 

@@ -83,6 +83,7 @@ void MainWindow::asynchronouslyRefreshData()
             if (status == std::future_status::ready)
                 futureReady = true;
         });
+    timer.start();
     while (!futureReady)
         continue;
     delete rotatingItemsWidget;

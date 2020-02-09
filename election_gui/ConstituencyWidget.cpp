@@ -110,22 +110,19 @@ void ConstituencyWidget::connectModelSignals()
 void ConstituencyWidget::refreshPixmaps(
     const QModelIndex& topLeft, const QModelIndex& bottomRight)
 {
-    QVector<QMap<QGraphicsItem*, QModelIndex>::iterator> toUpdate;
-    std::copy_if(
-        indexItemCache_.begin(),
-        indexItemCache_.end(),
-        std::back_inserter(toUpdate),
-        [this, topLeft, bottomRight](
-            QMap<QGraphicsItem*, QModelIndex>::iterator it) { 
-            auto row = it.value().row();
-            return (row >= topLeft.row() && row <= bottomRight.row());
-        });
-    for (auto it : toUpdate)
+    for (
+        auto it = indexItemCache_.begin(); 
+        it != indexItemCache_.end();
+        ++it)
     {
-        auto item = it.key();
-        if (auto pixmapItem = qgraphicsitem_cast<QGraphicsPixmapItem*>(item))
+        if (it.value().row() < topLeft.row() || it.value().row() > bottomRight.row())
+            continue;
+        if (auto pixmapItem = qgraphicsitem_cast<QGraphicsPixmapItem*>(
+            it.key()))
+        {
             pixmapItem->setPixmap(
                 constituencyModel_->data(it.value(), Qt::DecorationRole)
                 .value<QPixmap>());
+        }
     }
 }

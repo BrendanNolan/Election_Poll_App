@@ -6,8 +6,6 @@
 #include <cstdlib>
 #include <string>
 
-#include "ElectionDefinitions.h"
-#include "ElectionGuiFunctions.h"
 #include "MainWindow.h"
 
 int main(int argc, char* argv[])
@@ -18,9 +16,7 @@ int main(int argc, char* argv[])
     std::wstring wc(cSz + 1, L'#');
     std::mbstowcs(&wc[0], c, cSz);
     Py_SetProgramName(wc.c_str());
-
-    election_gui_functions::runPythonScript(QFileInfo(paths::scraperScript));
-
+    
     QApplication app(argc, argv);
     MainWindow mainWin;
     mainWin.show();

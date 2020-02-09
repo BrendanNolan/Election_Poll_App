@@ -20,6 +20,8 @@ MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent)
     , constituencyExplorerWidget_(new ConstituencyExplorerWidget)
 {
+    election_gui_functions::runPythonScript(QFileInfo(paths::scraperScript));
+
     setCentralWidget(constituencyExplorerWidget_);
 
     auto factory = SqlDatabaseManagerFactory(QFileInfo(

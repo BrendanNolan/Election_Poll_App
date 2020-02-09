@@ -3,6 +3,8 @@
 
 #include <QThread>
 
+class MainWindow;
+
 class MWDataRefreshThread : public QThread
 {
     Q_OBJECT

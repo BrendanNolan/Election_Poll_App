@@ -26,12 +26,13 @@ public:
 
 private slots:
     void selectConstituencyInModel();
-    void refreshSceneConstituencies();
+    void loadModel();
+    void refreshPixmaps(
+        const QModelIndex &topLeft, const QModelIndex &bottomRight);
 
 private:
-    void loadWidgetColours();
-    void makeModelConnections();
-    void loadModel();
+    void loadSceneConstituencies();
+    void connectModelSignals();
 
 private:
     ConstituencyPixmapProxyModel* constituencyModel_ = nullptr;

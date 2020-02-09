@@ -4,6 +4,9 @@
 #include <QGraphicsScene>
 #include <QItemSelectionModel>
 #include <QPointF>
+#include <QVector>
+
+#include <algorithm>
 
 #include "ConstituencyModel.h"
 #include "ConstituencyPixmapProxyModel.h"
@@ -21,6 +24,7 @@ void ConstituencyWidget::setModel(
     ConstituencyPixmapProxyModel* constituencyModel)
 {
     constituencyModel_ = constituencyModel;
+    connectModelSignals();
     loadModel();
 }
 
@@ -30,7 +34,7 @@ void ConstituencyWidget::setSelectionModel(QItemSelectionModel* selectionModel)
     selectConstituencyInModel();
 }
 
-void ConstituencyWidget::refreshSceneConstituencies()
+void ConstituencyWidget::loadSceneConstituencies()
 {
     scene()->clear();
     indexItemCache_.clear();
@@ -83,27 +87,45 @@ void ConstituencyWidget::selectConstituencyInModel()
         QItemSelectionModel::ClearAndSelect);
 }
 
-void ConstituencyWidget::loadWidgetColours()
-{
-    // NEEDS TO BE IMPLEMENTED
-}
-
-void ConstituencyWidget::makeModelConnections()
-{
-    connect(constituencyModel_, &QAbstractItemModel::modelReset,
-        this, &ConstituencyWidget::refreshSceneConstituencies);
-    connect(constituencyModel_, &QAbstractItemModel::rowsInserted,
-        this, &ConstituencyWidget::refreshSceneConstituencies);
-    connect(constituencyModel_, &QAbstractItemModel::rowsRemoved,
-        this, &ConstituencyWidget::refreshSceneConstituencies);
-}
-
 void ConstituencyWidget::loadModel()
 {
     if (!constituencyModel_)
         return;
-    makeModelConnections();
-    refreshSceneConstituencies();
-    loadWidgetColours();
+    loadSceneConstituencies();
     selectConstituencyInModel();
+}
+
+void ConstituencyWidget::connectModelSignals()
+{
+    connect(constituencyModel_, &QAbstractItemModel::modelReset,
+        this, &ConstituencyWidget::loadModel);
+    connect(constituencyModel_, &QAbstractItemModel::rowsInserted,
+        this, &ConstituencyWidget::loadModel);
+    connect(constituencyModel_, &QAbstractItemModel::rowsRemoved,
+        this, &ConstituencyWidget::loadModel);
+    connect(constituencyModel_, &QAbstractItemModel::dataChanged,
+        this, &ConstituencyWidget::refreshPixmaps);
+}
+
+void ConstituencyWidget::refreshPixmaps(
+    const QModelIndex& topLeft, const QModelIndex& bottomRight)
+{
+    QVector<QMap<QGraphicsItem*, QModelIndex>::iterator> toUpdate;
+    std::copy_if(
+        indexItemCache_.begin(),
+        indexItemCache_.end(),
+        std::back_inserter(toUpdate),
+        [this, topLeft, bottomRight](
+            QMap<QGraphicsItem*, QModelIndex>::iterator it) { 
+            auto row = it.value().row();
+            return (row >= topLeft.row() && row <= bottomRight.row());
+        });
+    for (auto it : toUpdate)
+    {
+        auto item = it.key();
+        if (auto pixmapItem = qgraphicsitem_cast<QGraphicsPixmapItem*>(item))
+            pixmapItem->setPixmap(
+                constituencyModel_->data(it.value(), Qt::DecorationRole)
+                .value<QPixmap>());
+    }
 }

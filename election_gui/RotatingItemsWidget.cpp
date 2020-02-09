@@ -3,7 +3,7 @@
 #include <QGraphicsRectItem>
 #include <QGraphicsScene>
 
-RotatingItemsWidget::RotatingItemsWidget(QWidget* parent = nullptr)
+RotatingItemsWidget::RotatingItemsWidget(QWidget* parent)
     : QGraphicsView(parent)
 {
     setScene(new QGraphicsScene());

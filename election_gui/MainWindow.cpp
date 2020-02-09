@@ -16,16 +16,13 @@
 #include "RotatingItemsWidget.h"
 #include "SqlDatabaseManagerFactory.h"
 
-namespace
-{
-
-class DataRefreshThread : public QThread
+class MainWindow::DataRefreshThread : public QThread
 {
     Q_OBJECT
 
 public:    
     DataRefreshThread(MainWindow& mainWindow)
-        : QThread(this)
+        : QThread(&mainWindow)
         , mainWindow_(&mainWindow)
     {}
 
@@ -43,8 +40,6 @@ private:
 private:
     MainWindow* mainWindow_;
 };
-
-}
 
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent)

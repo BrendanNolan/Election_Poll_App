@@ -3,7 +3,6 @@
 #include <QFileInfo>
 #include <QHBoxLayout>
 #include <QItemSelectionModel>
-#include <QMutexLocker>
 #include <QPushButton>
 
 #include "ConstituencyExplorerWidget.h"
@@ -57,7 +56,6 @@ MainWindow::MainWindow(QWidget* parent)
 
 void MainWindow::refreshModels()
 {
-    QMutexLocker locker(&mutex_);
     if (constituencyModel_)
         constituencyModel_->refresh();
     if (politicianModel_)
@@ -66,14 +64,12 @@ void MainWindow::refreshModels()
 
 void MainWindow::refreshData()
 {
-    QMutexLocker locker(&mutex_);
     election_gui_functions::runPythonScript(QFileInfo(paths::scraperScript));
     refreshModels();
 }
 
 void MainWindow::asynchronouslyRefreshData()
 {
-    QMutexLocker locker(&mutex_);
     rotatingItemsWidget_->show();
     
     auto workerThread = new MWDataRefreshThread(*this);
@@ -85,7 +81,5 @@ void MainWindow::asynchronouslyRefreshData()
         });
     connect(workerThread, &MWDataRefreshThread::finished, 
         workerThread, &QObject::deleteLater);
-    connect(workerThread, &MWDataRefreshThread::resultReady,
-        [this]() { rotatingItemsWidget_->hide(); });
     workerThread->start(QThread::HighestPriority);
 }

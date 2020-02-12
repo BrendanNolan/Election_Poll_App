@@ -4,13 +4,15 @@
 #include <QHBoxLayout>
 #include <QItemSelectionModel>
 #include <QPushButton>
+#include <QVector>
+
+#include <chrono>
 
 #include "ConstituencyExplorerWidget.h"
 #include "ConstituencyModel.h"
 #include "ConstituencyPixmapProxyModel.h"
 #include "ElectionDefinitions.h"
 #include "ElectionGuiFunctions.h"
-#include "MWDataRefreshThread.h"
 #include "PoliticianModel.h"
 #include "PoliticianPictureProxyModel.h"
 #include "RotatingItemsWidget.h"
@@ -71,15 +73,16 @@ void MainWindow::refreshData()
 void MainWindow::asynchronouslyRefreshData()
 {
     rotatingItemsWidget_->show();
-    
-    auto workerThread = new MWDataRefreshThread(*this);
-    connect(
-        workerThread, 
-        &MWDataRefreshThread::resultReady, 
+    timer_.setInterval(std::chrono::seconds(1));
+    fut_ = std::async(std::launch::async, &MainWindow::refreshData, this);
+    connect(&timer_, &QTimer::timeout,
         [this]() {
-            rotatingItemsWidget_->hide();
+            auto status = fut_.wait_for(std::chrono::seconds(0));
+            if (status == std::future_status::ready)
+            {
+                timer_.stop();
+                rotatingItemsWidget_->hide();
+            }
         });
-    connect(workerThread, &MWDataRefreshThread::finished, 
-        workerThread, &QObject::deleteLater);
-    workerThread->start(QThread::HighestPriority);
+    timer_.start();
 }

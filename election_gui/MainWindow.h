@@ -2,6 +2,9 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QTimer>
+
+#include <future>
 
 class ConstituencyModel;
 class ConstituencyExplorerWidget;
@@ -30,6 +33,9 @@ private:
 
     ConstituencyModel* constituencyModel_;
     PoliticianModel* politicianModel_;
+
+    std::future<void> fut_;
+    QTimer timer_;
 };
 
 #endif // MAINWINDOW_H

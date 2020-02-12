@@ -23,7 +23,6 @@ MainWindow::MainWindow(QWidget* parent)
     , constituencyExplorerWidget_(new ConstituencyExplorerWidget)
     , rotatingItemsLoadScreen_(new RotatingItemsWidget(this))
 {
-    rotatingItemsLoadScreen_->setWindowModality(Qt::ApplicationModal);
     rotatingItemsLoadScreen_->hide();
     setCentralWidget(constituencyExplorerWidget_);
 
@@ -70,8 +69,16 @@ void MainWindow::refreshData()
 
 void MainWindow::asynchronouslyRefreshData()
 {
+    mutex_.lock();
+    rotatingItemsLoadScreen_->setFixedSize(rect().size() * 1.0 / 2.0);
+    rotatingItemsLoadScreen_->setWindowModality(Qt::ApplicationModal);
+    rotatingItemsLoadScreen_->move(
+        rect().topLeft()
+        + QPoint(rect().width() * 1.0 / 4.0, rect().height() * 1.0 / 4.0));
     rotatingItemsLoadScreen_->show();
+    rotatingItemsLoadScreen_->raise();
     dataRefreshTimer_.setInterval(std::chrono::seconds(1));
+    mutex_.unlock();
     fut_ = std::async(std::launch::async, &MainWindow::refreshData, this);
     dataRefreshTimer_.start();
 }

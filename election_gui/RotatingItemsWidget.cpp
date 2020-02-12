@@ -9,3 +9,8 @@ RotatingItemsWidget::RotatingItemsWidget(QWidget* parent)
     setScene(new QGraphicsScene());
     scene()->addItem(new QGraphicsRectItem(0, 0, 10, 10));
 }
+
+void RotatingItemsWidget::freeze()
+{
+    sceneRotationTimer_.stop();
+}

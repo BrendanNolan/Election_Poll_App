@@ -5,6 +5,7 @@
 #include <QTimer>
 
 #include <future>
+#include <mutex>
 
 class ConstituencyModel;
 class ConstituencyExplorerWidget;
@@ -35,6 +36,7 @@ private:
     PoliticianModel* politicianModel_;
 
     std::future<void> fut_;
+    mutable std::mutex mutex_;
     QTimer timer_;
 };
 

@@ -66,6 +66,7 @@ void MainWindow::refreshModels()
 
 void MainWindow::refreshData()
 {
+    std::lock_guard<std::mutex> lock(mutex_);
     election_gui_functions::runPythonScript(QFileInfo(paths::scraperScript));
     refreshModels();
 }

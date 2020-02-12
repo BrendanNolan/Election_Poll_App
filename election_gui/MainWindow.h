@@ -31,7 +31,7 @@ private:
 
 private:
     ConstituencyExplorerWidget* constituencyExplorerWidget_ = nullptr;
-    RotatingItemsWidget* rotatingItemsWidget_;
+    RotatingItemsWidget* rotatingItemsLoadScreen_;
 
     ConstituencyModel* constituencyModel_;
     PoliticianModel* politicianModel_;

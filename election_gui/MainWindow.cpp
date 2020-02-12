@@ -21,9 +21,10 @@
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent)
     , constituencyExplorerWidget_(new ConstituencyExplorerWidget)
-    , rotatingItemsWidget_(new RotatingItemsWidget(this))
+    , rotatingItemsLoadScreen_(new RotatingItemsWidget(this))
 {
-    rotatingItemsWidget_->hide();
+    rotatingItemsLoadScreen_->setWindowModality(Qt::ApplicationModal);
+    rotatingItemsLoadScreen_->hide();
     setCentralWidget(constituencyExplorerWidget_);
 
     election_gui_functions::runPythonScript(QFileInfo(paths::scraperScript));
@@ -69,7 +70,7 @@ void MainWindow::refreshData()
 
 void MainWindow::asynchronouslyRefreshData()
 {
-    rotatingItemsWidget_->show();
+    rotatingItemsLoadScreen_->show();
     dataRefreshTimer_.setInterval(std::chrono::seconds(1));
     fut_ = std::async(std::launch::async, &MainWindow::refreshData, this);
     dataRefreshTimer_.start();
@@ -81,7 +82,7 @@ void MainWindow::onDataRefreshTimerTimeout()
     if (status == std::future_status::ready)
     {
         dataRefreshTimer_.stop();
-        rotatingItemsWidget_->hide();
+        rotatingItemsLoadScreen_->hide();
     }
 }
 

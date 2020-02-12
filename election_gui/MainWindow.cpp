@@ -58,6 +58,7 @@ MainWindow::MainWindow(QWidget* parent)
 
 void MainWindow::refreshModels()
 {
+    std::lock_guard<std::mutex> lock(mutex_);
     if (constituencyModel_)
         constituencyModel_->refresh();
     if (politicianModel_)
@@ -66,8 +67,9 @@ void MainWindow::refreshModels()
 
 void MainWindow::refreshData()
 {
-    std::lock_guard<std::mutex> lock(mutex_);
+    mutex_.lock();
     election_gui_functions::runPythonScript(QFileInfo(paths::scraperScript));
+    mutex_.unlock();
     refreshModels();
 }
 

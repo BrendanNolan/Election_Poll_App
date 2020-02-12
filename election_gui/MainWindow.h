@@ -24,8 +24,9 @@ public:
 
 private slots:
     void asynchronouslyRefreshData();
+    void onDataRefreshTimerTimeout();
 
-private :
+private:
     void refreshModels();
 
 private:
@@ -37,7 +38,7 @@ private:
 
     std::future<void> fut_;
     mutable std::mutex mutex_;
-    QTimer timer_;
+    QTimer dataRefreshTimer_;
 };
 
 #endif // MAINWINDOW_H

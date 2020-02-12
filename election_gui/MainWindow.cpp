@@ -54,15 +54,9 @@ MainWindow::MainWindow(QWidget* parent)
     constituencyExplorerWidget_->buttonLayout()->addWidget(refreshDataButton);
     connect(refreshDataButton, &QPushButton::clicked,
         this, &MainWindow::asynchronouslyRefreshData);
-}
 
-void MainWindow::refreshModels()
-{
-    std::lock_guard<std::mutex> lock(mutex_);
-    if (constituencyModel_)
-        constituencyModel_->refresh();
-    if (politicianModel_)
-        politicianModel_->refresh();
+    connect(&dataRefreshTimer_, &QTimer::timeout,
+        this, &MainWindow::onDataRefreshTimerTimeout);
 }
 
 void MainWindow::refreshData()
@@ -76,16 +70,26 @@ void MainWindow::refreshData()
 void MainWindow::asynchronouslyRefreshData()
 {
     rotatingItemsWidget_->show();
-    timer_.setInterval(std::chrono::seconds(1));
+    dataRefreshTimer_.setInterval(std::chrono::seconds(1));
     fut_ = std::async(std::launch::async, &MainWindow::refreshData, this);
-    connect(&timer_, &QTimer::timeout,
-        [this]() {
-            auto status = fut_.wait_for(std::chrono::seconds(0));
-            if (status == std::future_status::ready)
-            {
-                timer_.stop();
-                rotatingItemsWidget_->hide();
-            }
-        });
-    timer_.start();
+    dataRefreshTimer_.start();
+}
+
+void MainWindow::onDataRefreshTimerTimeout()
+{
+    auto status = fut_.wait_for(std::chrono::seconds(0));
+    if (status == std::future_status::ready)
+    {
+        dataRefreshTimer_.stop();
+        rotatingItemsWidget_->hide();
+    }
+}
+
+void MainWindow::refreshModels()
+{
+    std::lock_guard<std::mutex> lock(mutex_);
+    if (constituencyModel_)
+        constituencyModel_->refresh();
+    if (politicianModel_)
+        politicianModel_->refresh();
 }

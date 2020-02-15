@@ -1,6 +1,7 @@
 #include "MainWindow.h"
 
 #include <QFileInfo>
+#include <QGraphicsPixmapItem>
 #include <QHBoxLayout>
 #include <QItemSelectionModel>
 #include <QPushButton>
@@ -68,7 +69,20 @@ void MainWindow::refreshData()
 void MainWindow::asynchronouslyRefreshData()
 {
     mutex_.lock();
+    
+    PoliticianPictureProxyModel politicianProxyModel(nullptr, politicianModel_);
+    QVector<QGraphicsItem*> politicianGraphicsItems;
+    auto rowCount = politicianProxyModel.rowCount();
+    for (auto row = 0; row < rowCount; ++row)
+    {
+        auto pixmap = politicianProxyModel.data(
+            politicianProxyModel.index(row, 0))
+            .value<QPixmap>();
+        politicianGraphicsItems.push_back(new QGraphicsPixmapItem(pixmap));
+    }
+
     rotatingItemsLoadScreen_ = new RotatingItemsWidget(this);
+    rotatingItemsLoadScreen_->setRotatingItems(politicianGraphicsItems);
     rotatingItemsLoadScreen_->setFixedSize(rect().size() * 1.0 / 2.0);
     rotatingItemsLoadScreen_->setWindowModality(Qt::ApplicationModal);
     rotatingItemsLoadScreen_->move(
@@ -77,7 +91,9 @@ void MainWindow::asynchronouslyRefreshData()
     rotatingItemsLoadScreen_->show();
     rotatingItemsLoadScreen_->raise();
     dataRefreshTimer_.setInterval(std::chrono::seconds(1));
+    
     mutex_.unlock();
+    
     fut_ = std::async(std::launch::async, &MainWindow::refreshData, this);
     dataRefreshTimer_.start();
 }

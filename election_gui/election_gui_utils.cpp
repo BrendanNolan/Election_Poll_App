@@ -136,7 +136,7 @@ namespace geom_utils
         }
 
         auto r = std::sqrt(std::pow(x, 2) + std::pow(y, 2));
-        auto theta = 0;
+        auto theta = 0.0;
 
         if (x == 0)
             theta = (y > 0) ? pi / 2 : (3 * pi) / 2;

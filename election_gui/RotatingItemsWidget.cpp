@@ -33,7 +33,7 @@ void RotatingItemsWidget::setRotatingItems(const QVector<QGraphicsItem*>& items)
         scene()->addItem(rotatingItems_[i]);
         auto pos = startPoint.rotatedAbout(
             CartesianPoint(0.0, 0.0),
-            (i / itemCount) * (2 * pi));
+            (i / static_cast<double>(itemCount)) * (2 * pi));
         rotatingItems_[i]->setPos(pos.x(), pos.y());
     }
 }

@@ -3,7 +3,7 @@
 
 class QFileInfo;
 
-namespace election_gui_functions
+namespace election_gui_utils
 {
     void runPythonScript(const QFileInfo& script);
 };

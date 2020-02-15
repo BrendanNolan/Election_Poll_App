@@ -6,7 +6,7 @@
 
 #include <cstdio>
 
-void election_gui_functions::runPythonScript(const QFileInfo& script)
+void election_gui_utils::runPythonScript(const QFileInfo& script)
 {
     const auto scriptPathAsStdString = script.absoluteFilePath().toStdString();
     auto scriptPathAsCString = scriptPathAsStdString.c_str();

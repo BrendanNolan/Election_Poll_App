@@ -24,7 +24,7 @@ MainWindow::MainWindow(QWidget* parent)
 {
     setCentralWidget(constituencyExplorerWidget_);
 
-    election_gui_functions::runPythonScript(QFileInfo(paths::scraperScript));
+    election_gui_utils::runPythonScript(QFileInfo(paths::scraperScript));
 
     auto factory = SqlDatabaseManagerFactory(QFileInfo(
         paths::databasePath));
@@ -60,7 +60,7 @@ MainWindow::MainWindow(QWidget* parent)
 void MainWindow::refreshData()
 {
     mutex_.lock();
-    election_gui_functions::runPythonScript(QFileInfo(paths::scraperScript));
+    election_gui_utils::runPythonScript(QFileInfo(paths::scraperScript));
     mutex_.unlock();
     refreshModels();
 }

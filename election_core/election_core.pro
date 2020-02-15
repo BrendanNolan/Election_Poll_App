@@ -36,4 +36,4 @@ HEADERS += \
     SqlPoliticianDatabaseManager.h \
     election_core_utils.h \
     UnaryPredicate.h \
-    ElectionDefinitions.h
+    election_core_definitions.h

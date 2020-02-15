@@ -1,6 +1,6 @@
 #include <Python.h>
 
-#include "ElectionGuiFunctions.h"
+#include "election_gui_utils.h"
 
 #include <QFileInfo>
 

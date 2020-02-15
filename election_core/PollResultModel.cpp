@@ -4,7 +4,7 @@
 
 #include "IDatabaseManagerFactory.h"
 #include "IPollResultDatabaseManager.h"
-#include "ElectionCoreFunctions.h"
+#include "election_core_utils.h"
 #include "PollResult.h"
 #include "SqlDatabaseManagerFactory.h"
 

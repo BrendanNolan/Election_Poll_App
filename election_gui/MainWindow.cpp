@@ -12,7 +12,7 @@
 #include "ConstituencyModel.h"
 #include "ConstituencyPixmapProxyModel.h"
 #include "ElectionDefinitions.h"
-#include "ElectionGuiFunctions.h"
+#include "election_gui_utils.h"
 #include "PoliticianModel.h"
 #include "PoliticianPictureProxyModel.h"
 #include "RotatingItemsWidget.h"

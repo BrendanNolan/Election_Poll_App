@@ -11,7 +11,7 @@
 #include "IDatabaseManagerFactory.h"
 #include "SqlDatabaseManagerFactory.h"
 
-#include "ElectionCoreFunctions.h"
+#include "election_core_utils.h"
 
 using namespace std;
 

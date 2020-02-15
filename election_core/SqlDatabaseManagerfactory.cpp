@@ -2,7 +2,7 @@
 
 #include <QSqlDatabase>
 
-#include "ElectionCoreFunctions.h"
+#include "election_core_utils.h"
 #include "SqlConstituencyDatabaseManager.h"
 #include "SqlPoliticianDatabaseManager.h"
 #include "SqlPollResultDatabaseManager.h"

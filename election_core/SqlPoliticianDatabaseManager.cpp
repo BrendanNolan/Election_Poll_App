@@ -5,7 +5,7 @@
 #include <QUrl>
 #include <QVariant>
 
-#include "ElectionCoreFunctions.h"
+#include "election_core_utils.h"
 #include "Politician.h"
 
 using namespace std;

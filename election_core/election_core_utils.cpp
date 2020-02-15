@@ -1,4 +1,4 @@
-#include "ElectionCoreFunctions.h"
+#include "election_core_utils.h"
 
 #include <QAbstractListModel>
 #include <QDir>

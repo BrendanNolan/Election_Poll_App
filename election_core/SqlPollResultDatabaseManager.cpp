@@ -4,7 +4,7 @@
 #include <QSqlDatabase>
 #include <QSqlQuery>
 
-#include "ElectionCoreFunctions.h"
+#include "election_core_utils.h"
 #include "PollResult.h"
 
 using namespace std;

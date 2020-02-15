@@ -1,5 +1,5 @@
-#ifndef ELECTIONCOREFUNCTIONS_H
-#define ELECTIONCOREFUNCTIONS_H
+#ifndef ELECTION_CORE_UTILS_H
+#define ELECTION_CORE_UTILS_H
 
 #include <QFileInfo>
 #include <QSqlDatabase>
@@ -17,4 +17,4 @@ bool isIndexValid(const QModelIndex& index, const QAbstractListModel& model);
 QSqlDatabase connectToSqlDatabase(
     const QFileInfo& databaseFileInfo = QFileInfo());
 
-#endif // ELECTIONCOREFUNCTIONS_H
+#endif // ELECTION_CORE_UTILS_H

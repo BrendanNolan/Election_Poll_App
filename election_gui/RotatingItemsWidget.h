@@ -29,9 +29,9 @@ private:
 private:
     QTimer rotationTimer_;
     int milisecInterval_ = 250;
-    qreal rotationAngle_ = static_cast<qreal>(2 * geom_utils::pi) / 10;
+    double rotationAngle_ = (2.0 * geom_utils::pi) / 10.0;
     QVector<QGraphicsItem*> rotatingItems_;
-    qreal radiusOfRotatingItemsCircle_ = 0;
+    double radiusOfRotatingItemsCircle_ = 0.0;
 };
 
 #endif // ROTATINGITEMSWIDGET_H

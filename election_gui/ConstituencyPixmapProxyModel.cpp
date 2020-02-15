@@ -104,7 +104,7 @@ void ConstituencyPixmapProxyModel::partiallyReloadCache(
         auto sectionWidth = pixmap.width() / politicianCount;
         auto pixmapHeight = pixmap.height();
         QPainter painter(&pixmap);
-        qreal currentDrawXValue = 0;
+        auto currentDrawXValue = 0.0;
         for (const auto& colour : colours)
         {
             QRectF rectToFill(currentDrawXValue, 0, sectionWidth, pixmapHeight);

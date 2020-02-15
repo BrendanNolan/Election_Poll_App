@@ -13,7 +13,7 @@ HEADERS += \
     ConstituencyPixmapProxyModel.h \
     PoliticianDelegate.h \
     PollGraphDelegate.h \
-    ElectionGuiFunctions.h \
+    election_gui_utils.h \
     RotatingItemsWidget.h
 
 SOURCES += \

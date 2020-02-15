@@ -124,6 +124,10 @@ namespace geom_utils
         return CartesianPoint(a.x() - b.x(), a.y() - b.y());
     }
 
+    QPointF cartesianToQPointF(CartesianPoint& cp)
+    {
+        return QPointF(cp.x(), - (cp.y()));
+    }
 
     PolarPoint cartesianToPolar(const CartesianPoint& cartPoint)
     {

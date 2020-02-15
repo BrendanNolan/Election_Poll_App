@@ -6,6 +6,8 @@
     I need new utilities.
 */
 
+#include <QPointF>
+
 #include <cmath>
 
 class QFileInfo;
@@ -70,6 +72,8 @@ namespace geom_utils
 
     CartesianPoint operator-(
         const CartesianPoint& a, const CartesianPoint& b);
+
+    QPointF cartesianToQPointF(CartesianPoint& cp);
 
     PolarPoint cartesianToPolar(const CartesianPoint& cartPoint);
 

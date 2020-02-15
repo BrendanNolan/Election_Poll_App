@@ -58,7 +58,7 @@ void RotatingItemsWidget::rotateItems()
             static_cast<double>(pos.x()), static_cast<double>(pos.y()));
         cartPoint.rotateAbout(
             CartesianPoint(0.0, 0.0),
-            static_cast<double>(rotationAngle_));
+            - static_cast<double>(rotationAngle_));
         item->setPos(cartPoint.x(), cartPoint.y());
     }
 }

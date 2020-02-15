@@ -28,7 +28,7 @@ void RotatingItemsWidget::setRotatingItems(const QVector<QGraphicsItem*>& items)
 
     CartesianPoint startPoint(
         0.0, static_cast<double>(radiusOfRotatingItemsCircle_));
-    for (size_t i = 0; i < itemCount; ++i)
+    for (auto i = 0; i < itemCount; ++i)
     {
         scene()->addItem(rotatingItems_[i]);
         auto pos = startPoint.rotatedAbout(

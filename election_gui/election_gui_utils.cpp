@@ -134,18 +134,12 @@ namespace geom_utils
         auto x = cartPoint.x();
         auto y = cartPoint.y();
 
-        if (x == 0 && y == 0)
-        {
-            return PolarPoint(0, 0);
-        }
-
         auto r = std::sqrt(std::pow(x, 2) + std::pow(y, 2));
-        auto theta = 0.0;
+        if (r < doublePrecisionTolerance)
+            return PolarPoint(0.0, 0.0);
 
-        if (x == 0)
-            theta = (y > 0) ? pi / 2 : (3 * pi) / 2;
-        else
-            theta = std::atan(y / x);
+        auto theta = (y >= 0.0) ? std::acos(x / r) : - std::acos(x / r);
+
         return PolarPoint(r, theta);
     }
 

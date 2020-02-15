@@ -23,6 +23,7 @@ namespace geom_utils
 {
 
     const auto pi = 3.141;
+    const auto doublePrecisionTolerance = 0.000001;
 
     class PolarPoint
     {

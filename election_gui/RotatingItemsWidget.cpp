@@ -26,13 +26,14 @@ void RotatingItemsWidget::setRotatingItems(const QVector<QGraphicsItem*>& items)
 
     using namespace geom_utils;
 
-    CartesianPoint<qreal> startPoint(0, radiusOfRotatingItemsCircle_);
+    CartesianPoint startPoint(
+        0.0, static_cast<double>(radiusOfRotatingItemsCircle_));
     for (size_t i = 0; i < itemCount; ++i)
     {
         scene()->addItem(rotatingItems_[i]);
         auto pos = startPoint.rotatedAbout(
-            CartesianPoint<qreal>(0.0, 0.0),
-            (i / itemCount) * (2 * static_cast<qreal>(pi)));
+            CartesianPoint(0.0, 0.0),
+            (i / itemCount) * (2 * pi));
         rotatingItems_[i]->setPos(pos.x(), pos.y());
     }
 }
@@ -53,10 +54,11 @@ void RotatingItemsWidget::rotateItems()
     for (auto item : rotatingItems_)
     {
         auto pos = item->pos();
-        CartesianPoint<qreal> cartPoint(pos.x(), pos.y());
+        CartesianPoint cartPoint(
+            static_cast<double>(pos.x()), static_cast<double>(pos.y()));
         cartPoint.rotateAbout(
-            CartesianPoint<qreal>(0, 0),
-            rotationAngle_);
+            CartesianPoint(0.0, 0.0),
+            static_cast<double>(rotationAngle_));
         item->setPos(cartPoint.x(), cartPoint.y());
     }
 }

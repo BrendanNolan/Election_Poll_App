@@ -29,7 +29,7 @@ private:
 private:
     QTimer rotationTimer_;
     int milisecInterval_ = 500;
-    qreal rotationAngle_ = (2 * geom_utils::pi) / 360;
+    qreal rotationAngle_ = static_cast<qreal>(2 * geom_utils::pi) / 360;
     QVector<QGraphicsItem*> rotatingItems_;
     qreal radiusOfRotatingItemsCircle_ = 0;
 };

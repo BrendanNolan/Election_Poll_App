@@ -17,7 +17,7 @@ SOURCES += \
     PollResult.cpp \
     SqlPollResultDatabaseManager.cpp \
     SqlPoliticianDatabaseManager.cpp \
-    ElectionCoreFunctions.cpp
+    election_core_utils.cpp
 
 HEADERS += \
     IConstituencyDatabaseManager.h \
@@ -34,6 +34,6 @@ HEADERS += \
     PollResult.h \
     SqlPollResultDatabaseManager.h \
     SqlPoliticianDatabaseManager.h \
-    ElectionCoreFunctions.h \
+    election_core_utils.h \
     UnaryPredicate.h \
     ElectionDefinitions.h

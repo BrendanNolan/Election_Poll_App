@@ -27,7 +27,7 @@ SOURCES += \
     ConstituencyPixmapProxyModel.cpp \
     PoliticianDelegate.cpp \
     PollGraphDelegate.cpp \
-    ElectionGuiFunctions.cpp \
+    election_gui_utils.cpp \
     RotatingItemsWidget.cpp
 
 FORMS += \

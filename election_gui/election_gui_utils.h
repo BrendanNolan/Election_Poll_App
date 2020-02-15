@@ -80,6 +80,7 @@ namespace geom_utils
     CartesianPoint polarToCartesian(const PolarPoint& polarPoint);
 
     double dist(const CartesianPoint& a, const CartesianPoint& b);
+
 };
 
 #endif // ELECTION_GUI_UTILS_H

@@ -26,7 +26,7 @@ int PollResultModel::rowCount(const QModelIndex& /*parent*/) const
 
 QVariant PollResultModel::data(const QModelIndex & index, int role) const
 {
-    if (!isIndexValid(index, *this))
+    if (!election_core_utils::isIndexValid(index, *this))
         return QVariant();
     if (role != Qt::DisplayRole && role != SourceRole && role != DateTimeRole)
         return QVariant();
@@ -50,7 +50,7 @@ bool PollResultModel::setData(
     const QVariant& value, 
     int role)
 {
-    if (!isIndexValid(index, *this) || role != Qt::DisplayRole)
+    if (!election_core_utils::isIndexValid(index, *this) || role != Qt::DisplayRole)
         return false;
 
     pollResultCache_[index.row()]->setHistogram(

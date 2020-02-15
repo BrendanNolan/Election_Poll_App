@@ -5,6 +5,9 @@
 #include <QFileInfo>
 #include <QModelIndex>
 
+namespace election_core_utils
+{
+
 bool isIndexValid(const QModelIndex& index, const QAbstractListModel& model)
 {
     auto row = index.row();
@@ -24,7 +27,9 @@ QSqlDatabase connectToSqlDatabase(const QFileInfo& databaseFileInfo)
 
     if (!database.isValid())
         return QSqlDatabase();
-    
+
     database.open();
     return database;
+}
+
 }

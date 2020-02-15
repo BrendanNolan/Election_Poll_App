@@ -6,7 +6,10 @@
 
 #include <cstdio>
 
-void election_gui_utils::runPythonScript(const QFileInfo& script)
+namespace election_gui_utils
+{
+
+void runPythonScript(const QFileInfo& script)
 {
     const auto scriptPathAsStdString = script.absoluteFilePath().toStdString();
     auto scriptPathAsCString = scriptPathAsStdString.c_str();
@@ -17,4 +20,6 @@ void election_gui_utils::runPythonScript(const QFileInfo& script)
     PyRun_SimpleFile(scriptFilePtr, scriptPathAsCString);
     Py_Finalize();
     fclose(scriptFilePtr);
+}
+
 }

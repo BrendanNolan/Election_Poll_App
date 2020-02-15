@@ -65,5 +65,5 @@ void RotatingItemsWidget::rotateItems()
 
 void RotatingItemsWidget::setRadiusOfRotatingItemsCircle()
 {
-    radiusOfRotatingItemsCircle_ = 30.0;
+    radiusOfRotatingItemsCircle_ = 100.0;
 }

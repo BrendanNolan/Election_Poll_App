@@ -31,10 +31,10 @@ private:
 
 private:
     ConstituencyExplorerWidget* constituencyExplorerWidget_ = nullptr;
-    RotatingItemsWidget* rotatingItemsLoadScreen_;
+    RotatingItemsWidget* rotatingItemsLoadScreen_ = nullptr;
 
-    ConstituencyModel* constituencyModel_;
-    PoliticianModel* politicianModel_;
+    ConstituencyModel* constituencyModel_ = nullptr;
+    PoliticianModel* politicianModel_ = nullptr;
 
     std::future<void> fut_;
     mutable std::mutex mutex_;

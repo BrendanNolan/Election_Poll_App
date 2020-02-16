@@ -7,6 +7,7 @@ RotatingItemsWidget::RotatingItemsWidget(QWidget* parent)
     : QGraphicsView(parent)
 {
     setScene(new QGraphicsScene());
+    setRotationRadius(preferredRotationRadius());
     connect(&rotationTimer_, &QTimer::timeout,
         this, &RotatingItemsWidget::rotateItems);
     rotationTimer_.setInterval(milisecInterval_);
@@ -17,12 +18,9 @@ void RotatingItemsWidget::setRotatingItems(const QVector<QGraphicsItem*>& items)
 {
     qDeleteAll(rotatingItems_);
     rotatingItems_ = items;
-
-    if (rotatingItems_.isEmpty())
-        return;
-
     for (auto item : rotatingItems_)
         scene()->addItem(item);
+    positionRotatingItems();
 }
 
 void RotatingItemsWidget::freeze()
@@ -59,12 +57,15 @@ void RotatingItemsWidget::setRotationRadius(double radius)
 double RotatingItemsWidget::preferredRotationRadius() const
 {
     auto totalWidgetSize = size();
-    return 0.45 * std::min(
+    return 0.35 * std::min(
         totalWidgetSize.width(), totalWidgetSize.height());
 }
 
 void RotatingItemsWidget::positionRotatingItems()
 {
+    if (rotatingItems_.isEmpty())
+        return;
+
     using namespace geom_utils;
     auto itemCount = rotatingItems_.size();
     auto newRadius = rotationRadius_;
@@ -72,7 +73,8 @@ void RotatingItemsWidget::positionRotatingItems()
     for (auto i = 0; i < itemCount; ++i)
     {
         auto item = rotatingItems_[i];
-        auto itemAlreadyInScene = false;
+        
+        /*auto itemAlreadyInScene = false;
         auto iter = std::find(
             scene()->items().cbegin(),
             scene()->items().cend(),
@@ -80,18 +82,17 @@ void RotatingItemsWidget::positionRotatingItems()
         if (iter == scene()->items().cend())
             itemAlreadyInScene = false;
         else
-            itemAlreadyInScene = true;
+            itemAlreadyInScene = true;*/
 
         auto pos = item->pos();
         auto currentRadius = distFromOrigin(pos);
 
-        if (itemAlreadyInScene && currentRadius != 0)
+        if (currentRadius != 0)
         {
             item->setPos(pos * (newRadius / currentRadius));
         }
         else
         {
-            scene()->addItem(item);
             auto pos = startPoint.rotatedAbout(
                 CartesianPoint(0.0, 0.0),
                 (i / static_cast<double>(itemCount)) * (2 * pi));

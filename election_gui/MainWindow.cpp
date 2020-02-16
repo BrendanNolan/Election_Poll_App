@@ -72,6 +72,16 @@ void MainWindow::asynchronouslyRefreshData()
 {
     mutex_.lock();
     
+    auto sizeOfMainWindow = rect().size();
+    auto desiredSizeOfLoadScreen = 0.5 * sizeOfMainWindow;
+    auto desiredPositionOfLoadScreen = rect().topLeft()
+        + QPoint(rect().width() * 1.0 / 4.0, rect().height() * 1.0 / 4.0);
+    auto edgeLengthOfLoadScreenPixmaps = 0.15 * std::min(
+        desiredSizeOfLoadScreen.width(), 
+        desiredSizeOfLoadScreen.height());
+    QSize desiredSizeOfLoadScreenPixmaps(
+        edgeLengthOfLoadScreenPixmaps, edgeLengthOfLoadScreenPixmaps);
+
     PoliticianPictureProxyModel politicianProxyModel(nullptr, politicianModel_);
     QVector<QGraphicsItem*> politicianGraphicsItems;
     auto rowCount = politicianProxyModel.rowCount();
@@ -80,10 +90,16 @@ void MainWindow::asynchronouslyRefreshData()
         auto pixmap = politicianProxyModel.data(
             politicianProxyModel.index(row, 0))
             .value<QPixmap>();
-        politicianGraphicsItems.push_back(new QGraphicsPixmapItem(pixmap));
+        politicianGraphicsItems.push_back(new QGraphicsPixmapItem(
+            pixmap.scaled(
+                desiredSizeOfLoadScreenPixmaps, 
+                Qt::KeepAspectRatio)));
     }
 
     rotatingItemsLoadScreen_ = new RotatingItemsWidget(this);
+    rotatingItemsLoadScreen_->setFixedSize(desiredSizeOfLoadScreen);
+    rotatingItemsLoadScreen_->setRotationRadius(
+        rotatingItemsLoadScreen_->preferredRotationRadius());
     rotatingItemsLoadScreen_->scene()->setBackgroundBrush(
         QBrush(QColor(10, 15, 68)));
     rotatingItemsLoadScreen_->setHorizontalScrollBarPolicy(
@@ -92,9 +108,7 @@ void MainWindow::asynchronouslyRefreshData()
         Qt::ScrollBarAlwaysOff);
     rotatingItemsLoadScreen_->setRotatingItems(politicianGraphicsItems);
     rotatingItemsLoadScreen_->setWindowModality(Qt::ApplicationModal);
-    rotatingItemsLoadScreen_->move(
-        rect().topLeft()
-        + QPoint(rect().width() * 1.0 / 4.0, rect().height() * 1.0 / 4.0));
+    rotatingItemsLoadScreen_->move(desiredPositionOfLoadScreen);
     rotatingItemsLoadScreen_->show();
     rotatingItemsLoadScreen_->raise();
     dataRefreshTimer_.setInterval(std::chrono::seconds(1));

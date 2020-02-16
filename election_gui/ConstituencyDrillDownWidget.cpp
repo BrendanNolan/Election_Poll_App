@@ -20,8 +20,6 @@ ConstituencyDrillDownWidget::ConstituencyDrillDownWidget(
     , politicianProxyModel_(nullptr)
 {
     ui_->setupUi(this);
-    ui_->mpsRadioButton->setChecked(true);
-    ui_->candidatesRadioButton->setChecked(false);
     ui_->politicianListView->setItemDelegate(new PoliticianDelegate(this));
 }
 
@@ -30,37 +28,12 @@ ConstituencyDrillDownWidget::~ConstituencyDrillDownWidget()
     delete ui_;
 }
 
-void ConstituencyDrillDownWidget::setPoliticianModel(PoliticianPictureProxyModel* model)
+void ConstituencyDrillDownWidget::setPoliticianModel(
+    PoliticianPictureProxyModel* model)
 {
     politicianProxyModel_ = model;
     ui_->politicianListView->setModel(model);
     loadConstituency();
-
-    auto& politicianModel = *(politicianProxyModel_->politicianModel());
-    if (ui_->mpsRadioButton->isChecked())
-    {
-        politicianModel.setElectoralStatus(
-            PoliticianModel::ElectoralStatus::SITTING);
-    }
-    else if (ui_->candidatesRadioButton->isChecked())
-    {
-        politicianModel.setElectoralStatus(
-            PoliticianModel::ElectoralStatus::CANDIDATE);
-    }
-    connect(ui_->mpsRadioButton, &QRadioButton::toggled,
-        [this](bool checked) {
-            if (!checked)
-                return;
-            politicianProxyModel_->politicianModel()->setElectoralStatus(
-                PoliticianModel::ElectoralStatus::SITTING);
-        });
-    connect(ui_->candidatesRadioButton, &QRadioButton::toggled,
-        [this](bool checked) {
-            if (!checked)
-                return;
-            politicianProxyModel_->politicianModel()->setElectoralStatus(
-                PoliticianModel::ElectoralStatus::CANDIDATE);
-        });
 }
 
 void ConstituencyDrillDownWidget::setPoliticianSelectionModel(
@@ -148,12 +121,10 @@ void ConstituencyDrillDownWidget::setToInvalidState()
 
 void ConstituencyDrillDownWidget::enableRadioButtons()
 {
-    ui_->mpsRadioButton->setEnabled(true);
-    ui_->candidatesRadioButton->setEnabled(true);
+    ui_->politicianStatusWidget->enableRadioButtons();
 }
 
 void ConstituencyDrillDownWidget::disableRadioButtons()
 {
-    ui_->mpsRadioButton->setDisabled(true);
-    ui_->candidatesRadioButton->setDisabled(true);
+    ui_->politicianStatusWidget->disableRadioButtons();
 }

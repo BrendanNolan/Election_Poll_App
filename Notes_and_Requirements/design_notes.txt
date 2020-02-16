@@ -1,3 +1,7 @@
+At the moment, the main work of ConstituencyDrillDownWidget is in having buttons
+manipulate the electoral status of a PoliticianModel. We should have a widget 
+dedicated to this. It should be called something like PoliticianModelStatusSelectorWidget.
+
 I need a naming convention about refreshing and loading. There should
 be a consistent and clear distinction between functions called load... reload..., and refresh...
 

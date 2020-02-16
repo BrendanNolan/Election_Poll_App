@@ -1,5 +1,7 @@
 #include "MainWindow.h"
 
+#include <QBrush>
+#include <QColor>
 #include <QFileInfo>
 #include <QGraphicsPixmapItem>
 #include <QHBoxLayout>
@@ -82,6 +84,12 @@ void MainWindow::asynchronouslyRefreshData()
     }
 
     rotatingItemsLoadScreen_ = new RotatingItemsWidget(this);
+    rotatingItemsLoadScreen_->scene()->setBackgroundBrush(
+        QBrush(QColor(10, 15, 68)));
+    rotatingItemsLoadScreen_->setHorizontalScrollBarPolicy(
+        Qt::ScrollBarAlwaysOff);
+    rotatingItemsLoadScreen_->setVerticalScrollBarPolicy(
+        Qt::ScrollBarAlwaysOff);
     rotatingItemsLoadScreen_->setRotatingItems(politicianGraphicsItems);
     rotatingItemsLoadScreen_->setFixedSize(rect().size() * 1.0 / 2.0);
     rotatingItemsLoadScreen_->setWindowModality(Qt::ApplicationModal);

@@ -10,9 +10,9 @@ ConstituencyExplorerWidget::ConstituencyExplorerWidget(QWidget* parent)
     , ui_(new Ui::ConstituencyExplorerWidget)
 {
     ui_->setupUi(this);
-    connect(ui_->politicianListWidget, &PoliticianListWidget::pictureActivated,
+    connect(ui_->politicianListWidget, &ConstituencyDrillDownWidget::pictureActivated,
         this, &ConstituencyExplorerWidget::politicianActivated);
-    connect(ui_->politicianListWidget, &PoliticianListWidget::picturesActivated,
+    connect(ui_->politicianListWidget, &ConstituencyDrillDownWidget::picturesActivated,
         this, &ConstituencyExplorerWidget::politiciansActivated);
 }
 

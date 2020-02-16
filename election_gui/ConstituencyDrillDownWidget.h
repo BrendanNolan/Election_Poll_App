@@ -11,18 +11,18 @@ class QItemSelectionModel;
 
 namespace Ui
 {
-    class PoliticianListWidget;
+    class ConstituencyDrillDownWidget;
 }
 
-class PoliticianListWidget : public QWidget
+class ConstituencyDrillDownWidget : public QWidget
 {
     Q_OBJECT
 
 public:
-    PoliticianListWidget(
+    ConstituencyDrillDownWidget(
         QWidget* parent = nullptr,
         Qt::WindowFlags flags = Qt::WindowFlags());
-    ~PoliticianListWidget();
+    ~ConstituencyDrillDownWidget();
 
     void setPoliticianModel(PoliticianPictureProxyModel* model);
     void setPoliticianSelectionModel(QItemSelectionModel* selectionModel);
@@ -51,7 +51,7 @@ private:
     ConstituencyModel* constituencyModel_ = nullptr;
     QItemSelectionModel* constituencySelectionModel_ = nullptr;
 
-    Ui::PoliticianListWidget* ui_;
+    Ui::ConstituencyDrillDownWidget* ui_;
 };
 
 #endif // CONSTITUENCYDRILLDOWNWIDGET_H

@@ -1,5 +1,5 @@
-#include "PoliticianListWidget.h"
-#include "ui_PoliticianListWidget.h"
+#include "ConstituencyDrillDownWidget.h"
+#include "ui_ConstituencyDrillDownWidget.h"
 
 #include <QtGlobal>
 
@@ -12,11 +12,11 @@
 #include "PoliticianModel.h"
 #include "PoliticianPictureProxyModel.h"
 
-PoliticianListWidget::PoliticianListWidget(
+ConstituencyDrillDownWidget::ConstituencyDrillDownWidget(
     QWidget* parent, 
     Qt::WindowFlags flags)
     : QWidget(parent, flags)
-    , ui_(new Ui::PoliticianListWidget)
+    , ui_(new Ui::ConstituencyDrillDownWidget)
     , politicianProxyModel_(nullptr)
 {
     ui_->setupUi(this);
@@ -25,12 +25,12 @@ PoliticianListWidget::PoliticianListWidget(
     ui_->politicianListView->setItemDelegate(new PoliticianDelegate(this));
 }
 
-PoliticianListWidget::~PoliticianListWidget()
+ConstituencyDrillDownWidget::~ConstituencyDrillDownWidget()
 {
     delete ui_;
 }
 
-void PoliticianListWidget::setPoliticianModel(PoliticianPictureProxyModel* model)
+void ConstituencyDrillDownWidget::setPoliticianModel(PoliticianPictureProxyModel* model)
 {
     politicianProxyModel_ = model;
     ui_->politicianListView->setModel(model);
@@ -63,22 +63,22 @@ void PoliticianListWidget::setPoliticianModel(PoliticianPictureProxyModel* model
         });
 }
 
-void PoliticianListWidget::setPoliticianSelectionModel(
+void ConstituencyDrillDownWidget::setPoliticianSelectionModel(
     QItemSelectionModel* selectionModel)
 {
     Q_ASSERT(selectionModel->model() == politicianProxyModel_);
     ui_->politicianListView->setSelectionModel(selectionModel);
 }
 
-void PoliticianListWidget::setConstituencyModel(ConstituencyModel* model)
+void ConstituencyDrillDownWidget::setConstituencyModel(ConstituencyModel* model)
 {
     constituencyModel_ = model;
     loadConstituency();
     connect(model, &QAbstractItemModel::dataChanged,
-        this, &PoliticianListWidget::onConstituencyDataChanged);
+        this, &ConstituencyDrillDownWidget::onConstituencyDataChanged);
 }
 
-void PoliticianListWidget::onConstituencyDataChanged(
+void ConstituencyDrillDownWidget::onConstituencyDataChanged(
     const QModelIndex& topLeft,
     const QModelIndex& bottomRight)
 {
@@ -92,7 +92,7 @@ void PoliticianListWidget::onConstituencyDataChanged(
         loadConstituency();
 }
 
-void PoliticianListWidget::setConstituencySelectionModel(
+void ConstituencyDrillDownWidget::setConstituencySelectionModel(
     QItemSelectionModel* selectionModel)
 {
     constituencySelectionModel_ = selectionModel;
@@ -101,12 +101,12 @@ void PoliticianListWidget::setConstituencySelectionModel(
         [this]() { loadConstituency(); });
 }
 
-QModelIndexList PoliticianListWidget::selectedPoliticians() const
+QModelIndexList ConstituencyDrillDownWidget::selectedPoliticians() const
 {
     return ui_->politicianListView->selectionModel()->selectedRows();
 }
 
-QModelIndex PoliticianListWidget::constituencyToDisplay() const
+QModelIndex ConstituencyDrillDownWidget::constituencyToDisplay() const
 {
     if (!constituencyModel_) 
         return QModelIndex();
@@ -118,7 +118,7 @@ QModelIndex PoliticianListWidget::constituencyToDisplay() const
     return indexList.first();
 }
 
-void PoliticianListWidget::loadConstituency()
+void ConstituencyDrillDownWidget::loadConstituency()
 { 
     auto constituencyIndex = constituencyToDisplay();
     if (!constituencyIndex.isValid() || !politicianProxyModel_)
@@ -138,7 +138,7 @@ void PoliticianListWidget::loadConstituency()
     politicianProxyModel_->politicianModel()->setConstituency(constituencyId);
 }
 
-void PoliticianListWidget::setToInvalidState()
+void ConstituencyDrillDownWidget::setToInvalidState()
 {
     if (politicianProxyModel_)
         politicianProxyModel_->politicianModel()->setConstituency(-1);
@@ -146,13 +146,13 @@ void PoliticianListWidget::setToInvalidState()
     disableRadioButtons();
 }
 
-void PoliticianListWidget::enableRadioButtons()
+void ConstituencyDrillDownWidget::enableRadioButtons()
 {
     ui_->mpsRadioButton->setEnabled(true);
     ui_->candidatesRadioButton->setEnabled(true);
 }
 
-void PoliticianListWidget::disableRadioButtons()
+void ConstituencyDrillDownWidget::disableRadioButtons()
 {
     ui_->mpsRadioButton->setDisabled(true);
     ui_->candidatesRadioButton->setDisabled(true);

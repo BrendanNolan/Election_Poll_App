@@ -15,7 +15,7 @@
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
-    <widget class="PoliticianListWidget" name="politicianListWidget" native="true">
+    <widget class="ConstituencyDrillDownWidget" name="constituencyDrillDownWidget" native="true">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
        <horstretch>0</horstretch>
@@ -100,9 +100,9 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>PoliticianListWidget</class>
+   <class>ConstituencyDrillDownWidget</class>
    <extends>QWidget</extends>
-   <header location="global">PoliticianListWidget.h</header>
+   <header location="global">ConstituencyDrillDownWidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

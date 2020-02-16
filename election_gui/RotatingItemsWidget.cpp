@@ -82,21 +82,20 @@ void RotatingItemsWidget::positionRotatingItems()
         else
             itemAlreadyInScene = true;
 
-        if (itemAlreadyInScene)
+        auto pos = item->pos();
+        auto currentRadius = distFromOrigin(pos);
+
+        if (itemAlreadyInScene && currentRadius != 0)
         {
-            auto pos = item->pos();
-            auto currentRadius = distFromOrigin(pos);
-            item->setPos(pos * newRadius / currentRadius);
+            item->setPos(pos * (newRadius / currentRadius));
         }
         else
         {
-
+            scene()->addItem(item);
+            auto pos = startPoint.rotatedAbout(
+                CartesianPoint(0.0, 0.0),
+                (i / static_cast<double>(itemCount)) * (2 * pi));
+            item->setPos(pos.x(), pos.y());
         }
-
-        scene()->addItem(rotatingItems_[i]);
-        auto pos = startPoint.rotatedAbout(
-            CartesianPoint(0.0, 0.0),
-            (i / static_cast<double>(itemCount)) * (2 * pi));
-        rotatingItems_[i]->setPos(pos.x(), pos.y());
     }
 }

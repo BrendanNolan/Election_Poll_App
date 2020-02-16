@@ -143,7 +143,6 @@ namespace geom_utils
         return PolarPoint(r, theta);
     }
 
-
     CartesianPoint polarToCartesian(const PolarPoint& polarPoint)
     {
         CartesianPoint cartPoint;

@@ -82,6 +82,8 @@ namespace geom_utils
 
     double dist(const CartesianPoint& a, const CartesianPoint& b);
 
+    double distFromOrigin(const QPointF& point);
+
 };
 
 #endif // ELECTION_GUI_UTILS_H

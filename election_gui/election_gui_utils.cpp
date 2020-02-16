@@ -158,4 +158,11 @@ namespace geom_utils
             std::pow(a.x() - b.x(), 2) + std::pow(a.y() - b.y(), 2));
     }
 
+    double geom_utils::distFromOrigin(const QPointF& point)
+    {
+        return static_cast<double>(std::sqrt(
+            std::pow(point.x(), 2) + 
+            std::pow(point.y(), 2)));
+    }
+
 }

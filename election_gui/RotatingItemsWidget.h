@@ -18,23 +18,23 @@ public:
 
     void setRotatingItems(const QVector<QGraphicsItem*>& items);
     void setRotationRadius(double radius);
-    void setSizeForRotatingItems(const QSize& size);
+    double preferredRotationRadius() const;
 
     void freeze();
     void unfreeze();
 
 public slots:
-    void rotateItems();
+    void rotateItems();   
 
 private:
-    double calculateSensibleRadiusForRotatingItemsCircle();
-    QSize calculateSensibleSizeForRotatingItems();
+    void positionRotatingItems();
 
 private:
     QTimer rotationTimer_;
     int milisecInterval_ = 250;
 
     double rotationAngle_ = (2.0 * geom_utils::pi) / 10.0;
+    double rotationRadius_ = 0.0;
 
     QVector<QGraphicsItem*> rotatingItems_;
 };

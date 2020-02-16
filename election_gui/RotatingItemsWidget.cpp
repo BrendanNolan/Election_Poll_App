@@ -17,27 +17,12 @@ void RotatingItemsWidget::setRotatingItems(const QVector<QGraphicsItem*>& items)
 {
     qDeleteAll(rotatingItems_);
     rotatingItems_ = items;
+
     if (rotatingItems_.isEmpty())
         return;
 
-    auto radiusOfRotatingItemsCircle = 
-        calculateSensibleRadiusForRotatingItemsCircle();
-    auto sizeOfRotatingItems = calculateSensibleSizeForRotatingItems();
-
-    auto itemCount = rotatingItems_.size();
-
-    using namespace geom_utils;
-
-    CartesianPoint startPoint(0.0, radiusOfRotatingItemsCircle);
-    for (auto i = 0; i < itemCount; ++i)
-    {
-        rotatingItems_[i]->setSize(sizeOfRotatingItems);
-        scene()->addItem(rotatingItems_[i]);
-        auto pos = startPoint.rotatedAbout(
-            CartesianPoint(0.0, 0.0),
-            (i / static_cast<double>(itemCount)) * (2 * pi));
-        rotatingItems_[i]->setPos(pos.x(), pos.y());
-    }
+    for (auto item : rotatingItems_)
+        scene()->addItem(item);
 }
 
 void RotatingItemsWidget::freeze()
@@ -65,17 +50,53 @@ void RotatingItemsWidget::rotateItems()
     }
 }
 
-double RotatingItemsWidget::calculateSensibleRadiusForRotatingItemsCircle()
+void RotatingItemsWidget::setRotationRadius(double radius)
+{
+    rotationRadius_ = radius;
+    positionRotatingItems();
+}
+
+double RotatingItemsWidget::preferredRotationRadius() const
 {
     auto totalWidgetSize = size();
     return 0.45 * std::min(
         totalWidgetSize.width(), totalWidgetSize.height());
 }
 
-QSize RotatingItemsWidget::calculateSensibleSizeForRotatingItems()
+void RotatingItemsWidget::positionRotatingItems()
 {
-    auto totalWidgetSize = size();
-    auto desiredSquareEdgeLength = std::min(
-        totalWidgetSize.width(), totalWidgetSize.height());
-    return QSize(desiredSquareEdgeLength, desiredSquareEdgeLength);
+    using namespace geom_utils;
+    auto itemCount = rotatingItems_.size();
+    auto newRadius = rotationRadius_;
+    CartesianPoint startPoint(0.0, newRadius);
+    for (auto i = 0; i < itemCount; ++i)
+    {
+        auto item = rotatingItems_[i];
+        auto itemAlreadyInScene = false;
+        auto iter = std::find(
+            scene()->items().cbegin(),
+            scene()->items().cend(),
+            item);
+        if (iter == scene()->items().cend())
+            itemAlreadyInScene = false;
+        else
+            itemAlreadyInScene = true;
+
+        if (itemAlreadyInScene)
+        {
+            auto pos = item->pos();
+            auto currentRadius = distFromOrigin(pos);
+            item->setPos(pos * newRadius / currentRadius);
+        }
+        else
+        {
+
+        }
+
+        scene()->addItem(rotatingItems_[i]);
+        auto pos = startPoint.rotatedAbout(
+            CartesianPoint(0.0, 0.0),
+            (i / static_cast<double>(itemCount)) * (2 * pi));
+        rotatingItems_[i]->setPos(pos.x(), pos.y());
+    }
 }

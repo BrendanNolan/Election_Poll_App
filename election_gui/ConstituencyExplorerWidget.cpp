@@ -10,9 +10,9 @@ ConstituencyExplorerWidget::ConstituencyExplorerWidget(QWidget* parent)
     , ui_(new Ui::ConstituencyExplorerWidget)
 {
     ui_->setupUi(this);
-    connect(ui_->politicianListWidget, &ConstituencyDrillDownWidget::pictureActivated,
+    connect(ui_->constituencyDrillDownWidget, &ConstituencyDrillDownWidget::pictureActivated,
         this, &ConstituencyExplorerWidget::politicianActivated);
-    connect(ui_->politicianListWidget, &ConstituencyDrillDownWidget::picturesActivated,
+    connect(ui_->constituencyDrillDownWidget, &ConstituencyDrillDownWidget::picturesActivated,
         this, &ConstituencyExplorerWidget::politiciansActivated);
 }
 
@@ -25,26 +25,26 @@ void ConstituencyExplorerWidget::setConstituencyModel(
     ConstituencyPixmapProxyModel* model)
 {
     ui_->constituencyWidget->setModel(model);
-    ui_->politicianListWidget->setConstituencyModel(model->constituencyModel());
+    ui_->constituencyDrillDownWidget->setConstituencyModel(model->constituencyModel());
 }
 
 void ConstituencyExplorerWidget::setConstituencySelectionModel(
     QItemSelectionModel* selectionModel)
 {
     ui_->constituencyWidget->setSelectionModel(selectionModel);
-    ui_->politicianListWidget->setConstituencySelectionModel(selectionModel);
+    ui_->constituencyDrillDownWidget->setConstituencySelectionModel(selectionModel);
 }
 
 void ConstituencyExplorerWidget::setPoliticianModel(
     PoliticianPictureProxyModel* model)
 {
-    ui_->politicianListWidget->setPoliticianModel(model);
+    ui_->constituencyDrillDownWidget->setPoliticianModel(model);
 }
 
 void ConstituencyExplorerWidget::setPoliticianSelectionModel(
     QItemSelectionModel* selectionModel)
 {
-    ui_->politicianListWidget->setPoliticianSelectionModel(selectionModel);
+    ui_->constituencyDrillDownWidget->setPoliticianSelectionModel(selectionModel);
 }
 
 QHBoxLayout* ConstituencyExplorerWidget::buttonLayout()

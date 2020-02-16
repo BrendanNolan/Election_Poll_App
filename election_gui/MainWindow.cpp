@@ -91,7 +91,6 @@ void MainWindow::asynchronouslyRefreshData()
     rotatingItemsLoadScreen_->setVerticalScrollBarPolicy(
         Qt::ScrollBarAlwaysOff);
     rotatingItemsLoadScreen_->setRotatingItems(politicianGraphicsItems);
-    rotatingItemsLoadScreen_->setFixedSize(rect().size() * 1.0 / 2.0);
     rotatingItemsLoadScreen_->setWindowModality(Qt::ApplicationModal);
     rotatingItemsLoadScreen_->move(
         rect().topLeft()

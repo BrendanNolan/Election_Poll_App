@@ -3,6 +3,7 @@
 
 #include <QGraphicsItem>
 #include <QGraphicsView>
+#include <QSize>
 #include <QTimer>
 #include <QVector>
 
@@ -16,6 +17,8 @@ public:
     RotatingItemsWidget(QWidget* parent = nullptr);
 
     void setRotatingItems(const QVector<QGraphicsItem*>& items);
+    void setRotationRadius(double radius);
+    void setSizeForRotatingItems(const QSize& size);
 
     void freeze();
     void unfreeze();
@@ -24,14 +27,16 @@ public slots:
     void rotateItems();
 
 private:
-    void setRadiusOfRotatingItemsCircle(); // Needs proper implentation.
+    double calculateSensibleRadiusForRotatingItemsCircle();
+    QSize calculateSensibleSizeForRotatingItems();
 
 private:
     QTimer rotationTimer_;
     int milisecInterval_ = 250;
+
     double rotationAngle_ = (2.0 * geom_utils::pi) / 10.0;
+
     QVector<QGraphicsItem*> rotatingItems_;
-    double radiusOfRotatingItemsCircle_ = 0.0;
 };
 
 #endif // ROTATINGITEMSWIDGET_H

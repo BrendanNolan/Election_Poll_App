@@ -20,15 +20,18 @@ void RotatingItemsWidget::setRotatingItems(const QVector<QGraphicsItem*>& items)
     if (rotatingItems_.isEmpty())
         return;
 
-    setRadiusOfRotatingItemsCircle();
+    auto radiusOfRotatingItemsCircle = 
+        calculateSensibleRadiusForRotatingItemsCircle();
+    auto sizeOfRotatingItems = calculateSensibleSizeForRotatingItems();
 
     auto itemCount = rotatingItems_.size();
 
     using namespace geom_utils;
 
-    CartesianPoint startPoint(0.0, radiusOfRotatingItemsCircle_);
+    CartesianPoint startPoint(0.0, radiusOfRotatingItemsCircle);
     for (auto i = 0; i < itemCount; ++i)
     {
+        rotatingItems_[i]->setSize(sizeOfRotatingItems);
         scene()->addItem(rotatingItems_[i]);
         auto pos = startPoint.rotatedAbout(
             CartesianPoint(0.0, 0.0),
@@ -62,7 +65,17 @@ void RotatingItemsWidget::rotateItems()
     }
 }
 
-void RotatingItemsWidget::setRadiusOfRotatingItemsCircle()
+double RotatingItemsWidget::calculateSensibleRadiusForRotatingItemsCircle()
 {
-    radiusOfRotatingItemsCircle_ = 100.0;
+    auto totalWidgetSize = size();
+    return 0.45 * std::min(
+        totalWidgetSize.width(), totalWidgetSize.height());
+}
+
+QSize RotatingItemsWidget::calculateSensibleSizeForRotatingItems()
+{
+    auto totalWidgetSize = size();
+    auto desiredSquareEdgeLength = std::min(
+        totalWidgetSize.width(), totalWidgetSize.height());
+    return QSize(desiredSquareEdgeLength, desiredSquareEdgeLength);
 }

@@ -5,7 +5,7 @@ TEMPLATE = app
 
 HEADERS += \
     ConstituencyWidget.h \
-    PoliticianListWidget.h \
+    ConstituencyDrillDownWidget.h \
     ConstituencyExplorerWidget.h \
     RectanglePositionCalculator.h \
     MainWindow.h \
@@ -18,7 +18,7 @@ HEADERS += \
 
 SOURCES += \
     ConstituencyWidget.cpp \
-    PoliticianListWidget.cpp \
+    ConstituencyDrillDownWidget.cpp \
     ConstituencyExplorerWidget.cpp \
     RectanglePositionCalculator.cpp \
     main.cpp \
@@ -31,7 +31,7 @@ SOURCES += \
     RotatingItemsWidget.cpp
 
 FORMS += \
-    PoliticianListWidget.ui \
+    ConstituencyDrillDownWidget.ui \
     ConstituencyExplorerWidget.ui
 
 INCLUDEPATH += \

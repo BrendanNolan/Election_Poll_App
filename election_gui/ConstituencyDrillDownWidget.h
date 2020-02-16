@@ -1,5 +1,5 @@
-#ifndef PoliticianListWidget_H
-#define PoliticianListWidget_H
+#ifndef CONSTITUENCYDRILLDOWNWIDGET_H
+#define CONSTITUENCYDRILLDOWNWIDGET_H
 
 #include <QModelIndex>
 #include <QWidget>
@@ -54,4 +54,4 @@ private:
     Ui::PoliticianListWidget* ui_;
 };
 
-#endif // PoliticianListWidget_H
+#endif // CONSTITUENCYDRILLDOWNWIDGET_H

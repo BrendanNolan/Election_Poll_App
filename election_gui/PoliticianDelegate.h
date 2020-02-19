@@ -8,7 +8,6 @@ class PoliticianDelegate : public QStyledItemDelegate
 public:
     PoliticianDelegate(QObject* parent = nullptr);
     
-public:
     void paint(
         QPainter* painter, 
         const QStyleOptionViewItem& option, 

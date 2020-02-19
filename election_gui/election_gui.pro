@@ -14,8 +14,7 @@ HEADERS += \
     PoliticianDelegate.h \
     PollGraphDelegate.h \
     election_gui_utils.h \
-    RotatingItemsWidget.h \
-    PoliticianModelStatusSelectorWidget.h
+    RotatingItemsWidget.h
 
 SOURCES += \
     ConstituencyWidget.cpp \
@@ -29,8 +28,7 @@ SOURCES += \
     PoliticianDelegate.cpp \
     PollGraphDelegate.cpp \
     election_gui_utils.cpp \
-    RotatingItemsWidget.cpp \
-    PoliticianModelStatusSelectorWidget.cpp
+    RotatingItemsWidget.cpp
 
 FORMS += \
     ConstituencyDrillDownWidget.ui \

@@ -10,6 +10,8 @@
 #include "ConstituencyModel.h"
 #include "PoliticianDelegate.h"
 #include "PoliticianModel.h"
+#include "PoliticianPictureProxyModel.h"
+#include "PollResultmodel.h"
 
 ConstituencyDrillDownWidget::ConstituencyDrillDownWidget(
     QWidget* parent, 
@@ -60,7 +62,7 @@ void ConstituencyDrillDownWidget::setPollResultModel(PollResultModel* model)
 void ConstituencyDrillDownWidget::setPollResultSelectionModel(
     QItemSelectionModel* selectionModel)
 {
-    Q_ASSERT(selectionModel->model() == ui_->pollResultView->model());
+    Q_ASSERT(selectionModel->model() == ui_->pollResultListView->model());
     ui_->pollResultListView->setSelectionModel(selectionModel);
 }
 

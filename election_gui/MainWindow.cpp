@@ -34,20 +34,16 @@ MainWindow::MainWindow(QWidget* parent)
 
     politicianModel_ = new PoliticianModel(factory, this);
     constituencyModel_ = new ConstituencyModel(factory, this);
-    auto constituencyProxyModel = new ConstituencyPixmapProxyModel(
-        this, constituencyModel_, politicianModel_);
     auto constituencySelectionModel = new QItemSelectionModel(
-        constituencyProxyModel);
+        constituencyModel_);
 
-    auto politicianProxyModel = new PoliticianPictureProxyModel(
-        this, politicianModel_);
     auto politicianSelectionModel = new QItemSelectionModel(
-        politicianProxyModel);
+        politicianModel_);
 
-    constituencyExplorerWidget_->setPoliticianModel(politicianProxyModel);
+    constituencyExplorerWidget_->setPoliticianModel(politicianModel_);
     constituencyExplorerWidget_->setPoliticianSelectionModel(
         politicianSelectionModel);
-    constituencyExplorerWidget_->setConstituencyModel(constituencyProxyModel);
+    constituencyExplorerWidget_->setConstituencyModel(constituencyModel_);
     constituencyExplorerWidget_->setConstituencySelectionModel(
         constituencySelectionModel);
 

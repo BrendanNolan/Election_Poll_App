@@ -75,7 +75,7 @@
       <widget class="QListView" name="politicianListView"/>
      </item>
      <item>
-      <widget class="QListView" name="pollresultListView"/>
+      <widget class="QListView" name="pollResultListView"/>
      </item>
     </layout>
    </item>

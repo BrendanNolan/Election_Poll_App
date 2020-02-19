@@ -14,6 +14,11 @@ class QGraphicsScene;
 class QItemSelectionModel;
 class QPoint;
 
+/*
+    Should just keep a ConstituencyModel and, in ConstituencyWidget::setModel(), 
+    make a proxy model parented to the ConstituencyWidget instance.
+*/
+
 class ConstituencyWidget : public QGraphicsView
 {
     Q_OBJECT

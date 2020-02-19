@@ -7,6 +7,7 @@
 #include <QtGlobal>
 
 #include "ConstituencyModel.h"
+#include "ConstituencyPixmapProxyModel.h"
 #include "PoliticianModel.h"
 #include "PollResultModel.h"
 
@@ -37,7 +38,13 @@ void ConstituencyExplorerWidget::setConstituencyModel(
     ConstituencyModel* model)
 {
     constituencyModel_ = model;
-    ui_->constituencyWidget->setModel(model);
+    if (!politicianModel_)
+        return;
+    auto proxyModel = new ConstituencyPixmapProxyModel(
+        ui_->constituencyWidget,
+        constituencyModel_,
+        politicianModel_);
+    ui_->constituencyWidget->setModel(proxyModel);
 }
 
 void ConstituencyExplorerWidget::setConstituencySelectionModel(

@@ -40,7 +40,7 @@ void ConstituencyDrillDownWidget::setPoliticianModel(
 {
     politicianModel_ = model;
     auto proxyModel = new PoliticianPictureProxyModel(
-        this, 
+        ui_->politicianListView,
         politicianModel_);
     ui_->politicianListView->setModel(proxyModel);
 }

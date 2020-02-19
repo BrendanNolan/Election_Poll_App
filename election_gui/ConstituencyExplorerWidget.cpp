@@ -15,6 +15,7 @@ ConstituencyExplorerWidget::ConstituencyExplorerWidget(QWidget* parent)
     , ui_(new Ui::ConstituencyExplorerWidget)
 {
     ui_->setupUi(this);
+
     connect(
         ui_->constituencyDrillDownWidget, 
         &ConstituencyDrillDownWidget::pictureActivated,
@@ -37,8 +38,6 @@ void ConstituencyExplorerWidget::setConstituencyModel(
 {
     constituencyModel_ = model;
     ui_->constituencyWidget->setModel(model);
-    ui_->constituencyDrillDownWidget->setConstituencyModel(
-        model);
 }
 
 void ConstituencyExplorerWidget::setConstituencySelectionModel(
@@ -47,21 +46,18 @@ void ConstituencyExplorerWidget::setConstituencySelectionModel(
     if (selectionModel)
         Q_ASSERT(selectionModel->model() == constituencyModel_);
     constituencySelectionModel_ = selectionModel;
-    ui_->constituencyWidget->setSelectionModel(selectionModel);
-    ui_->constituencyDrillDownWidget->setConstituencySelectionModel(
-        selectionModel);
-    setConstituency();
-    connect(selectionModel, &QItemSelectionModel::selectionChanged,
-        this, &ConstituencyExplorerWidget::setConstituency);
+    ui_->constituencyWidget->setSelectionModel(constituencySelectionModel_);
+    onConstituencySelectionChanged();
+    connect(constituencySelectionModel_, &QItemSelectionModel::selectionChanged,
+        this, &ConstituencyExplorerWidget::onConstituencySelectionChanged);
 }
 
 void ConstituencyExplorerWidget::setPoliticianModel(
     PoliticianModel* model)
 {
     politicianModel_ = model;
-    ui_->constituencyDrillDownWidget->setPoliticianModel(model);
-    ui_->constituencyWidget->setPoliticianModel(model);
-    setConstituency();
+    politicianModel_->setConstituency(currentConstituencyId());
+    ui_->constituencyDrillDownWidget->setPoliticianModel(politicianModel_);
 }
 
 void ConstituencyExplorerWidget::setPoliticianSelectionModel(
@@ -71,23 +67,50 @@ void ConstituencyExplorerWidget::setPoliticianSelectionModel(
         selectionModel);
 }
 
+void ConstituencyExplorerWidget::setPollResultModel(PollResultModel* model)
+{
+    pollResultModel_ = model;
+    pollResultModel_->setConstituency(currentConstituencyId());
+    ui_->constituencyDrillDownWidget->setPollResultModel(pollResultModel_);
+}
+
+void ConstituencyExplorerWidget::setPollResultSelectionModel(
+    QItemSelectionModel* selectionModel)
+{
+    ui_->constituencyDrillDownWidget->setPollResultSelectionModel(
+        selectionModel);
+}
+
 QHBoxLayout* ConstituencyExplorerWidget::buttonLayout()
 {
     return ui_->buttonLayout;
 }
 
-void ConstituencyExplorerWidget::setConstituency()
+void ConstituencyExplorerWidget::onConstituencySelectionChanged()
 {
-    if (!constituencySelectionModel_)
-        return;
-    auto selectedIndexes = constituencySelectionModel_->selectedIndexes();
-    if (selectedIndexes.isEmpty())
-        return;
-    auto selectedIndex = selectedIndexes.first();
-    auto constituencyId = constituencyModel_->data(
-        selectedIndex, ConstituencyModel::IdRole).toInt();
     if (politicianModel_)
-        politicianModel_->setConstituency(constituencyId);
+        politicianModel_->setConstituency(currentConstituencyId());
     if (pollResultModel_)
-        pollResultModel_->setConstituency
+        pollResultModel_->setConstituency(currentConstituencyId());
+}
+
+int ConstituencyExplorerWidget::currentConstituencyId() const
+{
+    if (!constituencySelectionModel_ ||
+        constituencySelectionModel_->selectedIndexes().isEmpty())
+    {
+        if (constituencyModel_)
+        {
+            return constituencyModel_->data(
+                constituencyModel_->index(0, 0), 
+                ConstituencyModel::IdRole).toInt();
+        }
+        
+        return -1;
+    }
+
+    auto selectedIndex = constituencySelectionModel_->selectedIndexes().first();
+    return constituencyModel_->data(
+        selectedIndex, 
+        ConstituencyModel::IdRole).toInt();
 }

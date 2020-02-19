@@ -10,17 +10,24 @@
 #include "ConstituencyModel.h"
 #include "PoliticianDelegate.h"
 #include "PoliticianModel.h"
-#include "PoliticianPictureProxyModel.h"
 
 ConstituencyDrillDownWidget::ConstituencyDrillDownWidget(
     QWidget* parent, 
     Qt::WindowFlags flags)
     : QWidget(parent, flags)
     , ui_(new Ui::ConstituencyDrillDownWidget)
-    , politicianProxyModel_(nullptr)
+    , politicianModel_(nullptr)
 {
     ui_->setupUi(this);
+    // Could use dependency inhjection to create two delegates here.
+    // Will need a new general delegate class and then inject functionality
+    // for politicians and poll results.
     ui_->politicianListView->setItemDelegate(new PoliticianDelegate(this));
+    
+    connect(ui_->sittingRadioButton, &QRadioButton::toggled, 
+        this, &ConstituencyDrillDownWidget::onSittingRadioButtonToggled);
+    connect(ui_->candidatesRadioButton, &QRadioButton::toggled,
+        this, &ConstituencyDrillDownWidget::onCandidatesRadioButtonToggled);
 }
 
 ConstituencyDrillDownWidget::~ConstituencyDrillDownWidget()
@@ -29,48 +36,48 @@ ConstituencyDrillDownWidget::~ConstituencyDrillDownWidget()
 }
 
 void ConstituencyDrillDownWidget::setPoliticianModel(
-    PoliticianPictureProxyModel* model)
+    PoliticianModel* model)
 {
-    ui_->politicianListView->setModel(model);
-    loadConstituency();
+    politicianModel_ = model;
+    auto proxyModel = new PoliticianPictureProxyModel(
+        this, 
+        politicianModel_);
+    ui_->politicianListView->setModel(proxyModel);
 }
 
 void ConstituencyDrillDownWidget::setPoliticianSelectionModel(
     QItemSelectionModel* selectionModel)
 {
-    Q_ASSERT(selectionModel->model() == politicianProxyModel_);
+    Q_ASSERT(selectionModel->model() == politicianModel_);
     ui_->politicianListView->setSelectionModel(selectionModel);
 }
 
-void ConstituencyDrillDownWidget::setConstituencyModel(ConstituencyModel* model)
+void ConstituencyDrillDownWidget::setPollResultModel(PollResultModel* model)
 {
-    constituencyModel_ = model;
-    loadConstituency();
-    connect(model, &QAbstractItemModel::dataChanged,
-        this, &ConstituencyDrillDownWidget::onConstituencyDataChanged);
+    ui_->pollResultListView->setModel(model);
 }
 
-void ConstituencyDrillDownWidget::onConstituencyDataChanged(
-    const QModelIndex& topLeft,
-    const QModelIndex& bottomRight)
-{
-    auto toDisplay = constituencyToDisplay();
-    if (!toDisplay.isValid())
-    {
-        setToInvalidState();
-        return;
-    }
-    if (QItemSelectionRange(topLeft, bottomRight).contains(toDisplay))
-        loadConstituency();
-}
-
-void ConstituencyDrillDownWidget::setConstituencySelectionModel(
+void ConstituencyDrillDownWidget::setPollResultSelectionModel(
     QItemSelectionModel* selectionModel)
 {
-    constituencySelectionModel_ = selectionModel;
-    loadConstituency();
-    connect(selectionModel, &QItemSelectionModel::selectionChanged,
-        [this]() { loadConstituency(); });
+    Q_ASSERT(selectionModel->model() == ui_->pollResultView->model());
+    ui_->pollResultListView->setSelectionModel(selectionModel);
+}
+
+void ConstituencyDrillDownWidget::onCandidatesRadioButtonToggled(bool checked)
+{
+    if (!checked || !politicianModel_)
+        return;
+    politicianModel_->setElectoralStatus(
+        PoliticianModel::ElectoralStatus::CANDIDATE);
+}
+
+void ConstituencyDrillDownWidget::onSittingRadioButtonToggled(bool checked)
+{
+    if (!checked || !politicianModel_)
+        return;
+    politicianModel_->setElectoralStatus(
+        PoliticianModel::ElectoralStatus::SITTING);
 }
 
 QModelIndexList ConstituencyDrillDownWidget::selectedPoliticians() const
@@ -78,52 +85,26 @@ QModelIndexList ConstituencyDrillDownWidget::selectedPoliticians() const
     return ui_->politicianListView->selectionModel()->selectedRows();
 }
 
-QModelIndex ConstituencyDrillDownWidget::constituencyToDisplay() const
-{
-    if (!constituencyModel_) 
-        return QModelIndex();
-    if (!constituencySelectionModel_)
-        return constituencyModel_->index(0);
-    auto indexList = constituencySelectionModel_->selectedIndexes(); 
-    if (indexList.isEmpty())
-        return constituencyModel_->index(0);
-    return indexList.first();
-}
-
-void ConstituencyDrillDownWidget::loadConstituency()
+void ConstituencyDrillDownWidget::setDisplayedConstituencyName(
+    const QString& name)
 { 
-    auto constituencyIndex = constituencyToDisplay();
-    if (!constituencyIndex.isValid() || !politicianProxyModel_)
-    {
-        setToInvalidState();
-        return;
-    }
-
-    enableRadioButtons();
-    
-    auto constituencyName = constituencyModel_->data(
-        constituencyIndex, ConstituencyModel::NameRole).toString();
-    ui_->constituencyLabel->setText(constituencyName);
-
-    auto constituencyId = constituencyModel_->data(
-        constituencyIndex, ConstituencyModel::IdRole).toInt();
-    politicianProxyModel_->politicianModel()->setConstituency(constituencyId);
+    ui_->constituencyLabel->setText(name);
 }
 
 void ConstituencyDrillDownWidget::setToInvalidState()
 {
-    if (politicianProxyModel_)
-        politicianProxyModel_->politicianModel()->setConstituency(-1);
     ui_->constituencyLabel->setText("<Constituency Name>");
     disableRadioButtons();
 }
 
 void ConstituencyDrillDownWidget::enableRadioButtons()
 {
-    ui_->politicianStatusWidget->enableRadioButtons();
+    ui_->sittingRadioButton->setEnabled(true);
+    ui_->candidatesRadioButton->setEnabled(true);
 }
 
 void ConstituencyDrillDownWidget::disableRadioButtons()
 {
-    ui_->politicianStatusWidget->disableRadioButtons();
+    ui_->sittingRadioButton->setEnabled(false);
+    ui_->candidatesRadioButton->setEnabled(false);
 }

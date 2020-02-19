@@ -4,10 +4,11 @@
 #include <QModelIndex>
 #include <QWidget>
 
-class ConstituencyModel;
-class PoliticianPictureProxyModel;
+class PoliticianModel;
+class PollResultModel;
 class QItemSelection;
 class QItemSelectionModel;
+class QRadioButton;
 
 namespace Ui
 {
@@ -24,29 +25,32 @@ public:
         Qt::WindowFlags flags = Qt::WindowFlags());
     ~ConstituencyDrillDownWidget();
 
-    void setPoliticianModel(PoliticianPictureProxyModel* model);
+    void setPoliticianModel(PoliticianModel* model);
     void setPoliticianSelectionModel(QItemSelectionModel* selectionModel);
-    void setConstituencyModel(ConstituencyModel* model);
-    void setConstituencySelectionModel(QItemSelectionModel* selectionModel);
+    void setPollResultModel(PollResultModel* model);
+    void setPollResultSelectionModel(QItemSelectionModel* selectionModel);
+
+    void setDisplayedConstituencyName(const QString& name);
+
+    QRadioButton& sittingRadioButton() const;
+    QRadioButton& candidatesRadioButton() const;
 
 signals:
     void pictureActivated(const QModelIndex& pictureIndex);
     void picturesActivated(const QModelIndexList& pictureIndexes);
 
 private slots:
-    void onConstituencyDataChanged(
-        const QModelIndex& topLeft, 
-        const QModelIndex& bottomRight);
+    void onSittingRadioButtonToggled(bool checked);
+    void onCandidatesRadioButtonToggled(bool checked);
 
 private:
     QModelIndexList	selectedPoliticians() const;
-    QModelIndex constituencyToDisplay() const;
-    void loadConstituency();
     void setToInvalidState();
     void enableRadioButtons();
     void disableRadioButtons();
 
 private:
+    PoliticianModel* politicianModel_;
     Ui::ConstituencyDrillDownWidget* ui_;
 };
 

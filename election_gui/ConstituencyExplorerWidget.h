@@ -37,7 +37,10 @@ signals:
     void politiciansActivated(const QList<QModelIndex>& politicianIndex);
 
 private slots:
-    void setConstituency();
+    void onConstituencySelectionChanged();
+    
+private:
+    int currentConstituencyId() const;
 
 private:
     PoliticianModel* politicianModel_ = nullptr;

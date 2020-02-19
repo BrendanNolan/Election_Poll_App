@@ -41,7 +41,18 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_5">
      <item>
-      <widget class="PolitcianModelStatusSelectorWidget" name="politicianStatusWidget" native="true"/>
+      <widget class="QRadioButton" name="sittingRadioButton">
+       <property name="text">
+        <string>Sitting</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QRadioButton" name="radioButton_2">
+       <property name="text">
+        <string>Candidates</string>
+       </property>
+      </widget>
      </item>
      <item>
       <spacer name="horizontalSpacer_2">
@@ -70,14 +81,6 @@
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>PolitcianModelStatusSelectorWidget</class>
-   <extends>QWidget</extends>
-   <header>PolitcianModelStatusSelectorWidget.h</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>

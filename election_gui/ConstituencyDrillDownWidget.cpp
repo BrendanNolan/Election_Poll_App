@@ -31,7 +31,6 @@ ConstituencyDrillDownWidget::~ConstituencyDrillDownWidget()
 void ConstituencyDrillDownWidget::setPoliticianModel(
     PoliticianPictureProxyModel* model)
 {
-    politicianProxyModel_ = model;
     ui_->politicianListView->setModel(model);
     loadConstituency();
 }

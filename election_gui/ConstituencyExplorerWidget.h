@@ -5,9 +5,10 @@
 #include <QModelIndex>
 #include <QWidget>
 
-class ConstituencyPixmapProxyModel;
+class ConstituencyModel;
 class ConstituencyWidget;
-class PoliticianPictureProxyModel;
+class PoliticianModel;
+class PollResultModel;
 class QHBoxLayout;
 class QItemSelectionModel;
 class QModelIndex;
@@ -22,10 +23,12 @@ public:
     ConstituencyExplorerWidget(QWidget* parent = nullptr);
     ~ConstituencyExplorerWidget();
 
-    void setConstituencyModel(ConstituencyPixmapProxyModel* model);
+    void setConstituencyModel(ConstituencyModel* model);
     void setConstituencySelectionModel(QItemSelectionModel* selectionModel);
-    void setPoliticianModel(PoliticianPictureProxyModel* model);
+    void setPoliticianModel(PoliticianModel* model);
     void setPoliticianSelectionModel(QItemSelectionModel* selectionModel);
+    void setPollResultModel(PollResultModel* model);
+    void setPollResultSelectionModel(QItemSelectionModel* selectionModel);
 
     QHBoxLayout* buttonLayout();
 
@@ -33,7 +36,15 @@ signals:
     void politicianActivated(const QModelIndex& politicianIndex);
     void politiciansActivated(const QList<QModelIndex>& politicianIndex);
 
+private slots:
+    void setConstituency();
+
 private:
+    PoliticianModel* politicianModel_ = nullptr;
+    ConstituencyModel* constituencyModel_ = nullptr;
+    PollResultModel* pollResultModel_;
+    QItemSelectionModel* constituencySelectionModel_ = nullptr;
+
     Ui::ConstituencyExplorerWidget* ui_;
 };
 

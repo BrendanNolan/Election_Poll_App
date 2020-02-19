@@ -47,10 +47,6 @@ private:
     void disableRadioButtons();
 
 private:
-    PoliticianPictureProxyModel* politicianProxyModel_ = nullptr;
-    ConstituencyModel* constituencyModel_ = nullptr;
-    QItemSelectionModel* constituencySelectionModel_ = nullptr;
-
     Ui::ConstituencyDrillDownWidget* ui_;
 };
 

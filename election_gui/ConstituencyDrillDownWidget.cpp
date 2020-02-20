@@ -8,7 +8,7 @@
 #include <QRadioButton>
 
 #include "ConstituencyModel.h"
-#include "PoliticianDelegate.h"
+#include "ThinPixmapDelegate.h"
 #include "PoliticianModel.h"
 #include "PoliticianPictureProxyModel.h"
 #include "PollResultmodel.h"
@@ -24,7 +24,7 @@ ConstituencyDrillDownWidget::ConstituencyDrillDownWidget(
     // Could use dependency inhjection to create two delegates here.
     // Will need a new general delegate class and then inject functionality
     // for politicians and poll results.
-    ui_->politicianListView->setItemDelegate(new PoliticianDelegate(this));
+    ui_->politicianListView->setItemDelegate(new ThinPixmapDelegate(this));
     
     connect(ui_->sittingRadioButton, &QRadioButton::toggled, 
         this, &ConstituencyDrillDownWidget::onSittingRadioButtonToggled);

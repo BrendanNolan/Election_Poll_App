@@ -1,15 +1,15 @@
-#include "PoliticianDelegate.h"
+#include "ThinPixmapDelegate.h"
 
 #include <QAbstractItemModel>
 #include <QModelIndex>
 #include <QPainter>
 #include <QPixmap>
 
-PoliticianDelegate::PoliticianDelegate(QObject* parent)
+ThinPixmapDelegate::ThinPixmapDelegate(QObject* parent)
     : QStyledItemDelegate(parent)
 {}
 
-void PoliticianDelegate::paint(
+void ThinPixmapDelegate::paint(
     QPainter* painter,
     const QStyleOptionViewItem& option,
     const QModelIndex& index) const
@@ -35,7 +35,7 @@ void PoliticianDelegate::paint(
     painter->restore();
 }
 
-QSize PoliticianDelegate::sizeHint(
+QSize ThinPixmapDelegate::sizeHint(
     const QStyleOptionViewItem& /*option*/,
     const QModelIndex& index) const
 {

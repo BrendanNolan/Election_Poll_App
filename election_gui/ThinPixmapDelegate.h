@@ -3,10 +3,10 @@
 
 #include <QStyledItemDelegate>
 
-class PoliticianDelegate : public QStyledItemDelegate
+class ThinPixmapDelegate : public QStyledItemDelegate
 {
 public:
-    PoliticianDelegate(QObject* parent = nullptr);
+    ThinPixmapDelegate(QObject* parent = nullptr);
     
     void paint(
         QPainter* painter, 

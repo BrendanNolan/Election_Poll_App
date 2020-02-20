@@ -11,8 +11,7 @@ HEADERS += \
     MainWindow.h \
     PoliticianPictureProxyModel.h \
     ConstituencyPixmapProxyModel.h \
-    PoliticianDelegate.h \
-    PollGraphDelegate.h \
+    ThinPixmapDelegate.h \
     election_gui_utils.h \
     RotatingItemsWidget.h
 
@@ -25,8 +24,7 @@ SOURCES += \
     MainWindow.cpp \
     PoliticianPictureProxyModel.cpp \
     ConstituencyPixmapProxyModel.cpp \
-    PoliticianDelegate.cpp \
-    PollGraphDelegate.cpp \
+    ThinPixmapDelegate.cpp \
     election_gui_utils.cpp \
     RotatingItemsWidget.cpp
 

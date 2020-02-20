@@ -31,6 +31,8 @@ void ConstituencyWidget::setModel(
 void ConstituencyWidget::setSelectionModel(QItemSelectionModel* selectionModel)
 {
     constituencySelectionModel_ = selectionModel;
+    connect(constituencySelectionModel_, &QItemSelectionModel::selectionChanged,
+        [this](const QItemSelection& selected) {});
     selectConstituencyInModel();
 }
 

@@ -13,11 +13,11 @@
 
 #include "ConstituencyExplorerWidget.h"
 #include "ConstituencyModel.h"
-#include "ConstituencyPixmapProxyModel.h"
 #include "election_core_definitions.h"
 #include "election_gui_utils.h"
 #include "PoliticianModel.h"
 #include "PoliticianPictureProxyModel.h"
+#include "PollResultModel.h"
 #include "RotatingItemsWidget.h"
 #include "SqlDatabaseManagerFactory.h"
 
@@ -27,25 +27,32 @@ MainWindow::MainWindow(QWidget* parent)
 {
     setCentralWidget(constituencyExplorerWidget_);
 
-    python_script_running::runPythonScript(QFileInfo(paths::scraperScript));
+    python_scripting::runPythonScript(QFileInfo(paths::scraperScript));
 
     auto factory = SqlDatabaseManagerFactory(QFileInfo(
         paths::databasePath));
 
     politicianModel_ = new PoliticianModel(factory, this);
+    auto politicianSelectionModel = new QItemSelectionModel(politicianModel_);
+
     constituencyModel_ = new ConstituencyModel(factory, this);
     auto constituencySelectionModel = new QItemSelectionModel(
         constituencyModel_);
 
-    auto politicianSelectionModel = new QItemSelectionModel(
-        politicianModel_);
+    pollResultModel_ = new PollResultModel(factory, this);
+    auto pollResultSelectionModel = new QItemSelectionModel(pollResultModel_);
 
     constituencyExplorerWidget_->setPoliticianModel(politicianModel_);
     constituencyExplorerWidget_->setPoliticianSelectionModel(
         politicianSelectionModel);
+
     constituencyExplorerWidget_->setConstituencyModel(constituencyModel_);
     constituencyExplorerWidget_->setConstituencySelectionModel(
         constituencySelectionModel);
+
+    constituencyExplorerWidget_->setPollResultModel(pollResultModel_);
+    constituencyExplorerWidget_->setPollResultSelectionModel(
+        pollResultSelectionModel);
 
     auto refreshDataButton = new QPushButton("Refresh Data");
     constituencyExplorerWidget_->buttonLayout()->addWidget(refreshDataButton);
@@ -59,7 +66,7 @@ MainWindow::MainWindow(QWidget* parent)
 void MainWindow::refreshData()
 {
     mutex_.lock();
-    python_script_running::runPythonScript(QFileInfo(paths::scraperScript));
+    python_scripting::runPythonScript(QFileInfo(paths::scraperScript));
     mutex_.unlock();
     refreshModels();
 }
@@ -133,4 +140,6 @@ void MainWindow::refreshModels()
         constituencyModel_->refresh();
     if (politicianModel_)
         politicianModel_->refresh();
+    if (pollResultModel_)
+        pollResultModel_->refresh();
 }

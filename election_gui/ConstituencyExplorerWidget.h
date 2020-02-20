@@ -45,7 +45,7 @@ private:
 private:
     PoliticianModel* politicianModel_ = nullptr;
     ConstituencyModel* constituencyModel_ = nullptr;
-    PollResultModel* pollResultModel_;
+    PollResultModel* pollResultModel_ = nullptr;
     QItemSelectionModel* constituencySelectionModel_ = nullptr;
 
     Ui::ConstituencyExplorerWidget* ui_;

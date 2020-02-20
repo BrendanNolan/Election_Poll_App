@@ -10,6 +10,7 @@
 class ConstituencyModel;
 class ConstituencyExplorerWidget;
 class PoliticianModel;
+class PollResultModel;
 class RotatingItemsWidget;
 
 class MainWindow : public QMainWindow
@@ -35,6 +36,7 @@ private:
 
     ConstituencyModel* constituencyModel_ = nullptr;
     PoliticianModel* politicianModel_ = nullptr;
+    PollResultModel* pollResultModel_ = nullptr;
 
     std::future<void> fut_;
     mutable std::mutex mutex_;

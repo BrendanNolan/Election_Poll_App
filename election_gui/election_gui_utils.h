@@ -12,7 +12,7 @@
 
 class QFileInfo;
 
-namespace python_script_running
+namespace python_scripting
 {
 
     void runPythonScript(const QFileInfo& script);

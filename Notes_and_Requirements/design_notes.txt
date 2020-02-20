@@ -1,3 +1,6 @@
+1) MainWindow should not be clickable when load screen is displayed.
+2) Some constituency should be selected by default. 
+
 At the moment, the main work of ConstituencyDrillDownWidget is in having buttons
 manipulate the electoral status of a PoliticianModel. We should have a widget 
 dedicated to this. It should be called something like PoliticianModelStatusSelectorWidget.

@@ -45,6 +45,7 @@ void ConstituencyDrillDownWidget::setPoliticianModel(
         ui_->politicianListView,
         politicianModel_);
     ui_->politicianListView->setModel(proxyModel);
+    ui_->sittingRadioButton->setChecked(true);
 }
 
 void ConstituencyDrillDownWidget::setPoliticianSelectionModel(

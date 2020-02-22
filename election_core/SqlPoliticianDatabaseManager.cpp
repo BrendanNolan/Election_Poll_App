@@ -90,7 +90,8 @@ SqlPoliticianDatabaseManager::candidatesForConstituency(
         ")");
     query.bindValue(":constituency_id", constituencyId);
     query.bindValue(":candidate", 1);
-    query.exec();
+    if (!query.exec())
+        return vector<unique_ptr<Politician>>();
     while (query.next())
         ret.push_back(sqlQueryToPolitician(query));
     return ret;

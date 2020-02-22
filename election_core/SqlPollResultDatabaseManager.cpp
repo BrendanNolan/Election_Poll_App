@@ -138,7 +138,8 @@ SqlPollResultDatabaseManager::pollResultsForConstituency(int id) const
         "WHERE constituency_id = (:constituency_id) "
         "ORDER BY (date_time, source)");
     query.bindValue(":constitucney_id", id);
-    query.exec();
+    if (!query.exec())
+        return vector<unique_ptr<PollResult>>();
     auto source = query.value("source").toString();
     auto dateTime = query.value("date_time").toDateTime();
     unique_ptr<PollResult> pollResult(new PollResult(

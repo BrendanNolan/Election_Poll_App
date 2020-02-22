@@ -13,7 +13,8 @@ SqlPollResultDatabaseManager::SqlPollResultDatabaseManager(
     const QFileInfo& databaseFileInfo)
     : databaseFileInfo_(databaseFileInfo)
 {
-    auto database = election_core_utils::connectToSqlDatabase(databaseFileInfo_);
+    auto database = election_core_utils::connectToSqlDatabase(
+        databaseFileInfo_);
     if (!database.isValid() || database.tables().contains("poll_results"))
         return;
 
@@ -36,7 +37,8 @@ SqlPollResultDatabaseManager* SqlPollResultDatabaseManager::clone() const
 
 void SqlPollResultDatabaseManager::addPollResult(const PollResult& result) const
 {
-    auto database = election_core_utils::connectToSqlDatabase(databaseFileInfo_);
+    auto database = election_core_utils::connectToSqlDatabase(
+        databaseFileInfo_);
     if (!database.isValid())
         return;
 
@@ -68,7 +70,8 @@ void SqlPollResultDatabaseManager::addPollResult(const PollResult& result) const
 void SqlPollResultDatabaseManager::updatePollResult(
     const PollResult& result) const
 {
-    auto database = election_core_utils::connectToSqlDatabase(databaseFileInfo_);
+    auto database = election_core_utils::connectToSqlDatabase(
+        databaseFileInfo_);
     if (!database.isValid())
         return;
 
@@ -101,7 +104,8 @@ void SqlPollResultDatabaseManager::updatePollResult(
 void SqlPollResultDatabaseManager::removePollResult(
     const PollResult& result) const
 {
-    auto database = election_core_utils::connectToSqlDatabase(databaseFileInfo_);
+    auto database = election_core_utils::connectToSqlDatabase(
+        databaseFileInfo_);
     if (!database.isValid())
         return;
 
@@ -122,7 +126,8 @@ void SqlPollResultDatabaseManager::removePollResult(
 vector<unique_ptr<PollResult>> 
 SqlPollResultDatabaseManager::pollResultsForConstituency(int id) const
 {
-    auto database = election_core_utils::connectToSqlDatabase(databaseFileInfo_);
+    auto database = election_core_utils::connectToSqlDatabase(
+        databaseFileInfo_);
     if (!database.isValid())
         return vector<unique_ptr<PollResult>>();
 

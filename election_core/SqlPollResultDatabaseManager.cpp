@@ -169,6 +169,7 @@ SqlPollResultDatabaseManager::pollResultsForConstituency(int id) const
                 query.value("poll_value").toInt());
         }
     }
+    ret.push_back(move(pollResult));
 
     return ret;
 }

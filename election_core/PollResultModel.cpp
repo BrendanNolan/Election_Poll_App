@@ -50,7 +50,8 @@ bool PollResultModel::setData(
     const QVariant& value, 
     int role)
 {
-    if (!election_core_utils::isIndexValid(index, *this) || role != Qt::DisplayRole)
+    if (!election_core_utils::isIndexValid(index, *this) 
+        || role != Qt::DisplayRole)
         return false;
 
     pollResultCache_[index.row()]->setHistogram(

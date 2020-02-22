@@ -48,7 +48,8 @@ SqlPoliticianDatabaseManager* SqlPoliticianDatabaseManager::clone() const
 vector<unique_ptr<Politician>> SqlPoliticianDatabaseManager::mpsForConstituency(
     int constituencyId) const
 {
-    auto database = election_core_utils::connectToSqlDatabase(databaseFileInfo_);
+    auto database = election_core_utils::connectToSqlDatabase(
+        databaseFileInfo_);
     if (!database.isValid())
         return vector<unique_ptr<Politician>>();
 
@@ -74,7 +75,8 @@ vector<unique_ptr<Politician>>
 SqlPoliticianDatabaseManager::candidatesForConstituency(
     int constituencyId) const
 {
-    auto database = election_core_utils::connectToSqlDatabase(databaseFileInfo_);
+    auto database = election_core_utils::connectToSqlDatabase(
+        databaseFileInfo_);
     if (!database.isValid())
         return vector<unique_ptr<Politician>>();
 
@@ -99,7 +101,8 @@ SqlPoliticianDatabaseManager::candidatesForConstituency(
 
 unique_ptr<Politician> SqlPoliticianDatabaseManager::politician(int id) const
 {
-    auto database = election_core_utils::connectToSqlDatabase(databaseFileInfo_);
+    auto database = election_core_utils::connectToSqlDatabase(
+        databaseFileInfo_);
     if (!database.isValid())
         return nullptr;
     
@@ -110,7 +113,8 @@ unique_ptr<Politician> SqlPoliticianDatabaseManager::politician(int id) const
 
 QUrl SqlPoliticianDatabaseManager::imageUrlForPolitician(int politicianId) const
 {
-    auto database = election_core_utils::connectToSqlDatabase(databaseFileInfo_);
+    auto database = election_core_utils::connectToSqlDatabase(
+        databaseFileInfo_);
     if (!database.isValid())
         return QUrl();
     
@@ -125,7 +129,8 @@ void SqlPoliticianDatabaseManager::addPoliticianToConstituency(
     Politician& thePolitician,
     int constituencyId) const
 {
-    auto database = election_core_utils::connectToSqlDatabase(databaseFileInfo_);
+    auto database = election_core_utils::connectToSqlDatabase(
+        databaseFileInfo_);
     if (!database.isValid())
         return;
 
@@ -163,7 +168,8 @@ void SqlPoliticianDatabaseManager::addPoliticianToConstituency(
 void SqlPoliticianDatabaseManager::updatePolitician(
     const Politician & politician) const
 {
-    auto database = election_core_utils::connectToSqlDatabase(databaseFileInfo_);
+    auto database = election_core_utils::connectToSqlDatabase(
+        databaseFileInfo_);
     if (!database.isValid())
         return;
 
@@ -199,7 +205,8 @@ void SqlPoliticianDatabaseManager::updatePolitician(
 
 void SqlPoliticianDatabaseManager::removePolitician(int politicianId) const
 {
-    auto database = election_core_utils::connectToSqlDatabase(databaseFileInfo_);
+    auto database = election_core_utils::connectToSqlDatabase(
+        databaseFileInfo_);
     if (!database.isValid())
         return;
 
@@ -211,7 +218,8 @@ void SqlPoliticianDatabaseManager::removePolitician(int politicianId) const
 void SqlPoliticianDatabaseManager::clearPoliticiansFromConstituency(
     int constituencyId) const
 {
-    auto database = election_core_utils::connectToSqlDatabase(databaseFileInfo_);
+    auto database = election_core_utils::connectToSqlDatabase(
+        databaseFileInfo_);
     if (!database.isValid())
         return;
 

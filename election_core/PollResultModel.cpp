@@ -28,13 +28,12 @@ QVariant PollResultModel::data(const QModelIndex & index, int role) const
 {
     if (!election_core_utils::isIndexValid(index, *this))
         return QVariant();
-    if (role != Qt::DisplayRole && role != SourceRole && role != DateTimeRole)
-        return QVariant();
 
     const auto& pollResult = *(pollResultCache_[index.row()]);
     switch (role)
     {
-    case Qt::DisplayPropertyRole:
+    case Qt::DisplayRole:
+    case Qt::DecorationRole:
         return pollResult.histogram();
     case SourceRole:
         return pollResult.source();

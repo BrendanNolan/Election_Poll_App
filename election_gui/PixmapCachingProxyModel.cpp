@@ -1,10 +1,6 @@
-#include "PoliticianPictureProxyModel.h"
+#include "PixmapCachingProxyModel.h"
 
-#include <QtGlobal>
-
-#include <QFileInfo>
-
-#include "PoliticianModel.h"
+#include "PixmapCreatingFunctor.h"
 
 namespace
 {
@@ -12,14 +8,17 @@ namespace
     const auto PREFERRED_HEIGHT = 60;
 }
 
-PoliticianPictureProxyModel::PoliticianPictureProxyModel(
-    QObject* parent, PoliticianModel* politicianModel)
-    : QIdentityProxyModel(parent)
-{
-    setSourceModel(politicianModel);
-}
+PixmapCachingProxyModel::PixmapCachingProxyModel(
+    std::unique_ptr<PixmapCreatingFunctor> pixmapFunctor,
+    QObject* parent)
+    : pixmapFunctor_(move(pixmapFunctor))
+    , QIdentityProxyModel(parent)
+{}
 
-QVariant PoliticianPictureProxyModel::data(
+PixmapCachingProxyModel::~PixmapCachingProxyModel()
+{}
+
+QVariant PixmapCachingProxyModel::data(
     const QModelIndex& index, int role) const
 {
     if (role != Qt::DecorationRole)
@@ -29,7 +28,7 @@ QVariant PoliticianPictureProxyModel::data(
     return pixmapCache_[index];
 }
 
-void PoliticianPictureProxyModel::setSourceModel(QAbstractItemModel* source)
+void PixmapCachingProxyModel::setSourceModel(QAbstractItemModel* source)
 {
     QIdentityProxyModel::setSourceModel(source);
 
@@ -38,7 +37,7 @@ void PoliticianPictureProxyModel::setSourceModel(QAbstractItemModel* source)
         return;
 
     connect(source, &QAbstractItemModel::modelReset,
-        this, &PoliticianPictureProxyModel::reloadCache);
+        this, &PixmapCachingProxyModel::reloadCache);
     connect(source, &QAbstractItemModel::rowsInserted,
         [this](const QModelIndex& /*parent*/, int first, int last) {
         partiallyReloadCache(index(first, 0), last - first + 1);
@@ -52,32 +51,23 @@ void PoliticianPictureProxyModel::setSourceModel(QAbstractItemModel* source)
     });
 }
 
-PoliticianModel* PoliticianPictureProxyModel::politicianModel() const
-{
-    return qobject_cast<PoliticianModel*>(sourceModel());
-}
-
-void PoliticianPictureProxyModel::partiallyReloadCache(
+void PixmapCachingProxyModel::partiallyReloadCache(
     const QModelIndex& startIndex, int count)
 {
-    if (!sourceModel() 
-        || !politicianModel() 
-        || count <= 0 
+    if (!sourceModel()
+        || count <= 0
         || count + startIndex.row() > rowCount())
         return;
-    const auto& politicianMod = *(politicianModel());
     for (auto i = 0; i < count; ++i)
     {
         auto theIndex = index(startIndex.row() + i, 0);
-        auto path = politicianMod.data(
-            theIndex, PoliticianModel::FilePathRole).
-                toString();
-        pixmapCache_[theIndex] = QPixmap(path).scaled(
+        const auto& createPixmap = *pixmapFunctor_;
+        pixmapCache_[theIndex] = createPixmap(theIndex).scaled(
             PREFERRED_WIDTH, PREFERRED_HEIGHT);
     }
 }
 
-void PoliticianPictureProxyModel::reloadCache()
+void PixmapCachingProxyModel::reloadCache()
 {
     pixmapCache_.clear();
     if (!sourceModel())

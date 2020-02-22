@@ -27,6 +27,8 @@ public:
         const IDatabaseManagerFactory& factory,
         QObject* parent = nullptr,
         ElectoralStatus status = ElectoralStatus::SITTING);
+    PoliticianModel(const PoliticianModel& rhs);
+
     enum Role
     {
         NameRole = Qt::UserRole + 1,

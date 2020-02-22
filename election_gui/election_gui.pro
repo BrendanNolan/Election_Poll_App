@@ -14,7 +14,12 @@ HEADERS += \
     ThinPixmapDelegate.h \
     election_gui_utils.h \
     RotatingItemsWidget.h \
-    PollResultHistogramProxyModel.h
+    PollResultHistogramProxyModel.h \
+    PixmapCachingProxyModel.h \
+    PixmapCreatingFunctor.h \
+    PoliticianPixmapCreatingFunctor.h \
+    ConstituencyPixmapCreatingFunctor.h \
+    PollResultPixmapCreatingFunctor.h
 
 SOURCES += \
     ConstituencyWidget.cpp \
@@ -28,7 +33,12 @@ SOURCES += \
     ThinPixmapDelegate.cpp \
     election_gui_utils.cpp \
     RotatingItemsWidget.cpp \
-    PollResultHistogramProxyModel.cpp
+    PollResultHistogramProxyModel.cpp \
+    PixmapCachingProxyModel.cpp \
+    PixmapCreatingFunctor.cpp \
+    PoliticianPixmapCreatingFunctor.cpp \
+    ConstituencyPixmapCreatingFunctor.cpp \
+    PollResultPixmapCreatingFunctor.cpp
 
 FORMS += \
     ConstituencyDrillDownWidget.ui \

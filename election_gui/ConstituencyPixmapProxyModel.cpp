@@ -32,7 +32,7 @@ QVariant ConstituencyPixmapProxyModel::data(
     const QModelIndex& proxyIndex, 
     int role) const
 {
-    if (role != Qt::DisplayRole)
+    if (role != Qt::DecorationRole)
         return QIdentityProxyModel::data(proxyIndex, role);
     return constituencyPixmapCache_[proxyIndex];
 }

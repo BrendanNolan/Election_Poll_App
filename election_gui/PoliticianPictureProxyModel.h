@@ -3,6 +3,7 @@
 
 #include <QHash>
 #include <QIdentityProxyModel>
+#include <QModelIndex>
 #include <QPixmap>
 #include <QString>
 
@@ -24,7 +25,7 @@ private:
     void reloadCache();
 
 private:
-    QHash<QString, QPixmap> pixmapCache_;
+    QHash<QModelIndex, QPixmap> pixmapCache_;
 };
 
 #endif // POLITICIANPICTUREPROXYMODEL_H

@@ -32,12 +32,24 @@ db.commit()
 
 cursor.execute('''
     CREATE TABLE constituencies  
-            (
-            id INTEGER PRIMARY KEY AUTOINCREMENT, 
-            name TEXT, 
-            latitude INTEGER, 
-            longitude INTEGER
-            )
+        (
+        id INTEGER PRIMARY KEY AUTOINCREMENT, 
+        name TEXT, 
+        latitude INTEGER, 
+        longitude INTEGER
+        )
+''')
+db.commit()
+
+cursor.execute('''
+    CREATE TABLE poll_results  
+        (
+        constituency_id INTEGER,
+        source TEXT,
+        date_time DATETIME,
+        politician_name TEXT,
+        poll_value INT
+        )
 ''')
 db.commit()
 
@@ -50,6 +62,15 @@ for i in range(3):
     ''', ("Wexford", i * 40, i * 40))
     db.commit()
     constituency_id = cursor.lastrowid
+
+    for j in range(3):
+        cursor.execute('''
+            INSERT INTO poll_results
+            (constituency_id, source, date_time, politician_name, poll_value)
+            VALUES
+            (?, ?, ?, ?, ?)
+        ''', (constituency_id, "NYT", 22022020, "Politician i", i * 40))
+        db.commit()
 
     cursor.execute('''
         INSERT INTO politicians 

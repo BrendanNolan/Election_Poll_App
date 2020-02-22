@@ -54,6 +54,13 @@
          </property>
         </spacer>
        </item>
+       <item>
+        <widget class="QPushButton" name="refreshDataButton">
+         <property name="text">
+          <string>Refresh Data</string>
+         </property>
+        </widget>
+       </item>
       </layout>
      </item>
      <item>

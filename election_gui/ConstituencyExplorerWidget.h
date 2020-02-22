@@ -1,17 +1,16 @@
 #ifndef CONSTITUENCYEXPLORERWIDGET_H
 #define CONSTITUENCYEXPLORERWIDGET_H
 
-#include <QList>
-#include <QModelIndex>
 #include <QWidget>
+#include <QTimer>
+
+#include <future>
 
 class ConstituencyModel;
-class ConstituencyWidget;
 class PoliticianModel;
 class PollResultModel;
-class QHBoxLayout;
+class RotatingItemsWidget;
 class QItemSelectionModel;
-class QModelIndex;
 
 namespace Ui { class ConstituencyExplorerWidget; }
 
@@ -30,23 +29,25 @@ public:
     void setPollResultModel(PollResultModel* model);
     void setPollResultSelectionModel(QItemSelectionModel* selectionModel);
 
-    QHBoxLayout* buttonLayout();
-
-signals:
-    void politicianActivated(const QModelIndex& politicianIndex);
-    void politiciansActivated(const QList<QModelIndex>& politicianIndex);
-
 private slots:
+    void asynchronouslyRefreshData();
+    void onDataRefreshTimerTimeout();
     void onConstituencySelectionChanged();
     
 private:
     int currentConstituencyId() const;
+    void refreshModels();
 
 private:
     PoliticianModel* politicianModel_ = nullptr;
     ConstituencyModel* constituencyModel_ = nullptr;
     PollResultModel* pollResultModel_ = nullptr;
     QItemSelectionModel* constituencySelectionModel_ = nullptr;
+
+    std::future<void> fut_;
+    QTimer dataRefreshTimer_;
+
+    RotatingItemsWidget* rotatingItemsLoadScreen_ = nullptr;
 
     Ui::ConstituencyExplorerWidget* ui_;
 };

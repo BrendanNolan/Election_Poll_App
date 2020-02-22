@@ -9,7 +9,13 @@
 #include "ConstituencyModel.h"
 #include "ConstituencyPixmapProxyModel.h"
 #include "PoliticianModel.h"
+#include "PoliticianPictureProxyModel.h"
 #include "PollResultModel.h"
+
+#include "election_core_definitions.h"
+#include "election_gui_utils.h"
+#include "RotatingItemsWidget.h"
+#include "SqlDatabaseManagerFactory.h"
 
 ConstituencyExplorerWidget::ConstituencyExplorerWidget(QWidget* parent)
     : QWidget(parent)
@@ -17,16 +23,35 @@ ConstituencyExplorerWidget::ConstituencyExplorerWidget(QWidget* parent)
 {
     ui_->setupUi(this);
 
-    connect(
-        ui_->constituencyDrillDownWidget, 
-        &ConstituencyDrillDownWidget::pictureActivated,
-        this, 
-        &ConstituencyExplorerWidget::politicianActivated);
-    connect(
-        ui_->constituencyDrillDownWidget, 
-        &ConstituencyDrillDownWidget::picturesActivated,
-        this, 
-        &ConstituencyExplorerWidget::politiciansActivated);
+    python_scripting::runPythonScript(QFileInfo(paths::scraperScript));
+
+    auto factory = SqlDatabaseManagerFactory(QFileInfo(
+        paths::databasePath));
+
+    auto politicianModel = new PoliticianModel(factory, this);
+    auto politicianSelectionModel = new QItemSelectionModel(politicianModel);
+
+    auto constituencyModel = new ConstituencyModel(factory, this);
+    auto constituencySelectionModel = new QItemSelectionModel(
+        constituencyModel);
+
+    auto pollResultModel = new PollResultModel(factory, this);
+    auto pollResultSelectionModel = new QItemSelectionModel(pollResultModel);
+
+    setPoliticianModel(politicianModel);
+    setPoliticianSelectionModel(politicianSelectionModel);
+
+    setConstituencyModel(constituencyModel);
+    setConstituencySelectionModel(constituencySelectionModel);
+
+    setPollResultModel(pollResultModel);
+    setPollResultSelectionModel(pollResultSelectionModel);
+
+    connect(ui_->refreshDataButton, &QPushButton::clicked,
+        this, &ConstituencyExplorerWidget::asynchronouslyRefreshData);
+
+    connect(&dataRefreshTimer_, &QTimer::timeout,
+        this, &ConstituencyExplorerWidget::onDataRefreshTimerTimeout);
 }
 
 ConstituencyExplorerWidget::~ConstituencyExplorerWidget()
@@ -88,11 +113,6 @@ void ConstituencyExplorerWidget::setPollResultSelectionModel(
         selectionModel);
 }
 
-QHBoxLayout* ConstituencyExplorerWidget::buttonLayout()
-{
-    return ui_->buttonLayout;
-}
-
 void ConstituencyExplorerWidget::onConstituencySelectionChanged()
 {
     if (politicianModel_)
@@ -120,4 +140,78 @@ int ConstituencyExplorerWidget::currentConstituencyId() const
     return constituencyModel_->data(
         selectedIndex, 
         ConstituencyModel::IdRole).toInt();
+}
+
+void ConstituencyExplorerWidget::asynchronouslyRefreshData()
+{
+    auto sizeOfMainWindow = rect().size();
+    auto desiredSizeOfLoadScreen = 0.5 * sizeOfMainWindow;
+    auto desiredPositionOfLoadScreen = rect().topLeft()
+        + QPoint(rect().width() * 1.0 / 4.0, rect().height() * 1.0 / 4.0);
+    auto edgeLengthOfLoadScreenPixmaps = 0.15 * std::min(
+        desiredSizeOfLoadScreen.width(),
+        desiredSizeOfLoadScreen.height());
+    QSize desiredSizeOfLoadScreenPixmaps(
+        edgeLengthOfLoadScreenPixmaps, edgeLengthOfLoadScreenPixmaps);
+
+    PoliticianPictureProxyModel politicianProxyModel(nullptr, politicianModel_);
+    QVector<QGraphicsItem*> politicianGraphicsItems;
+    auto rowCount = politicianProxyModel.rowCount();
+    for (auto row = 0; row < rowCount; ++row)
+    {
+        auto pixmap = politicianProxyModel.data(
+            politicianProxyModel.index(row, 0))
+            .value<QPixmap>();
+        politicianGraphicsItems.push_back(new QGraphicsPixmapItem(
+            pixmap.scaled(
+                desiredSizeOfLoadScreenPixmaps,
+                Qt::KeepAspectRatio)));
+    }
+
+    rotatingItemsLoadScreen_ = new RotatingItemsWidget(this);
+    rotatingItemsLoadScreen_->setFrameRate(60);
+    rotatingItemsLoadScreen_->setInterFrameAngleDifference(25);
+    rotatingItemsLoadScreen_->setFixedSize(desiredSizeOfLoadScreen);
+    rotatingItemsLoadScreen_->setRotationRadius(
+        rotatingItemsLoadScreen_->preferredRotationRadius());
+    rotatingItemsLoadScreen_->scene()->setBackgroundBrush(
+        QBrush(QColor(10, 15, 68)));
+    rotatingItemsLoadScreen_->setHorizontalScrollBarPolicy(
+        Qt::ScrollBarAlwaysOff);
+    rotatingItemsLoadScreen_->setVerticalScrollBarPolicy(
+        Qt::ScrollBarAlwaysOff);
+    rotatingItemsLoadScreen_->setRotatingItems(politicianGraphicsItems);
+    rotatingItemsLoadScreen_->setWindowModality(Qt::ApplicationModal);
+    rotatingItemsLoadScreen_->move(desiredPositionOfLoadScreen);
+    rotatingItemsLoadScreen_->show();
+    rotatingItemsLoadScreen_->raise();
+    dataRefreshTimer_.setInterval(std::chrono::seconds(1));
+
+    fut_ = std::async(
+        std::launch::async,
+        &python_scripting::runPythonScript,
+        QFileInfo(paths::scraperScript));
+    dataRefreshTimer_.start();
+}
+
+void ConstituencyExplorerWidget::onDataRefreshTimerTimeout()
+{
+    auto status = fut_.wait_for(std::chrono::seconds(0));
+    if (status == std::future_status::ready)
+    {
+        dataRefreshTimer_.stop();
+        delete rotatingItemsLoadScreen_;
+        rotatingItemsLoadScreen_ = nullptr;
+        refreshModels();
+    }
+}
+
+void ConstituencyExplorerWidget::refreshModels()
+{
+    if (constituencyModel_)
+        constituencyModel_->refresh();
+    if (politicianModel_)
+        politicianModel_->refresh();
+    if (pollResultModel_)
+        pollResultModel_->refresh();
 }

@@ -69,7 +69,7 @@ for i in range(3):
             (constituency_id, source, date_time, politician_name, poll_value)
             VALUES
             (?, ?, ?, ?, ?)
-        ''', (constituency_id, "NYT", 22022020, "Politician i", i * 40))
+        ''', (constituency_id, "NYT", 22022020, "Politician" + str(i), i * 40))
         db.commit()
 
     cursor.execute('''

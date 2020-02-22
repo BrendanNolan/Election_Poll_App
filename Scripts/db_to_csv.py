@@ -11,7 +11,7 @@ db = sqlite3.connect(primary_database_path)
 cursor = db.cursor()
 
 print ("Exporting data into CSV............")
-for table_name in [str("constituencies"), str("politicians")]:
+for table_name in [str("constituencies"), str("politicians"), str("poll_results")]:
     cursor.execute("select * from " + table_name)
     with open(table_name + ".csv", "w") as csv_file:
         csv_writer = csv.writer(csv_file, delimiter=",")

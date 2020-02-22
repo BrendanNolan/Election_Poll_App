@@ -1,5 +1,8 @@
 1) MainWindow should not be clickable when load screen is displayed.
 2) Some constituency should be selected by default. 
+3) It would be nice t have models notified (probably via signals&slots) when their 
+underlying data is updated. At the moment, after asynchronously refreshing data with 
+a python script, the code that runs the script also tells the models to refresh.
 
 At the moment, the main work of ConstituencyDrillDownWidget is in having buttons
 manipulate the electoral status of a PoliticianModel. We should have a widget 

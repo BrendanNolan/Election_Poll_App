@@ -13,6 +13,7 @@ class PoliticianPictureProxyModel : public QIdentityProxyModel
 public:
     PoliticianPictureProxyModel(
         QObject* parent = nullptr, PoliticianModel* politicianModel = nullptr);
+    
     QVariant data(
         const QModelIndex& index, int role = Qt::DecorationRole) const override;
     void setSourceModel(QAbstractItemModel* source) override;

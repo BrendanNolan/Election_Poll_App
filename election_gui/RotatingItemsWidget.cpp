@@ -33,6 +33,19 @@ void RotatingItemsWidget::unfreeze()
     rotationTimer_.start();
 }
 
+void RotatingItemsWidget::setFrameRate(int framesPerSecond)
+{
+    if (framesPerSecond < 1)
+        return;
+    milisecInterval_ = 1000 / framesPerSecond;
+}
+
+void RotatingItemsWidget::setInterFrameAngleDifference(int degrees)
+{
+    degrees %= 360;
+    rotationAngle_ = ((2.0 * geom_utils::pi) / 360) * degrees;
+}
+
 void RotatingItemsWidget::rotateItems()
 {
     using namespace geom_utils;

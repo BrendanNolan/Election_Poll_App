@@ -90,6 +90,8 @@ void MainWindow::asynchronouslyRefreshData()
     }
 
     rotatingItemsLoadScreen_ = new RotatingItemsWidget(this);
+    rotatingItemsLoadScreen_->setFrameRate(60);
+    rotatingItemsLoadScreen_->setInterFrameAngleDifference(10);
     rotatingItemsLoadScreen_->setFixedSize(desiredSizeOfLoadScreen);
     rotatingItemsLoadScreen_->setRotationRadius(
         rotatingItemsLoadScreen_->preferredRotationRadius());

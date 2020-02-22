@@ -23,6 +23,9 @@ public:
     void freeze();
     void unfreeze();
 
+    void setFrameRate(int framesPerSecond);
+    void setInterFrameAngleDifference(int degrees);
+
 public slots:
     void rotateItems();   
 

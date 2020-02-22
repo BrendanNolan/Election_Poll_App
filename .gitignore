@@ -269,8 +269,5 @@ release/*
 ui_*.h
 *.sln
 *.db
-output.csv
+*.csv
 get_database_tables.py 
-constituencies.csv
-politicians.csv
-

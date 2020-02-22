@@ -26,12 +26,7 @@ PoliticianModel::PoliticianModel(const PoliticianModel& rhs)
     , electoralStatus_(rhs.electoralStatus_)
     , constituencyId_(rhs.constituencyId_)
 {
-    politicianCache_.reserve(rhs.politicianCache_.size());
-    for (const auto& uniquePtrConstRef : rhs.politicianCache_)
-    {
-        politicianCache_.push_back(
-            unique_ptr<Politician>(new Politician(*uniquePtrConstRef)));
-    }
+    refresh();
 }
 
 int PoliticianModel::rowCount(const QModelIndex& /*parent*/) const

@@ -5,7 +5,6 @@
 #include <QTimer>
 
 #include <future>
-#include <mutex>
 
 class ConstituencyModel;
 class ConstituencyExplorerWidget;
@@ -19,9 +18,6 @@ class MainWindow : public QMainWindow
 
 public:
     MainWindow(QWidget* parent = nullptr);
-
-public:
-    void refreshData();
 
 private slots:
     void asynchronouslyRefreshData();
@@ -39,7 +35,6 @@ private:
     PollResultModel* pollResultModel_ = nullptr;
 
     std::future<void> fut_;
-    mutable std::mutex mutex_;
     QTimer dataRefreshTimer_;
 };
 

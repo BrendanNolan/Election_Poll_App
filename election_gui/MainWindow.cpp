@@ -63,18 +63,8 @@ MainWindow::MainWindow(QWidget* parent)
         this, &MainWindow::onDataRefreshTimerTimeout);
 }
 
-void MainWindow::refreshData()
-{
-    mutex_.lock();
-    python_scripting::runPythonScript(QFileInfo(paths::scraperScript));
-    mutex_.unlock();
-    refreshModels();
-}
-
 void MainWindow::asynchronouslyRefreshData()
 {
-    mutex_.lock();
-    
     auto sizeOfMainWindow = rect().size();
     auto desiredSizeOfLoadScreen = 0.5 * sizeOfMainWindow;
     auto desiredPositionOfLoadScreen = rect().topLeft()
@@ -116,9 +106,10 @@ void MainWindow::asynchronouslyRefreshData()
     rotatingItemsLoadScreen_->raise();
     dataRefreshTimer_.setInterval(std::chrono::seconds(1));
     
-    mutex_.unlock();
-    
-    fut_ = std::async(std::launch::async, &MainWindow::refreshData, this);
+    fut_ = std::async(
+        std::launch::async, 
+        &python_scripting::runPythonScript,
+        QFileInfo(paths::scraperScript));
     dataRefreshTimer_.start();
 }
 
@@ -130,12 +121,12 @@ void MainWindow::onDataRefreshTimerTimeout()
         dataRefreshTimer_.stop();
         delete rotatingItemsLoadScreen_;
         rotatingItemsLoadScreen_ = nullptr;
+        refreshModels();
     }
 }
 
 void MainWindow::refreshModels()
 {
-    std::lock_guard<std::mutex> lock(mutex_);
     if (constituencyModel_)
         constituencyModel_->refresh();
     if (politicianModel_)

@@ -9,6 +9,9 @@ existing refresh methods or new methods should tell their data-access objects to
 It's starting to feel like each model should have its own data-update script but this would be difficult
 to implement; however if I do not implement this, I run the risk of ending up repeatedly updating
 the data when I really need to do this only once.  
+5) SqlPollResultDatabaseManager is currently not reading datetimes correctly - the datetimes that
+SqlPollResultDatabaseManager::pollResultsForConstituency() reads from the database all convert to 
+empty strings.
 
 At the moment, the main work of ConstituencyDrillDownWidget is in having buttons
 manipulate the electoral status of a PoliticianModel. We should have a widget 

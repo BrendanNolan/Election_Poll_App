@@ -163,6 +163,12 @@ void PoliticianModel::refresh()
     endResetModel();
 }
 
+void PoliticianModel::refreshDataSource()
+{
+    manager_->refreshDatabase();
+    refresh();
+}
+
 void PoliticianModel::setElectoralStatus(ElectoralStatus status)
 {
     beginResetModel();

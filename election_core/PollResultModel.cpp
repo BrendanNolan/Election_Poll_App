@@ -112,6 +112,12 @@ void PollResultModel::refresh()
     endResetModel();
 }
 
+void PollResultModel::refreshDataSource()
+{
+    manager_->refreshDatabase();
+    refresh();
+}
+
 void PollResultModel::setConstituency(int id)
 {
     if (id == constituencyId_)

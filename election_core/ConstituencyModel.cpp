@@ -81,6 +81,12 @@ void ConstituencyModel::refresh()
     emit dataChanged(index(0), index(rowCount()));
 }
 
+void ConstituencyModel::refreshDataSource()
+{
+    constituencyManager_->refreshDatabase();
+    refresh();
+}
+
 void ConstituencyModel::reloadConstituencyCache()
 {
     constituencyCache_ = constituencyManager_->constituencies();

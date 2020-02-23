@@ -164,6 +164,7 @@ void ConstituencyExplorerWidget::asynchronouslyRefreshData()
     PixmapCreatingProxyModel politicianProxyModel(
         std::unique_ptr<PixmapCreatingFunctor>(
             new PoliticianPixmapCreatingFunctor(politicianModel_)),
+        politicianModel_,
         nullptr);
     QVector<QGraphicsItem*> politicianGraphicsItems;
     auto rowCount = politicianProxyModel.rowCount();

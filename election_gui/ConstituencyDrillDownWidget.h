@@ -32,9 +32,6 @@ public:
 
     void setDisplayedConstituencyName(const QString& name);
 
-    QRadioButton& sittingRadioButton() const;
-    QRadioButton& candidatesRadioButton() const;
-
 signals:
     void pictureActivated(const QModelIndex& pictureIndex);
     void picturesActivated(const QModelIndexList& pictureIndexes);

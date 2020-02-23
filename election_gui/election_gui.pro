@@ -15,7 +15,7 @@ HEADERS += \
     election_gui_utils.h \
     RotatingItemsWidget.h \
     PollResultHistogramProxyModel.h \
-    PixmapCachingProxyModel.h \
+    PixmapCreatingProxyModel.h \
     PixmapCreatingFunctor.h \
     PoliticianPixmapCreatingFunctor.h \
     ConstituencyPixmapCreatingFunctor.h \
@@ -34,7 +34,7 @@ SOURCES += \
     election_gui_utils.cpp \
     RotatingItemsWidget.cpp \
     PollResultHistogramProxyModel.cpp \
-    PixmapCachingProxyModel.cpp \
+    PixmapCreatingProxyModel.cpp \
     PixmapCreatingFunctor.cpp \
     PoliticianPixmapCreatingFunctor.cpp \
     ConstituencyPixmapCreatingFunctor.cpp \

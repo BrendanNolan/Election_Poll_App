@@ -1,5 +1,5 @@
-#ifndef PIXMAPCACHINGPROXYMODEL_H
-#define PIXMAPCACHINGPROXYMODEL_H
+#ifndef PIXMAPCREATINGPROXYMODEL_H
+#define PIXMAPCREATINGPROXYMODEL_H
 
 #include <QHash>
 #include <QIdentityProxyModel>
@@ -10,13 +10,13 @@
 
 class PixmapCreatingFunctor;
 
-class PixmapCachingProxyModel : public QIdentityProxyModel
+class PixmapCreatingProxyModel : public QIdentityProxyModel
 {
 public:
-    PixmapCachingProxyModel(
+    PixmapCreatingProxyModel(
         std::unique_ptr<PixmapCreatingFunctor> pixmapFunctor,
         QObject* parent = nullptr);
-    ~PixmapCachingProxyModel();
+    ~PixmapCreatingProxyModel();
 
     QVariant data(
         const QModelIndex& index, int role = Qt::DecorationRole) const override;
@@ -34,4 +34,4 @@ private:
     QHash<QModelIndex, QPixmap> pixmapCache_;
 };
 
-#endif // PIXMAPCACHINGPROXYMODEL_H
+#endif // PIXMAPCREATINGPROXYMODEL_H

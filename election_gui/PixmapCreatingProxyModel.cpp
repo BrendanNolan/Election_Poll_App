@@ -1,4 +1,4 @@
-#include "PixmapCachingProxyModel.h"
+#include "PixmapCreatingProxyModel.h"
 
 #include "PixmapCreatingFunctor.h"
 
@@ -8,17 +8,17 @@ namespace
     const auto PREFERRED_HEIGHT = 60;
 }
 
-PixmapCachingProxyModel::PixmapCachingProxyModel(
+PixmapCreatingProxyModel::PixmapCreatingProxyModel(
     std::unique_ptr<PixmapCreatingFunctor> pixmapFunctor,
     QObject* parent)
     : pixmapFunctor_(move(pixmapFunctor))
     , QIdentityProxyModel(parent)
 {}
 
-PixmapCachingProxyModel::~PixmapCachingProxyModel()
+PixmapCreatingProxyModel::~PixmapCreatingProxyModel()
 {}
 
-QVariant PixmapCachingProxyModel::data(
+QVariant PixmapCreatingProxyModel::data(
     const QModelIndex& index, int role) const
 {
     if (role != Qt::DecorationRole)
@@ -28,7 +28,7 @@ QVariant PixmapCachingProxyModel::data(
     return pixmapCache_[index];
 }
 
-void PixmapCachingProxyModel::setSourceModel(QAbstractItemModel* source)
+void PixmapCreatingProxyModel::setSourceModel(QAbstractItemModel* source)
 {
     QIdentityProxyModel::setSourceModel(source);
 
@@ -37,7 +37,7 @@ void PixmapCachingProxyModel::setSourceModel(QAbstractItemModel* source)
         return;
 
     connect(source, &QAbstractItemModel::modelReset,
-        this, &PixmapCachingProxyModel::reloadCache);
+        this, &PixmapCreatingProxyModel::reloadCache);
     connect(source, &QAbstractItemModel::rowsInserted,
         [this](const QModelIndex& /*parent*/, int first, int last) {
         partiallyReloadCache(index(first, 0), last - first + 1);
@@ -51,7 +51,7 @@ void PixmapCachingProxyModel::setSourceModel(QAbstractItemModel* source)
     });
 }
 
-void PixmapCachingProxyModel::partiallyReloadCache(
+void PixmapCreatingProxyModel::partiallyReloadCache(
     const QModelIndex& startIndex, int count)
 {
     if (!sourceModel()
@@ -67,7 +67,7 @@ void PixmapCachingProxyModel::partiallyReloadCache(
     }
 }
 
-void PixmapCachingProxyModel::reloadCache()
+void PixmapCreatingProxyModel::reloadCache()
 {
     pixmapCache_.clear();
     if (!sourceModel())

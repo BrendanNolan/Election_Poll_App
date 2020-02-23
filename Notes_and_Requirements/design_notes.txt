@@ -16,6 +16,8 @@ empty strings.
 forever. This does not seems to be a script-running problem because the sript does seem to run and the 
 does seem to get updated - it's just that the load screen never gets deleted. This only happens
 sometimes. 
+7) In commit 42ee9562ae37b77abc3337e95ec79678f8fe01a4 (and possibly still), on line 211 of 
+ConstituencyExplorerWidget.cpp, the call to QWidget::setWindowModality() doesn't seem to work.
 
 At the moment, the main work of ConstituencyDrillDownWidget is in having buttons
 manipulate the electoral status of a PoliticianModel. We should have a widget 

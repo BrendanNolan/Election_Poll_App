@@ -13,8 +13,9 @@
 #include "ThinPixmapDelegate.h"
 #include "PoliticianModel.h"
 #include "PoliticianPixmapCreatingFunctor.h"
+#include "PollResultPixmapCreatingFunctor.h"
+#include "PollResultModel.h"
 #include "PixmapCreatingProxyModel.h"
-#include "PollResultmodel.h"
 
 ConstituencyDrillDownWidget::ConstituencyDrillDownWidget(
     QWidget* parent, 
@@ -49,7 +50,7 @@ void ConstituencyDrillDownWidget::setPoliticianModel(
         std::unique_ptr<PixmapCreatingFunctor>(
             new PoliticianPixmapCreatingFunctor(politicianModel_)),
         politicianModel_,
-        nullptr);
+        ui_->politicianListView);
 
     ui_->politicianListView->setModel(proxyModel);
     ui_->sittingRadioButton->setChecked(true);
@@ -64,7 +65,13 @@ void ConstituencyDrillDownWidget::setPoliticianSelectionModel(
 
 void ConstituencyDrillDownWidget::setPollResultModel(PollResultModel* model)
 {
-    ui_->pollResultListView->setModel(model);
+    auto proxyModel = new PixmapCreatingProxyModel(
+        std::unique_ptr<PixmapCreatingFunctor>(
+            new PollResultPixmapCreatingFunctor(model)),
+        model,
+        ui_->pollResultListView);
+
+    ui_->pollResultListView->setModel(proxyModel);
 }
 
 void ConstituencyDrillDownWidget::setPollResultSelectionModel(

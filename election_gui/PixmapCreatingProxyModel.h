@@ -15,6 +15,7 @@ class PixmapCreatingProxyModel : public QIdentityProxyModel
 public:
     PixmapCreatingProxyModel(
         std::unique_ptr<PixmapCreatingFunctor> pixmapFunctor,
+        QAbstractItemModel* sourcemodel,
         QObject* parent = nullptr);
     ~PixmapCreatingProxyModel();
 

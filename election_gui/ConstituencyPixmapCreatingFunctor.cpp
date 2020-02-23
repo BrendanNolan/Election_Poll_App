@@ -53,6 +53,8 @@ QPixmap ConstituencyPixmapCreatingFunctor::operator()(
         painter.fillRect(rectToFill, colour);
         currentDrawXValue += sectionWidth;
     }
+
+    return pixmap;
 }
 
 namespace

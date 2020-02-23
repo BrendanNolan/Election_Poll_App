@@ -48,6 +48,7 @@ void ConstituencyDrillDownWidget::setPoliticianModel(
     auto proxyModel = new PixmapCreatingProxyModel(
         std::unique_ptr<PixmapCreatingFunctor>(
             new PoliticianPixmapCreatingFunctor(politicianModel_)),
+        politicianModel_,
         nullptr);
 
     ui_->politicianListView->setModel(proxyModel);

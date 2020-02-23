@@ -73,6 +73,7 @@ void ConstituencyExplorerWidget::setConstituencyModel(
             new ConstituencyPixmapCreatingFunctor(
                 constituencyModel_,
                 *politicianModel_)),
+        constituencyModel_,
         ui_->constituencyWidget);
 
     ui_->constituencyWidget->setModel(constituencyProxyModel);

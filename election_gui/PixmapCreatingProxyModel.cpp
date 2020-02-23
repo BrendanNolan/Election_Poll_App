@@ -10,10 +10,13 @@ namespace
 
 PixmapCreatingProxyModel::PixmapCreatingProxyModel(
     std::unique_ptr<PixmapCreatingFunctor> pixmapFunctor,
+    QAbstractItemModel* sourceModel,
     QObject* parent)
-    : pixmapFunctor_(move(pixmapFunctor))
-    , QIdentityProxyModel(parent)
-{}
+    : QIdentityProxyModel(parent)
+    , pixmapFunctor_(move(pixmapFunctor))
+{
+    setSourceModel(sourceModel);
+}
 
 PixmapCreatingProxyModel::~PixmapCreatingProxyModel()
 {}

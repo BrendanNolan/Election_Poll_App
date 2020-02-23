@@ -19,7 +19,7 @@ ConstituencyModel::ConstituencyModel(
     const IDatabaseManagerFactory& factory,
     QObject* parent)
     : QAbstractListModel(parent)
-    , constituencyManager_(factory.createConstituencyDatabaseManager())
+    , manager_(factory.createConstituencyDatabaseManager())
 {
     beginResetModel();
     reloadConstituencyCache();
@@ -68,7 +68,7 @@ QModelIndex ConstituencyModel::addConstituency(
     auto row = rowCount();
 
     beginInsertRows(QModelIndex(), row, row);
-    constituencyManager_->addConstituency(*constituency);
+    manager_->addConstituency(*constituency);
     constituencyCache_.push_back(move(constituency));
     endInsertRows();
 
@@ -83,11 +83,11 @@ void ConstituencyModel::refresh()
 
 void ConstituencyModel::refreshDataSource()
 {
-    constituencyManager_->refreshDatabase();
+    manager_->refreshDatabase();
     refresh();
 }
 
 void ConstituencyModel::reloadConstituencyCache()
 {
-    constituencyCache_ = constituencyManager_->constituencies();
+    constituencyCache_ = manager_->constituencies();
 }

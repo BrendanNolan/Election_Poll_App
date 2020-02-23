@@ -21,9 +21,6 @@ ConstituencyPixmapCreatingFunctor::ConstituencyPixmapCreatingFunctor(
         PoliticianModel::ElectoralStatus::SITTING);
 }
 
-ConstituencyPixmapCreatingFunctor::~ConstituencyPixmapCreatingFunctor()
-{}
-
 QPixmap ConstituencyPixmapCreatingFunctor::operator()(
     const QModelIndex& index) const
 {

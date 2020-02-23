@@ -16,7 +16,6 @@ public:
     ConstituencyPixmapCreatingFunctor(
         const ConstituencyModel* constituencyModel,
         const PoliticianModel& politicianModel);
-    ~ConstituencyPixmapCreatingFunctor();
 
 private:
     QPixmap operator()(const QModelIndex& index) const override;

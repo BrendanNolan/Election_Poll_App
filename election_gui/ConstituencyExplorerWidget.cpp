@@ -6,10 +6,13 @@
 
 #include <QtGlobal>
 
+#include <memory>
+
 #include "ConstituencyModel.h"
-#include "ConstituencyPixmapProxyModel.h"
+#include "ConstituencyPixmapCreatingFunctor.h"
+#include "PixmapCreatingProxyModel.h"
 #include "PoliticianModel.h"
-#include "PoliticianPictureProxyModel.h"
+#include "PoliticianPixmapCreatingFunctor.h"
 #include "PollResultModel.h"
 
 #include "election_core_definitions.h"
@@ -65,11 +68,14 @@ void ConstituencyExplorerWidget::setConstituencyModel(
     constituencyModel_ = model;
     if (!politicianModel_)
         return;
-    auto proxyModel = new ConstituencyPixmapProxyModel(
-        ui_->constituencyWidget,
-        constituencyModel_,
-        politicianModel_);
-    ui_->constituencyWidget->setModel(proxyModel);
+    auto constituencyProxyModel = new PixmapCreatingProxyModel(
+        std::unique_ptr<PixmapCreatingFunctor>(
+            new ConstituencyPixmapCreatingFunctor(
+                constituencyModel_,
+                *politicianModel_)),
+        ui_->constituencyWidget);
+
+    ui_->constituencyWidget->setModel(constituencyProxyModel);
 }
 
 void ConstituencyExplorerWidget::setConstituencySelectionModel(
@@ -154,7 +160,10 @@ void ConstituencyExplorerWidget::asynchronouslyRefreshData()
     QSize desiredSizeOfLoadScreenPixmaps(
         edgeLengthOfLoadScreenPixmaps, edgeLengthOfLoadScreenPixmaps);
 
-    PoliticianPictureProxyModel politicianProxyModel(nullptr, politicianModel_);
+    PixmapCreatingProxyModel politicianProxyModel(
+        std::unique_ptr<PixmapCreatingFunctor>(
+            new PoliticianPixmapCreatingFunctor(politicianModel_)),
+        nullptr);
     QVector<QGraphicsItem*> politicianGraphicsItems;
     auto rowCount = politicianProxyModel.rowCount();
     for (auto row = 0; row < rowCount; ++row)

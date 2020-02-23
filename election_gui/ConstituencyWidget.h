@@ -8,7 +8,7 @@
 
 #include "Constituency.h"
 
-class ConstituencyPixmapProxyModel;
+class PixmapCreatingProxyModel;
 class QGraphicsItem;
 class QGraphicsScene;
 class QItemSelectionModel;
@@ -26,7 +26,7 @@ class ConstituencyWidget : public QGraphicsView
 public:
     explicit ConstituencyWidget(QWidget* parent = nullptr);
 
-    void setModel(ConstituencyPixmapProxyModel* constituencyModel);
+    void setModel(PixmapCreatingProxyModel* constituencyModel);
     void setSelectionModel(QItemSelectionModel* selectionModel);
 
 private slots:
@@ -40,7 +40,7 @@ private:
     void connectModelSignals();
 
 private:
-    ConstituencyPixmapProxyModel* constituencyModel_ = nullptr;
+    PixmapCreatingProxyModel* constituencyModel_ = nullptr;
     QItemSelectionModel* constituencySelectionModel_ = nullptr;
     QMap<QGraphicsItem*, QModelIndex> indexItemCache_;
 };

@@ -27,7 +27,7 @@ protected:
 
 private:
     virtual void partiallyReloadCache(
-        const QModelIndex& startIndex, int count) = 0;
+        const QModelIndex& startIndex, int count);
 
 private:
     std::unique_ptr<PixmapCreatingFunctor> pixmapFunctor_;

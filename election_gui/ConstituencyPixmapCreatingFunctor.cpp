@@ -16,6 +16,7 @@ ConstituencyPixmapCreatingFunctor::ConstituencyPixmapCreatingFunctor(
     : constituencyModel_(constituencyModel)
     , politicianModel_(politicianModel)
 {
+    politicianModel_.setParent(nullptr);
     politicianModel_.setElectoralStatus(
         PoliticianModel::ElectoralStatus::SITTING);
 }

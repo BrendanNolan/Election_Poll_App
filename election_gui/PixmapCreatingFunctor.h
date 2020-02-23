@@ -1,6 +1,8 @@
 #ifndef PIXMAPCREATINGFUNCTOR_H
 #define PIXMAPCREATINGFUNCTOR_H
 
+#include <QPixmap>
+
 class QModelIndex;
 
 class PixmapCreatingFunctor

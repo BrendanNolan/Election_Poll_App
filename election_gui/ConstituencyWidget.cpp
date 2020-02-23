@@ -9,7 +9,8 @@
 #include <algorithm>
 
 #include "ConstituencyModel.h"
-#include "ConstituencyPixmapProxyModel.h"
+#include "ConstituencyPixmapCreatingFunctor.h"
+#include "PixmapCreatingProxyModel.h"
 #include "RectanglePositionCalculator.h"
 
 ConstituencyWidget::ConstituencyWidget(QWidget* parent)
@@ -21,7 +22,7 @@ ConstituencyWidget::ConstituencyWidget(QWidget* parent)
 }
 
 void ConstituencyWidget::setModel(
-    ConstituencyPixmapProxyModel* constituencyModel)
+    PixmapCreatingProxyModel* constituencyModel)
 {
     constituencyModel_ = constituencyModel;
     connectModelSignals();

@@ -12,7 +12,6 @@ HEADERS += \
     ThinPixmapDelegate.h \
     election_gui_utils.h \
     RotatingItemsWidget.h \
-    PollResultHistogramProxyModel.h \
     PixmapCreatingProxyModel.h \
     PixmapCreatingFunctor.h \
     PoliticianPixmapCreatingFunctor.h \
@@ -29,7 +28,6 @@ SOURCES += \
     ThinPixmapDelegate.cpp \
     election_gui_utils.cpp \
     RotatingItemsWidget.cpp \
-    PollResultHistogramProxyModel.cpp \
     PixmapCreatingProxyModel.cpp \
     PixmapCreatingFunctor.cpp \
     PoliticianPixmapCreatingFunctor.cpp \

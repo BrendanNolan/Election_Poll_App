@@ -22,11 +22,17 @@ PoliticianModel::PoliticianModel(
 }
 
 PoliticianModel::PoliticianModel(const PoliticianModel& rhs)
-    : manager_(rhs.manager_)
+    : QAbstractListModel(rhs.parent())
     , electoralStatus_(rhs.electoralStatus_)
+    , manager_(rhs.manager_)
     , constituencyId_(rhs.constituencyId_)
 {
-    refresh();
+    politicianCache_.reserve(rhs.politicianCache_.size());
+    for (const auto& uniquePtrConstRef : rhs.politicianCache_)
+    {
+        politicianCache_.push_back(
+            unique_ptr<Politician>(new Politician(*uniquePtrConstRef)));
+    }
 }
 
 int PoliticianModel::rowCount(const QModelIndex& /*parent*/) const

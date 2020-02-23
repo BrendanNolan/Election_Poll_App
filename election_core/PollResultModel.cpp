@@ -34,7 +34,7 @@ QVariant PollResultModel::data(const QModelIndex & index, int role) const
     {
     case Qt::DisplayRole:
         return pollResult.source() + 
-            '(' + pollResult.dateTime().toString() + ')';
+            " (" + pollResult.dateTime().toString() + ')';
     case HistogramRole:
         return pollResult.histogram();
     case SourceRole:

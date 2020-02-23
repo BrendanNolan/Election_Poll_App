@@ -50,7 +50,6 @@ QVariant PoliticianModel::data(
     switch (role)
     {
     case Qt::DisplayRole:
-        return politician.imageUrl();
     case NameRole:
         return politician.name();
     case PartyNameRole:
@@ -82,9 +81,10 @@ bool PoliticianModel::setData(
     auto& politician = *(politicianCache_[index.row()]);
     switch (role)
     {
-    case Qt::DisplayRole: 
+    case FilePathRole:
         politician.setImageUrl(value.toString());
         break;
+    case Qt::DisplayRole:
     case NameRole:
         politician.setName(value.toString());
     case PartyNameRole:

@@ -33,7 +33,9 @@ QVariant PollResultModel::data(const QModelIndex & index, int role) const
     switch (role)
     {
     case Qt::DisplayRole:
-    case Qt::DecorationRole:
+        return pollResult.source() + 
+            '(' + pollResult.dateTime().toString() + ')';
+    case HistogramRole:
         return pollResult.histogram();
     case SourceRole:
         return pollResult.source();
@@ -49,8 +51,9 @@ bool PollResultModel::setData(
     const QVariant& value, 
     int role)
 {
-    if (!election_core_utils::isIndexValid(index, *this) 
-        || role != Qt::DisplayRole)
+    if (!election_core_utils::isIndexValid(index, *this))
+        return false;
+    if (role != HistogramRole)
         return false;
 
     pollResultCache_[index.row()]->setHistogram(

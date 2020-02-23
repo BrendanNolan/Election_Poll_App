@@ -22,7 +22,7 @@ QPixmap PollResultPixmapCreatingFunctor::operator()(
         index, PollResultModel::HistogramRole)
         .value<QHash<QString, QVariant>>();
 
-    QPixmap ret;
+    QPixmap ret(1, 1);
     // PLACEHOLDER DUMMY IMPLEMENTATION
     {
         std::vector<int> pollPercentages;

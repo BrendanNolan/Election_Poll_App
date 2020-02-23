@@ -37,6 +37,9 @@ private slots:
     
 private:
     QModelIndex currentConstituencyIndex() const;
+    int currentConstituencyId() const;
+    QString currentConstituencyName() const;
+
     void refreshModels();
 
 private:

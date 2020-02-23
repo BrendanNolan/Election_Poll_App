@@ -122,24 +122,14 @@ void ConstituencyExplorerWidget::setPollResultSelectionModel(
 
 void ConstituencyExplorerWidget::onConstituencySelectionChanged()
 {
-    auto index = currentConstituencyIndex();
-    if (!index.isValid())
-        return;
-
-    auto id = -1;
-    if (constituencyModel_)
-        id = constituencyModel_->data(index, ConstituencyModel::IdRole).toInt();
     if (politicianModel_)
-        politicianModel_->setConstituency(id);
+        politicianModel_->setConstituency(currentConstituencyId());
     if (pollResultModel_)
-        pollResultModel_->setConstituency(id);
+        pollResultModel_->setConstituency(currentConstituencyId());
     
-    QString textToDisplay("No constituency selected");
-    if (constituencyModel_)
-    {
-        textToDisplay = constituencyModel_->data(
-            index, ConstituencyModel::NameRole).toString();
-    }
+    auto textToDisplay = currentConstituencyName();
+    if (textToDisplay.isEmpty())
+        textToDisplay = "No constituency selected";
     ui_->constituencyDrillDownWidget->setDisplayedConstituencyName(
         textToDisplay);
 }
@@ -156,6 +146,23 @@ QModelIndex ConstituencyExplorerWidget::currentConstituencyIndex() const
     }
 
     return constituencySelectionModel_->selectedIndexes().first();
+}
+
+int ConstituencyExplorerWidget::currentConstituencyId() const
+{
+    auto index = currentConstituencyIndex();
+    if (!index.isValid() || !constituencyModel_)
+        return -1;
+    return constituencyModel_->data(index, ConstituencyModel::IdRole).toInt();
+}
+
+QString ConstituencyExplorerWidget::currentConstituencyName() const
+{
+    auto index = currentConstituencyIndex();
+    if (!index.isValid() || !constituencyModel_)
+        return QString();
+    return constituencyModel_->data(
+        index, ConstituencyModel::NameRole).toString();
 }
 
 void ConstituencyExplorerWidget::asynchronouslyRefreshData()

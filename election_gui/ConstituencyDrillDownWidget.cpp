@@ -77,7 +77,6 @@ void ConstituencyDrillDownWidget::setPollResultModel(PollResultModel* model)
 void ConstituencyDrillDownWidget::setPollResultSelectionModel(
     QItemSelectionModel* selectionModel)
 {
-    Q_ASSERT(selectionModel->model() == ui_->pollResultListView->model());
     ui_->pollResultListView->setSelectionModel(selectionModel);
 }
 

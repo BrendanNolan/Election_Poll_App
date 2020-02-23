@@ -12,6 +12,10 @@ the data when I really need to do this only once.
 5) SqlPollResultDatabaseManager is currently not reading datetimes correctly - the datetimes that
 SqlPollResultDatabaseManager::pollResultsForConstituency() reads from the database all convert to 
 empty strings.
+6) As of 7115 23/Feb/2020, there seems to be a race condition that makes the load screen display 
+forever. This does not seems to be a script-running problem because the sript does seem to run and the 
+does seem to get updated - it's just that the load screen never gets deleted. This only happens
+sometimes. 
 
 At the moment, the main work of ConstituencyDrillDownWidget is in having buttons
 manipulate the electoral status of a PoliticianModel. We should have a widget 

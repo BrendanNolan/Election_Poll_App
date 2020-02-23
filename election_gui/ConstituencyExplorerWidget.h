@@ -1,6 +1,7 @@
 #ifndef CONSTITUENCYEXPLORERWIDGET_H
 #define CONSTITUENCYEXPLORERWIDGET_H
 
+#include <QModelIndex>
 #include <QWidget>
 #include <QTimer>
 
@@ -35,7 +36,7 @@ private slots:
     void onConstituencySelectionChanged();
     
 private:
-    int currentConstituencyId() const;
+    QModelIndex currentConstituencyIndex() const;
     void refreshModels();
 
 private:

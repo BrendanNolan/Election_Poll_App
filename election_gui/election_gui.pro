@@ -9,8 +9,6 @@ HEADERS += \
     ConstituencyExplorerWidget.h \
     RectanglePositionCalculator.h \
     MainWindow.h \
-    PoliticianPictureProxyModel.h \
-    ConstituencyPixmapProxyModel.h \
     ThinPixmapDelegate.h \
     election_gui_utils.h \
     RotatingItemsWidget.h \
@@ -28,8 +26,6 @@ SOURCES += \
     RectanglePositionCalculator.cpp \
     main.cpp \
     MainWindow.cpp \
-    PoliticianPictureProxyModel.cpp \
-    ConstituencyPixmapProxyModel.cpp \
     ThinPixmapDelegate.cpp \
     election_gui_utils.cpp \
     RotatingItemsWidget.cpp \

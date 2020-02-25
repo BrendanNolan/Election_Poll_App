@@ -8,6 +8,7 @@ class QModelIndex;
 class PixmapCreatingFunctor
 {
 public:
+    virtual ~PixmapCreatingFunctor() {}
     virtual QPixmap operator()(const QModelIndex& index) const = 0;
 };
 

@@ -41,7 +41,7 @@ public:
     // constituencies don't come and go like politicians and poll results.
     // This is why I am not reimplementing QAbstractItemModel::removeRows()
     // or QAbstractItemModel::setData().
-    void refresh(); 
+    void reload(); 
     void refreshDataSource();
 
 private:

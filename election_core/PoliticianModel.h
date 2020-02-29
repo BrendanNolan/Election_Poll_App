@@ -52,7 +52,7 @@ public:
         std::unique_ptr<Politician> politician);
     ElectoralStatus electoralStatus() const;
 
-    void refresh();
+    void reload();
     void refreshDataSource();
 
 public slots:

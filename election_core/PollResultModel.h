@@ -38,7 +38,7 @@ public:
 
     QModelIndex addPollresult(std::unique_ptr<PollResult> pollResult);
 
-    void refresh();
+    void reload();
     void refreshDataSource();
 
 public slots:

@@ -75,7 +75,7 @@ QModelIndex ConstituencyModel::addConstituency(
     return index(row);
 }
 
-void ConstituencyModel::refresh()
+void ConstituencyModel::reload()
 {
     reloadConstituencyCache();
     emit dataChanged(index(0), index(rowCount()));
@@ -84,7 +84,7 @@ void ConstituencyModel::refresh()
 void ConstituencyModel::refreshDataSource()
 {
     manager_->refreshDatabase();
-    refresh();
+    reload();
 }
 
 void ConstituencyModel::reloadConstituencyCache()

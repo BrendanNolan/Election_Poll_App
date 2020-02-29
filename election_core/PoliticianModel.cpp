@@ -18,7 +18,7 @@ PoliticianModel::PoliticianModel(
     , electoralStatus_(status)
     , manager_(factory.createPoliticianDatabaseManager())
 {
-    refresh();
+    reload();
 }
 
 PoliticianModel::PoliticianModel(const PoliticianModel& rhs)
@@ -156,7 +156,7 @@ PoliticianModel::ElectoralStatus PoliticianModel::electoralStatus() const
     return electoralStatus_;
 }
 
-void PoliticianModel::refresh()
+void PoliticianModel::reload()
 {
     beginResetModel();
     reloadPoliticianCache();
@@ -166,7 +166,7 @@ void PoliticianModel::refresh()
 void PoliticianModel::refreshDataSource()
 {
     manager_->refreshDatabase();
-    refresh();
+    reload();
 }
 
 void PoliticianModel::setElectoralStatus(ElectoralStatus status)

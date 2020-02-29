@@ -236,9 +236,9 @@ void ConstituencyExplorerWidget::onDataRefreshTimerTimeout()
 void ConstituencyExplorerWidget::refreshModels()
 {
     if (constituencyModel_)
-        constituencyModel_->refresh();
+        constituencyModel_->reload();
     if (politicianModel_)
-        politicianModel_->refresh();
+        politicianModel_->reload();
     if (pollResultModel_)
-        pollResultModel_->refresh();
+        pollResultModel_->reload();
 }

@@ -11,7 +11,8 @@ class QString;
 namespace election_core_utils
 {
 
-    bool isIndexValid(const QModelIndex& index, const QAbstractListModel& model);
+    bool isIndexValid(
+        const QModelIndex& index, const QAbstractListModel& model);
 
     // Returns a connection to the database file if the file exists, otherwise
     // returns the default connection; in either case, the returned connection 

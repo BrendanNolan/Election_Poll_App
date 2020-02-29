@@ -23,7 +23,11 @@ namespace election_core_utils
 
         auto database = QSqlDatabase::database("QSQLITE");
         if (!database.isValid())
+        {
             database = QSqlDatabase::addDatabase("QSQLITE");
+            database.open();
+        }
+
         auto path = QDir::toNativeSeparators(
             databaseFileInfo.absoluteFilePath());
         if (database.databaseName() != path)

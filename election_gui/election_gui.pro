@@ -29,7 +29,6 @@ SOURCES += \
     election_gui_utils.cpp \
     RotatingItemsWidget.cpp \
     PixmapCreatingProxyModel.cpp \
-    PixmapCreatingFunctor.cpp \
     PoliticianPixmapCreatingFunctor.cpp \
     ConstituencyPixmapCreatingFunctor.cpp \
     PollResultPixmapCreatingFunctor.cpp

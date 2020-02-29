@@ -50,7 +50,8 @@ namespace python_scripting
 
 void runPythonScript(const QFileInfo& script)
 {
-    const auto scriptPathAsStdString = script.absoluteFilePath().toStdString();
+    auto scriptPathAsStdString =
+        QDir::toNativeSeparators(script.absoluteFilePath()).toStdString();
     auto scriptPathAsCString = scriptPathAsStdString.c_str();
 
     auto scriptFilePtr = fopen(scriptPathAsCString, "r");

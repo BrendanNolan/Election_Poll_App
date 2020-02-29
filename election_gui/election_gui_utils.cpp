@@ -87,7 +87,6 @@ CartesianPoint operator+(const CartesianPoint& a, const CartesianPoint& b)
     return CartesianPoint(a.x() + b.x(), a.y() + b.y());
 }
 
-
 CartesianPoint operator-(const CartesianPoint& a, const CartesianPoint& b)
 {
     return CartesianPoint(a.x() - b.x(), a.y() - b.y());

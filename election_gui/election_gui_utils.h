@@ -44,7 +44,6 @@ private:
     double theta_ = 0;
 };
 
-
 class CartesianPoint
 {
 public:

@@ -8,10 +8,7 @@ class Constituency
 {
 public:
     Constituency() = default;
-    Constituency(
-        const QString& name,
-        int latitude,
-        int longitude);
+    Constituency(const QString& name, int latitude, int longitude);
 
     int id() const;
     void setId(int id);
@@ -29,4 +26,4 @@ private:
     int longitude_ = -1;
 };
 
-#endif // CONSTITUENCY_H
+#endif// CONSTITUENCY_H

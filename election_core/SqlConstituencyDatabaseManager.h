@@ -22,11 +22,10 @@ public:
     void updateConstituency(const Constituency& constituency) const override;
     void removeConstituency(int id) const override;
     std::unique_ptr<Constituency> constituency(int id) const override;
-    std::vector<std::unique_ptr<Constituency>>
-        constituencies() const override;
+    std::vector<std::unique_ptr<Constituency>> constituencies() const override;
 
 private:
     QFileInfo databaseFileInfo_;
 };
 
-#endif // SQLCONSTITUENCYDATABASEMANAGER_H
+#endif// SQLCONSTITUENCYDATABASEMANAGER_H

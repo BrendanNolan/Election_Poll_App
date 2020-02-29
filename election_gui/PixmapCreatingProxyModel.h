@@ -27,12 +27,11 @@ protected:
     void reloadCache();
 
 private:
-    virtual void partiallyReloadCache(
-        const QModelIndex& startIndex, int count);
+    virtual void partiallyReloadCache(const QModelIndex& startIndex, int count);
 
 private:
     std::unique_ptr<PixmapCreatingFunctor> pixmapFunctor_;
     QHash<QModelIndex, QPixmap> pixmapCache_;
 };
 
-#endif // PIXMAPCREATINGPROXYMODEL_H
+#endif// PIXMAPCREATINGPROXYMODEL_H

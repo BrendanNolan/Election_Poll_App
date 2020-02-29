@@ -13,7 +13,10 @@ class PollResultModel;
 class RotatingItemsWidget;
 class QItemSelectionModel;
 
-namespace Ui { class ConstituencyExplorerWidget; }
+namespace Ui
+{
+class ConstituencyExplorerWidget;
+}
 
 class ConstituencyExplorerWidget : public QWidget
 {
@@ -34,7 +37,7 @@ private slots:
     void asynchronouslyRefreshData();
     void onDataRefreshTimerTimeout();
     void onConstituencySelectionChanged();
-    
+
 private:
     QModelIndex currentConstituencyIndex() const;
     int currentConstituencyId() const;
@@ -56,4 +59,4 @@ private:
     Ui::ConstituencyExplorerWidget* ui_;
 };
 
-#endif // CONSTITUENCYEXPLORERWIDGET_H
+#endif// CONSTITUENCYEXPLORERWIDGET_H

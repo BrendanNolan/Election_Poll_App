@@ -13,8 +13,8 @@ SqlPollResultDatabaseManager::SqlPollResultDatabaseManager(
     const QFileInfo& databaseFileInfo)
     : databaseFileInfo_(databaseFileInfo)
 {
-    auto database = election_core_utils::connectToSqlDatabase(
-        databaseFileInfo_);
+    auto database =
+        election_core_utils::connectToSqlDatabase(databaseFileInfo_);
     if (!database.isValid() || database.tables().contains("poll_results"))
         return;
 
@@ -37,8 +37,8 @@ SqlPollResultDatabaseManager* SqlPollResultDatabaseManager::clone() const
 
 void SqlPollResultDatabaseManager::addPollResult(const PollResult& result) const
 {
-    auto database = election_core_utils::connectToSqlDatabase(
-        databaseFileInfo_);
+    auto database =
+        election_core_utils::connectToSqlDatabase(databaseFileInfo_);
     if (!database.isValid())
         return;
 
@@ -57,7 +57,7 @@ void SqlPollResultDatabaseManager::addPollResult(const PollResult& result) const
     auto dateTime = result.dateTime();
     auto histogram = result.histogram();
     for (auto it = histogram.constBegin(); it != histogram.constEnd(); ++it)
-    { // May need to move the above query preparation inside this loop.
+    {// May need to move the above query preparation inside this loop.
         query.bindValue(":constituency_id", constituencyId);
         query.bindValue(":source", source);
         query.bindValue(":date_time", dateTime);
@@ -70,8 +70,8 @@ void SqlPollResultDatabaseManager::addPollResult(const PollResult& result) const
 void SqlPollResultDatabaseManager::updatePollResult(
     const PollResult& result) const
 {
-    auto database = election_core_utils::connectToSqlDatabase(
-        databaseFileInfo_);
+    auto database =
+        election_core_utils::connectToSqlDatabase(databaseFileInfo_);
     if (!database.isValid())
         return;
 
@@ -91,7 +91,7 @@ void SqlPollResultDatabaseManager::updatePollResult(
     auto dateTime = result.dateTime();
     auto histogram = result.histogram();
     for (auto it = histogram.constBegin(); it != histogram.constEnd(); ++it)
-    { // May need to move the above query preparation inside this loop.
+    {// May need to move the above query preparation inside this loop.
         query.bindValue(":constituency_id", constituencyId);
         query.bindValue(":source", source);
         query.bindValue(":date_time", dateTime);
@@ -104,8 +104,8 @@ void SqlPollResultDatabaseManager::updatePollResult(
 void SqlPollResultDatabaseManager::removePollResult(
     const PollResult& result) const
 {
-    auto database = election_core_utils::connectToSqlDatabase(
-        databaseFileInfo_);
+    auto database =
+        election_core_utils::connectToSqlDatabase(databaseFileInfo_);
     if (!database.isValid())
         return;
 
@@ -123,11 +123,11 @@ void SqlPollResultDatabaseManager::removePollResult(
     query.exec();
 }
 
-vector<unique_ptr<PollResult>> 
-SqlPollResultDatabaseManager::pollResultsForConstituency(int id) const
+vector<unique_ptr<PollResult>>
+    SqlPollResultDatabaseManager::pollResultsForConstituency(int id) const
 {
-    auto database = election_core_utils::connectToSqlDatabase(
-        databaseFileInfo_);
+    auto database =
+        election_core_utils::connectToSqlDatabase(databaseFileInfo_);
     if (!database.isValid())
         return vector<unique_ptr<PollResult>>();
 
@@ -142,10 +142,7 @@ SqlPollResultDatabaseManager::pollResultsForConstituency(int id) const
         return vector<unique_ptr<PollResult>>();
     auto source = query.value("source").toString();
     auto dateTime = query.value("date_time").toDateTime();
-    unique_ptr<PollResult> pollResult(new PollResult(
-        source,
-        dateTime,
-        id));
+    unique_ptr<PollResult> pollResult(new PollResult(source, dateTime, id));
     query.previous();
     while (query.next())
     {
@@ -154,11 +151,9 @@ SqlPollResultDatabaseManager::pollResultsForConstituency(int id) const
         if (nextSource != source || nextDateTime != dateTime)
         {
             ret.push_back(move(pollResult));
-            
-            pollResult = unique_ptr<PollResult>(new PollResult(
-                nextSource,
-                nextDateTime,
-                id));
+
+            pollResult = unique_ptr<PollResult>(
+                new PollResult(nextSource, nextDateTime, id));
             source = nextSource;
             dateTime = nextDateTime;
         }

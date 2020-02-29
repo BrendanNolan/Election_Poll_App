@@ -20,4 +20,4 @@ private:
     const PollResultModel* pollResultModel_;
 };
 
-#endif // POLLRESULTPIXMAPCREATINGFUNCTOR_H
+#endif// POLLRESULTPIXMAPCREATINGFUNCTOR_H

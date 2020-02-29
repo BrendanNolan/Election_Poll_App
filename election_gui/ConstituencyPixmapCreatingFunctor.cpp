@@ -7,11 +7,11 @@
 
 namespace
 {
-    QColor hashToColour(const QHash<QString, QVariant>& hash);
+QColor hashToColour(const QHash<QString, QVariant>& hash);
 }
 
 ConstituencyPixmapCreatingFunctor::ConstituencyPixmapCreatingFunctor(
-    const ConstituencyModel* constituencyModel, 
+    const ConstituencyModel* constituencyModel,
     const PoliticianModel& politicianModel)
     : constituencyModel_(constituencyModel)
     , politicianModel_(politicianModel)
@@ -27,16 +27,17 @@ QPixmap ConstituencyPixmapCreatingFunctor::operator()(
     if (!constituencyModel_)
         return QPixmap();
 
-    auto constituencyId = constituencyModel_->data(
-        index, ConstituencyModel::IdRole).toInt();
+    auto constituencyId =
+        constituencyModel_->data(index, ConstituencyModel::IdRole).toInt();
     politicianModel_.setConstituency(constituencyId);
     QVector<QColor> colours;
     auto politicianCount = politicianModel_.rowCount();
     for (auto row = 0; row < politicianCount; ++row)
     {
-        auto rgbHash = politicianModel_.data(
-            constituencyModel_->index(row, 0), PoliticianModel::PartyColourRole)
-            .value<QHash<QString, QVariant>>();
+        auto rgbHash = politicianModel_
+                           .data(constituencyModel_->index(row, 0),
+                               PoliticianModel::PartyColourRole)
+                           .value<QHash<QString, QVariant>>();
         colours.push_back(hashToColour(rgbHash));
     }
     QPixmap pixmap(50, 50);
@@ -56,11 +57,11 @@ QPixmap ConstituencyPixmapCreatingFunctor::operator()(
 
 namespace
 {
-    QColor hashToColour(const QHash<QString, QVariant>& hash)
-    {
-        auto red = hash["red"].toInt();
-        auto green = hash["green"].toInt();
-        auto blue = hash["blue"].toInt();
-        return QColor(red, green, blue);
-    }
+QColor hashToColour(const QHash<QString, QVariant>& hash)
+{
+    auto red = hash["red"].toInt();
+    auto green = hash["green"].toInt();
+    auto blue = hash["blue"].toInt();
+    return QColor(red, green, blue);
 }
+}// namespace

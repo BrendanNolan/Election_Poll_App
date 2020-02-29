@@ -28,15 +28,14 @@ ConstituencyExplorerWidget::ConstituencyExplorerWidget(QWidget* parent)
 
     python_scripting::runPythonScript(QFileInfo(paths::scraperScript));
 
-    auto factory = SqlDatabaseManagerFactory(QFileInfo(
-        paths::databasePath));
+    auto factory = SqlDatabaseManagerFactory(QFileInfo(paths::databasePath));
 
     auto politicianModel = new PoliticianModel(factory, this);
     auto politicianSelectionModel = new QItemSelectionModel(politicianModel);
 
     auto constituencyModel = new ConstituencyModel(factory, this);
-    auto constituencySelectionModel = new QItemSelectionModel(
-        constituencyModel);
+    auto constituencySelectionModel =
+        new QItemSelectionModel(constituencyModel);
 
     auto pollResultModel = new PollResultModel(factory, this);
     auto pollResultSelectionModel = new QItemSelectionModel(pollResultModel);
@@ -50,20 +49,20 @@ ConstituencyExplorerWidget::ConstituencyExplorerWidget(QWidget* parent)
     setPollResultModel(pollResultModel);
     setPollResultSelectionModel(pollResultSelectionModel);
 
-    connect(ui_->refreshDataButton, &QPushButton::clicked,
-        this, &ConstituencyExplorerWidget::asynchronouslyRefreshData);
+    connect(ui_->refreshDataButton,
+        &QPushButton::clicked,
+        this,
+        &ConstituencyExplorerWidget::asynchronouslyRefreshData);
 
-    connect(&dataRefreshTimer_, &QTimer::timeout,
-        this, &ConstituencyExplorerWidget::onDataRefreshTimerTimeout);
+    connect(&dataRefreshTimer_,
+        &QTimer::timeout,
+        this,
+        &ConstituencyExplorerWidget::onDataRefreshTimerTimeout);
 }
 
-ConstituencyExplorerWidget::~ConstituencyExplorerWidget()
-{
-    delete ui_;
-}
+ConstituencyExplorerWidget::~ConstituencyExplorerWidget() { delete ui_; }
 
-void ConstituencyExplorerWidget::setConstituencyModel(
-    ConstituencyModel* model)
+void ConstituencyExplorerWidget::setConstituencyModel(ConstituencyModel* model)
 {
     constituencyModel_ = model;
     if (!politicianModel_)
@@ -71,8 +70,7 @@ void ConstituencyExplorerWidget::setConstituencyModel(
     auto constituencyProxyModel = new PixmapCreatingProxyModel(
         std::unique_ptr<PixmapCreatingFunctor>(
             new ConstituencyPixmapCreatingFunctor(
-                constituencyModel_,
-                *politicianModel_)),
+                constituencyModel_, *politicianModel_)),
         constituencyModel_,
         ui_->constituencyWidget);
 
@@ -87,12 +85,13 @@ void ConstituencyExplorerWidget::setConstituencySelectionModel(
     constituencySelectionModel_ = selectionModel;
     ui_->constituencyWidget->setSelectionModel(constituencySelectionModel_);
     onConstituencySelectionChanged();
-    connect(constituencySelectionModel_, &QItemSelectionModel::selectionChanged,
-        this, &ConstituencyExplorerWidget::onConstituencySelectionChanged);
+    connect(constituencySelectionModel_,
+        &QItemSelectionModel::selectionChanged,
+        this,
+        &ConstituencyExplorerWidget::onConstituencySelectionChanged);
 }
 
-void ConstituencyExplorerWidget::setPoliticianModel(
-    PoliticianModel* model)
+void ConstituencyExplorerWidget::setPoliticianModel(PoliticianModel* model)
 {
     politicianModel_ = model;
     politicianModel_->setConstituency(currentConstituencyId());
@@ -126,7 +125,7 @@ void ConstituencyExplorerWidget::onConstituencySelectionChanged()
         politicianModel_->setConstituency(currentConstituencyId());
     if (pollResultModel_)
         pollResultModel_->setConstituency(currentConstituencyId());
-    
+
     auto textToDisplay = currentConstituencyName();
     if (textToDisplay.isEmpty())
         textToDisplay = "No constituency selected";
@@ -136,8 +135,8 @@ void ConstituencyExplorerWidget::onConstituencySelectionChanged()
 
 QModelIndex ConstituencyExplorerWidget::currentConstituencyIndex() const
 {
-    if (!constituencySelectionModel_ ||
-        constituencySelectionModel_->selectedIndexes().isEmpty())
+    if (!constituencySelectionModel_
+        || constituencySelectionModel_->selectedIndexes().isEmpty())
     {
         if (constituencyModel_)
             return constituencyModel_->index(0, 0);
@@ -161,19 +160,21 @@ QString ConstituencyExplorerWidget::currentConstituencyName() const
     auto index = currentConstituencyIndex();
     if (!index.isValid() || !constituencyModel_)
         return QString();
-    return constituencyModel_->data(
-        index, ConstituencyModel::NameRole).toString();
+    return constituencyModel_->data(index, ConstituencyModel::NameRole)
+        .toString();
 }
 
 void ConstituencyExplorerWidget::asynchronouslyRefreshData()
 {
     auto sizeOfMainWindow = rect().size();
     auto desiredSizeOfLoadScreen = 0.5 * sizeOfMainWindow;
-    auto desiredPositionOfLoadScreen = rect().topLeft()
+    auto desiredPositionOfLoadScreen =
+        rect().topLeft()
         + QPoint(rect().width() * 1.0 / 4.0, rect().height() * 1.0 / 4.0);
-    auto edgeLengthOfLoadScreenPixmaps = 0.15 * std::min(
-        desiredSizeOfLoadScreen.width(),
-        desiredSizeOfLoadScreen.height());
+    auto edgeLengthOfLoadScreenPixmaps =
+        0.15
+        * std::min(desiredSizeOfLoadScreen.width(),
+              desiredSizeOfLoadScreen.height());
     QSize desiredSizeOfLoadScreenPixmaps(
         edgeLengthOfLoadScreenPixmaps, edgeLengthOfLoadScreenPixmaps);
 
@@ -186,13 +187,11 @@ void ConstituencyExplorerWidget::asynchronouslyRefreshData()
     auto rowCount = politicianProxyModel.rowCount();
     for (auto row = 0; row < rowCount; ++row)
     {
-        auto pixmap = politicianProxyModel.data(
-            politicianProxyModel.index(row, 0))
-            .value<QPixmap>();
-        politicianGraphicsItems.push_back(new QGraphicsPixmapItem(
-            pixmap.scaled(
-                desiredSizeOfLoadScreenPixmaps,
-                Qt::KeepAspectRatio)));
+        auto pixmap =
+            politicianProxyModel.data(politicianProxyModel.index(row, 0))
+                .value<QPixmap>();
+        politicianGraphicsItems.push_back(new QGraphicsPixmapItem(pixmap.scaled(
+            desiredSizeOfLoadScreenPixmaps, Qt::KeepAspectRatio)));
     }
 
     rotatingItemsLoadScreen_ = new RotatingItemsWidget(this);
@@ -214,8 +213,7 @@ void ConstituencyExplorerWidget::asynchronouslyRefreshData()
     rotatingItemsLoadScreen_->raise();
     dataRefreshTimer_.setInterval(std::chrono::seconds(1));
 
-    fut_ = std::async(
-        std::launch::async,
+    fut_ = std::async(std::launch::async,
         &python_scripting::runPythonScript,
         QFileInfo(paths::scraperScript));
     dataRefreshTimer_.start();

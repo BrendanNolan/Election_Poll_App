@@ -18,8 +18,7 @@ class ConstituencyModel : public QAbstractListModel
 
 public:
     ConstituencyModel(
-        const IDatabaseManagerFactory&,
-        QObject* parent = nullptr);
+        const IDatabaseManagerFactory&, QObject* parent = nullptr);
 
     enum Role
     {
@@ -32,8 +31,7 @@ public:
 
     int rowCount(const QModelIndex& parent = QModelIndex()) const override;
     QVariant data(
-        const QModelIndex &index, 
-        int role = Qt::DisplayRole) const override;
+        const QModelIndex& index, int role = Qt::DisplayRole) const override;
     QHash<int, QByteArray> roleNames() const override;
     QModelIndex addConstituency(std::unique_ptr<Constituency> constituency);
 
@@ -41,7 +39,7 @@ public:
     // constituencies don't come and go like politicians and poll results.
     // This is why I am not reimplementing QAbstractItemModel::removeRows()
     // or QAbstractItemModel::setData().
-    void reload(); 
+    void reload();
     void refreshDataSource();
 
 private:
@@ -52,4 +50,4 @@ private:
     std::shared_ptr<IConstituencyDatabaseManager> manager_ = nullptr;
 };
 
-#endif // CONSTITUENCYMODEL_H
+#endif// CONSTITUENCYMODEL_H

@@ -25,4 +25,4 @@ private:
     mutable PoliticianModel politicianModel_;
 };
 
-#endif // CONSTITUENCYPIXMAPCREATINGFUNCTOR_H
+#endif// CONSTITUENCYPIXMAPCREATINGFUNCTOR_H

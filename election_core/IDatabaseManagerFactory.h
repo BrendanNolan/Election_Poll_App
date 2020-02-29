@@ -11,8 +11,8 @@ class IDatabaseManagerFactory
 {
 public:
     virtual ~IDatabaseManagerFactory() = default;
-    
-    virtual std::shared_ptr<IConstituencyDatabaseManager> 
+
+    virtual std::shared_ptr<IConstituencyDatabaseManager>
         createConstituencyDatabaseManager() const = 0;
     virtual std::shared_ptr<IPollResultDatabaseManager>
         createPollResultDatabaseManager() const = 0;
@@ -22,4 +22,4 @@ public:
     virtual IDatabaseManagerFactory* clone() const = 0;
 };
 
-#endif //IDATABASEMANAGERFACTORY_H
+#endif// IDATABASEMANAGERFACTORY_H

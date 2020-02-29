@@ -10,7 +10,8 @@ struct RGBValue
         : red_(red)
         , green_(green)
         , blue_(blue)
-    {}
+    {
+    }
 
     int red_;
     int green_;
@@ -23,7 +24,8 @@ struct PartyDetails
     PartyDetails(const QString& name, const RGBValue& rgb)
         : name_(name)
         , colour_(rgb)
-    {}
+    {
+    }
 
     QString name_;
     RGBValue colour_;
@@ -59,4 +61,4 @@ private:
     bool candidate_;
 };
 
-#endif // POLITICIAN_H
+#endif// POLITICIAN_H

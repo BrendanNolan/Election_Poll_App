@@ -12,20 +12,21 @@ using namespace std;
 
 namespace
 {
-    unique_ptr<Constituency> sqlQueryToConstituency(const QSqlQuery& query);
+unique_ptr<Constituency> sqlQueryToConstituency(const QSqlQuery& query);
 }
 
 SqlConstituencyDatabaseManager::SqlConstituencyDatabaseManager(
     const QFileInfo& databaseFileInfo)
     : databaseFileInfo_(databaseFileInfo)
 {
-    auto database = election_core_utils::connectToSqlDatabase(databaseFileInfo_);
+    auto database =
+        election_core_utils::connectToSqlDatabase(databaseFileInfo_);
     if (!database.isValid() || database.tables().contains("constituencies"))
         return;
-    
+
     QSqlQuery query(database);
     query.exec(
-        "CREATE TABLE constituencies " 
+        "CREATE TABLE constituencies "
         "("
         "id INTEGER PRIMARY KEY AUTOINCREMENT, "
         "name TEXT, "
@@ -42,15 +43,16 @@ SqlConstituencyDatabaseManager* SqlConstituencyDatabaseManager::clone() const
 void SqlConstituencyDatabaseManager::addConstituency(
     Constituency& constituency) const
 {
-    auto database = election_core_utils::connectToSqlDatabase(databaseFileInfo_);
+    auto database =
+        election_core_utils::connectToSqlDatabase(databaseFileInfo_);
     if (!database.isValid())
         return;
-    
+
     QSqlQuery query(database);
     query.prepare(
         "INSERT INTO constituencies "
         "(name, latitude, longitude) "
-        "VALUES " 
+        "VALUES "
         "(:name, :latitude, :longitude)");
     query.bindValue(":name", constituency.name());
     query.bindValue(":latitude", constituency.latitude());
@@ -59,13 +61,14 @@ void SqlConstituencyDatabaseManager::addConstituency(
     constituency.setId(query.lastInsertId().toInt());
 }
 
-void SqlConstituencyDatabaseManager::
-    updateConstituency(const Constituency& constituency) const
+void SqlConstituencyDatabaseManager::updateConstituency(
+    const Constituency& constituency) const
 {
-    auto database = election_core_utils::connectToSqlDatabase(databaseFileInfo_);
+    auto database =
+        election_core_utils::connectToSqlDatabase(databaseFileInfo_);
     if (!database.isValid())
         return;
-    
+
     QSqlQuery query(database);
     query.prepare(
         "UPDATE constituencies SET "
@@ -83,32 +86,34 @@ void SqlConstituencyDatabaseManager::
 
 void SqlConstituencyDatabaseManager::removeConstituency(int id) const
 {
-    auto database = election_core_utils::connectToSqlDatabase(databaseFileInfo_);
+    auto database =
+        election_core_utils::connectToSqlDatabase(databaseFileInfo_);
     if (!database.isValid())
         return;
-    
+
     QSqlQuery query(database);
-    query.exec(
-        "DELETE FROM comstituencies WHERE id = " + QString::number(id));
+    query.exec("DELETE FROM comstituencies WHERE id = " + QString::number(id));
 }
 
-unique_ptr<Constituency> SqlConstituencyDatabaseManager::
-    constituency(int id) const
+unique_ptr<Constituency> SqlConstituencyDatabaseManager::constituency(
+    int id) const
 {
-    auto database = election_core_utils::connectToSqlDatabase(databaseFileInfo_);
+    auto database =
+        election_core_utils::connectToSqlDatabase(databaseFileInfo_);
     if (!database.isValid())
         return nullptr;
-    
+
     QSqlQuery query(database);
     query.exec(
         "SELECT * FROM comstituencies WHERE id = " + QString::number(id));
     return sqlQueryToConstituency(query);
 }
 
-vector<unique_ptr<Constituency>> SqlConstituencyDatabaseManager::
-    constituencies() const
+vector<unique_ptr<Constituency>>
+    SqlConstituencyDatabaseManager::constituencies() const
 {
-    auto database = election_core_utils::connectToSqlDatabase(databaseFileInfo_);
+    auto database =
+        election_core_utils::connectToSqlDatabase(databaseFileInfo_);
     if (!database.isValid())
         return vector<unique_ptr<Constituency>>();
 
@@ -116,21 +121,20 @@ vector<unique_ptr<Constituency>> SqlConstituencyDatabaseManager::
     QSqlQuery query(database);
     if (!query.exec("SELECT * FROM constituencies"))
         return vector<unique_ptr<Constituency>>();
-    while (query.next())
-        ret.push_back(sqlQueryToConstituency(query));
+    while (query.next()) ret.push_back(sqlQueryToConstituency(query));
 
     return ret;
 }
 
 namespace
 {
-    unique_ptr<Constituency> sqlQueryToConstituency(const QSqlQuery& query)
-    {
-        unique_ptr<Constituency> constituency(new Constituency);
-        constituency->setId(query.value("id").toInt());
-        constituency->setName(query.value("name").toString());
-        constituency->setLatitude(query.value("latitude").toInt());
-        constituency->setLongitude(query.value("longitude").toInt());
-        return constituency;
-    }
+unique_ptr<Constituency> sqlQueryToConstituency(const QSqlQuery& query)
+{
+    unique_ptr<Constituency> constituency(new Constituency);
+    constituency->setId(query.value("id").toInt());
+    constituency->setName(query.value("name").toString());
+    constituency->setLatitude(query.value("latitude").toInt());
+    constituency->setLongitude(query.value("longitude").toInt());
+    return constituency;
 }
+}// namespace

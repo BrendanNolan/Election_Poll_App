@@ -21,8 +21,7 @@ public:
     virtual std::unique_ptr<Politician> politician(int id) const = 0;
     virtual QUrl imageUrlForPolitician(int politicianId) const = 0;
     virtual void addPoliticianToConstituency(
-        Politician& politcian, 
-        int constituencyId) const = 0;
+        Politician& politcian, int constituencyId) const = 0;
     virtual void updatePolitician(const Politician& politician) const = 0;
     virtual void removePolitician(int politicianId) const = 0;
     virtual void clearPoliticiansFromConstituency(int constituencyId) const = 0;
@@ -30,4 +29,4 @@ public:
     virtual void refreshDatabase() const = 0;
 };
 
-#endif // IPOLITICIANDATABASEMANAGER_H
+#endif// IPOLITICIANDATABASEMANAGER_H

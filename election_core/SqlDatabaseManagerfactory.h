@@ -32,4 +32,4 @@ private:
     QFileInfo databaseFileInfo_;
 };
 
-#endif // SQLDATABASEMANAGERFACTORY_H
+#endif// SQLDATABASEMANAGERFACTORY_H

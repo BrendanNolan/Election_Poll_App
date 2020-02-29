@@ -10,8 +10,7 @@
 
 using namespace std;
 
-PoliticianModel::PoliticianModel(
-    const IDatabaseManagerFactory& factory,
+PoliticianModel::PoliticianModel(const IDatabaseManagerFactory& factory,
     QObject* parent,
     ElectoralStatus status)
     : QAbstractListModel(parent)
@@ -40,9 +39,7 @@ int PoliticianModel::rowCount(const QModelIndex& /*parent*/) const
     return politicianCache_.size();
 }
 
-QVariant PoliticianModel::data(
-    const QModelIndex& index,
-    int role) const
+QVariant PoliticianModel::data(const QModelIndex& index, int role) const
 {
     if (!election_core_utils::isIndexValid(index, *this))
         return QVariant();
@@ -66,15 +63,13 @@ QVariant PoliticianModel::data(
     case FilePathRole:
         return QDir::toNativeSeparators(
             QFileInfo(politician.imageUrl().path()).absoluteFilePath());
-    default: 
+    default:
         return QVariant();
     }
 }
 
 bool PoliticianModel::setData(
-    const QModelIndex& index,
-    const QVariant& value,
-    int role)
+    const QModelIndex& index, const QVariant& value, int role)
 {
     if (!election_core_utils::isIndexValid(index, *this))
         return false;
@@ -93,8 +88,7 @@ bool PoliticianModel::setData(
     {
         auto hash = value.value<QHash<QString, QVariant>>();
         auto details = politician.partyDetails();
-        details.colour_ = RGBValue(
-            hash["rgb_red"].toInt(),
+        details.colour_ = RGBValue(hash["rgb_red"].toInt(),
             hash["rgb_green"].toInt(),
             hash["rgb_blue"].toInt());
         politician.setPartyDetails(details);
@@ -109,9 +103,7 @@ bool PoliticianModel::setData(
 }
 
 bool PoliticianModel::removeRows(
-    int row, 
-    int count, 
-    const QModelIndex& /*parent*/)
+    int row, int count, const QModelIndex& /*parent*/)
 {
     if (row < 0 || count < 0 || row + count > rowCount())
         return false;
@@ -124,8 +116,7 @@ bool PoliticianModel::removeRows(
         --rowsLeftToRemove;
     }
     politicianCache_.erase(
-        politicianCache_.begin() + row,
-        politicianCache_.begin() + row + count);
+        politicianCache_.begin() + row, politicianCache_.begin() + row + count);
     endRemoveRows();
     return true;
 }

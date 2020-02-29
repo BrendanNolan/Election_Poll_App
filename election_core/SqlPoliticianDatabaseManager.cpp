@@ -12,14 +12,15 @@ using namespace std;
 
 namespace
 {
-    unique_ptr<Politician> sqlQueryToPolitician(const QSqlQuery& query);
+unique_ptr<Politician> sqlQueryToPolitician(const QSqlQuery& query);
 }
 
 SqlPoliticianDatabaseManager::SqlPoliticianDatabaseManager(
     const QFileInfo& databaseFileInfo)
     : databaseFileInfo_(databaseFileInfo)
 {
-    auto database = election_core_utils::connectToSqlDatabase(databaseFileInfo_);
+    auto database =
+        election_core_utils::connectToSqlDatabase(databaseFileInfo_);
     if (!database.isValid() || database.tables().contains("politicians"))
         return;
 
@@ -31,8 +32,8 @@ SqlPoliticianDatabaseManager::SqlPoliticianDatabaseManager(
         "constituency_id INTEGER, "
         "image_url TEXT, "
         "name TEXT, "
-        "elected INTEGER, " // 0 for false 1 for true
-        "candidate INTEGER, " // 0 for false 1 for true
+        "elected INTEGER, "// 0 for false 1 for true
+        "candidate INTEGER, "// 0 for false 1 for true
         "party_name TEXT, "
         "party_rgb_red TEXT, "
         "party_rgb_green TEXT, "
@@ -48,8 +49,8 @@ SqlPoliticianDatabaseManager* SqlPoliticianDatabaseManager::clone() const
 vector<unique_ptr<Politician>> SqlPoliticianDatabaseManager::mpsForConstituency(
     int constituencyId) const
 {
-    auto database = election_core_utils::connectToSqlDatabase(
-        databaseFileInfo_);
+    auto database =
+        election_core_utils::connectToSqlDatabase(databaseFileInfo_);
     if (!database.isValid())
         return vector<unique_ptr<Politician>>();
 
@@ -66,17 +67,16 @@ vector<unique_ptr<Politician>> SqlPoliticianDatabaseManager::mpsForConstituency(
     query.bindValue(":constituency_id", constituencyId);
     query.bindValue(":elected", 1);
     query.exec();
-    while (query.next())
-        ret.push_back(sqlQueryToPolitician(query));
+    while (query.next()) ret.push_back(sqlQueryToPolitician(query));
     return ret;
 }
 
-vector<unique_ptr<Politician>> 
-SqlPoliticianDatabaseManager::candidatesForConstituency(
-    int constituencyId) const
+vector<unique_ptr<Politician>>
+    SqlPoliticianDatabaseManager::candidatesForConstituency(
+        int constituencyId) const
 {
-    auto database = election_core_utils::connectToSqlDatabase(
-        databaseFileInfo_);
+    auto database =
+        election_core_utils::connectToSqlDatabase(databaseFileInfo_);
     if (!database.isValid())
         return vector<unique_ptr<Politician>>();
 
@@ -94,18 +94,17 @@ SqlPoliticianDatabaseManager::candidatesForConstituency(
     query.bindValue(":candidate", 1);
     if (!query.exec())
         return vector<unique_ptr<Politician>>();
-    while (query.next())
-        ret.push_back(sqlQueryToPolitician(query));
+    while (query.next()) ret.push_back(sqlQueryToPolitician(query));
     return ret;
 }
 
 unique_ptr<Politician> SqlPoliticianDatabaseManager::politician(int id) const
 {
-    auto database = election_core_utils::connectToSqlDatabase(
-        databaseFileInfo_);
+    auto database =
+        election_core_utils::connectToSqlDatabase(databaseFileInfo_);
     if (!database.isValid())
         return nullptr;
-    
+
     QSqlQuery query(database);
     query.exec("SELECT * FROM politicians WHERE id = " + QString::number(id));
     return sqlQueryToPolitician(query);
@@ -113,24 +112,22 @@ unique_ptr<Politician> SqlPoliticianDatabaseManager::politician(int id) const
 
 QUrl SqlPoliticianDatabaseManager::imageUrlForPolitician(int politicianId) const
 {
-    auto database = election_core_utils::connectToSqlDatabase(
-        databaseFileInfo_);
+    auto database =
+        election_core_utils::connectToSqlDatabase(databaseFileInfo_);
     if (!database.isValid())
         return QUrl();
-    
+
     QSqlQuery query(database);
-    query.exec(
-        "SELECT image_url FROM politicians WHERE id = " 
-        + QString::number(politicianId));
+    query.exec("SELECT image_url FROM politicians WHERE id = "
+               + QString::number(politicianId));
     return QUrl(query.value("image_url").toString());
 }
 
 void SqlPoliticianDatabaseManager::addPoliticianToConstituency(
-    Politician& thePolitician,
-    int constituencyId) const
+    Politician& thePolitician, int constituencyId) const
 {
-    auto database = election_core_utils::connectToSqlDatabase(
-        databaseFileInfo_);
+    auto database =
+        election_core_utils::connectToSqlDatabase(databaseFileInfo_);
     if (!database.isValid())
         return;
 
@@ -154,22 +151,19 @@ void SqlPoliticianDatabaseManager::addPoliticianToConstituency(
     query.bindValue(":candidate", static_cast<int>(thePolitician.candidate()));
     query.bindValue(":party_name", thePolitician.partyDetails().name_);
     query.bindValue(
-        ":party_rgb_red", 
-        thePolitician.partyDetails().colour_.red_);
+        ":party_rgb_red", thePolitician.partyDetails().colour_.red_);
     query.bindValue(
-        ":party_rgb_green", 
-        thePolitician.partyDetails().colour_.green_);
+        ":party_rgb_green", thePolitician.partyDetails().colour_.green_);
     query.bindValue(
-        ":party_rgb_blue", 
-        thePolitician.partyDetails().colour_.blue_);
+        ":party_rgb_blue", thePolitician.partyDetails().colour_.blue_);
     thePolitician.setId(query.lastInsertId().toInt());
 }
 
 void SqlPoliticianDatabaseManager::updatePolitician(
-    const Politician & politician) const
+    const Politician& politician) const
 {
-    auto database = election_core_utils::connectToSqlDatabase(
-        databaseFileInfo_);
+    auto database =
+        election_core_utils::connectToSqlDatabase(databaseFileInfo_);
     if (!database.isValid())
         return;
 
@@ -193,8 +187,7 @@ void SqlPoliticianDatabaseManager::updatePolitician(
     query.bindValue(":constituency_id", politician.constituencyId());
     query.bindValue(":party_rgb_red", politician.partyDetails().colour_.red_);
     query.bindValue(
-        ":party_rgb_green", 
-        politician.partyDetails().colour_.green_);
+        ":party_rgb_green", politician.partyDetails().colour_.green_);
     query.bindValue(":party_rgb_blue", politician.partyDetails().colour_.blue_);
     query.bindValue(":party_name", politician.partyDetails().name_);
     query.bindValue(":elected", static_cast<int>(politician.elected()));
@@ -205,8 +198,8 @@ void SqlPoliticianDatabaseManager::updatePolitician(
 
 void SqlPoliticianDatabaseManager::removePolitician(int politicianId) const
 {
-    auto database = election_core_utils::connectToSqlDatabase(
-        databaseFileInfo_);
+    auto database =
+        election_core_utils::connectToSqlDatabase(databaseFileInfo_);
     if (!database.isValid())
         return;
 
@@ -218,38 +211,36 @@ void SqlPoliticianDatabaseManager::removePolitician(int politicianId) const
 void SqlPoliticianDatabaseManager::clearPoliticiansFromConstituency(
     int constituencyId) const
 {
-    auto database = election_core_utils::connectToSqlDatabase(
-        databaseFileInfo_);
+    auto database =
+        election_core_utils::connectToSqlDatabase(databaseFileInfo_);
     if (!database.isValid())
         return;
 
     QSqlQuery query(database);
-    query.exec(
-        "DELETE FROM politicians WHERE constituency_id = " 
-        + QString::number(constituencyId));
+    query.exec("DELETE FROM politicians WHERE constituency_id = "
+               + QString::number(constituencyId));
 }
 
-namespace 
+namespace
 {
-    unique_ptr<Politician> sqlQueryToPolitician(const QSqlQuery& query)
+unique_ptr<Politician> sqlQueryToPolitician(const QSqlQuery& query)
+{
+    PartyDetails details;
     {
-        PartyDetails details;
-        {
-            RGBValue rgb(
-                query.value("party_rgb_red").toInt(),
-                query.value("party_rgb_green").toInt(),
-                query.value("party_rgb_blue").toInt());
-            details.name_ = query.value("party_name").toString();
-            details.colour_ = rgb;
-        }
-        unique_ptr<Politician> politician(new Politician);
-        politician->setImageUrl(QUrl(query.value("image_url").toString()));
-        politician->setName(query.value("name").toString());
-        politician->setId(query.value("id").toInt());
-        politician->setConstituencyId(query.value("constituency_id").toInt());
-        politician->setElected(query.value("elected").toInt());
-        politician->setCandidate(query.value("candidate").toInt());
-        politician->setPartyDetails(details);
-        return politician;
+        RGBValue rgb(query.value("party_rgb_red").toInt(),
+            query.value("party_rgb_green").toInt(),
+            query.value("party_rgb_blue").toInt());
+        details.name_ = query.value("party_name").toString();
+        details.colour_ = rgb;
     }
+    unique_ptr<Politician> politician(new Politician);
+    politician->setImageUrl(QUrl(query.value("image_url").toString()));
+    politician->setName(query.value("name").toString());
+    politician->setId(query.value("id").toInt());
+    politician->setConstituencyId(query.value("constituency_id").toInt());
+    politician->setElected(query.value("elected").toInt());
+    politician->setCandidate(query.value("candidate").toInt());
+    politician->setPartyDetails(details);
+    return politician;
 }
+}// namespace

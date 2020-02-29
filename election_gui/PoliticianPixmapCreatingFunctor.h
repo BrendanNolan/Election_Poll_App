@@ -20,4 +20,4 @@ private:
     const PoliticianModel* politicianModel_;
 };
 
-#endif // POLITICIANPIXMAPCREATINGFUNCTOR_H
+#endif// POLITICIANPIXMAPCREATINGFUNCTOR_H

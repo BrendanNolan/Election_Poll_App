@@ -16,10 +16,10 @@ public:
     virtual void updateConstituency(const Constituency& constituency) const = 0;
     virtual void removeConstituency(int id) const = 0;
     virtual std::unique_ptr<Constituency> constituency(int id) const = 0;
-    virtual std::vector<std::unique_ptr<Constituency>> 
+    virtual std::vector<std::unique_ptr<Constituency>>
         constituencies() const = 0;
 
     virtual void refreshDatabase() const = 0;
 };
 
-#endif // ICONSTITUENCYDATABASEMANAGER_H
+#endif// ICONSTITUENCYDATABASEMANAGER_H

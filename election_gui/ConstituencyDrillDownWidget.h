@@ -12,7 +12,7 @@ class QRadioButton;
 
 namespace Ui
 {
-    class ConstituencyDrillDownWidget;
+class ConstituencyDrillDownWidget;
 }
 
 class ConstituencyDrillDownWidget : public QWidget
@@ -21,8 +21,7 @@ class ConstituencyDrillDownWidget : public QWidget
 
 public:
     ConstituencyDrillDownWidget(
-        QWidget* parent = nullptr,
-        Qt::WindowFlags flags = Qt::WindowFlags());
+        QWidget* parent = nullptr, Qt::WindowFlags flags = Qt::WindowFlags());
     ~ConstituencyDrillDownWidget();
 
     void setPoliticianModel(PoliticianModel* model);
@@ -41,7 +40,7 @@ private slots:
     void onCandidatesRadioButtonToggled(bool checked);
 
 private:
-    QModelIndexList	selectedPoliticians() const;
+    QModelIndexList selectedPoliticians() const;
     void setToInvalidState();
     void enableRadioButtons();
     void disableRadioButtons();
@@ -51,4 +50,4 @@ private:
     Ui::ConstituencyDrillDownWidget* ui_;
 };
 
-#endif // CONSTITUENCYDRILLDOWNWIDGET_H
+#endif// CONSTITUENCYDRILLDOWNWIDGET_H

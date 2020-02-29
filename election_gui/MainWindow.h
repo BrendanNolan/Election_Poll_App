@@ -16,4 +16,4 @@ private:
     ConstituencyExplorerWidget* constituencyExplorerWidget_ = nullptr;
 };
 
-#endif // MAINWINDOW_H
+#endif// MAINWINDOW_H

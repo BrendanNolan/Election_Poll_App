@@ -1,7 +1,6 @@
 #include "PollResult.h"
 
-PollResult::PollResult(
-    const QString& source,
+PollResult::PollResult(const QString& source,
     const QDateTime& dateTime,
     int constituencyId,
     const QHash<QString, QVariant>& histogram)
@@ -9,7 +8,8 @@ PollResult::PollResult(
     , histogram_(histogram)
     , source_(source)
     , dateTime_(dateTime)
-{}
+{
+}
 
 void PollResult::appendToHistogram(const QString& name, int value)
 {
@@ -21,32 +21,20 @@ int PollResult::value(const QString& name) const
     return histogram_[name].toInt();
 }
 
-QHash<QString, QVariant> PollResult::histogram() const
-{
-    return histogram_;
-}
+QHash<QString, QVariant> PollResult::histogram() const { return histogram_; }
 
 void PollResult::setHistogram(const QHash<QString, QVariant>& histogram)
 {
     histogram_ = histogram;
 }
 
-int PollResult::constituencyId() const
-{
-    return constituencyId_;
-}
+int PollResult::constituencyId() const { return constituencyId_; }
 
 void PollResult::setConstituencyId(int constituencyId)
 {
     constituencyId_ = constituencyId;
 }
 
-QString PollResult::source() const
-{
-    return source_;
-}
+QString PollResult::source() const { return source_; }
 
-QDateTime PollResult::dateTime() const
-{
-    return dateTime_;
-}
+QDateTime PollResult::dateTime() const { return dateTime_; }

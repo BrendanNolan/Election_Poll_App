@@ -15,8 +15,7 @@ class PollResultModel : public QAbstractListModel
 
 public:
     PollResultModel(
-        const IDatabaseManagerFactory& factory,
-        QObject* parent = nullptr);
+        const IDatabaseManagerFactory& factory, QObject* parent = nullptr);
 
     enum Role
     {
@@ -27,12 +26,9 @@ public:
 
     int rowCount(const QModelIndex& parent = QModelIndex()) const override;
     QVariant data(
-        const QModelIndex &index,
-        int role = Qt::DisplayRole) const override;
+        const QModelIndex& index, int role = Qt::DisplayRole) const override;
     bool setData(
-        const QModelIndex& index,
-        const QVariant& value,
-        int role) override;
+        const QModelIndex& index, const QVariant& value, int role) override;
     bool removeRows(int row, int count, const QModelIndex& parent) override;
     QHash<int, QByteArray> roleNames() const override;
 
@@ -53,4 +49,4 @@ private:
     int constituencyId_ = -1;
 };
 
-#endif // POLLRESULTMODEL_H
+#endif// POLLRESULTMODEL_H

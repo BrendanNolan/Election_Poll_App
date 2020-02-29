@@ -12,27 +12,28 @@ using namespace std;
 SqlDatabaseManagerFactory::SqlDatabaseManagerFactory(
     const QFileInfo& databaseFileInfo)
     : databaseFileInfo_(databaseFileInfo)
-{}
+{
+}
 
 SqlDatabaseManagerFactory* SqlDatabaseManagerFactory::clone() const
 {
     return new SqlDatabaseManagerFactory(*this);
 }
 
-shared_ptr<IConstituencyDatabaseManager> 
-SqlDatabaseManagerFactory::createConstituencyDatabaseManager() const
+shared_ptr<IConstituencyDatabaseManager>
+    SqlDatabaseManagerFactory::createConstituencyDatabaseManager() const
 {
     return make_shared<SqlConstituencyDatabaseManager>(databaseFileInfo_);
 }
 
 shared_ptr<IPollResultDatabaseManager>
-SqlDatabaseManagerFactory::createPollResultDatabaseManager() const
+    SqlDatabaseManagerFactory::createPollResultDatabaseManager() const
 {
     return make_shared<SqlPollResultDatabaseManager>(databaseFileInfo_);
 }
 
 shared_ptr<IPoliticianDatabaseManager>
-SqlDatabaseManagerFactory::createPoliticianDatabaseManager() const
+    SqlDatabaseManagerFactory::createPoliticianDatabaseManager() const
 {
     return make_shared<SqlPoliticianDatabaseManager>(databaseFileInfo_);
 }

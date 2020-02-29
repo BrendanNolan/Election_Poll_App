@@ -11,8 +11,7 @@
 using namespace std;
 
 PollResultModel::PollResultModel(
-    const IDatabaseManagerFactory& factory,
-    QObject* parent)
+    const IDatabaseManagerFactory& factory, QObject* parent)
     : QAbstractListModel(parent)
     , manager_(factory.createPollResultDatabaseManager())
 {
@@ -24,7 +23,7 @@ int PollResultModel::rowCount(const QModelIndex& /*parent*/) const
     return pollResultCache_.size();
 }
 
-QVariant PollResultModel::data(const QModelIndex & index, int role) const
+QVariant PollResultModel::data(const QModelIndex& index, int role) const
 {
     if (!election_core_utils::isIndexValid(index, *this))
         return QVariant();
@@ -33,8 +32,8 @@ QVariant PollResultModel::data(const QModelIndex & index, int role) const
     switch (role)
     {
     case Qt::DisplayRole:
-        return pollResult.source() + 
-            " (" + pollResult.dateTime().toString() + ')';
+        return pollResult.source() + " (" + pollResult.dateTime().toString()
+               + ')';
     case HistogramRole:
         return pollResult.histogram();
     case SourceRole:
@@ -47,9 +46,7 @@ QVariant PollResultModel::data(const QModelIndex & index, int role) const
 }
 
 bool PollResultModel::setData(
-    const QModelIndex& index, 
-    const QVariant& value, 
-    int role)
+    const QModelIndex& index, const QVariant& value, int role)
 {
     if (!election_core_utils::isIndexValid(index, *this))
         return false;
@@ -63,9 +60,7 @@ bool PollResultModel::setData(
 }
 
 bool PollResultModel::removeRows(
-    int row, 
-    int count, 
-    const QModelIndex& /*parent*/)
+    int row, int count, const QModelIndex& /*parent*/)
 {
     if (row < 0 || count < 0 || row + count > rowCount())
         return false;
@@ -79,8 +74,7 @@ bool PollResultModel::removeRows(
         manager_->removePollResult(pollResultToRemove);
     }
     pollResultCache_.erase(
-        pollResultCache_.begin() + row,
-        pollResultCache_.end() + row + count);
+        pollResultCache_.begin() + row, pollResultCache_.end() + row + count);
     endRemoveRows();
     return true;
 }

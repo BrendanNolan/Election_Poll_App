@@ -18,8 +18,7 @@
 #include "PixmapCreatingProxyModel.h"
 
 ConstituencyDrillDownWidget::ConstituencyDrillDownWidget(
-    QWidget* parent, 
-    Qt::WindowFlags flags)
+    QWidget* parent, Qt::WindowFlags flags)
     : QWidget(parent, flags)
     , ui_(new Ui::ConstituencyDrillDownWidget)
     , politicianModel_(nullptr)
@@ -29,20 +28,20 @@ ConstituencyDrillDownWidget::ConstituencyDrillDownWidget(
     // Will need a new general delegate class and then inject functionality
     // for politicians and poll results.
     ui_->politicianListView->setItemDelegate(new ThinPixmapDelegate(this));
-    
-    connect(ui_->sittingRadioButton, &QRadioButton::toggled, 
-        this, &ConstituencyDrillDownWidget::onSittingRadioButtonToggled);
-    connect(ui_->candidatesRadioButton, &QRadioButton::toggled,
-        this, &ConstituencyDrillDownWidget::onCandidatesRadioButtonToggled);
+
+    connect(ui_->sittingRadioButton,
+        &QRadioButton::toggled,
+        this,
+        &ConstituencyDrillDownWidget::onSittingRadioButtonToggled);
+    connect(ui_->candidatesRadioButton,
+        &QRadioButton::toggled,
+        this,
+        &ConstituencyDrillDownWidget::onCandidatesRadioButtonToggled);
 }
 
-ConstituencyDrillDownWidget::~ConstituencyDrillDownWidget()
-{
-    delete ui_;
-}
+ConstituencyDrillDownWidget::~ConstituencyDrillDownWidget() { delete ui_; }
 
-void ConstituencyDrillDownWidget::setPoliticianModel(
-    PoliticianModel* model)
+void ConstituencyDrillDownWidget::setPoliticianModel(PoliticianModel* model)
 {
     politicianModel_ = model;
 
@@ -103,7 +102,7 @@ QModelIndexList ConstituencyDrillDownWidget::selectedPoliticians() const
 
 void ConstituencyDrillDownWidget::setDisplayedConstituencyName(
     const QString& name)
-{ 
+{
     ui_->constituencyLabel->setText(name);
 }
 

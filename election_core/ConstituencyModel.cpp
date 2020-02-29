@@ -16,8 +16,7 @@
 using namespace std;
 
 ConstituencyModel::ConstituencyModel(
-    const IDatabaseManagerFactory& factory,
-    QObject* parent)
+    const IDatabaseManagerFactory& factory, QObject* parent)
     : QAbstractListModel(parent)
     , manager_(factory.createConstituencyDatabaseManager())
 {
@@ -31,23 +30,23 @@ int ConstituencyModel::rowCount(const QModelIndex& /*parent*/) const
     return constituencyCache_.size();
 }
 
-QVariant ConstituencyModel::data(const QModelIndex &index, int role) const
+QVariant ConstituencyModel::data(const QModelIndex& index, int role) const
 {
     if (!election_core_utils::isIndexValid(index, *this))
         return false;
     const auto& constituency = *(constituencyCache_[index.row()]);
     switch (role)
     {
-    case LatitudeRole: 
+    case LatitudeRole:
         return constituency.latitude();
-    case LongitudeRole: 
+    case LongitudeRole:
         return constituency.longitude();
     case Qt::DisplayRole:
-    case NameRole: 
+    case NameRole:
         return constituency.name();
-    case IdRole: 
+    case IdRole:
         return constituency.id();
-    default: 
+    default:
         return QVariant();
     }
 }

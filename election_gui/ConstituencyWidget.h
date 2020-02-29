@@ -15,7 +15,7 @@ class QItemSelectionModel;
 class QPoint;
 
 /*
-    Should just keep a ConstituencyModel and, in ConstituencyWidget::setModel(), 
+    Should just keep a ConstituencyModel and, in ConstituencyWidget::setModel(),
     make a proxy model parented to the ConstituencyWidget instance.
 */
 
@@ -33,7 +33,7 @@ private slots:
     void selectConstituencyInModel();
     void loadModel();
     void refreshPixmaps(
-        const QModelIndex &topLeft, const QModelIndex &bottomRight);
+        const QModelIndex& topLeft, const QModelIndex& bottomRight);
 
 private:
     void loadSceneConstituencies();
@@ -45,4 +45,4 @@ private:
     QMap<QGraphicsItem*, QModelIndex> indexItemCache_;
 };
 
-#endif // CONSTITUENCYWIDGET_H
+#endif// CONSTITUENCYWIDGET_H

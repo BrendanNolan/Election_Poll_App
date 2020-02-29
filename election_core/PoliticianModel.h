@@ -23,8 +23,7 @@ public:
     };
 
 public:
-    PoliticianModel(
-        const IDatabaseManagerFactory& factory,
+    PoliticianModel(const IDatabaseManagerFactory& factory,
         QObject* parent = nullptr,
         ElectoralStatus status = ElectoralStatus::SITTING);
     PoliticianModel(const PoliticianModel& rhs);
@@ -32,24 +31,20 @@ public:
     enum Role
     {
         NameRole = Qt::UserRole + 1,
-        PartyNameRole, 
+        PartyNameRole,
         PartyColourRole,
         FilePathRole
     };
 
     int rowCount(const QModelIndex& parent = QModelIndex()) const override;
     QVariant data(
-        const QModelIndex &index,
-        int role = Qt::DisplayRole) const override;
+        const QModelIndex& index, int role = Qt::DisplayRole) const override;
     bool setData(
-        const QModelIndex& index,
-        const QVariant& value,
-        int role) override;
+        const QModelIndex& index, const QVariant& value, int role) override;
     bool removeRows(int row, int count, const QModelIndex& parent) override;
     QHash<int, QByteArray> roleNames() const override;
 
-    QModelIndex addPolitician(
-        std::unique_ptr<Politician> politician);
+    QModelIndex addPolitician(std::unique_ptr<Politician> politician);
     ElectoralStatus electoralStatus() const;
 
     void reload();
@@ -71,4 +66,4 @@ private:
     int constituencyId_ = -1;
 };
 
-#endif // POLITICIANMODEL_H
+#endif// POLITICIANMODEL_H

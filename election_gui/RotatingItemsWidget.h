@@ -27,7 +27,7 @@ public:
     void setInterFrameAngleDifference(int degrees);
 
 public slots:
-    void rotateItems();   
+    void rotateItems();
 
 private:
     void positionRotatingItems();
@@ -42,4 +42,4 @@ private:
     QVector<QGraphicsItem*> rotatingItems_;
 };
 
-#endif // ROTATINGITEMSWIDGET_H
+#endif// ROTATINGITEMSWIDGET_H

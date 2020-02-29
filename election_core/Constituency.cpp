@@ -1,50 +1,24 @@
 #include "Constituency.h"
 
-Constituency::Constituency(
-    const QString& name,
-    int latitude,
-    int longitude)
+Constituency::Constituency(const QString& name, int latitude, int longitude)
     : name_(name)
     , latitude_(latitude)
     , longitude_(longitude)
-{}
-
-int Constituency::id() const
 {
-    return id_;
 }
 
-void Constituency::setId(int id)
-{
-    id_ = id;
-}
+int Constituency::id() const { return id_; }
 
-QString Constituency::name() const
-{
-    return name_;
-}
+void Constituency::setId(int id) { id_ = id; }
 
-void Constituency::setName(const QString& name)
-{
-    name_ = name;
-}
+QString Constituency::name() const { return name_; }
 
-int Constituency::latitude() const
-{
-    return latitude_;
-}
+void Constituency::setName(const QString& name) { name_ = name; }
 
-void Constituency::setLatitude(int latitude)
-{
-    latitude_ = latitude;
-}
+int Constituency::latitude() const { return latitude_; }
 
-int Constituency::longitude() const
-{
-    return longitude_;
-}
+void Constituency::setLatitude(int latitude) { latitude_ = latitude; }
 
-void Constituency::setLongitude(int longitude)
-{
-    longitude_ = longitude;
-}
+int Constituency::longitude() const { return longitude_; }
+
+void Constituency::setLongitude(int longitude) { longitude_ = longitude; }

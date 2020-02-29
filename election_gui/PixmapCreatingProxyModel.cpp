@@ -4,9 +4,9 @@
 
 namespace
 {
-    const auto PREFERRED_WIDTH = 60;
-    const auto PREFERRED_HEIGHT = 60;
-}
+const auto PREFERRED_WIDTH = 60;
+const auto PREFERRED_HEIGHT = 60;
+}// namespace
 
 PixmapCreatingProxyModel::PixmapCreatingProxyModel(
     std::unique_ptr<PixmapCreatingFunctor> pixmapFunctor,
@@ -18,8 +18,7 @@ PixmapCreatingProxyModel::PixmapCreatingProxyModel(
     setSourceModel(sourceModel);
 }
 
-PixmapCreatingProxyModel::~PixmapCreatingProxyModel()
-{}
+PixmapCreatingProxyModel::~PixmapCreatingProxyModel() {}
 
 QVariant PixmapCreatingProxyModel::data(
     const QModelIndex& index, int role) const
@@ -39,34 +38,36 @@ void PixmapCreatingProxyModel::setSourceModel(QAbstractItemModel* source)
     if (!source)
         return;
 
-    connect(source, &QAbstractItemModel::modelReset,
-        this, &PixmapCreatingProxyModel::reloadCache);
-    connect(source, &QAbstractItemModel::rowsInserted,
+    connect(source,
+        &QAbstractItemModel::modelReset,
+        this,
+        &PixmapCreatingProxyModel::reloadCache);
+    connect(source,
+        &QAbstractItemModel::rowsInserted,
         [this](const QModelIndex& /*parent*/, int first, int last) {
-        partiallyReloadCache(index(first, 0), last - first + 1);
-    });
-    connect(source, &QAbstractItemModel::dataChanged,
+            partiallyReloadCache(index(first, 0), last - first + 1);
+        });
+    connect(source,
+        &QAbstractItemModel::dataChanged,
         [this](const QModelIndex& topLeft, const QModelIndex& bottomRight) {
-        auto count = bottomRight.row() - topLeft.row();
-        if (count <= 0)
-            return;
-        partiallyReloadCache(topLeft, count);
-    });
+            auto count = bottomRight.row() - topLeft.row();
+            if (count <= 0)
+                return;
+            partiallyReloadCache(topLeft, count);
+        });
 }
 
 void PixmapCreatingProxyModel::partiallyReloadCache(
     const QModelIndex& startIndex, int count)
 {
-    if (!sourceModel()
-        || count <= 0
-        || count + startIndex.row() > rowCount())
+    if (!sourceModel() || count <= 0 || count + startIndex.row() > rowCount())
         return;
     for (auto i = 0; i < count; ++i)
     {
         auto theIndex = index(startIndex.row() + i, 0);
         const auto& createPixmap = *pixmapFunctor_;
-        pixmapCache_[theIndex] = createPixmap(theIndex).scaled(
-            PREFERRED_WIDTH, PREFERRED_HEIGHT);
+        pixmapCache_[theIndex] =
+            createPixmap(theIndex).scaled(PREFERRED_WIDTH, PREFERRED_HEIGHT);
     }
 }
 

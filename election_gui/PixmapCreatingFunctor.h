@@ -12,4 +12,4 @@ public:
     virtual QPixmap operator()(const QModelIndex& index) const = 0;
 };
 
-#endif // PIXMAPCREATINGFUNCTOR_H
+#endif// PIXMAPCREATINGFUNCTOR_H

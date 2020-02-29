@@ -9,15 +9,14 @@ class PollResult
 {
 public:
     PollResult() = default;
-    PollResult(
-        const QString& source, 
+    PollResult(const QString& source,
         const QDateTime& dateTime,
         int constituencyId,
         const QHash<QString, QVariant>& histogram = QHash<QString, QVariant>());
-    
+
     void appendToHistogram(const QString& name, int value);
     int value(const QString& name) const;
-    
+
     QHash<QString, QVariant> histogram() const;
     void setHistogram(const QHash<QString, QVariant>& histogram);
     int constituencyId() const;
@@ -32,4 +31,4 @@ private:
     QDateTime dateTime_ = QDateTime();
 };
 
-#endif // POLLRESULT_H
+#endif// POLLRESULT_H

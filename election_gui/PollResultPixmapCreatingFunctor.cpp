@@ -10,7 +10,8 @@
 PollResultPixmapCreatingFunctor::PollResultPixmapCreatingFunctor(
     const PollResultModel* pollResultModel)
     : pollResultModel_(pollResultModel)
-{}
+{
+}
 
 QPixmap PollResultPixmapCreatingFunctor::operator()(
     const QModelIndex& index) const
@@ -18,17 +19,16 @@ QPixmap PollResultPixmapCreatingFunctor::operator()(
     if (!pollResultModel_)
         return QPixmap();
 
-    auto histogram = pollResultModel_->data(
-        index, PollResultModel::HistogramRole)
-        .value<QHash<QString, QVariant>>();
+    auto histogram =
+        pollResultModel_->data(index, PollResultModel::HistogramRole)
+            .value<QHash<QString, QVariant>>();
 
     QPixmap ret(1, 1);
     // PLACEHOLDER DUMMY IMPLEMENTATION
     {
         std::vector<int> pollPercentages;
         pollPercentages.reserve(histogram.size());
-        for (auto s : histogram.values())
-            pollPercentages.push_back(s.toInt());
+        for (auto s : histogram.values()) pollPercentages.push_back(s.toInt());
 
         std::vector<int> rgb(3, 100);
         for (size_t i = 0; i < pollPercentages.size(); ++i)

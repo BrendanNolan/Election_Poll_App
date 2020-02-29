@@ -24,8 +24,7 @@ public:
     std::unique_ptr<Politician> politician(int id) const override;
     QUrl imageUrlForPolitician(int politicianId) const override;
     void addPoliticianToConstituency(
-        Politician& politcian,
-        int constituencyId) const override;
+        Politician& politcian, int constituencyId) const override;
     void updatePolitician(const Politician& politician) const override;
     void removePolitician(int politicianId) const override;
     void clearPoliticiansFromConstituency(int constituencyId) const override;
@@ -34,4 +33,4 @@ private:
     QFileInfo databaseFileInfo_;
 };
 
-#endif // SQLPOLITICIANDATABASEMANAGER_H
+#endif// SQLPOLITICIANDATABASEMANAGER_H

@@ -47,6 +47,8 @@ ConstituencyExplorerWidget::ConstituencyExplorerWidget(QWidget* parent)
     setPollResultModel(pollResultModel);
     setPollResultSelectionModel(pollResultSelectionModel);
 
+    refreshModels();
+
     connect(ui_->refreshDataButton,
         &QPushButton::clicked,
         this,

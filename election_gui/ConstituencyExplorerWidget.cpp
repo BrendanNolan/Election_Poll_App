@@ -50,7 +50,7 @@ ConstituencyExplorerWidget::ConstituencyExplorerWidget(QWidget* parent)
     connect(ui_->refreshDataButton,
         &QPushButton::clicked,
         this,
-        &ConstituencyExplorerWidget::asynchronouslyRefreshData);
+        &ConstituencyExplorerWidget::asynchronouslyRefreshModels);
 
     connect(&dataRefreshTimer_,
         &QTimer::timeout,
@@ -162,7 +162,7 @@ QString ConstituencyExplorerWidget::currentConstituencyName() const
         .toString();
 }
 
-void ConstituencyExplorerWidget::asynchronouslyRefreshData()
+void ConstituencyExplorerWidget::asynchronouslyRefreshModels()
 {
     auto sizeOfMainWindow = rect().size();
     auto desiredSizeOfLoadScreen = 0.5 * sizeOfMainWindow;
@@ -211,9 +211,8 @@ void ConstituencyExplorerWidget::asynchronouslyRefreshData()
     rotatingItemsLoadScreen_->raise();
     dataRefreshTimer_.setInterval(std::chrono::seconds(1));
 
-    fut_ = std::async(std::launch::async,
-        &python_scripting::runPythonScript,
-        QFileInfo(paths::scraperScript));
+    fut_ = std::async(
+        std::launch::async, &ConstituencyExplorerWidget::refreshModels, this);
     dataRefreshTimer_.start();
 }
 
@@ -225,11 +224,10 @@ void ConstituencyExplorerWidget::onDataRefreshTimerTimeout()
         dataRefreshTimer_.stop();
         delete rotatingItemsLoadScreen_;
         rotatingItemsLoadScreen_ = nullptr;
-        refreshModels();
     }
 }
 
-void ConstituencyExplorerWidget::refreshModels()
+void ConstituencyExplorerWidget::reloadModels()
 {
     if (constituencyModel_)
         constituencyModel_->reload();
@@ -237,4 +235,14 @@ void ConstituencyExplorerWidget::refreshModels()
         politicianModel_->reload();
     if (pollResultModel_)
         pollResultModel_->reload();
+}
+
+void ConstituencyExplorerWidget::refreshModels()
+{
+    if (constituencyModel_)
+        constituencyModel_->refreshDataSource();
+    if (politicianModel_)
+        politicianModel_->refreshDataSource();
+    if (pollResultModel_)
+        pollResultModel_->refreshDataSource();
 }

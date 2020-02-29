@@ -34,7 +34,7 @@ public:
     void setPollResultSelectionModel(QItemSelectionModel* selectionModel);
 
 private slots:
-    void asynchronouslyRefreshData();
+    void asynchronouslyRefreshModels();
     void onDataRefreshTimerTimeout();
     void onConstituencySelectionChanged();
 
@@ -43,6 +43,7 @@ private:
     int currentConstituencyId() const;
     QString currentConstituencyName() const;
 
+    void reloadModels();
     void refreshModels();
 
 private:

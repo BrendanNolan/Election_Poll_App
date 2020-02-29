@@ -12,12 +12,6 @@
 
 class QFileInfo;
 
-namespace python_scripting
-{
-
-void runPythonScript(const QFileInfo& script);
-};
-
 namespace geom_utils
 {
 

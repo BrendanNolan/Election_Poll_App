@@ -4,6 +4,7 @@
 #include <QSqlDatabase>
 #include <QSqlQuery>
 
+#include "election_core_definitions.h"
 #include "election_core_utils.h"
 #include "PollResult.h"
 
@@ -167,4 +168,9 @@ vector<unique_ptr<PollResult>>
     ret.push_back(move(pollResult));
 
     return ret;
+}
+
+void SqlPollResultDatabaseManager::refreshDatabase() const 
+{
+    python_scripting::runPythonScript(paths::pollResultScrapingScript);
 }

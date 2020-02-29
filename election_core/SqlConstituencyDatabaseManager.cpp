@@ -5,6 +5,7 @@
 #include <Qvariant>
 
 #include "Constituency.h"
+#include "election_core_definitions.h"
 #include "election_core_utils.h"
 #include "Politician.h"
 
@@ -124,6 +125,11 @@ vector<unique_ptr<Constituency>>
     while (query.next()) ret.push_back(sqlQueryToConstituency(query));
 
     return ret;
+}
+
+void SqlConstituencyDatabaseManager::refreshDatabase() const 
+{
+    python_scripting::runPythonScript(paths::constituencyScrapingScript);
 }
 
 namespace

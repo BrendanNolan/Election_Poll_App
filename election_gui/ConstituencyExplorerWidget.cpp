@@ -26,8 +26,6 @@ ConstituencyExplorerWidget::ConstituencyExplorerWidget(QWidget* parent)
 {
     ui_->setupUi(this);
 
-    python_scripting::runPythonScript(QFileInfo(paths::scraperScript));
-
     auto factory = SqlDatabaseManagerFactory(QFileInfo(paths::databasePath));
 
     auto politicianModel = new PoliticianModel(factory, this);

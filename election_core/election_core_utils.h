@@ -22,4 +22,11 @@ QSqlDatabase connectToSqlDatabase(
 
 }// namespace election_core_utils
 
+namespace python_scripting
+{
+
+void runPythonScript(const QFileInfo& script);
+
+};
+
 #endif// ELECTION_CORE_UTILS_H

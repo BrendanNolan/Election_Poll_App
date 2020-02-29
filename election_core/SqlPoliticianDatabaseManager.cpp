@@ -5,6 +5,7 @@
 #include <QUrl>
 #include <QVariant>
 
+#include "election_core_definitions.h"
 #include "election_core_utils.h"
 #include "Politician.h"
 
@@ -219,6 +220,11 @@ void SqlPoliticianDatabaseManager::clearPoliticiansFromConstituency(
     QSqlQuery query(database);
     query.exec("DELETE FROM politicians WHERE constituency_id = "
                + QString::number(constituencyId));
+}
+
+void SqlPoliticianDatabaseManager::refreshDatabase() const 
+{
+    python_scripting::runPythonScript(paths::politicianScrapingScript);
 }
 
 namespace

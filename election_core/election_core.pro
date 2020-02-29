@@ -37,3 +37,6 @@ HEADERS += \
     election_core_utils.h \
     UnaryPredicate.h \
     election_core_definitions.h
+
+INCLUDEPATH += \
+    $$(PYTHON_38_STUFF)\include

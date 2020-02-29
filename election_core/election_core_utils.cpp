@@ -5,6 +5,8 @@
 #include <QFileInfo>
 #include <QModelIndex>
 
+#include <Python.h>
+
 namespace election_core_utils
 {
 
@@ -40,3 +42,21 @@ QSqlDatabase connectToSqlDatabase(const QFileInfo& databaseFileInfo)
 }
 
 }// namespace election_core_utils
+
+namespace python_scripting
+{
+
+void runPythonScript(const QFileInfo& script)
+{
+    const auto scriptPathAsStdString = script.absoluteFilePath().toStdString();
+    auto scriptPathAsCString = scriptPathAsStdString.c_str();
+
+    auto scriptFilePtr = fopen(scriptPathAsCString, "r");
+    // Not yet asynchronous but needs to be
+    Py_Initialize();
+    PyRun_SimpleFile(scriptFilePtr, scriptPathAsCString);
+    Py_Finalize();
+    fclose(scriptFilePtr);
+}
+
+}// namespace python_scripting

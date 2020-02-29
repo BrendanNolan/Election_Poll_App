@@ -7,6 +7,8 @@
 #include <QFileInfo>
 #include <QModelIndex>
 
+#include <cstdio>
+
 namespace election_core_utils
 {
 
@@ -52,6 +54,8 @@ void runPythonScript(const QFileInfo& script)
     auto scriptPathAsCString = scriptPathAsStdString.c_str();
 
     auto scriptFilePtr = fopen(scriptPathAsCString, "r");
+    if (!scriptFilePtr)
+        return;
     Py_Initialize();
     PyRun_SimpleFile(scriptFilePtr, scriptPathAsCString);
     Py_Finalize();

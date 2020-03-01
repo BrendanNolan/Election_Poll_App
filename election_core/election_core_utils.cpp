@@ -56,7 +56,7 @@ bool runPythonScript(const QFileInfo& script)
 
     auto scriptFilePtr = fopen(scriptPathAsCString, "r");
     if (!scriptFilePtr)
-        return;
+        return false;
     Py_Initialize();
     if (PyRun_SimpleFile(scriptFilePtr, scriptPathAsCString) != 0)
         return false;

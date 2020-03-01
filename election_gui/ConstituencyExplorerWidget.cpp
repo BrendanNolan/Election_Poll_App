@@ -58,6 +58,14 @@ ConstituencyExplorerWidget::ConstituencyExplorerWidget(QWidget* parent)
         failureWarning.exec();
     }
 
+    if (constituencyModel->rowCount() > 0)
+    {
+        politicianModel->setConstituency(
+            constituencyModel
+                ->data(constituencyModel->index(0), ConstituencyModel::IdRole)
+                .toInt());
+    }
+
     connect(ui_->refreshDataButton,
         &QPushButton::clicked,
         this,

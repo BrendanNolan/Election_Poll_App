@@ -11,7 +11,10 @@ PolarPoint::PolarPoint(double r, double theta)
     setTheta(theta);
 }
 
-void PolarPoint::rotate(double radians) { setTheta(theta_ + radians); }
+void PolarPoint::rotate(double radians)
+{
+    setTheta(theta_ + radians);
+}
 
 PolarPoint PolarPoint::rotated(double radians) const
 {
@@ -20,13 +23,25 @@ PolarPoint PolarPoint::rotated(double radians) const
     return rotatedCopy;
 }
 
-double PolarPoint::r() const { return r_; }
+double PolarPoint::r() const
+{
+    return r_;
+}
 
-double PolarPoint::theta() const { return theta_; }
+double PolarPoint::theta() const
+{
+    return theta_;
+}
 
-void PolarPoint::setR(double r) { r_ = r; }
+void PolarPoint::setR(double r)
+{
+    r_ = r;
+}
 
-void PolarPoint::setTheta(double theta) { theta_ = std::fmod(theta, 2 * pi); }
+void PolarPoint::setTheta(double theta)
+{
+    theta_ = std::fmod(theta, 2 * pi);
+}
 
 CartesianPoint::CartesianPoint(double x, double y)
     : x_(x)
@@ -52,13 +67,25 @@ CartesianPoint CartesianPoint::rotatedAbout(
     return rotatedCopy;
 }
 
-double CartesianPoint::x() const { return x_; }
+double CartesianPoint::x() const
+{
+    return x_;
+}
 
-double CartesianPoint::y() const { return y_; }
+double CartesianPoint::y() const
+{
+    return y_;
+}
 
-void CartesianPoint::setX(double x) { x_ = x; }
+void CartesianPoint::setX(double x)
+{
+    x_ = x;
+}
 
-void CartesianPoint::setY(double y) { y_ = y; }
+void CartesianPoint::setY(double y)
+{
+    y_ = y;
+}
 
 CartesianPoint operator+(const CartesianPoint& a, const CartesianPoint& b)
 {

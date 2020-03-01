@@ -53,9 +53,8 @@ bool runPythonScript(const QFileInfo& script)
 {
     auto scriptPathAsQString =
         QDir::toNativeSeparators(script.absoluteFilePath());
-    auto scriptPathAsStdString =
-        scriptPathAsQString.toStdString();
-    auto scriptPathAsCString = scriptPathAsStdString.c_str(); 
+    auto scriptPathAsStdString = scriptPathAsQString.toStdString();
+    auto scriptPathAsCString = scriptPathAsStdString.c_str();
 
     auto scriptFilePtr = fopen(scriptPathAsCString, "rb");
     if (!scriptFilePtr)

@@ -69,7 +69,10 @@ ConstituencyExplorerWidget::ConstituencyExplorerWidget(QWidget* parent)
         &ConstituencyExplorerWidget::onDataRefreshTimerTimeout);
 }
 
-ConstituencyExplorerWidget::~ConstituencyExplorerWidget() { delete ui_; }
+ConstituencyExplorerWidget::~ConstituencyExplorerWidget()
+{
+    delete ui_;
+}
 
 void ConstituencyExplorerWidget::setConstituencyModel(ConstituencyModel* model)
 {

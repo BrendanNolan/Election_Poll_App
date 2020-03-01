@@ -18,7 +18,9 @@ PixmapCreatingProxyModel::PixmapCreatingProxyModel(
     setSourceModel(sourceModel);
 }
 
-PixmapCreatingProxyModel::~PixmapCreatingProxyModel() {}
+PixmapCreatingProxyModel::~PixmapCreatingProxyModel()
+{
+}
 
 QVariant PixmapCreatingProxyModel::data(
     const QModelIndex& index, int role) const

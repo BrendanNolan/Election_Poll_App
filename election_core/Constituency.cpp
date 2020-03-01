@@ -7,18 +7,42 @@ Constituency::Constituency(const QString& name, int latitude, int longitude)
 {
 }
 
-int Constituency::id() const { return id_; }
+int Constituency::id() const
+{
+    return id_;
+}
 
-void Constituency::setId(int id) { id_ = id; }
+void Constituency::setId(int id)
+{
+    id_ = id;
+}
 
-QString Constituency::name() const { return name_; }
+QString Constituency::name() const
+{
+    return name_;
+}
 
-void Constituency::setName(const QString& name) { name_ = name; }
+void Constituency::setName(const QString& name)
+{
+    name_ = name;
+}
 
-int Constituency::latitude() const { return latitude_; }
+int Constituency::latitude() const
+{
+    return latitude_;
+}
 
-void Constituency::setLatitude(int latitude) { latitude_ = latitude; }
+void Constituency::setLatitude(int latitude)
+{
+    latitude_ = latitude;
+}
 
-int Constituency::longitude() const { return longitude_; }
+int Constituency::longitude() const
+{
+    return longitude_;
+}
 
-void Constituency::setLongitude(int longitude) { longitude_ = longitude; }
+void Constituency::setLongitude(int longitude)
+{
+    longitude_ = longitude;
+}

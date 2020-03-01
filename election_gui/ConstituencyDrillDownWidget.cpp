@@ -39,7 +39,10 @@ ConstituencyDrillDownWidget::ConstituencyDrillDownWidget(
         &ConstituencyDrillDownWidget::onCandidatesRadioButtonToggled);
 }
 
-ConstituencyDrillDownWidget::~ConstituencyDrillDownWidget() { delete ui_; }
+ConstituencyDrillDownWidget::~ConstituencyDrillDownWidget()
+{
+    delete ui_;
+}
 
 void ConstituencyDrillDownWidget::setPoliticianModel(PoliticianModel* model)
 {

@@ -24,9 +24,15 @@ void RotatingItemsWidget::setRotatingItems(const QVector<QGraphicsItem*>& items)
     positionRotatingItems();
 }
 
-void RotatingItemsWidget::freeze() { rotationTimer_.stop(); }
+void RotatingItemsWidget::freeze()
+{
+    rotationTimer_.stop();
+}
 
-void RotatingItemsWidget::unfreeze() { rotationTimer_.start(); }
+void RotatingItemsWidget::unfreeze()
+{
+    rotationTimer_.start();
+}
 
 void RotatingItemsWidget::setFrameRate(int framesPerSecond)
 {

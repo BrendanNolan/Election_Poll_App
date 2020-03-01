@@ -36,6 +36,7 @@ QPixmap ConstituencyPixmapCreatingFunctor::operator()(
     {
         QPixmap blackPixmap(50, 50);
         blackPixmap.fill(Qt::black);
+        return blackPixmap;
     }
     for (auto row = 0; row < politicianCount; ++row)
     {

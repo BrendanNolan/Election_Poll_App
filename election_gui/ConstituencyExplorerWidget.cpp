@@ -48,7 +48,15 @@ ConstituencyExplorerWidget::ConstituencyExplorerWidget(QWidget* parent)
     setPollResultModel(pollResultModel);
     setPollResultSelectionModel(pollResultSelectionModel);
 
-    refreshModels();
+    auto dataLoadSuccessful = refreshModels();
+    if (!dataLoadSuccessful)
+    {
+        QMessageBox failureWarning;
+        failureWarning.setWindowTitle("Load Failure");
+        failureWarning.setIcon(QMessageBox::Warning);
+        failureWarning.setText("Data Loading Operation Failed");
+        failureWarning.exec();
+    }
 
     connect(ui_->refreshDataButton,
         &QPushButton::clicked,
@@ -234,7 +242,7 @@ void ConstituencyExplorerWidget::onDataRefreshTimerTimeout()
         QMessageBox failureWarning;
         failureWarning.setWindowTitle("Update Failure");
         failureWarning.setIcon(QMessageBox::Warning);
-        failureWarning.setText("Data refresh Operation Failed");
+        failureWarning.setText("Data Refresh Operation Failed");
         failureWarning.exec();
     }
 }

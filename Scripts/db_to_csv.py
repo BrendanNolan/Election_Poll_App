@@ -10,7 +10,13 @@ primary_database.close()
 db = sqlite3.connect(primary_database_path)
 cursor = db.cursor()
 
-print ("Exporting data into CSV............")
+table_names = cursor.execute("SELECT name FROM sqlite_master WHERE type='table'")
+print("Database contains " + str(len(table_names.fetchall())) + " tables.")
+print("Table names:")
+for table in table_names:
+    print(table[0])
+
+print("Exporting data into CSV............")
 for table_name in [str("constituencies"), str("politicians"), str("poll_results")]:
     try:
         cursor.execute("select * from " + table_name)

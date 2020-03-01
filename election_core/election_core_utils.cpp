@@ -44,15 +44,6 @@ QSqlDatabase connectToSqlDatabase(const QFileInfo& databaseFileInfo)
     return database;
 }
 
-const char* election_core_utils::qStringToCString(const QString& qString)
-{
-    // Do not try to contract the two lines below into a single line i.e. 
-    // do not make the body of the function as follows:
-    //   return qString.toLatin1().data();  
-    auto byteArray = qString.toLatin1();
-    return byteArray.data();
-}
-
 }// namespace election_core_utils
 
 namespace python_scripting
@@ -62,8 +53,8 @@ bool runPythonScript(const QFileInfo& script)
 {
     auto scriptPathAsQString =
         QDir::toNativeSeparators(script.absoluteFilePath());
-    auto scriptPathAsCString =
-        election_core_utils::qStringToCString(scriptPathAsQString);
+    auto byteArray = scriptPathAsQString.toLatin1();
+    auto scriptPathAsCString = byteArray.data();
 
     auto scriptFilePtr = fopen(scriptPathAsCString, "r");
     if (!scriptFilePtr)

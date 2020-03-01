@@ -39,6 +39,15 @@ ConstituencyExplorerWidget::ConstituencyExplorerWidget(QWidget* parent)
     auto pollResultModel = new PollResultModel(factory, this);
     auto pollResultSelectionModel = new QItemSelectionModel(pollResultModel);
 
+    setPoliticianModel(politicianModel);
+    setPoliticianSelectionModel(politicianSelectionModel);
+
+    setConstituencyModel(constituencyModel);
+    setConstituencySelectionModel(constituencySelectionModel);
+
+    setPollResultModel(pollResultModel);
+    setPollResultSelectionModel(pollResultSelectionModel);
+
     auto dataLoadSuccessful = refreshModels();
     if (!dataLoadSuccessful)
     {
@@ -48,15 +57,6 @@ ConstituencyExplorerWidget::ConstituencyExplorerWidget(QWidget* parent)
         failureWarning.setText("Data Loading Operation Failed");
         failureWarning.exec();
     }
-
-    setPoliticianModel(politicianModel);
-    setPoliticianSelectionModel(politicianSelectionModel);
-
-    setConstituencyModel(constituencyModel);
-    setConstituencySelectionModel(constituencySelectionModel);
-
-    setPollResultModel(pollResultModel);
-    setPollResultSelectionModel(pollResultSelectionModel);
 
     connect(ui_->refreshDataButton,
         &QPushButton::clicked,

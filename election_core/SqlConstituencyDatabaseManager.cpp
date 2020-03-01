@@ -1,5 +1,6 @@
 #include "SqlConstituencyDatabaseManager.h"
 
+#include <QFileInfo>
 #include <QSqlDatabase>
 #include <QSqlQuery>
 #include <Qvariant>
@@ -129,7 +130,8 @@ vector<unique_ptr<Constituency>>
 
 bool SqlConstituencyDatabaseManager::refreshDatabase() const
 {
-    return python_scripting::runPythonScript(paths::constituencyScrapingScript);
+    return python_scripting::runPythonScript(
+        QFileInfo(paths::constituencyScrapingScript));
 }
 
 namespace

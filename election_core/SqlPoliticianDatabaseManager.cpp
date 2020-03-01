@@ -224,7 +224,8 @@ void SqlPoliticianDatabaseManager::clearPoliticiansFromConstituency(
 
 bool SqlPoliticianDatabaseManager::refreshDatabase() const
 {
-    return python_scripting::runPythonScript(paths::politicianScrapingScript);
+    return python_scripting::runPythonScript(
+        QFileInfo(paths::politicianScrapingScript));
 }
 
 namespace

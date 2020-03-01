@@ -27,6 +27,6 @@ namespace python_scripting
 
 bool runPythonScript(const QFileInfo& script);
 
-};
+}// namespace python_scripting
 
 #endif// ELECTION_CORE_UTILS_H

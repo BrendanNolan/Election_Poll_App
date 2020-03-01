@@ -3,12 +3,12 @@
 #include "election_core_utils.h"
 
 #include <QAbstractListModel>
-#include <QByteArray>
 #include <QDir>
 #include <QFileInfo>
 #include <QModelIndex>
 
 #include <cstdio>
+#include <string>
 
 namespace election_core_utils
 {
@@ -53,10 +53,11 @@ bool runPythonScript(const QFileInfo& script)
 {
     auto scriptPathAsQString =
         QDir::toNativeSeparators(script.absoluteFilePath());
-    auto byteArray = scriptPathAsQString.toLatin1();
-    auto scriptPathAsCString = byteArray.data();
+    auto scriptPathAsStdString =
+        scriptPathAsQString.toStdString();
+    auto scriptPathAsCString = scriptPathAsStdString.c_str(); 
 
-    auto scriptFilePtr = fopen(scriptPathAsCString, "r");
+    auto scriptFilePtr = fopen(scriptPathAsCString, "rb");
     if (!scriptFilePtr)
         return false;
     Py_Initialize();

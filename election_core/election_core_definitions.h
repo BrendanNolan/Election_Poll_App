@@ -14,7 +14,7 @@ static const QString politicianScrapingScript(
 static const QString constituencyScrapingScript(
     "C:\\CPP_Stuff\\Election_Poll_App\\Scripts\\constituency_scraping.py");
 static const QString pollResultScrapingScript(
-    "C:\\CPP_Stuff\\Election_Poll_App\\Scripts\\pollResult_scraping.py");
+    "C:\\CPP_Stuff\\Election_Poll_App\\Scripts\\poll_result_scraping.py");
 
 }// namespace paths
 

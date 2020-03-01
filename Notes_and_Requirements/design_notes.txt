@@ -21,6 +21,8 @@ ConstituencyExplorerWidget.cpp, the call to QWidget::setWindowModality() doesn't
 8) At the moment, the three "scraping" scripts (they don't yet scrape at all - that will have to come later; now they 
    just populate tables in a database) seem to be doing something weird where they will all onliterate the database before doing their
    work. This is why tables seem to disappear.
+9) Perhaps model methods that necessitate the emission of dataChanged signals and similar signals should emit those
+   signals themselves, since no calling function would not want to emit those signals.
 
 
 At the moment, the main work of ConstituencyDrillDownWidget is in having buttons

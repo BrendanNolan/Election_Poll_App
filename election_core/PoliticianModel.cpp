@@ -201,7 +201,10 @@ bool PoliticianModel::refreshCachedPolitician(int id)
 void PoliticianModel::reloadPoliticianCache()
 {
     if (constituencyId_ == -1)
+    {
         politicianCache_.clear();
+        return;
+    }
     switch (electoralStatus_)
     {
     case ElectoralStatus::SITTING:

@@ -127,6 +127,9 @@ void PollResultModel::setConstituency(int id)
 void PollResultModel::reloadPollResultCache()
 {
     if (constituencyId_ == -1)
+    {
         pollResultCache_.clear();
+        return;
+    }
     pollResultCache_ = manager_->pollResultsForConstituency(constituencyId_);
 }

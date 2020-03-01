@@ -20,6 +20,8 @@ bool isIndexValid(const QModelIndex& index, const QAbstractListModel& model);
 QSqlDatabase connectToSqlDatabase(
     const QFileInfo& databaseFileInfo = QFileInfo());
 
+const char* qStringToCString(const QString& qString);
+
 }// namespace election_core_utils
 
 namespace python_scripting

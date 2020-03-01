@@ -19,7 +19,7 @@ sometimes.
 7) In commit 42ee9562ae37b77abc3337e95ec79678f8fe01a4 (and possibly still), on line 211 of 
 ConstituencyExplorerWidget.cpp, the call to QWidget::setWindowModality() doesn't seem to work.
 8) At the moment, the three "scraping" scripts (they don't yet scrape at all - that will have to come later; now they 
-   just populate tables in a database) seem to be doing something weird where they will all onliterate the database before doing their
+   just populate tables in a database) seem to be doing something weird where they will all obliterate the database before doing their
    work. This is why tables seem to disappear.
 9) Perhaps model methods that necessitate the emission of dataChanged signals and similar signals should emit those
    signals themselves, since no calling function would not want to emit those signals.

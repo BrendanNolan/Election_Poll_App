@@ -12,7 +12,11 @@ cursor = db.cursor()
 
 print ("Exporting data into CSV............")
 for table_name in [str("constituencies"), str("politicians"), str("poll_results")]:
-    cursor.execute("select * from " + table_name)
+    try:
+        cursor.execute("select * from " + table_name)
+    except:
+        print(str("Could not select from table ") + table_name)
+        continue
     with open(table_name + ".csv", "w") as csv_file:
         csv_writer = csv.writer(csv_file, delimiter=",")
         csv_writer.writerow([i[0] for i in cursor.description])

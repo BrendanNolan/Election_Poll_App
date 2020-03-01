@@ -31,8 +31,8 @@ ConstituencyExplorerWidget.cpp, the call to QWidget::setWindowModality() doesn't
     ConstituecyExplorerWidget. This will probably mean it will need to keep a handle to the PoliticianModel.
 11) When the ConstituencyModel which is the source of ConstituencyWidget's ProxyModel emits modelReset, it will trigger ConstituencyWidget::loadSceneConstituencies()
     before it will trigger PixmapCreatingProxyModel::reloadCache(), so that loadSceneConstituencies() does not have access to the latest Pixmaps from 
-    PixmapCreatingProxyModel. This is partially fixed by connecting ConstituencyWidget directly to proxymodel signals, having done this, there are now black pixmaps 
-    on startup but why not filled pixmaps? I won't committhis because it seems wrong but it's good to have a note of it. 
+    PixmapCreatingProxyModel. This is partially fixed by having PixmapCreatingProxyModel::reloadCache() emit modelReset(); having done this, there are now black pixmaps 
+    on startup but why not filled pixmaps? I won't commit this because it seems wrong but it's good to have a note of it. Point 10 may be a solution.
 
 At the moment, the main work of ConstituencyDrillDownWidget is in having buttons
 manipulate the electoral status of a PoliticianModel. We should have a widget 

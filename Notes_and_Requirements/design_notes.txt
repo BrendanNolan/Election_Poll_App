@@ -21,8 +21,12 @@ ConstituencyExplorerWidget.cpp, the call to QWidget::setWindowModality() doesn't
 8) At the moment, the three "scraping" scripts (they don't yet scrape at all - that will have to come later; now they 
    just populate tables in a database) seem to be doing something weird where they will all obliterate the database before doing their
    work. This is why tables seem to disappear.
-9) Perhaps model methods that necessitate the emission of dataChanged signals and similar signals should emit those
-   signals themselves, since no calling function would not want to emit those signals.
+9) It is tempting to think that model methods that necessitate the emission of signals signals should emit those
+   signals themselves, since no calling function would not want to emit those signals. BUT THIS IS NOT TRUE!!! 
+   This can depend on context e.g. whether ConstituencyModel::reloadConstituencyCache() is called by 
+   ConstituencyModel::refreshDataSource() or by ConstituencyModel::reLoad() (in their form in commit 230821ac6d8fba9323b3a2528b912384bfca47ba). 
+   Moreover, not calling these signals inside the mothods also means that the methods just t=do what their name suggests 
+   (again ConstituencyModel::reloadConstituencyCache() is a good example of this.).
 
 
 At the moment, the main work of ConstituencyDrillDownWidget is in having buttons

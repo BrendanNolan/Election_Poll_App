@@ -233,21 +233,22 @@ void ConstituencyExplorerWidget::asynchronouslyRefreshModels()
 void ConstituencyExplorerWidget::onDataRefreshTimerTimeout()
 {
     auto status = fut_.wait_for(std::chrono::seconds(0));
-    if (status == std::future_status::ready)
-    {
-        dataRefreshTimer_.stop();
-        delete rotatingItemsLoadScreen_;
-        rotatingItemsLoadScreen_ = nullptr;
-    }
+    if (status != std::future_status::ready)
+        return;
+
+    dataRefreshTimer_.stop();
+    delete rotatingItemsLoadScreen_;
+    rotatingItemsLoadScreen_ = nullptr;
+
     auto refreshSuccssful = fut_.get();
-    if (!refreshSuccssful)
-    {
-        QMessageBox failureWarning;
-        failureWarning.setWindowTitle("Update Failure");
-        failureWarning.setIcon(QMessageBox::Warning);
-        failureWarning.setText("Data Refresh Operation Failed");
-        failureWarning.exec();
-    }
+    if (refreshSuccssful)
+        return;
+
+    QMessageBox failureWarning;
+    failureWarning.setWindowTitle("Update Failure");
+    failureWarning.setIcon(QMessageBox::Warning);
+    failureWarning.setText("Data Refresh Operation Failed");
+    failureWarning.exec();
 }
 
 void ConstituencyExplorerWidget::reloadModels()

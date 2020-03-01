@@ -33,7 +33,7 @@ cursor.execute('''
 ''')
 db.commit()
 
-for constituency_id in range(4):
+for constituency_id in range(1, 5):
     for i in range(3):
         cursor.execute('''
                 INSERT INTO politicians 

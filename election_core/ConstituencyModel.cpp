@@ -84,7 +84,9 @@ bool ConstituencyModel::refreshDataSource()
 {
     if (!manager_->refreshDatabase())
         return false;
-    reload();
+    beginResetModel();
+    reloadConstituencyCache();
+    endResetModel();
     return true;
 }
 

@@ -14,7 +14,7 @@ db = sqlite3.connect(primary_database_path)
 cursor = db.cursor()
 
 cursor.execute('''
-    DROP TABLE [IF EXISTS] politicians
+    DROP TABLE IF EXISTS politicians
 ''')
 cursor.execute('''
     CREATE TABLE politicians 

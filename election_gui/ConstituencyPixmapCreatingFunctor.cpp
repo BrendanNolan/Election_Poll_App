@@ -32,6 +32,11 @@ QPixmap ConstituencyPixmapCreatingFunctor::operator()(
     politicianModel_.setConstituency(constituencyId);
     QVector<QColor> colours;
     auto politicianCount = politicianModel_.rowCount();
+    if (politicianCount == 0)
+    {
+        QPixmap blackPixmap(50, 50);
+        blackPixmap.fill(Qt::black);
+    }
     for (auto row = 0; row < politicianCount; ++row)
     {
         auto rgbHash = politicianModel_

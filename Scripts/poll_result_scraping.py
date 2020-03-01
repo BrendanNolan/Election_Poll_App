@@ -14,5 +14,5 @@ db = sqlite3.connect(primary_database_path)
 cursor = db.cursor()
 
 cursor.execute('''
-    DROP TABLE [IF EXISTS] poll_results
+    DROP TABLE IF EXISTS poll_results
 ''')

@@ -3,6 +3,7 @@
 #include "ui_ConstituencyExplorerWidget.h"
 
 #include <QItemSelectionModel>
+#include <QMessageBox>
 
 #include <QtGlobal>
 
@@ -227,6 +228,15 @@ void ConstituencyExplorerWidget::onDataRefreshTimerTimeout()
         delete rotatingItemsLoadScreen_;
         rotatingItemsLoadScreen_ = nullptr;
     }
+    auto refreshSuccssful = fut_.get();
+    if (!refreshSuccssful)
+    {
+        QMessageBox failureWarning;
+        failureWarning.setWindowTitle("Update Failure");
+        failureWarning.setIcon(QMessageBox::Warning);
+        failureWarning.setText("Data refresh Operation Failed");
+        failureWarning.exec();
+    }
 }
 
 void ConstituencyExplorerWidget::reloadModels()
@@ -239,12 +249,23 @@ void ConstituencyExplorerWidget::reloadModels()
         pollResultModel_->reload();
 }
 
-void ConstituencyExplorerWidget::refreshModels()
+bool ConstituencyExplorerWidget::refreshModels()
 {
+    auto refreshSuccessful = true;
     if (constituencyModel_)
-        constituencyModel_->refreshDataSource();
+    {
+        if (!constituencyModel_->refreshDataSource())
+            refreshSuccessful = false;
+    }
     if (politicianModel_)
-        politicianModel_->refreshDataSource();
+    {
+        if (!politicianModel_->refreshDataSource())
+            refreshSuccessful = false;
+    }
     if (pollResultModel_)
-        pollResultModel_->refreshDataSource();
+    {
+        if (!pollResultModel_->refreshDataSource())
+            refreshSuccessful = false;
+    }
+    return refreshSuccessful;
 }

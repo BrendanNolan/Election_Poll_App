@@ -106,10 +106,12 @@ void PollResultModel::reload()
     endResetModel();
 }
 
-void PollResultModel::refreshDataSource()
+bool PollResultModel::refreshDataSource()
 {
-    manager_->refreshDatabase();
+    if (!manager_->refreshDatabase())
+        return false;
     reload();
+    return true;
 }
 
 void PollResultModel::setConstituency(int id)

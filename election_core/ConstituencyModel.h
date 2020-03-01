@@ -40,7 +40,7 @@ public:
     // This is why I am not reimplementing QAbstractItemModel::removeRows()
     // or QAbstractItemModel::setData().
     void reload();
-    void refreshDataSource();
+    bool refreshDataSource();
 
 private:
     void reloadConstituencyCache();

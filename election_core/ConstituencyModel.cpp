@@ -80,10 +80,12 @@ void ConstituencyModel::reload()
     emit dataChanged(index(0), index(rowCount()));
 }
 
-void ConstituencyModel::refreshDataSource()
+bool ConstituencyModel::refreshDataSource()
 {
-    manager_->refreshDatabase();
+    if (!manager_->refreshDatabase())
+        return false;
     reload();
+    return true;
 }
 
 void ConstituencyModel::reloadConstituencyCache()

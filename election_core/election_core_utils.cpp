@@ -48,7 +48,7 @@ QSqlDatabase connectToSqlDatabase(const QFileInfo& databaseFileInfo)
 namespace python_scripting
 {
 
-void runPythonScript(const QFileInfo& script)
+bool runPythonScript(const QFileInfo& script)
 {
     auto scriptPathAsStdString =
         QDir::toNativeSeparators(script.absoluteFilePath()).toStdString();
@@ -58,9 +58,11 @@ void runPythonScript(const QFileInfo& script)
     if (!scriptFilePtr)
         return;
     Py_Initialize();
-    PyRun_SimpleFile(scriptFilePtr, scriptPathAsCString);
+    if (PyRun_SimpleFile(scriptFilePtr, scriptPathAsCString) != 0)
+        return false;
     Py_Finalize();
     fclose(scriptFilePtr);
+    return true;
 }
 
 }// namespace python_scripting

@@ -19,7 +19,7 @@ public:
     virtual std::vector<std::unique_ptr<Constituency>>
         constituencies() const = 0;
 
-    virtual void refreshDatabase() const = 0;
+    virtual bool refreshDatabase() const = 0;
 };
 
 #endif// ICONSTITUENCYDATABASEMANAGER_H

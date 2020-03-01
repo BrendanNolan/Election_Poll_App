@@ -26,7 +26,7 @@ public:
     virtual void removePolitician(int politicianId) const = 0;
     virtual void clearPoliticiansFromConstituency(int constituencyId) const = 0;
 
-    virtual void refreshDatabase() const = 0;
+    virtual bool refreshDatabase() const = 0;
 };
 
 #endif// IPOLITICIANDATABASEMANAGER_H

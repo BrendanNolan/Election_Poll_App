@@ -25,7 +25,7 @@ QSqlDatabase connectToSqlDatabase(
 namespace python_scripting
 {
 
-void runPythonScript(const QFileInfo& script);
+bool runPythonScript(const QFileInfo& script);
 
 };
 

@@ -48,7 +48,7 @@ public:
     ElectoralStatus electoralStatus() const;
 
     void reload();
-    void refreshDataSource();
+    bool refreshDataSource();
 
 public slots:
     void setElectoralStatus(ElectoralStatus status);

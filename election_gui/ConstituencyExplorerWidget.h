@@ -44,7 +44,7 @@ private:
     QString currentConstituencyName() const;
 
     void reloadModels();
-    void refreshModels();
+    bool refreshModels();
 
 private:
     PoliticianModel* politicianModel_ = nullptr;
@@ -52,7 +52,7 @@ private:
     PollResultModel* pollResultModel_ = nullptr;
     QItemSelectionModel* constituencySelectionModel_ = nullptr;
 
-    std::future<void> fut_;
+    std::future<bool> fut_;
     QTimer dataRefreshTimer_;
 
     RotatingItemsWidget* rotatingItemsLoadScreen_ = nullptr;

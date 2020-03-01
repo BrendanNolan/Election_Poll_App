@@ -170,7 +170,7 @@ vector<unique_ptr<PollResult>>
     return ret;
 }
 
-void SqlPollResultDatabaseManager::refreshDatabase() const 
+bool SqlPollResultDatabaseManager::refreshDatabase() const 
 {
-    python_scripting::runPythonScript(paths::pollResultScrapingScript);
+    return python_scripting::runPythonScript(paths::pollResultScrapingScript);
 }

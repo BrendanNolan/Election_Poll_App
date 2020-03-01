@@ -29,7 +29,7 @@ public:
     void removePolitician(int politicianId) const override;
     void clearPoliticiansFromConstituency(int constituencyId) const override;
 
-    void refreshDatabase() const override;
+    bool refreshDatabase() const override;
 
 private:
     QFileInfo databaseFileInfo_;

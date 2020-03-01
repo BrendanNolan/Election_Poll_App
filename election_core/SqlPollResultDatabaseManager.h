@@ -18,7 +18,7 @@ public:
     std::vector<std::unique_ptr<PollResult>> pollResultsForConstituency(
         int id) const override;
 
-    void refreshDatabase() const override;
+    bool refreshDatabase() const override;
 
 private:
     QFileInfo databaseFileInfo_;

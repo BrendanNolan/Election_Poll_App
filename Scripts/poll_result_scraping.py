@@ -13,3 +13,6 @@ primary_database.close()
 db = sqlite3.connect(primary_database_path)
 cursor = db.cursor()
 
+cursor.execute('''
+    DROP TABLE [IF EXISTS] poll_results
+''')

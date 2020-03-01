@@ -24,7 +24,7 @@ public:
     std::unique_ptr<Constituency> constituency(int id) const override;
     std::vector<std::unique_ptr<Constituency>> constituencies() const override;
 
-    void refreshDatabase() const override;
+    bool refreshDatabase() const override;
 
 private:
     QFileInfo databaseFileInfo_;

@@ -222,9 +222,9 @@ void SqlPoliticianDatabaseManager::clearPoliticiansFromConstituency(
                + QString::number(constituencyId));
 }
 
-void SqlPoliticianDatabaseManager::refreshDatabase() const 
+bool SqlPoliticianDatabaseManager::refreshDatabase() const 
 {
-    python_scripting::runPythonScript(paths::politicianScrapingScript);
+    return python_scripting::runPythonScript(paths::politicianScrapingScript);
 }
 
 namespace

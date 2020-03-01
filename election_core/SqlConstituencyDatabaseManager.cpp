@@ -127,9 +127,9 @@ vector<unique_ptr<Constituency>>
     return ret;
 }
 
-void SqlConstituencyDatabaseManager::refreshDatabase() const 
+bool SqlConstituencyDatabaseManager::refreshDatabase() const 
 {
-    python_scripting::runPythonScript(paths::constituencyScrapingScript);
+    return python_scripting::runPythonScript(paths::constituencyScrapingScript);
 }
 
 namespace

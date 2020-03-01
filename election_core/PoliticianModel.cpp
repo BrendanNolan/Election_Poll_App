@@ -154,10 +154,12 @@ void PoliticianModel::reload()
     endResetModel();
 }
 
-void PoliticianModel::refreshDataSource()
+bool PoliticianModel::refreshDataSource()
 {
-    manager_->refreshDatabase();
+    if (!manager_->refreshDatabase())
+        return false;
     reload();
+    return true;
 }
 
 void PoliticianModel::setElectoralStatus(ElectoralStatus status)

@@ -35,6 +35,9 @@ ConstituencyExplorerWidget.cpp, the call to QWidget::setWindowModality() doesn't
     on startup but why not filled pixmaps? I won't commit this because it seems wrong but it's good to have a note of it. Point 10 may be a solution.
 12) If you have a proxy model, then you should interact with its signals and slots, not its source's signals and slots. (This is very vague but 
     it feels right and also stops you reactingto a change in the sourcemodel before that change has had a chance to filter down to the proxymodel.)
+13) Now PixmapCreatingProxyModel updates its cache in response to its own modelReset signal etc. The problem is, what happens if views which are looking at this
+    proxyModel update themselves in response to the PixmapCreatingProxyModel::modelReset() signal before PixmapCreatingProxyModel updates its cache
+    in response to the PixmapCreatingProxyModel::modelReset() signal?
 
 At the moment, the main work of ConstituencyDrillDownWidget is in having buttons
 manipulate the electoral status of a PoliticianModel. We should have a widget 

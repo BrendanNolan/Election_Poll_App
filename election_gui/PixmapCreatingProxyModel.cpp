@@ -15,6 +15,24 @@ PixmapCreatingProxyModel::PixmapCreatingProxyModel(
     : QIdentityProxyModel(parent)
     , pixmapFunctor_(move(pixmapFunctor))
 {
+    connect(this,
+        &QAbstractItemModel::modelReset,
+        this,
+        &PixmapCreatingProxyModel::reloadCache);
+    connect(this,
+        &QAbstractItemModel::rowsInserted,
+        [this](const QModelIndex& /*parent*/, int first, int last) {
+            partiallyReloadCache(index(first, 0), last - first + 1);
+        });
+    connect(this,
+        &QAbstractItemModel::dataChanged,
+        [this](const QModelIndex& topLeft, const QModelIndex& bottomRight) {
+            auto count = bottomRight.row() - topLeft.row();
+            if (count <= 0)
+                return;
+            partiallyReloadCache(topLeft, count);
+        });
+
     setSourceModel(sourceModel);
 }
 
@@ -35,28 +53,7 @@ QVariant PixmapCreatingProxyModel::data(
 void PixmapCreatingProxyModel::setSourceModel(QAbstractItemModel* source)
 {
     QIdentityProxyModel::setSourceModel(source);
-
     reloadCache();
-    if (!source)
-        return;
-
-    connect(source,
-        &QAbstractItemModel::modelReset,
-        this,
-        &PixmapCreatingProxyModel::reloadCache);
-    connect(source,
-        &QAbstractItemModel::rowsInserted,
-        [this](const QModelIndex& /*parent*/, int first, int last) {
-            partiallyReloadCache(index(first, 0), last - first + 1);
-        });
-    connect(source,
-        &QAbstractItemModel::dataChanged,
-        [this](const QModelIndex& topLeft, const QModelIndex& bottomRight) {
-            auto count = bottomRight.row() - topLeft.row();
-            if (count <= 0)
-                return;
-            partiallyReloadCache(topLeft, count);
-        });
 }
 
 void PixmapCreatingProxyModel::partiallyReloadCache(

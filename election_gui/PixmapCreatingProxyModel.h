@@ -12,6 +12,8 @@ class PixmapCreatingFunctor;
 
 class PixmapCreatingProxyModel : public QIdentityProxyModel
 {
+    Q_OBJECT
+
 public:
     PixmapCreatingProxyModel(
         std::unique_ptr<PixmapCreatingFunctor> pixmapFunctor,
@@ -23,10 +25,8 @@ public:
         const QModelIndex& index, int role = Qt::DecorationRole) const override;
     void setSourceModel(QAbstractItemModel* source) override;
 
-protected:
+private slots:
     void reloadCache();
-
-private:
     virtual void partiallyReloadCache(const QModelIndex& startIndex, int count);
 
 private:

@@ -71,12 +71,15 @@ void PixmapCreatingProxyModel::partiallyReloadCache(
         pixmapCache_[theIndex] =
             createPixmap(theIndex).scaled(PREFERRED_WIDTH, PREFERRED_HEIGHT);
     }
+    emit dataChanged(startIndex, index(startIndex.row() + count -1, 0));
 }
 
 void PixmapCreatingProxyModel::reloadCache()
 {
+    beginResetModel();
     pixmapCache_.clear();
     if (!sourceModel())
         return;
     partiallyReloadCache(index(0, 0), rowCount());
+    endResetModel();
 }

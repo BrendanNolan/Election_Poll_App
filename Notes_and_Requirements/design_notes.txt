@@ -50,6 +50,7 @@ ConstituencyExplorerWidget.cpp, the call to QWidget::setWindowModality() doesn't
     the cache implementation detail) and connect PoliticianModel::dataChanged() and politicianModel::modelReset() to these slots.
 15) Need to remember that in some places I want to pass a source model to a widget and then create a proxymodel. 
 16) It may be useful to set models together where they need to be synchronised in some way. Done in COnstituencyWidget, might want to do this in ConstituencyExplorerWidget.
+17) Getting a crash when I select a new constituency in ConstituencyWidget with the mouse.
 
 At the moment, the main work of ConstituencyDrillDownWidget is in having buttons
 manipulate the electoral status of a PoliticianModel. We should have a widget 

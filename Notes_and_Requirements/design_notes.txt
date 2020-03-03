@@ -48,6 +48,7 @@ ConstituencyExplorerWidget.cpp, the call to QWidget::setWindowModality() doesn't
 14) ConstituencyWidget is not notified when PoliticianModel emits signals. That's why it doesn't update properly. It might be wise to expose PixmapCreatingProxyModel's 
     private cache reloading methods as public slots (or make public slots that fall through to the private cache reloading methods but have names that don't refer to 
     the cache implementation detail) and connect PoliticianModel::dataChanged() and politicianModel::modelReset() to these slots.
+1%) Need to remember that in some places I want to pass a source model to a widget and then create a proxymodel. 
 
 At the moment, the main work of ConstituencyDrillDownWidget is in having buttons
 manipulate the electoral status of a PoliticianModel. We should have a widget 

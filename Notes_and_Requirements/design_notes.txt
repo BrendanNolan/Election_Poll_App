@@ -27,6 +27,7 @@ ConstituencyExplorerWidget.cpp, the call to QWidget::setWindowModality() doesn't
    ConstituencyModel::refreshDataSource() or by ConstituencyModel::reLoad() (in their form in commit 230821ac6d8fba9323b3a2528b912384bfca47ba). 
    Moreover, not calling these signals inside the mothods also means that the methods just t=do what their name suggests 
    (again ConstituencyModel::reloadConstituencyCache() is a good example of this.).
+   NOW I AM NOT SURE ABOUT THIS AGAIN. SOME THOUGHT NEEDS TO GO INTO DECIDING WHICH METHODS EMIT THESE SIGNALS.
 10) ConstituencyWidget should probably create its own proxy model rather than having one passed to it by 
     ConstituecyExplorerWidget. This will probably mean it will need to keep a handle to the PoliticianModel.
 11) When the ConstituencyModel which is the source of ConstituencyWidget's ProxyModel emits modelReset, it will trigger ConstituencyWidget::loadSceneConstituencies()

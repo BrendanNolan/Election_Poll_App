@@ -23,9 +23,16 @@ ConstituencyWidget::ConstituencyWidget(QWidget* parent)
         &ConstituencyWidget::selectConstituencyInModel);
 }
 
-void ConstituencyWidget::setModel(PixmapCreatingProxyModel* constituencyModel)
+void ConstituencyWidget::setModels(
+    ConstituencyModel* constituencyModel, PoliticianModel* politicianModel)
 {
-    constituencyModel_ = constituencyModel;
+    politicianModel_ = politicianModel;
+    constituencyProxyModel_ = new PixmapCreatingProxyModel(
+        std::unique_ptr<PixmapCreatingFunctor>(
+            new ConstituencyPixmapCreatingFunctor(
+                constituencyModel, *politicianModel_)),
+        constituencyModel,
+        this);
     connectModelSignals();
     loadModel();
 }
@@ -44,18 +51,18 @@ void ConstituencyWidget::loadSceneConstituencies()
     scene()->clear();
     indexItemCache_.clear();
 
-    auto rows = constituencyModel_->rowCount();
+    auto rows = constituencyProxyModel_->rowCount();
     QMap<QGraphicsItem*, QModelIndex> roughMap;
     for (auto row = 0; row < rows; ++row)
     {
-        auto index = constituencyModel_->index(row, 0);
+        auto index = constituencyProxyModel_->index(row, 0);
         QPointF constituencyPosition(
-            constituencyModel_->data(index, ConstituencyModel::LongitudeRole)
+            constituencyProxyModel_->data(index, ConstituencyModel::LongitudeRole)
                 .toInt(),
-            -(constituencyModel_->data(index, ConstituencyModel::LatitudeRole)
+            -(constituencyProxyModel_->data(index, ConstituencyModel::LatitudeRole)
                     .toInt()));
         auto pixmapItem = new QGraphicsPixmapItem(
-            constituencyModel_->data(index, Qt::DecorationRole)
+            constituencyProxyModel_->data(index, Qt::DecorationRole)
                 .value<QPixmap>()
                 .scaled(20, 20, Qt::KeepAspectRatio));
         pixmapItem->setFlag(QGraphicsItem::ItemIsSelectable);
@@ -92,7 +99,7 @@ void ConstituencyWidget::selectConstituencyInModel()
 
 void ConstituencyWidget::loadModel()
 {
-    if (!constituencyModel_)
+    if (!constituencyProxyModel_)
         return;
     loadSceneConstituencies();
     selectConstituencyInModel();
@@ -100,19 +107,23 @@ void ConstituencyWidget::loadModel()
 
 void ConstituencyWidget::connectModelSignals()
 {
-    connect(constituencyModel_,
+    // Need to make a similar connection for QAbstractItemModel::dataChanged()
+    // as the one below for &QAbstractItemModel::modelReset().
+    connect(politicianModel_, &QAbstractItemModel::modelReset,
+        constituencyProxyModel_, &PixmapCreatingProxyModel::reloadCache);
+    connect(constituencyProxyModel_,
         &QAbstractItemModel::modelReset,
         this,
         &ConstituencyWidget::loadModel);
-    connect(constituencyModel_,
+    connect(constituencyProxyModel_,
         &QAbstractItemModel::rowsInserted,
         this,
         &ConstituencyWidget::loadModel);
-    connect(constituencyModel_,
+    connect(constituencyProxyModel_,
         &QAbstractItemModel::rowsRemoved,
         this,
         &ConstituencyWidget::loadModel);
-    connect(constituencyModel_,
+    connect(constituencyProxyModel_,
         &QAbstractItemModel::dataChanged,
         this,
         &ConstituencyWidget::refreshPixmaps);
@@ -130,7 +141,7 @@ void ConstituencyWidget::refreshPixmaps(
                 qgraphicsitem_cast<QGraphicsPixmapItem*>(it.key()))
         {
             pixmapItem->setPixmap(
-                constituencyModel_->data(it.value(), Qt::DecorationRole)
+                constituencyProxyModel_->data(it.value(), Qt::DecorationRole)
                     .value<QPixmap>());
         }
     }

@@ -10,7 +10,6 @@
 #include <memory>
 
 #include "ConstituencyModel.h"
-#include "ConstituencyPixmapCreatingFunctor.h"
 #include "PixmapCreatingProxyModel.h"
 #include "PoliticianModel.h"
 #include "PoliticianPixmapCreatingFunctor.h"
@@ -87,14 +86,8 @@ void ConstituencyExplorerWidget::setConstituencyModel(ConstituencyModel* model)
     constituencyModel_ = model;
     if (!politicianModel_)
         return;
-    auto constituencyProxyModel = new PixmapCreatingProxyModel(
-        std::unique_ptr<PixmapCreatingFunctor>(
-            new ConstituencyPixmapCreatingFunctor(
-                constituencyModel_, *politicianModel_)),
-        constituencyModel_,
-        ui_->constituencyWidget);
-
-    ui_->constituencyWidget->setModel(constituencyProxyModel);
+    
+    ui_->constituencyWidget->setModels(constituencyModel_, politicianModel_);
 }
 
 void ConstituencyExplorerWidget::setConstituencySelectionModel(

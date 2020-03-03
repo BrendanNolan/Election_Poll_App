@@ -25,7 +25,7 @@ public:
         const QModelIndex& index, int role = Qt::DecorationRole) const override;
     void setSourceModel(QAbstractItemModel* source) override;
 
-private slots:
+public slots:
     void reloadCache();
     virtual void partiallyReloadCache(const QModelIndex& startIndex, int count);
 

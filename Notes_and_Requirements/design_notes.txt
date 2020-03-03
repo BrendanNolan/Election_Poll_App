@@ -45,7 +45,9 @@ ConstituencyExplorerWidget.cpp, the call to QWidget::setWindowModality() doesn't
 13) Now PixmapCreatingProxyModel updates its cache in response to its own modelReset signal etc. The problem is, what happens if views which are looking at this
     proxyModel update themselves in response to the PixmapCreatingProxyModel::modelReset() signal before PixmapCreatingProxyModel updates its cache
     in response to the PixmapCreatingProxyModel::modelReset() signal?
-14) ConstituencyWidget is not notified when PoliticianModel emits signals. That's why it doesn't update properly.
+14) ConstituencyWidget is not notified when PoliticianModel emits signals. That's why it doesn't update properly. It might be wise to expose PixmapCreatingProxyModel's 
+    private cache reloading methods as public slots (or make public slots that fall through to the private cache reloading methods but have names that don't refer to 
+    the cache implementation detail) and connect PoliticianModel::dataChanged() and politicianModel::modelReset() to these slots.
 
 At the moment, the main work of ConstituencyDrillDownWidget is in having buttons
 manipulate the electoral status of a PoliticianModel. We should have a widget 

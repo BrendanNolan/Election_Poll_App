@@ -1,3 +1,9 @@
+Questions for forums:
+1) What if a method of a subclass of QAbstractItemModel emits both dataChanged() and modelReset()?
+2) 
+
+
+Comments on my own code:
 1) MainWindow should not be clickable when load screen is displayed.
 2) Some constituency should be selected by default. 
 3) It would be nice t have models notified (probably via signals&slots) when their 
@@ -39,6 +45,7 @@ ConstituencyExplorerWidget.cpp, the call to QWidget::setWindowModality() doesn't
 13) Now PixmapCreatingProxyModel updates its cache in response to its own modelReset signal etc. The problem is, what happens if views which are looking at this
     proxyModel update themselves in response to the PixmapCreatingProxyModel::modelReset() signal before PixmapCreatingProxyModel updates its cache
     in response to the PixmapCreatingProxyModel::modelReset() signal?
+14) ConstituencyWidget is not notified when PoliticianModel emits signals. That's why it doesn't update properly.
 
 At the moment, the main work of ConstituencyDrillDownWidget is in having buttons
 manipulate the electoral status of a PoliticianModel. We should have a widget 

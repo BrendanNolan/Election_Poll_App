@@ -86,7 +86,7 @@ void ConstituencyExplorerWidget::setConstituencyModel(ConstituencyModel* model)
     constituencyModel_ = model;
     if (!politicianModel_)
         return;
-    
+
     ui_->constituencyWidget->setModels(constituencyModel_, politicianModel_);
 }
 

@@ -57,9 +57,11 @@ void ConstituencyWidget::loadSceneConstituencies()
     {
         auto index = constituencyProxyModel_->index(row, 0);
         QPointF constituencyPosition(
-            constituencyProxyModel_->data(index, ConstituencyModel::LongitudeRole)
+            constituencyProxyModel_
+                ->data(index, ConstituencyModel::LongitudeRole)
                 .toInt(),
-            -(constituencyProxyModel_->data(index, ConstituencyModel::LatitudeRole)
+            -(constituencyProxyModel_
+                    ->data(index, ConstituencyModel::LatitudeRole)
                     .toInt()));
         auto pixmapItem = new QGraphicsPixmapItem(
             constituencyProxyModel_->data(index, Qt::DecorationRole)
@@ -109,8 +111,10 @@ void ConstituencyWidget::connectModelSignals()
 {
     // Need to make a similar connection for QAbstractItemModel::dataChanged()
     // as the one below for &QAbstractItemModel::modelReset().
-    connect(politicianModel_, &QAbstractItemModel::modelReset,
-        constituencyProxyModel_, &PixmapCreatingProxyModel::reloadCache);
+    connect(politicianModel_,
+        &QAbstractItemModel::modelReset,
+        constituencyProxyModel_,
+        &PixmapCreatingProxyModel::reloadCache);
     connect(constituencyProxyModel_,
         &QAbstractItemModel::modelReset,
         this,

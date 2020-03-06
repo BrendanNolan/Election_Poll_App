@@ -1,7 +1,7 @@
 #ifndef PIXMAPCREATINGPROXYMODEL_H
 #define PIXMAPCREATINGPROXYMODEL_H
 
-#include <QHash>
+#include <QQueue>
 #include <QIdentityProxyModel>
 #include <QModelIndex>
 #include <QPixmap>
@@ -24,6 +24,7 @@ public:
     QVariant data(
         const QModelIndex& index, int role = Qt::DecorationRole) const override;
     void setSourceModel(QAbstractItemModel* source) override;
+    void setCacheCapacity(int capacity);
 
 public slots:
     void reloadCache();
@@ -31,7 +32,8 @@ public slots:
 
 private:
     std::unique_ptr<PixmapCreatingFunctor> pixmapFunctor_;
-    QHash<QModelIndex, QPixmap> pixmapCache_;
+    mutable QQueue<QPair<int, QPixmap>> pixmapCache_;
+    int cacheCapacity = 100;
 };
 
 #endif// PIXMAPCREATINGPROXYMODEL_H

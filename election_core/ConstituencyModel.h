@@ -34,6 +34,8 @@ public:
         const QModelIndex& index, int role = Qt::DisplayRole) const override;
     QHash<int, QByteArray> roleNames() const override;
     QModelIndex addConstituency(std::unique_ptr<Constituency> constituency);
+    // O(n) complexity
+    QModelIndex indexofConstituency(int constituencyId) const;
 
     // Does not emit QAbstractItemModel::modelReset(). The rationalse is that
     // constituencies don't come and go like politicians and poll results.

@@ -63,28 +63,3 @@ void PixmapCreatingProxyModel::setCacheCapacity(int capacity)
 {
     cacheCapacity_ = capacity;
 }
-
-void PixmapCreatingProxyModel::reloadCache()
-{
-    beginResetModel();
-    pixmapCache_.clear();
-    if (!sourceModel())
-        return;
-    partiallyReloadCache(index(0, 0), rowCount());
-    endResetModel();
-}
-
-void PixmapCreatingProxyModel::partiallyReloadCache(
-    const QModelIndex& startIndex, int count)
-{
-    if (!sourceModel() || count <= 0 || count + startIndex.row() > rowCount())
-        return;
-    for (auto i = 0; i < count; ++i)
-    {
-        auto theIndex = index(startIndex.row() + i, 0);
-        const auto& createPixmap = *pixmapFunctor_;
-        pixmapCache_[theIndex] =
-            createPixmap(theIndex).scaled(PREFERRED_WIDTH, PREFERRED_HEIGHT);
-    }
-    emit dataChanged(startIndex, index(startIndex.row() + count - 1, 0));
-}

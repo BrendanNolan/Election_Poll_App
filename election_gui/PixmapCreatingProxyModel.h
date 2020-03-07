@@ -27,8 +27,6 @@ public:
     void setCacheCapacity(int capacity);
 
 public slots:
-    void reloadCache();
-    virtual void partiallyReloadCache(const QModelIndex& startIndex, int count);
 
 private:
     std::unique_ptr<PixmapCreatingFunctor> pixmapFunctor_;

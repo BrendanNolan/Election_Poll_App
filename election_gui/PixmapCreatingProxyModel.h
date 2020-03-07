@@ -33,7 +33,7 @@ public slots:
 private:
     std::unique_ptr<PixmapCreatingFunctor> pixmapFunctor_;
     mutable QQueue<QPair<int, QPixmap>> pixmapCache_;
-    int cacheCapacity = 100;
+    int cacheCapacity_ = 100;
 };
 
 #endif// PIXMAPCREATINGPROXYMODEL_H

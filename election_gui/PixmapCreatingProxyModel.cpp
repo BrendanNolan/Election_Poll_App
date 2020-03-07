@@ -59,6 +59,21 @@ void PixmapCreatingProxyModel::setSourceModel(QAbstractItemModel* source)
         });
 }
 
+void PixmapCreatingProxyModel::setCacheCapacity(int capacity)
+{
+    cacheCapacity_ = capacity;
+}
+
+void PixmapCreatingProxyModel::reloadCache()
+{
+    beginResetModel();
+    pixmapCache_.clear();
+    if (!sourceModel())
+        return;
+    partiallyReloadCache(index(0, 0), rowCount());
+    endResetModel();
+}
+
 void PixmapCreatingProxyModel::partiallyReloadCache(
     const QModelIndex& startIndex, int count)
 {
@@ -72,14 +87,4 @@ void PixmapCreatingProxyModel::partiallyReloadCache(
             createPixmap(theIndex).scaled(PREFERRED_WIDTH, PREFERRED_HEIGHT);
     }
     emit dataChanged(startIndex, index(startIndex.row() + count - 1, 0));
-}
-
-void PixmapCreatingProxyModel::reloadCache()
-{
-    beginResetModel();
-    pixmapCache_.clear();
-    if (!sourceModel())
-        return;
-    partiallyReloadCache(index(0, 0), rowCount());
-    endResetModel();
 }

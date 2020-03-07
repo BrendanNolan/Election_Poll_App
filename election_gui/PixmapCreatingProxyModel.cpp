@@ -27,39 +27,35 @@ QVariant PixmapCreatingProxyModel::data(
 {
     if (role != Qt::DecorationRole)
         return QIdentityProxyModel::data(index, role);
-    if (!pixmapCache_.contains(index))
-        return QPixmap();
-    return pixmapCache_[index];
+    auto id = sourceModel()->data(index, ); // uh oh. Cannot ask for IdRole. All we have is a QAbstractItemModel
 }
 
 void PixmapCreatingProxyModel::setSourceModel(QAbstractItemModel* source)
 {
-    QIdentityProxyModel::setSourceModel(source);
-
-    reloadCache();
-    if (!source)
+    if (source == sourceModel())
         return;
-
-    connect(source,
-        &QAbstractItemModel::modelReset,
-        this,
-        &PixmapCreatingProxyModel::reloadCache);
-    connect(source,
-        &QAbstractItemModel::rowsInserted,
-        [this](const QModelIndex& /*parent*/, int first, int last) {
-            partiallyReloadCache(index(first, 0), last - first + 1);
-        });
-    connect(source,
-        &QAbstractItemModel::dataChanged,
-        [this](const QModelIndex& topLeft, const QModelIndex& bottomRight) {
-            auto count = bottomRight.row() - topLeft.row();
-            if (count <= 0)
-                return;
-            partiallyReloadCache(topLeft, count);
-        });
+    clearCache();
+    QIdentityProxyModel::setSourceModel(source);
 }
 
 void PixmapCreatingProxyModel::setCacheCapacity(int capacity)
 {
     cacheCapacity_ = capacity;
+}
+
+void PixmapCreatingProxyModel::removeFromCache(int id)
+{
+    for (auto& pair : pixmapCache_)
+    {
+        if (pair.first == id)
+        {
+            pixmapCache_.removeOne(pair);
+            return;
+        }
+    }
+}
+
+void PixmapCreatingProxyModel::clearCache()
+{
+    pixmapCache_.clear();
 }

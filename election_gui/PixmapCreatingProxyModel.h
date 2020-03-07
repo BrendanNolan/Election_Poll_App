@@ -27,6 +27,8 @@ public:
     void setCacheCapacity(int capacity);
 
 public slots:
+    void removeFromCache(int id);
+    void clearCache();
 
 private:
     std::unique_ptr<PixmapCreatingFunctor> pixmapFunctor_;

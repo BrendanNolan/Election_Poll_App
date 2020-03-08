@@ -232,7 +232,7 @@ bool SqlPoliticianDatabaseManager::refreshDatabase() const
             QFileInfo(paths::politicianScrapingScript)))
     {
         if (auto signaller = databaseSignaller())
-        emit signaller->databaseRefreshed();
+            emit signaller->databaseRefreshed();
         return true;
     }
 

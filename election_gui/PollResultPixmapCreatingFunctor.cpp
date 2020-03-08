@@ -13,8 +13,8 @@ PollResultPixmapCreatingFunctor::PollResultPixmapCreatingFunctor(
 {
 }
 
-QPixmap PollResultPixmapCreatingFunctor::operator()(
-    const QModelIndex& index) const
+QPixmap PollResultPixmapCreatingFunctor::
+    operator()(const QModelIndex& index) const
 {
     if (!pollResultModel_)
         return QPixmap();

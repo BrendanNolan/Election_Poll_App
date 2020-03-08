@@ -115,7 +115,7 @@ bool PollResultModel::refreshDataSource()
 {
     if (manager_)
         return manager_->refreshDatabase();
-    
+
     return false;
 }
 

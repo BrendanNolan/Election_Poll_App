@@ -49,22 +49,21 @@ QVariant ConstituencyColoursProxyModel::data(
                            .value<QHash<QString, QVariant>>();
         colours.push_back(hashToColour(rgbHash));
     }
-    std::sort(
-        colours.begin(), colours.end(), [](QColor a, QColor b) {
-            if (a.red() > b.red())
-                return true;
-            if (a.red() < b.red())
-                return false;
-            if (a.green() > b.green())
-                return true;
-            if (a.green() < b.green())
-                return false;
-            if (a.blue() > b.blue())
-                return true;
-            if (a.blue() < b.blue())
-                return false;
+    std::sort(colours.begin(), colours.end(), [](QColor a, QColor b) {
+        if (a.red() > b.red())
+            return true;
+        if (a.red() < b.red())
             return false;
-        });
+        if (a.green() > b.green())
+            return true;
+        if (a.green() < b.green())
+            return false;
+        if (a.blue() > b.blue())
+            return true;
+        if (a.blue() < b.blue())
+            return false;
+        return false;
+    });
     auto it = std::find_if(
         pixmapCache_.cbegin(),
         pixmapCache_.cend(),

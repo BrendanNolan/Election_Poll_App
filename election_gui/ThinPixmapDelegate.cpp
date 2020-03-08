@@ -10,7 +10,8 @@ ThinPixmapDelegate::ThinPixmapDelegate(QObject* parent)
 {
 }
 
-void ThinPixmapDelegate::paint(QPainter* painter,
+void ThinPixmapDelegate::paint(
+    QPainter* painter,
     const QStyleOptionViewItem& option,
     const QModelIndex& index) const
 {
@@ -23,7 +24,8 @@ void ThinPixmapDelegate::paint(QPainter* painter,
     {
         QPixmap littlePixmap(7, 7);
         littlePixmap.fill(Qt::red);
-        painter->drawPixmap(option.rect.x() + pixmap.width() - 10,
+        painter->drawPixmap(
+            option.rect.x() + pixmap.width() - 10,
             option.rect.top() + 3,
             littlePixmap);
     }

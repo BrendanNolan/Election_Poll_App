@@ -22,8 +22,8 @@ PixmapCreatingProxyModel::~PixmapCreatingProxyModel()
 {
 }
 
-QVariant PixmapCreatingProxyModel::data(
-    const QModelIndex& index, int role) const
+QVariant
+    PixmapCreatingProxyModel::data(const QModelIndex& index, int role) const
 {
     if (role != Qt::DecorationRole)
         return QIdentityProxyModel::data(index, role);
@@ -40,16 +40,19 @@ void PixmapCreatingProxyModel::setSourceModel(QAbstractItemModel* source)
     if (!source)
         return;
 
-    connect(source,
+    connect(
+        source,
         &QAbstractItemModel::modelReset,
         this,
         &PixmapCreatingProxyModel::reloadCache);
-    connect(source,
+    connect(
+        source,
         &QAbstractItemModel::rowsInserted,
         [this](const QModelIndex& /*parent*/, int first, int last) {
             partiallyReloadCache(index(first, 0), last - first + 1);
         });
-    connect(source,
+    connect(
+        source,
         &QAbstractItemModel::dataChanged,
         [this](const QModelIndex& topLeft, const QModelIndex& bottomRight) {
             auto count = bottomRight.row() - topLeft.row();

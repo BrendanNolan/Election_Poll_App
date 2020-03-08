@@ -29,11 +29,13 @@ ConstituencyDrillDownWidget::ConstituencyDrillDownWidget(
     // for politicians and poll results.
     ui_->politicianListView->setItemDelegate(new ThinPixmapDelegate(this));
 
-    connect(ui_->sittingRadioButton,
+    connect(
+        ui_->sittingRadioButton,
         &QRadioButton::toggled,
         this,
         &ConstituencyDrillDownWidget::onSittingRadioButtonToggled);
-    connect(ui_->candidatesRadioButton,
+    connect(
+        ui_->candidatesRadioButton,
         &QRadioButton::toggled,
         this,
         &ConstituencyDrillDownWidget::onCandidatesRadioButtonToggled);

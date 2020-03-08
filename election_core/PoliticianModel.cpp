@@ -10,7 +10,8 @@
 
 using namespace std;
 
-PoliticianModel::PoliticianModel(const IDatabaseManagerFactory& factory,
+PoliticianModel::PoliticianModel(
+    const IDatabaseManagerFactory& factory,
     QObject* parent,
     ElectoralStatus status)
     : QAbstractListModel(parent)
@@ -98,7 +99,8 @@ bool PoliticianModel::setData(
     {
         auto hash = value.value<QHash<QString, QVariant>>();
         auto details = politician.partyDetails();
-        details.colour_ = RGBValue(hash["rgb_red"].toInt(),
+        details.colour_ = RGBValue(
+            hash["rgb_red"].toInt(),
             hash["rgb_green"].toInt(),
             hash["rgb_blue"].toInt());
         politician.setPartyDetails(details);

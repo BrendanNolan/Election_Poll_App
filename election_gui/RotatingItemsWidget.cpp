@@ -8,7 +8,8 @@ RotatingItemsWidget::RotatingItemsWidget(QWidget* parent)
 {
     setScene(new QGraphicsScene());
     setRotationRadius(preferredRotationRadius());
-    connect(&rotationTimer_,
+    connect(
+        &rotationTimer_,
         &QTimer::timeout,
         this,
         &RotatingItemsWidget::rotateItems);
@@ -104,7 +105,8 @@ void RotatingItemsWidget::positionRotatingItems()
         }
         else
         {
-            auto pos = startPoint.rotatedAbout(CartesianPoint(0.0, 0.0),
+            auto pos = startPoint.rotatedAbout(
+                CartesianPoint(0.0, 0.0),
                 (i / static_cast<double>(itemCount)) * (2 * pi));
             item->setPos(pos.x(), pos.y());
         }

@@ -16,7 +16,8 @@ ConstituencyWidget::ConstituencyWidget(QWidget* parent)
     : QGraphicsView(parent)
 {
     setScene(new QGraphicsScene(this));
-    connect(scene(),
+    connect(
+        scene(),
         &QGraphicsScene::selectionChanged,
         this,
         &ConstituencyWidget::selectConstituencyInModel);
@@ -33,9 +34,7 @@ void ConstituencyWidget::setModels(
     }
     politicianModel_ = politicianModel;
     constituencyProxyModel_ = new ConstituencyColoursProxyModel(
-        *constituencyModel,
-        *politicianModel_,
-        this);
+        *constituencyModel, *politicianModel_, this);
     connectModelSignals();
     loadModel();
 }
@@ -43,7 +42,8 @@ void ConstituencyWidget::setModels(
 void ConstituencyWidget::setSelectionModel(QItemSelectionModel* selectionModel)
 {
     constituencySelectionModel_ = selectionModel;
-    connect(constituencySelectionModel_,
+    connect(
+        constituencySelectionModel_,
         &QItemSelectionModel::selectionChanged,
         [this](const QItemSelection& selected) {});
     selectConstituencyInModel();
@@ -64,8 +64,8 @@ void ConstituencyWidget::loadSceneConstituencies()
                 ->data(index, ConstituencyModel::LongitudeRole)
                 .toInt(),
             -(constituencyProxyModel_
-                    ->data(index, ConstituencyModel::LatitudeRole)
-                    .toInt()));
+                  ->data(index, ConstituencyModel::LatitudeRole)
+                  .toInt()));
         auto pixmapItem = new QGraphicsPixmapItem(
             constituencyProxyModel_->data(index, Qt::DecorationRole)
                 .value<QPixmap>()
@@ -120,19 +120,23 @@ void ConstituencyWidget::connectModelSignals()
         this,
         &ConstituencyWidget::loadModel);
 
-    connect(constituencyProxyModel_,
+    connect(
+        constituencyProxyModel_,
         &QAbstractItemModel::modelReset,
         this,
         &ConstituencyWidget::loadModel);
-    connect(constituencyProxyModel_,
+    connect(
+        constituencyProxyModel_,
         &QAbstractItemModel::rowsInserted,
         this,
         &ConstituencyWidget::loadModel);
-    connect(constituencyProxyModel_,
+    connect(
+        constituencyProxyModel_,
         &QAbstractItemModel::rowsRemoved,
         this,
         &ConstituencyWidget::loadModel);
-    connect(constituencyProxyModel_,
+    connect(
+        constituencyProxyModel_,
         &QAbstractItemModel::dataChanged,
         this,
         &ConstituencyWidget::refreshPixmaps);

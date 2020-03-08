@@ -9,7 +9,8 @@ class PollResult
 {
 public:
     PollResult() = default;
-    PollResult(const QString& source,
+    PollResult(
+        const QString& source,
         const QDateTime& dateTime,
         int constituencyId,
         const QHash<QString, QVariant>& histogram = QHash<QString, QVariant>());

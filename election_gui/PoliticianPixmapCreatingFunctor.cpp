@@ -11,8 +11,8 @@ PoliticianPixmapCreatingFunctor::PoliticianPixmapCreatingFunctor(
 {
 }
 
-QPixmap PoliticianPixmapCreatingFunctor::operator()(
-    const QModelIndex& index) const
+QPixmap PoliticianPixmapCreatingFunctor::
+    operator()(const QModelIndex& index) const
 {
     if (!politicianModel_)
         return QPixmap();

@@ -19,10 +19,10 @@ public:
         std::shared_ptr<DatabaseSignaller> databaseSignaller = nullptr);
     SqlPoliticianDatabaseManager* clone() const override;
 
-    std::vector<std::unique_ptr<Politician>> mpsForConstituency(
-        int constituencyId) const override;
-    std::vector<std::unique_ptr<Politician>> candidatesForConstituency(
-        int constituencyId) const override;
+    std::vector<std::unique_ptr<Politician>>
+        mpsForConstituency(int constituencyId) const override;
+    std::vector<std::unique_ptr<Politician>>
+        candidatesForConstituency(int constituencyId) const override;
     std::unique_ptr<Politician> politician(int id) const override;
     QUrl imageUrlForPolitician(int politicianId) const override;
     void addPoliticianToConstituency(

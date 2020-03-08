@@ -6,8 +6,8 @@
 namespace paths
 {
 
-static const QString databasePath(
-    "C:\\CPP_Stuff\\Election_Poll_App\\primary_database.db");
+static const QString
+    databasePath("C:\\CPP_Stuff\\Election_Poll_App\\primary_database.db");
 
 static const QString politicianScrapingScript(
     "C:\\CPP_Stuff\\Election_Poll_App\\Scripts\\politician_scraping.py");

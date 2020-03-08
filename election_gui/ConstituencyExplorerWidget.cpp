@@ -65,12 +65,14 @@ ConstituencyExplorerWidget::ConstituencyExplorerWidget(QWidget* parent)
                 .toInt());
     }
 
-    connect(ui_->refreshDataButton,
+    connect(
+        ui_->refreshDataButton,
         &QPushButton::clicked,
         this,
         &ConstituencyExplorerWidget::asynchronouslyRefreshModels);
 
-    connect(&dataRefreshTimer_,
+    connect(
+        &dataRefreshTimer_,
         &QTimer::timeout,
         this,
         &ConstituencyExplorerWidget::onDataRefreshTimerTimeout);
@@ -98,7 +100,8 @@ void ConstituencyExplorerWidget::setConstituencySelectionModel(
     constituencySelectionModel_ = selectionModel;
     ui_->constituencyWidget->setSelectionModel(constituencySelectionModel_);
     onConstituencySelectionChanged();
-    connect(constituencySelectionModel_,
+    connect(
+        constituencySelectionModel_,
         &QItemSelectionModel::selectionChanged,
         this,
         &ConstituencyExplorerWidget::onConstituencySelectionChanged);
@@ -186,7 +189,8 @@ void ConstituencyExplorerWidget::asynchronouslyRefreshModels()
         + QPoint(rect().width() * 1.0 / 4.0, rect().height() * 1.0 / 4.0);
     auto edgeLengthOfLoadScreenPixmaps =
         0.15
-        * std::min(desiredSizeOfLoadScreen.width(),
+        * std::min(
+              desiredSizeOfLoadScreen.width(),
               desiredSizeOfLoadScreen.height());
     QSize desiredSizeOfLoadScreenPixmaps(
         edgeLengthOfLoadScreenPixmaps, edgeLengthOfLoadScreenPixmaps);

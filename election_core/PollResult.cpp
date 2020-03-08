@@ -1,6 +1,7 @@
 #include "PollResult.h"
 
-PollResult::PollResult(const QString& source,
+PollResult::PollResult(
+    const QString& source,
     const QDateTime& dateTime,
     int constituencyId,
     const QHash<QString, QVariant>& histogram)

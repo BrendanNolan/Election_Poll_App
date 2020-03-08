@@ -1,6 +1,6 @@
 #include "IPoliticianDatabaseManager.h"
 
-DatabaseSignaller& IPoliticianDatabaseManager::databaseSignaller() const
+DatabaseSignaller* IPoliticianDatabaseManager::databaseSignaller() const
 {
-    return databaseSignaller_;
+    return databaseSignaller_.get();
 }

@@ -28,10 +28,10 @@ public:
     virtual void clearPoliticiansFromConstituency(int constituencyId) const = 0;
 
     virtual bool refreshDatabase() const = 0;
-    DatabaseSignaller& databaseSignaller() const;
+    DatabaseSignaller* databaseSignaller() const;
 
 private:
-    mutable DatabaseSignaller databaseSignaller_;
+    std::shared_ptr<DatabaseSignaller> databaseSignaller_;
 };
 
 #endif// IPOLITICIANDATABASEMANAGER_H

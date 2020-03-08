@@ -1,6 +1,12 @@
 #include "IConstituencyDatabaseManager.h"
 
-DatabaseSignaller& IConstituencyDatabaseManager::databaseSignaller() const
+IConstituencyDatabaseManager::IConstituencyDatabaseManager(
+    std::shared_ptr<DatabaseSignaller> databaseSignaller)
+    : databaseSignaller_(databaseSignaller)
 {
-    return databaseSignaller_;
+}
+
+DatabaseSignaller* IConstituencyDatabaseManager::databaseSignaller() const
+{
+    return databaseSignaller_.get();
 }

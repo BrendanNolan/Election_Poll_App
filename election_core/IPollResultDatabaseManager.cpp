@@ -1,6 +1,6 @@
 #include "IPollResultDatabaseManager.h"
 
-DatabaseSignaller& IPollResultDatabaseManager::databaseSignaller() const
+DatabaseSignaller* IPollResultDatabaseManager::databaseSignaller() const
 {
-    return databaseSignaller_;
+    return databaseSignaller_.get();
 }

@@ -27,35 +27,59 @@ QVariant PixmapCreatingProxyModel::data(
 {
     if (role != Qt::DecorationRole)
         return QIdentityProxyModel::data(index, role);
-    auto id = sourceModel()->data(index, ); // uh oh. Cannot ask for IdRole. All we have is a QAbstractItemModel
+    if (!pixmapCache_.contains(index))
+        return QPixmap();
+    return pixmapCache_[index];
 }
 
 void PixmapCreatingProxyModel::setSourceModel(QAbstractItemModel* source)
 {
-    if (source == sourceModel())
-        return;
-    clearCache();
     QIdentityProxyModel::setSourceModel(source);
+
+    reloadCache();
+    if (!source)
+        return;
+
+    connect(source,
+        &QAbstractItemModel::modelReset,
+        this,
+        &PixmapCreatingProxyModel::reloadCache);
+    connect(source,
+        &QAbstractItemModel::rowsInserted,
+        [this](const QModelIndex& /*parent*/, int first, int last) {
+            partiallyReloadCache(index(first, 0), last - first + 1);
+        });
+    connect(source,
+        &QAbstractItemModel::dataChanged,
+        [this](const QModelIndex& topLeft, const QModelIndex& bottomRight) {
+            auto count = bottomRight.row() - topLeft.row();
+            if (count <= 0)
+                return;
+            partiallyReloadCache(topLeft, count);
+        });
 }
 
-void PixmapCreatingProxyModel::setCacheCapacity(int capacity)
+void PixmapCreatingProxyModel::partiallyReloadCache(
+    const QModelIndex& startIndex, int count)
 {
-    cacheCapacity_ = capacity;
-}
-
-void PixmapCreatingProxyModel::removeFromCache(int id)
-{
-    for (auto& pair : pixmapCache_)
+    if (!sourceModel() || count <= 0 || count + startIndex.row() > rowCount())
+        return;
+    for (auto i = 0; i < count; ++i)
     {
-        if (pair.first == id)
-        {
-            pixmapCache_.removeOne(pair);
-            return;
-        }
+        auto theIndex = index(startIndex.row() + i, 0);
+        const auto& createPixmap = *pixmapFunctor_;
+        pixmapCache_[theIndex] =
+            createPixmap(theIndex).scaled(PREFERRED_WIDTH, PREFERRED_HEIGHT);
     }
+    emit dataChanged(startIndex, index(startIndex.row() + count - 1, 0));
 }
 
-void PixmapCreatingProxyModel::clearCache()
+void PixmapCreatingProxyModel::reloadCache()
 {
+    beginResetModel();
     pixmapCache_.clear();
+    if (!sourceModel())
+        return;
+    partiallyReloadCache(index(0, 0), rowCount());
+    endResetModel();
 }

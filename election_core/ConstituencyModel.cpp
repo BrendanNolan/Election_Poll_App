@@ -74,18 +74,6 @@ QModelIndex ConstituencyModel::addConstituency(
     return index(row);
 }
 
-QModelIndex ConstituencyModel::indexofConstituency(int constituencyId) const
-{
-    auto numRows = rowCount();
-    for (auto row = 0; row < numRows; ++row)
-    {
-        auto theIndex = index(row);
-        if (data(theIndex, IdRole).toInt() == constituencyId)
-            return theIndex;
-    }
-    return QModelIndex();
-}
-
 void ConstituencyModel::reload()
 {
     reloadConstituencyCache();

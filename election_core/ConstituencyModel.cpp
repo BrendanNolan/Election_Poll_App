@@ -20,9 +20,12 @@ ConstituencyModel::ConstituencyModel(
     : QAbstractListModel(parent)
     , manager_(factory.createConstituencyDatabaseManager())
 {
-    beginResetModel();
-    reloadConstituencyCache();
-    endResetModel();
+    connect(
+        &(manager_->databaseSignaller()),
+        &DatabaseSignaller::databaseRefreshed,
+        this,
+        &ConstituencyModel::reload);
+    reload();
 }
 
 int ConstituencyModel::rowCount(const QModelIndex& /*parent*/) const
@@ -61,8 +64,8 @@ QHash<int, QByteArray> ConstituencyModel::roleNames() const
     return ret;
 }
 
-QModelIndex ConstituencyModel::addConstituency(
-    unique_ptr<Constituency> constituency)
+QModelIndex
+    ConstituencyModel::addConstituency(unique_ptr<Constituency> constituency)
 {
     auto row = rowCount();
 
@@ -76,18 +79,17 @@ QModelIndex ConstituencyModel::addConstituency(
 
 void ConstituencyModel::reload()
 {
+    beginResetModel();
     reloadConstituencyCache();
-    emit dataChanged(index(0), index(rowCount()));
+    endResetModel();
 }
 
 bool ConstituencyModel::refreshDataSource()
 {
-    if (!manager_->refreshDatabase())
-        return false;
-    beginResetModel();
-    reloadConstituencyCache();
-    endResetModel();
-    return true;
+    if (manager_)
+        return manager_->refreshDatabase();
+
+    return false;
 }
 
 void ConstituencyModel::reloadConstituencyCache()

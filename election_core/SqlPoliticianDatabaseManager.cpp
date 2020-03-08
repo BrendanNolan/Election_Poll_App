@@ -224,8 +224,14 @@ void SqlPoliticianDatabaseManager::clearPoliticiansFromConstituency(
 
 bool SqlPoliticianDatabaseManager::refreshDatabase() const
 {
-    return python_scripting::runPythonScript(
-        QFileInfo(paths::politicianScrapingScript));
+    if (python_scripting::runPythonScript(
+            QFileInfo(paths::politicianScrapingScript)))
+    {
+        emit databaseSignaller().databaseRefreshed();
+        return true;
+    }
+
+    return false;
 }
 
 namespace

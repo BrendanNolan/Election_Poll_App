@@ -15,6 +15,11 @@ PollResultModel::PollResultModel(
     : QAbstractListModel(parent)
     , manager_(factory.createPollResultDatabaseManager())
 {
+    connect(
+        &(manager_->databaseSignaller()),
+        &DatabaseSignaller::databaseRefreshed,
+        this,
+        &PollResultModel::reload);
     reload();
 }
 
@@ -108,10 +113,10 @@ void PollResultModel::reload()
 
 bool PollResultModel::refreshDataSource()
 {
-    if (!manager_->refreshDatabase())
-        return false;
-    reload();
-    return true;
+    if (manager_)
+        return manager_->refreshDatabase();
+    
+    return false;
 }
 
 void PollResultModel::setConstituency(int id)

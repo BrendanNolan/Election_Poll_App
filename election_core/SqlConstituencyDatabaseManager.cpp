@@ -130,8 +130,14 @@ vector<unique_ptr<Constituency>>
 
 bool SqlConstituencyDatabaseManager::refreshDatabase() const
 {
-    return python_scripting::runPythonScript(
-        QFileInfo(paths::constituencyScrapingScript));
+    if (python_scripting::runPythonScript(
+            QFileInfo(paths::constituencyScrapingScript)))
+    {
+        emit databaseSignaller().databaseRefreshed();
+        return true;
+    }
+
+    return false;
 }
 
 namespace

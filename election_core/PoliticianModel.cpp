@@ -17,6 +17,11 @@ PoliticianModel::PoliticianModel(const IDatabaseManagerFactory& factory,
     , electoralStatus_(status)
     , manager_(factory.createPoliticianDatabaseManager())
 {
+    connect(
+        &(manager_->databaseSignaller()),
+        &DatabaseSignaller::databaseRefreshed,
+        this,
+        &PoliticianModel::reload);
     reload();
 }
 
@@ -32,6 +37,11 @@ PoliticianModel::PoliticianModel(const PoliticianModel& rhs)
         politicianCache_.push_back(
             unique_ptr<Politician>(new Politician(*uniquePtrConstRef)));
     }
+    connect(
+        &(manager_->databaseSignaller()),
+        &DatabaseSignaller::databaseRefreshed,
+        &rhs,
+        &PoliticianModel::reload);
 }
 
 int PoliticianModel::rowCount(const QModelIndex& /*parent*/) const
@@ -156,10 +166,10 @@ void PoliticianModel::reload()
 
 bool PoliticianModel::refreshDataSource()
 {
-    if (!manager_->refreshDatabase())
-        return false;
-    reload();
-    return true;
+    if (manager_)
+        return manager_->refreshDatabase();
+
+    return false;
 }
 
 void PoliticianModel::setElectoralStatus(ElectoralStatus status)

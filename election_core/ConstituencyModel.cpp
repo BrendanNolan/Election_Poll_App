@@ -25,7 +25,7 @@ ConstituencyModel::ConstituencyModel(
         &DatabaseSignaller::databaseRefreshed,
         this,
         &ConstituencyModel::reload);
-    reload();
+    reloadConstituencyCache();
 }
 
 int ConstituencyModel::rowCount(const QModelIndex& /*parent*/) const

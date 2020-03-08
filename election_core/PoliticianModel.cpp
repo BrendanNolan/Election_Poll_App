@@ -23,7 +23,6 @@ PoliticianModel::PoliticianModel(
         &DatabaseSignaller::databaseRefreshed,
         this,
         &PoliticianModel::reload);
-    reload();
 }
 
 PoliticianModel::PoliticianModel(const PoliticianModel& rhs)

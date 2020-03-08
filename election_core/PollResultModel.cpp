@@ -20,7 +20,6 @@ PollResultModel::PollResultModel(
         &DatabaseSignaller::databaseRefreshed,
         this,
         &PollResultModel::reload);
-    reload();
 }
 
 int PollResultModel::rowCount(const QModelIndex& /*parent*/) const

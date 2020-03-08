@@ -50,7 +50,7 @@ QVariant ConstituencyColoursProxyModel::data(
         colours.push_back(hashToColour(rgbHash));
     }
     std::sort(
-        colours.begin(), colours.end(), [](const QColor& a, const QColor& b) {
+        colours.begin(), colours.end(), [](QColor a, QColor b) {
             if (a.red() > b.red())
                 return true;
             if (a.red() < b.red())
@@ -63,7 +63,7 @@ QVariant ConstituencyColoursProxyModel::data(
                 return true;
             if (a.blue() < b.blue())
                 return false;
-            return true;
+            return false;
         });
     auto it = std::find_if(
         pixmapCache_.cbegin(),

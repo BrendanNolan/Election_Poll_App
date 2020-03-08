@@ -7,6 +7,7 @@
 
 #include "IDatabaseManagerFactory.h"
 
+class DatabaseSignaller;
 class IConstituencyDatabaseManager;
 class IPollResultDatabaseManager;
 class IPoliticianDatabaseManager;
@@ -30,6 +31,9 @@ public:
 
 private:
     QFileInfo databaseFileInfo_;
+    std::shared_ptr<DatabaseSignaller> constituencySignaller_;
+    std::shared_ptr<DatabaseSignaller> politicianSignaller_;
+    std::shared_ptr<DatabaseSignaller> pollResultSignaller_;
 };
 
 #endif// SQLDATABASEMANAGERFACTORY_H

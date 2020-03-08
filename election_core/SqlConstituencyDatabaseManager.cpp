@@ -18,8 +18,10 @@ unique_ptr<Constituency> sqlQueryToConstituency(const QSqlQuery& query);
 }
 
 SqlConstituencyDatabaseManager::SqlConstituencyDatabaseManager(
-    const QFileInfo& databaseFileInfo)
-    : databaseFileInfo_(databaseFileInfo)
+    const QFileInfo& databaseFileInfo,
+    std::shared_ptr<DatabaseSignaller> databaseSignaller)
+    : IConstituencyDatabaseManager(databaseSignaller)
+    , databaseFileInfo_(databaseFileInfo)
 {
     auto database =
         election_core_utils::connectToSqlDatabase(databaseFileInfo_);
@@ -97,8 +99,8 @@ void SqlConstituencyDatabaseManager::removeConstituency(int id) const
     query.exec("DELETE FROM comstituencies WHERE id = " + QString::number(id));
 }
 
-unique_ptr<Constituency> SqlConstituencyDatabaseManager::constituency(
-    int id) const
+unique_ptr<Constituency>
+    SqlConstituencyDatabaseManager::constituency(int id) const
 {
     auto database =
         election_core_utils::connectToSqlDatabase(databaseFileInfo_);
@@ -133,7 +135,8 @@ bool SqlConstituencyDatabaseManager::refreshDatabase() const
     if (python_scripting::runPythonScript(
             QFileInfo(paths::constituencyScrapingScript)))
     {
-        emit databaseSignaller().databaseRefreshed();
+        if (auto signaller = databaseSignaller())
+            emit signaller->databaseRefreshed();
         return true;
     }
 

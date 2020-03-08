@@ -17,8 +17,10 @@ unique_ptr<Politician> sqlQueryToPolitician(const QSqlQuery& query);
 }
 
 SqlPoliticianDatabaseManager::SqlPoliticianDatabaseManager(
-    const QFileInfo& databaseFileInfo)
-    : databaseFileInfo_(databaseFileInfo)
+    const QFileInfo& databaseFileInfo,
+    std::shared_ptr<DatabaseSignaller> databaseSignaller)
+    : IPoliticianDatabaseManager(databaseSignaller)
+    , databaseFileInfo_(databaseFileInfo)
 {
     auto database =
         election_core_utils::connectToSqlDatabase(databaseFileInfo_);
@@ -47,8 +49,8 @@ SqlPoliticianDatabaseManager* SqlPoliticianDatabaseManager::clone() const
     return new SqlPoliticianDatabaseManager(*this);
 }
 
-vector<unique_ptr<Politician>> SqlPoliticianDatabaseManager::mpsForConstituency(
-    int constituencyId) const
+vector<unique_ptr<Politician>>
+    SqlPoliticianDatabaseManager::mpsForConstituency(int constituencyId) const
 {
     auto database =
         election_core_utils::connectToSqlDatabase(databaseFileInfo_);
@@ -119,8 +121,9 @@ QUrl SqlPoliticianDatabaseManager::imageUrlForPolitician(int politicianId) const
         return QUrl();
 
     QSqlQuery query(database);
-    query.exec("SELECT image_url FROM politicians WHERE id = "
-               + QString::number(politicianId));
+    query.exec(
+        "SELECT image_url FROM politicians WHERE id = "
+        + QString::number(politicianId));
     return QUrl(query.value("image_url").toString());
 }
 
@@ -218,8 +221,9 @@ void SqlPoliticianDatabaseManager::clearPoliticiansFromConstituency(
         return;
 
     QSqlQuery query(database);
-    query.exec("DELETE FROM politicians WHERE constituency_id = "
-               + QString::number(constituencyId));
+    query.exec(
+        "DELETE FROM politicians WHERE constituency_id = "
+        + QString::number(constituencyId));
 }
 
 bool SqlPoliticianDatabaseManager::refreshDatabase() const
@@ -227,7 +231,8 @@ bool SqlPoliticianDatabaseManager::refreshDatabase() const
     if (python_scripting::runPythonScript(
             QFileInfo(paths::politicianScrapingScript)))
     {
-        emit databaseSignaller().databaseRefreshed();
+        if (auto signaller = databaseSignaller())
+        emit signaller->databaseRefreshed();
         return true;
     }
 
@@ -240,7 +245,8 @@ unique_ptr<Politician> sqlQueryToPolitician(const QSqlQuery& query)
 {
     PartyDetails details;
     {
-        RGBValue rgb(query.value("party_rgb_red").toInt(),
+        RGBValue rgb(
+            query.value("party_rgb_red").toInt(),
             query.value("party_rgb_green").toInt(),
             query.value("party_rgb_blue").toInt());
         details.name_ = query.value("party_name").toString();

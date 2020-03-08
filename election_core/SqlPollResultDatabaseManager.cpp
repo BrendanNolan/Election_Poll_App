@@ -11,8 +11,10 @@
 using namespace std;
 
 SqlPollResultDatabaseManager::SqlPollResultDatabaseManager(
-    const QFileInfo& databaseFileInfo)
-    : databaseFileInfo_(databaseFileInfo)
+    const QFileInfo& databaseFileInfo,
+    std::shared_ptr<DatabaseSignaller> databaseSignaller)
+    : IPollResultDatabaseManager(databaseSignaller)
+    , databaseFileInfo_(databaseFileInfo)
 {
     auto database =
         election_core_utils::connectToSqlDatabase(databaseFileInfo_);
@@ -173,9 +175,10 @@ vector<unique_ptr<PollResult>>
 bool SqlPollResultDatabaseManager::refreshDatabase() const
 {
     if (python_scripting::runPythonScript(
-        QFileInfo(paths::pollResultScrapingScript)))
+            QFileInfo(paths::pollResultScrapingScript)))
     {
-        emit databaseSignaller().databaseRefreshed();
+        if (auto signaller = databaseSignaller())
+            emit signaller->databaseRefreshed();
         return true;
     }
 

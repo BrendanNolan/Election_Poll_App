@@ -12,6 +12,8 @@ class QString;
 class IPollResultDatabaseManager
 {
 public:
+    IPollResultDatabaseManager(
+        std::shared_ptr<DatabaseSignaller> databaseSignaller);
     virtual ~IPollResultDatabaseManager() = default;
     virtual IPollResultDatabaseManager* clone() const = 0;
 

@@ -6,6 +6,7 @@
 #include <memory>
 #include <vector>
 
+#include "DatabaseSignaller.h"
 #include "IConstituencyDatabaseManager.h"
 
 class Constituency;
@@ -15,7 +16,8 @@ class SqlConstituencyDatabaseManager : public IConstituencyDatabaseManager
 {
 public:
     explicit SqlConstituencyDatabaseManager(
-        const QFileInfo& databaseFileInfo = QFileInfo());
+        const QFileInfo& databaseFileInfo = QFileInfo(),
+        std::shared_ptr<DatabaseSignaller> databaseSignaller = nullptr);
     SqlConstituencyDatabaseManager* clone() const override;
 
     void addConstituency(Constituency& constituency) const override;

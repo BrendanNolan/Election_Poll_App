@@ -6,6 +6,7 @@
 #include <memory>
 #include <vector>
 
+#include "DatabaseSignaller.h"
 #include "IPoliticianDatabaseManager.h"
 
 class QSqlDatabase;
@@ -14,7 +15,8 @@ class SqlPoliticianDatabaseManager : public IPoliticianDatabaseManager
 {
 public:
     explicit SqlPoliticianDatabaseManager(
-        const QFileInfo& databaseFileInfo = QFileInfo());
+        const QFileInfo& databaseFileInfo = QFileInfo(),
+        std::shared_ptr<DatabaseSignaller> databaseSignaller = nullptr);
     SqlPoliticianDatabaseManager* clone() const override;
 
     std::vector<std::unique_ptr<Politician>> mpsForConstituency(

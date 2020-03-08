@@ -2,7 +2,7 @@
 
 IConstituencyDatabaseManager::IConstituencyDatabaseManager(
     std::shared_ptr<DatabaseSignaller> databaseSignaller)
-    : databaseSignaller_(databaseSignaller)
+    : databaseSignaller_(std::move(databaseSignaller))
 {
 }
 

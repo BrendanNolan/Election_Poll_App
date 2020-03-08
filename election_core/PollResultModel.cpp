@@ -16,7 +16,7 @@ PollResultModel::PollResultModel(
     , manager_(factory.createPollResultDatabaseManager())
 {
     connect(
-        &(manager_->databaseSignaller()),
+        manager_->databaseSignaller(),
         &DatabaseSignaller::databaseRefreshed,
         this,
         &PollResultModel::reload);

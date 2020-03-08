@@ -9,8 +9,7 @@
 #include <algorithm>
 
 #include "ConstituencyModel.h"
-#include "ConstituencyPixmapCreatingFunctor.h"
-#include "PixmapCreatingProxyModel.h"
+#include "ConstituencyColoursProxyModel.h "
 #include "RectanglePositionCalculator.h"
 
 ConstituencyWidget::ConstituencyWidget(QWidget* parent)
@@ -26,12 +25,16 @@ ConstituencyWidget::ConstituencyWidget(QWidget* parent)
 void ConstituencyWidget::setModels(
     ConstituencyModel* constituencyModel, PoliticianModel* politicianModel)
 {
+    if (!constituencyModel || !politicianModel)
+    {
+        constituencyProxyModel_ = nullptr;
+        politicianModel_ = nullptr;
+        constituencySelectionModel_ = nullptr;
+    }
     politicianModel_ = politicianModel;
-    constituencyProxyModel_ = new PixmapCreatingProxyModel(
-        std::unique_ptr<PixmapCreatingFunctor>(
-            new ConstituencyPixmapCreatingFunctor(
-                constituencyModel, *politicianModel_)),
-        constituencyModel,
+    constituencyProxyModel_ = new ConstituencyColoursProxyModel(
+        *constituencyModel,
+        *politicianModel_,
         this);
     connectModelSignals();
     loadModel();
@@ -111,10 +114,6 @@ void ConstituencyWidget::connectModelSignals()
 {
     // Need to make a similar connection for QAbstractItemModel::dataChanged()
     // as the one below for &QAbstractItemModel::modelReset().
-    connect(politicianModel_,
-        &QAbstractItemModel::modelReset,
-        constituencyProxyModel_,
-        &PixmapCreatingProxyModel::reloadCache);
     connect(constituencyProxyModel_,
         &QAbstractItemModel::modelReset,
         this,

@@ -9,7 +9,7 @@
 #include "Constituency.h"
 
 class ConstituencyModel;
-class PixmapCreatingProxyModel;
+class ConstituencyColoursProxyModel;
 class PoliticianModel;
 class QGraphicsItem;
 class QGraphicsScene;
@@ -43,10 +43,11 @@ private:
     void connectModelSignals();
 
 private:
-    PixmapCreatingProxyModel* constituencyProxyModel_ = nullptr;
+    ConstituencyColoursProxyModel* constituencyProxyModel_ = nullptr;
     QItemSelectionModel* constituencySelectionModel_ = nullptr;
     PoliticianModel* politicianModel_;
 
+    // Needs to change. Caching indices is a bad idea.
     QMap<QGraphicsItem*, QModelIndex> indexItemCache_;
 };
 

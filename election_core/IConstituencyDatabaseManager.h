@@ -4,6 +4,8 @@
 #include <memory>
 #include <vector>
 
+#include "DatabaseSignaller.h"
+
 class Constituency;
 
 class IConstituencyDatabaseManager
@@ -20,6 +22,10 @@ public:
         constituencies() const = 0;
 
     virtual bool refreshDatabase() const = 0;
+    DatabaseSignaller& databaseSignaller() const;
+
+private:
+    mutable DatabaseSignaller databaseSignaller_;
 };
 
 #endif// ICONSTITUENCYDATABASEMANAGER_H

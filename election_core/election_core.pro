@@ -12,6 +12,9 @@ SOURCES += \
     ConstituencyModel.cpp \
     PoliticianModel.cpp \
     PollResultModel.cpp \
+    IPollResultDatabaseManager.cpp \
+    IPoliticianDatabaseManager.cpp \
+    IConstituencyDatabaseManager.cpp \
     SqlDatabaseManagerFactory.cpp \
     Politician.cpp \
     PollResult.cpp \
@@ -36,7 +39,8 @@ HEADERS += \
     SqlPoliticianDatabaseManager.h \
     election_core_utils.h \
     UnaryPredicate.h \
-    election_core_definitions.h
+    election_core_definitions.h \
+    DatabaseSignaller.h
 
 INCLUDEPATH += \
     $$(PYTHON_38_STUFF)\include

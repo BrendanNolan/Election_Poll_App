@@ -15,7 +15,6 @@ HEADERS += \
     PixmapCreatingProxyModel.h \
     PixmapCreatingFunctor.h \
     PoliticianPixmapCreatingFunctor.h \
-    ConstituencyPixmapCreatingFunctor.h \
     PollResultPixmapCreatingFunctor.h \
     ConstituencyColoursProxyModel.h
 
@@ -31,7 +30,6 @@ SOURCES += \
     RotatingItemsWidget.cpp \
     PixmapCreatingProxyModel.cpp \
     PoliticianPixmapCreatingFunctor.cpp \
-    ConstituencyPixmapCreatingFunctor.cpp \
     PollResultPixmapCreatingFunctor.cpp \
     ConstituencyColoursProxyModel.cpp
 

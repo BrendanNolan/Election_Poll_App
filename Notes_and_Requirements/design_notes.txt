@@ -52,6 +52,16 @@ ConstituencyExplorerWidget.cpp, the call to QWidget::setWindowModality() doesn't
 16) It may be useful to set models together where they need to be synchronised in some way. Done in COnstituencyWidget, might want to do this in ConstituencyExplorerWidget.
 17) Getting a crash when I select a new constituency in ConstituencyWidget with the mouse.
 18) SIgnaller class seems to have made I*DatabaseManager classes uncopyable.
+19) To understand the crash when clicking a new constituency in the ConstituencyWidget,
+    set vreakpoints on lines 88 and 107 in ConstituencyWidget.cpp (as of commit 65e2773427485b5f2c68d825308539a358cadc7f).
+    This here is a problem
+        connect(
+        constituencyProxyModel_,
+        &QAbstractItemModel::modelReset,
+        this,
+        &ConstituencyWidget::loadModel);
+    This is calling ConstituencyWidget::loadModel() too often. Perhaps a custom signal in 
+    PoliticianModel is called for. 
 
 
 At the moment, the main work of ConstituencyDrillDownWidget is in having buttons

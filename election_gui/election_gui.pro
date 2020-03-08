@@ -16,7 +16,8 @@ HEADERS += \
     PixmapCreatingFunctor.h \
     PoliticianPixmapCreatingFunctor.h \
     ConstituencyPixmapCreatingFunctor.h \
-    PollResultPixmapCreatingFunctor.h
+    PollResultPixmapCreatingFunctor.h \
+    ConstituencyColoursProxyModel.h
 
 SOURCES += \
     ConstituencyWidget.cpp \
@@ -31,7 +32,8 @@ SOURCES += \
     PixmapCreatingProxyModel.cpp \
     PoliticianPixmapCreatingFunctor.cpp \
     ConstituencyPixmapCreatingFunctor.cpp \
-    PollResultPixmapCreatingFunctor.cpp
+    PollResultPixmapCreatingFunctor.cpp \
+    ConstituencyColoursProxyModel.cpp
 
 FORMS += \
     ConstituencyDrillDownWidget.ui \

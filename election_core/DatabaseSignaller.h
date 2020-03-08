@@ -3,7 +3,7 @@
 
 #include <QObject>
 
-class DatabaseSignaller
+class DatabaseSignaller : public QObject
 {
     Q_OBJECT
 

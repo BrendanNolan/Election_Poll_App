@@ -10,18 +10,6 @@ QVariant PollResultHistogramProxyModel::data(
 {
 }
 
-void PollResultHistogramProxyModel::setSourceModel(QAbstractItemModel * source)
-{
-}
-
 PollResultModel * PollResultHistogramProxyModel::pollResultModel() const
-{
-}
-
-void PollResultHistogramProxyModel::partiallyReloadCache(const QModelIndex & startIndex, int count)
-{
-}
-
-void PollResultHistogramProxyModel::reloadCache()
 {
 }

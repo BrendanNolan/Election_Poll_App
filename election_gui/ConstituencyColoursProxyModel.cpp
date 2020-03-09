@@ -2,6 +2,8 @@
 
 #include <QPainter>
 
+#include <QtGlobal>
+
 #include <algorithm>
 
 #include "ConstituencyModel.h"
@@ -19,7 +21,6 @@ ConstituencyColoursProxyModel::ConstituencyColoursProxyModel(
     , QIdentityProxyModel(parent)
     , blackPixmap_(1, 1)
 {
-    constituencyModel_ = &constituencyModel;
     setSourceModel(&constituencyModel);
     blackPixmap_.fill(Qt::black);
 }
@@ -27,13 +28,14 @@ ConstituencyColoursProxyModel::ConstituencyColoursProxyModel(
 QVariant ConstituencyColoursProxyModel::data(
     const QModelIndex& index, int role) const
 {
-    if (!constituencyModel_)
+    auto sourceConstituencyModel = constituencyModel();
+    if (!sourceConstituencyModel)
         return QVariant();
     if (role != Qt::DecorationRole)
-        return constituencyModel_->data(index, role);
+        return sourceConstituencyModel->data(index, role);
 
     auto constituencyId =
-        constituencyModel_->data(index, ConstituencyModel::IdRole).toInt();
+        sourceConstituencyModel->data(index, ConstituencyModel::IdRole).toInt();
     politicianModel_.setConstituency(constituencyId);
     QVector<QColor> colours;
     auto politicianCount = politicianModel_.rowCount();
@@ -44,7 +46,7 @@ QVariant ConstituencyColoursProxyModel::data(
     {
         auto rgbHash = politicianModel_
                            .data(
-                               constituencyModel_->index(row, 0),
+                               sourceConstituencyModel->index(row, 0),
                                PoliticianModel::PartyColourRole)
                            .value<QHash<QString, QVariant>>();
         colours.push_back(hashToColour(rgbHash));
@@ -99,6 +101,13 @@ void ConstituencyColoursProxyModel::insertToCacheWhileRespectingCapacity(
     if (pixmapCache_.size() > maxCacheCapacity_)
         pixmapCache_.pop_front();
     pixmapCache_.append(QPair<QVector<QColor>, QPixmap>(colours, pixmap));
+}
+
+ConstituencyModel* ConstituencyColoursProxyModel::constituencyModel() const
+{
+    auto ret = qobject_cast<ConstituencyModel*>(sourceModel());
+    Q_ASSERT(ret);
+    return ret;
 }
 
 namespace

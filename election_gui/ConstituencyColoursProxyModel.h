@@ -27,9 +27,9 @@ public:
 private:
     void insertToCacheWhileRespectingCapacity(
         const QVector<QColor>& colours, const QPixmap& pixmap) const;
+    ConstituencyModel* constituencyModel() const;
 
 private:
-    ConstituencyModel* constituencyModel_;
     mutable PoliticianModel politicianModel_;
     mutable QVector<QPair<QVector<QColor>, QPixmap>> pixmapCache_;
     int maxCacheCapacity_ = 50;

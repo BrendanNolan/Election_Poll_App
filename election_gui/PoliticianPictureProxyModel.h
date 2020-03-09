@@ -13,18 +13,14 @@ class PoliticianPictureProxyModel : public QIdentityProxyModel
 public:
     PoliticianPictureProxyModel(
         QObject* parent = nullptr, PoliticianModel* politicianModel = nullptr);
-    
     QVariant data(
         const QModelIndex& index, int role = Qt::DecorationRole) const override;
-    void setSourceModel(QAbstractItemModel* source) override;
-    PoliticianModel* politicianModel() const;
 
 private:
-    void partiallyReloadCache(const QModelIndex& startIndex, int count);
-    void reloadCache();
+    PoliticianModel* politicianModel() const;
 
 private:
     QHash<QString, QPixmap> pixmapCache_;
 };
 
-#endif // POLITICIANPICTUREPROXYMODEL_H
+#endif// POLITICIANPICTUREPROXYMODEL_H

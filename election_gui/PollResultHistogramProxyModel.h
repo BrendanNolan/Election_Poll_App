@@ -10,19 +10,14 @@ class PollResultHistogramProxyModel : public QIdentityProxyModel
 public:
     PollResultHistogramProxyModel(
         QObject* parent = nullptr, PollResultModel* pollResultModel = nullptr);
-
     QVariant data(
         const QModelIndex& index, int role = Qt::DecorationRole) const override;
-    void setSourceModel(QAbstractItemModel* source) override;
+    
+private:    
     PollResultModel* pollResultModel() const;
 
 private:
-    void partiallyReloadCache(const QModelIndex& startIndex, int count);
-    void reloadCache();
-
-private:
-    QHash<QString, QPixmap> pixmapCache_;
-};
+    QHash<DataToMakeHistogram, QPixmap> pixmapCache_;
 };
 
 #endif // POLLRESULTHISTOGRAMPROXYMODEL_H

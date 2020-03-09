@@ -1,0 +1,9 @@
+#ifndef POLITICIANPIXMAPPROXYMODEL_H
+#define POLITICIANPIXMAPPROXYMODEL_H
+
+class PoliticianPixmapProxyModel
+{
+
+};
+
+#endif // POLITICIANPIXMAPPROXYMODEL_H

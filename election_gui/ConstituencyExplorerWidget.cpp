@@ -10,9 +10,7 @@
 #include <memory>
 
 #include "ConstituencyModel.h"
-#include "PixmapCreatingProxyModel.h"
 #include "PoliticianModel.h"
-#include "PoliticianPixmapCreatingFunctor.h"
 #include "PollResultModel.h"
 
 #include "election_core_definitions.h"

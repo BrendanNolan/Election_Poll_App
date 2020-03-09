@@ -12,10 +12,7 @@
 #include "ConstituencyModel.h"
 #include "ThinPixmapDelegate.h"
 #include "PoliticianModel.h"
-#include "PoliticianPixmapCreatingFunctor.h"
-#include "PollResultPixmapCreatingFunctor.h"
 #include "PollResultModel.h"
-#include "PixmapCreatingProxyModel.h"
 
 ConstituencyDrillDownWidget::ConstituencyDrillDownWidget(
     QWidget* parent, Qt::WindowFlags flags)

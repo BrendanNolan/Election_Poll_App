@@ -13,8 +13,8 @@ HEADERS += \
     election_gui_utils.h \
     RotatingItemsWidget.h \
     ConstituencyColoursProxyModel.h \
-    PoliticianPixmapProxyModel.h \
-    PollResultPixmapProxyModel.h
+    PoliticianPictureProxyModel.h \
+    PollResultHistogramProxyModel.h
 
 SOURCES += \
     ConstituencyWidget.cpp \
@@ -27,8 +27,8 @@ SOURCES += \
     election_gui_utils.cpp \
     RotatingItemsWidget.cpp \
     ConstituencyColoursProxyModel.cpp \
-    PoliticianPixmapProxyModel.cpp \
-    PollResultPixmapProxyModel.cpp
+    PoliticianPictureProxyModel.cpp \
+    PollResultHistogramProxyModel.cpp
 
 FORMS += \
     ConstituencyDrillDownWidget.ui \

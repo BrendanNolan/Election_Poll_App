@@ -47,7 +47,6 @@ QVariant PoliticianPictureProxyModel::data(
         insertIntoCacheWhileRespectingCapacity(path, pixmap);
         return pixmap;
     }
-
 }
 
 void PoliticianPictureProxyModel::setMaxCacheCapacity(int capacity)

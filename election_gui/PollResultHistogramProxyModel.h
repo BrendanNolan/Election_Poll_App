@@ -17,7 +17,7 @@ public:
 private:
     PollResultModel* pollResultModel() const;
 
-// private:
+    // private:
     // QHash<DataToMakeHistogram, QPixmap> pixmapCache_;
 };
 

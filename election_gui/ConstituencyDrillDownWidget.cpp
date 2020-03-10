@@ -66,9 +66,7 @@ void ConstituencyDrillDownWidget::setPoliticianSelectionModel(
 void ConstituencyDrillDownWidget::setPollResultModel(PollResultModel* model)
 {
     auto proxyModel =
-        new PollResultHistogramProxyModel(
-        model,
-        ui_->pollResultListView);
+        new PollResultHistogramProxyModel(model, ui_->pollResultListView);
 
     ui_->pollResultListView->setModel(proxyModel);
 }

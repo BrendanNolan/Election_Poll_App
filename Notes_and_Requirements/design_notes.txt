@@ -61,7 +61,7 @@ ConstituencyExplorerWidget.cpp, the call to QWidget::setWindowModality() doesn't
         this,
         &ConstituencyWidget::loadModel);
     This is calling ConstituencyWidget::loadModel() too often. Perhaps a custom signal in 
-    PoliticianModel is called for. 
+    PoliticianModel is called for. Still shouldn't crash thogh!!!!!
 20) Still got a problem with 19). Also, politican pictures are sometimes flattened vertically and displayed on the duoble.
 
 

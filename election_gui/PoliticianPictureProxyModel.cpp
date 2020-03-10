@@ -43,7 +43,8 @@ QVariant PoliticianPictureProxyModel::data(
     }
     else
     {
-        auto pixmap = QPixmap(path);
+        auto pixmap = QPixmap(path).scaled(
+            PREFERRED_WIDTH, PREFERRED_HEIGHT, Qt::KeepAspectRatio);
         insertIntoCacheWhileRespectingCapacity(path, pixmap);
         return pixmap;
     }

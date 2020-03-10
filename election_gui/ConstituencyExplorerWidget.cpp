@@ -11,6 +11,7 @@
 
 #include "ConstituencyModel.h"
 #include "PoliticianModel.h"
+#include "PoliticianPictureProxyModel.h"
 #include "PollResultModel.h"
 
 #include "election_core_definitions.h"
@@ -193,11 +194,7 @@ void ConstituencyExplorerWidget::asynchronouslyRefreshModels()
     QSize desiredSizeOfLoadScreenPixmaps(
         edgeLengthOfLoadScreenPixmaps, edgeLengthOfLoadScreenPixmaps);
 
-    PixmapCreatingProxyModel politicianProxyModel(
-        std::unique_ptr<PixmapCreatingFunctor>(
-            new PoliticianPixmapCreatingFunctor(politicianModel_)),
-        politicianModel_,
-        nullptr);
+    PoliticianPictureProxyModel politicianProxyModel(politicianModel_, nullptr);
     QVector<QGraphicsItem*> politicianGraphicsItems;
     auto rowCount = politicianProxyModel.rowCount();
     for (auto row = 0; row < rowCount; ++row)

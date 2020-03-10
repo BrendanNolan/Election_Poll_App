@@ -4,6 +4,8 @@
 
 #include <QFileInfo>
 
+#include <algorithm>
+
 #include "PoliticianModel.h"
 
 namespace
@@ -13,10 +15,12 @@ const auto PREFERRED_HEIGHT = 60;
 }// namespace
 
 PoliticianPictureProxyModel::PoliticianPictureProxyModel(
-    QObject* parent, PoliticianModel* politicianModel)
+    PoliticianModel* politicianModel, QObject* parent)
     : QIdentityProxyModel(parent)
+    , blackPixmap_(1, 1)
 {
     setSourceModel(politicianModel);
+    blackPixmap_.fill(Qt::black);
 }
 
 QVariant PoliticianPictureProxyModel::data(
@@ -27,9 +31,36 @@ QVariant PoliticianPictureProxyModel::data(
     auto path = politicianModel()
                     ->data(index, PoliticianModel::FilePathRole)
                     .toString();
-    if (!pixmapCache_.contains(path))
-        return QPixmap();
-    return pixmapCache_[path];
+    auto found = std::find_if(
+        pixmapCache_.begin(),
+        pixmapCache_.end(),
+        [&path](const QPair<QString, QPixmap>& pair) {
+            return pair.first == path;
+        });
+    if (found != pixmapCache_.end())
+    {
+        return found->second;
+    }
+    else
+    {
+        auto pixmap = QPixmap(path);
+        insertIntoCacheWhileRespectingCapacity(path, pixmap);
+        return pixmap;
+    }
+
+}
+
+void PoliticianPictureProxyModel::setMaxCacheCapacity(int capacity)
+{
+    if (capacity < maxCacheCapacity_)
+    {
+        pixmapCache_.erase(
+            pixmapCache_.end()
+                - static_cast<ptrdiff_t>(maxCacheCapacity_ - capacity),
+            pixmapCache_.end());
+    }
+
+    maxCacheCapacity_ = capacity;
 }
 
 PoliticianModel* PoliticianPictureProxyModel::politicianModel() const
@@ -37,4 +68,12 @@ PoliticianModel* PoliticianPictureProxyModel::politicianModel() const
     auto ret = qobject_cast<PoliticianModel*>(sourceModel());
     Q_ASSERT(ret);
     return ret;
+}
+
+void PoliticianPictureProxyModel::insertIntoCacheWhileRespectingCapacity(
+    const QString& filePath, const QPixmap& pixmap) const
+{
+    if (pixmapCache_.size() > maxCacheCapacity_)
+        pixmapCache_.pop_front();
+    pixmapCache_.append(QPair<QString, QPixmap>(filePath, pixmap));
 }

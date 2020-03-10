@@ -12,7 +12,9 @@
 #include "ConstituencyModel.h"
 #include "ThinPixmapDelegate.h"
 #include "PoliticianModel.h"
+#include "PoliticianPictureProxyModel.h"
 #include "PollResultModel.h"
+#include "PollResultHistogramProxyModel.h"
 
 ConstituencyDrillDownWidget::ConstituencyDrillDownWidget(
     QWidget* parent, Qt::WindowFlags flags)
@@ -47,11 +49,8 @@ void ConstituencyDrillDownWidget::setPoliticianModel(PoliticianModel* model)
 {
     politicianModel_ = model;
 
-    auto proxyModel = new PixmapCreatingProxyModel(
-        std::unique_ptr<PixmapCreatingFunctor>(
-            new PoliticianPixmapCreatingFunctor(politicianModel_)),
-        politicianModel_,
-        ui_->politicianListView);
+    auto proxyModel = new PoliticianPictureProxyModel(
+        politicianModel_, ui_->politicianListView);
 
     ui_->politicianListView->setModel(proxyModel);
     ui_->sittingRadioButton->setChecked(true);
@@ -66,9 +65,8 @@ void ConstituencyDrillDownWidget::setPoliticianSelectionModel(
 
 void ConstituencyDrillDownWidget::setPollResultModel(PollResultModel* model)
 {
-    auto proxyModel = new PixmapCreatingProxyModel(
-        std::unique_ptr<PixmapCreatingFunctor>(
-            new PollResultPixmapCreatingFunctor(model)),
+    auto proxyModel =
+        new PollResultHistogramProxyModel(
         model,
         ui_->pollResultListView);
 

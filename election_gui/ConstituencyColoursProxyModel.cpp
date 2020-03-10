@@ -92,6 +92,14 @@ QVariant ConstituencyColoursProxyModel::data(
 
 void ConstituencyColoursProxyModel::setMaxCacheCapacity(int capacity)
 {
+    if (capacity < maxCacheCapacity_)
+    {
+        pixmapCache_.erase(
+            pixmapCache_.end()
+                - static_cast<ptrdiff_t>(maxCacheCapacity_ - capacity),
+            pixmapCache_.end());
+    }
+
     maxCacheCapacity_ = capacity;
 }
 

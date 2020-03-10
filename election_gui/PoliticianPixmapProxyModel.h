@@ -3,7 +3,6 @@
 
 class PoliticianPixmapProxyModel
 {
-
 };
 
-#endif // POLITICIANPIXMAPPROXYMODEL_H
+#endif// POLITICIANPIXMAPPROXYMODEL_H

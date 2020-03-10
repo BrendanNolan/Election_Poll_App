@@ -46,8 +46,8 @@ public:
 
     void rotateAbout(const CartesianPoint& fulcrum, double radians);
 
-    CartesianPoint
-        rotatedAbout(const CartesianPoint& fulcrum, double radians) const;
+    CartesianPoint rotatedAbout(
+        const CartesianPoint& fulcrum, double radians) const;
 
     double x() const;
     double y() const;

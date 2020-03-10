@@ -126,8 +126,8 @@ void SqlPollResultDatabaseManager::removePollResult(
     query.exec();
 }
 
-vector<unique_ptr<PollResult>>
-    SqlPollResultDatabaseManager::pollResultsForConstituency(int id) const
+vector<unique_ptr<PollResult>> SqlPollResultDatabaseManager::
+    pollResultsForConstituency(int id) const
 {
     auto database =
         election_core_utils::connectToSqlDatabase(databaseFileInfo_);

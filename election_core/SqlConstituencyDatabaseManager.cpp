@@ -99,8 +99,8 @@ void SqlConstituencyDatabaseManager::removeConstituency(int id) const
     query.exec("DELETE FROM comstituencies WHERE id = " + QString::number(id));
 }
 
-unique_ptr<Constituency>
-    SqlConstituencyDatabaseManager::constituency(int id) const
+unique_ptr<Constituency> SqlConstituencyDatabaseManager::constituency(
+    int id) const
 {
     auto database =
         election_core_utils::connectToSqlDatabase(databaseFileInfo_);
@@ -113,8 +113,8 @@ unique_ptr<Constituency>
     return sqlQueryToConstituency(query);
 }
 
-vector<unique_ptr<Constituency>>
-    SqlConstituencyDatabaseManager::constituencies() const
+vector<unique_ptr<Constituency>> SqlConstituencyDatabaseManager::
+    constituencies() const
 {
     auto database =
         election_core_utils::connectToSqlDatabase(databaseFileInfo_);

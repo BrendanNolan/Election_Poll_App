@@ -49,8 +49,8 @@ SqlPoliticianDatabaseManager* SqlPoliticianDatabaseManager::clone() const
     return new SqlPoliticianDatabaseManager(*this);
 }
 
-vector<unique_ptr<Politician>>
-    SqlPoliticianDatabaseManager::mpsForConstituency(int constituencyId) const
+vector<unique_ptr<Politician>> SqlPoliticianDatabaseManager::mpsForConstituency(
+    int constituencyId) const
 {
     auto database =
         election_core_utils::connectToSqlDatabase(databaseFileInfo_);
@@ -74,9 +74,8 @@ vector<unique_ptr<Politician>>
     return ret;
 }
 
-vector<unique_ptr<Politician>>
-    SqlPoliticianDatabaseManager::candidatesForConstituency(
-        int constituencyId) const
+vector<unique_ptr<Politician>> SqlPoliticianDatabaseManager::
+    candidatesForConstituency(int constituencyId) const
 {
     auto database =
         election_core_utils::connectToSqlDatabase(databaseFileInfo_);

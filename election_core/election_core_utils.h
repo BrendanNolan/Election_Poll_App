@@ -17,8 +17,8 @@ bool isIndexValid(const QModelIndex& index, const QAbstractListModel& model);
 // returns the default connection; in either case, the returned connection
 // may be invalid, for example if the connection has not been added with
 // QSqlDatabase::addDatabase().
-QSqlDatabase
-    connectToSqlDatabase(const QFileInfo& databaseFileInfo = QFileInfo());
+QSqlDatabase connectToSqlDatabase(
+    const QFileInfo& databaseFileInfo = QFileInfo());
 
 }// namespace election_core_utils
 

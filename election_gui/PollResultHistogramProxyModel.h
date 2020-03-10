@@ -12,12 +12,12 @@ public:
         QObject* parent = nullptr, PollResultModel* pollResultModel = nullptr);
     QVariant data(
         const QModelIndex& index, int role = Qt::DecorationRole) const override;
-    
-private:    
+
+private:
     PollResultModel* pollResultModel() const;
 
 private:
     QHash<DataToMakeHistogram, QPixmap> pixmapCache_;
 };
 
-#endif // POLLRESULTHISTOGRAMPROXYMODEL_H
+#endif// POLLRESULTHISTOGRAMPROXYMODEL_H

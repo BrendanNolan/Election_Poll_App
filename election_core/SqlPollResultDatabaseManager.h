@@ -18,8 +18,8 @@ public:
     void addPollResult(const PollResult& result) const override;
     void updatePollResult(const PollResult& result) const override;
     void removePollResult(const PollResult& result) const override;
-    std::vector<std::unique_ptr<PollResult>>
-        pollResultsForConstituency(int id) const override;
+    std::vector<std::unique_ptr<PollResult>> pollResultsForConstituency(
+        int id) const override;
 
     bool refreshDatabase() const override;
 

@@ -19,8 +19,8 @@ PoliticianPictureProxyModel::PoliticianPictureProxyModel(
     setSourceModel(politicianModel);
 }
 
-QVariant
-    PoliticianPictureProxyModel::data(const QModelIndex& index, int role) const
+QVariant PoliticianPictureProxyModel::data(
+    const QModelIndex& index, int role) const
 {
     if (role != Qt::DecorationRole)
         return QIdentityProxyModel::data(index, role);

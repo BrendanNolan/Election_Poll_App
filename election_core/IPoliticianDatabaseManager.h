@@ -17,10 +17,10 @@ public:
     virtual ~IPoliticianDatabaseManager() = default;
     virtual IPoliticianDatabaseManager* clone() const = 0;
 
-    virtual std::vector<std::unique_ptr<Politician>>
-        mpsForConstituency(int constituencyId) const = 0;
-    virtual std::vector<std::unique_ptr<Politician>>
-        candidatesForConstituency(int constituencyId) const = 0;
+    virtual std::vector<std::unique_ptr<Politician>> mpsForConstituency(
+        int constituencyId) const = 0;
+    virtual std::vector<std::unique_ptr<Politician>> candidatesForConstituency(
+        int constituencyId) const = 0;
     virtual std::unique_ptr<Politician> politician(int id) const = 0;
     virtual QUrl imageUrlForPolitician(int politicianId) const = 0;
     virtual void addPoliticianToConstituency(

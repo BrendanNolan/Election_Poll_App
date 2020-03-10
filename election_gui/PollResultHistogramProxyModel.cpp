@@ -6,10 +6,10 @@ PollResultHistogramProxyModel::PollResultHistogramProxyModel(
 }
 
 QVariant PollResultHistogramProxyModel::data(
-    const QModelIndex & index, int role) const
+    const QModelIndex& index, int role) const
 {
 }
 
-PollResultModel * PollResultHistogramProxyModel::pollResultModel() const
+PollResultModel* PollResultHistogramProxyModel::pollResultModel() const
 {
 }

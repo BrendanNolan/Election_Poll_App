@@ -24,22 +24,22 @@ SqlDatabaseManagerFactory* SqlDatabaseManagerFactory::clone() const
     return new SqlDatabaseManagerFactory(*this);
 }
 
-shared_ptr<IConstituencyDatabaseManager>
-    SqlDatabaseManagerFactory::createConstituencyDatabaseManager() const
+shared_ptr<IConstituencyDatabaseManager> SqlDatabaseManagerFactory::
+    createConstituencyDatabaseManager() const
 {
     return make_shared<SqlConstituencyDatabaseManager>(
         databaseFileInfo_, constituencySignaller_);
 }
 
-shared_ptr<IPollResultDatabaseManager>
-    SqlDatabaseManagerFactory::createPollResultDatabaseManager() const
+shared_ptr<IPollResultDatabaseManager> SqlDatabaseManagerFactory::
+    createPollResultDatabaseManager() const
 {
     return make_shared<SqlPollResultDatabaseManager>(
         databaseFileInfo_, pollResultSignaller_);
 }
 
-shared_ptr<IPoliticianDatabaseManager>
-    SqlDatabaseManagerFactory::createPoliticianDatabaseManager() const
+shared_ptr<IPoliticianDatabaseManager> SqlDatabaseManagerFactory::
+    createPoliticianDatabaseManager() const
 {
     return make_shared<SqlPoliticianDatabaseManager>(
         databaseFileInfo_, politicianSignaller_);

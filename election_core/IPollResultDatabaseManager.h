@@ -20,8 +20,8 @@ public:
     virtual void addPollResult(const PollResult& result) const = 0;
     virtual void updatePollResult(const PollResult& result) const = 0;
     virtual void removePollResult(const PollResult& result) const = 0;
-    virtual std::vector<std::unique_ptr<PollResult>>
-        pollResultsForConstituency(int id) const = 0;
+    virtual std::vector<std::unique_ptr<PollResult>> pollResultsForConstituency(
+        int id) const = 0;
 
     virtual bool refreshDatabase() const = 0;
     DatabaseSignaller* databaseSignaller() const;

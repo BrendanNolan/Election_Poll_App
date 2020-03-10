@@ -3,7 +3,6 @@
 
 class PollResultPixmapProxyModel
 {
-
 };
 
-#endif // POLLRESULTPIXMAPPROXYMODEL_H
+#endif// POLLRESULTPIXMAPPROXYMODEL_H

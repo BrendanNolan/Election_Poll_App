@@ -64,8 +64,8 @@ QHash<int, QByteArray> ConstituencyModel::roleNames() const
     return ret;
 }
 
-QModelIndex
-    ConstituencyModel::addConstituency(unique_ptr<Constituency> constituency)
+QModelIndex ConstituencyModel::addConstituency(
+    unique_ptr<Constituency> constituency)
 {
     auto row = rowCount();
 

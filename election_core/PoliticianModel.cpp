@@ -23,6 +23,11 @@ PoliticianModel::PoliticianModel(
         &DatabaseSignaller::databaseRefreshed,
         this,
         &PoliticianModel::reload);
+    connect(
+        manager_->databaseSignaller(),
+        &DatabaseSignaller::databaseRefreshed,
+        this,
+        &PoliticianModel::refreshed);
 }
 
 PoliticianModel::PoliticianModel(const PoliticianModel& rhs)

@@ -50,6 +50,9 @@ public:
 
     bool refreshDataSource();
 
+signals:
+    void refreshed();
+
 public slots:
     void reload();
     void setElectoralStatus(ElectoralStatus status);

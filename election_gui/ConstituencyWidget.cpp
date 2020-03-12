@@ -113,6 +113,12 @@ void ConstituencyWidget::loadModel()
 void ConstituencyWidget::connectModelSignals()
 {
     connect(
+        politicianModel_,
+        &PoliticianModel::refreshed,
+        this,
+        &ConstituencyWidget::loadModel);
+
+    connect(
         constituencyProxyModel_,
         &QAbstractItemModel::modelReset,
         this,

@@ -112,14 +112,6 @@ void ConstituencyWidget::loadModel()
 
 void ConstituencyWidget::connectModelSignals()
 {
-    // Need to make a similar connection for QAbstractItemModel::dataChanged()
-    // as the one below for &QAbstractItemModel::modelReset().
-    connect(
-        politicianModel_,
-        &QAbstractItemModel::modelReset,
-        this,
-        &ConstituencyWidget::loadModel);
-
     connect(
         constituencyProxyModel_,
         &QAbstractItemModel::modelReset,

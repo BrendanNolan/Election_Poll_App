@@ -16,10 +16,11 @@ public:
         PoliticianModel* politicianModel = nullptr, QObject* parent = nullptr);
     QVariant data(
         const QModelIndex& index, int role = Qt::DecorationRole) const override;
+    
     void setMaxCacheCapacity(int capacity);
+    PoliticianModel* politicianModel() const;
 
 private:
-    PoliticianModel* politicianModel() const;
     void insertIntoCacheWhileRespectingCapacity(
         const QString& filePath, const QPixmap& pixmap) const;
 

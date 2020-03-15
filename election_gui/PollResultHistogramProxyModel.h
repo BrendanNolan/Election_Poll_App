@@ -14,7 +14,6 @@ public:
     QVariant data(
         const QModelIndex& index, int role = Qt::DecorationRole) const override;
 
-private:
     PollResultModel* pollResultModel() const;
 
     // private:

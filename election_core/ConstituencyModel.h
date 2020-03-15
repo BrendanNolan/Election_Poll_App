@@ -35,10 +35,6 @@ public:
     QHash<int, QByteArray> roleNames() const override;
     QModelIndex addConstituency(std::unique_ptr<Constituency> constituency);
 
-    // Does not emit QAbstractItemModel::modelReset(). The rationalse is that
-    // constituencies don't come and go like politicians and poll results.
-    // This is why I am not reimplementing QAbstractItemModel::removeRows()
-    // or QAbstractItemModel::setData().
     bool refreshDataSource();
 
 public slots:

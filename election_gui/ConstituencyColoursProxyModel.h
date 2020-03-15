@@ -23,11 +23,11 @@ public:
     QVariant data(
         const QModelIndex& index, int role = Qt::DecorationRole) const override;
     void setMaxCacheCapacity(int capacity);
+    ConstituencyModel* constituencyModel() const;
 
 private:
     void insertToCacheWhileRespectingCapacity(
         const QVector<QColor>& colours, const QPixmap& pixmap) const;
-    ConstituencyModel* constituencyModel() const;
 
 private:
     mutable PoliticianModel politicianModel_;

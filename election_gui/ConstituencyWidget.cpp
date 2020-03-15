@@ -2,6 +2,7 @@
 
 #include <QGraphicsPixmapItem>
 #include <QGraphicsScene>
+#include <QItemSelection>
 #include <QItemSelectionModel>
 #include <QPointF>
 #include <QVector>
@@ -10,6 +11,7 @@
 
 #include "ConstituencyModel.h"
 #include "ConstituencyColoursProxyModel.h "
+#include "election_core_utils.h"
 #include "RectanglePositionCalculator.h"
 
 ConstituencyWidget::ConstituencyWidget(QWidget* parent)
@@ -45,7 +47,8 @@ void ConstituencyWidget::setSelectionModel(QItemSelectionModel* selectionModel)
     connect(
         constituencySelectionModel_,
         &QItemSelectionModel::selectionChanged,
-        [this](const QItemSelection& selected) {});
+        this,
+        &ConstituencyWidget::onSelectionChanged);
     selectConstituencyInModel();
 }
 
@@ -83,10 +86,37 @@ void ConstituencyWidget::loadSceneConstituencies()
     indexItemCache_ = roughMap;
 }
 
+void ConstituencyWidget::onSelectionChanged(const QItemSelection& selected)
+{
+    if (selected.isEmpty())
+        return;
+    auto indexList = selected.indexes();
+    if (indexList.isEmpty())
+        return;
+    idOfMostRecentlySelectedConstituency_ =
+        constituencyProxyModel_
+            ->data(indexList.first(), ConstituencyModel::IdRole)
+            .toInt();
+}
+
 void ConstituencyWidget::selectConstituencyInModel()
 {
     if (!constituencySelectionModel_)
         return;
+    if (idOfMostRecentlySelectedConstituency_ > -1)
+    {
+        auto indexOfMostRecentlySelectedConstituency =
+            election_core_utils::idToModelIndex(
+                *(constituencyProxyModel_->constituencyModel()),
+                idOfMostRecentlySelectedConstituency_);
+        if (indexOfMostRecentlySelectedConstituency.isValid())
+        {
+            constituencySelectionModel_->select(
+                indexOfMostRecentlySelectedConstituency,
+                QItemSelectionModel::ClearAndSelect);
+            return;
+        }
+    }
     auto itemList = scene()->selectedItems();
     if (itemList.isEmpty())
         itemList = scene()->items();

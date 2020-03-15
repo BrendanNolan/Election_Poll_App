@@ -2,14 +2,28 @@
 #define ELECTION_CORE_UTILS_H
 
 #include <QFileInfo>
+#include <QModelIndex>
 #include <QSqlDatabase>
 
 class QAbstractListModel;
-class QModelIndex;
+class QItemSelectionModel;
 class QString;
 
 namespace election_core_utils
 {
+
+template <class Model>
+QModelIndex idToModelIndex(const Model& model, int id)
+{
+    auto numRows = model.rowCount();
+    for (auto row = 0; row < numRows; ++row)
+    {
+        auto modelIndex = model.index(row, 0);
+        if (model.data(modelIndex, Model::IdRole).toInt() == id)
+            return modelIndex;
+    }
+    return QModelIndex();
+}
 
 bool isIndexValid(const QModelIndex& index, const QAbstractListModel& model);
 

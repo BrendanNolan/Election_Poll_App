@@ -39,7 +39,7 @@ private slots:
     void onConstituencySelectionChanged();
 
 private:
-    QModelIndex currentConstituencyIndex() const;
+    QModelIndex selectedConstituencyIndex() const;
     int currentConstituencyId() const;
     QString currentConstituencyName() const;
 

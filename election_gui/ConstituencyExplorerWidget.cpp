@@ -148,7 +148,7 @@ void ConstituencyExplorerWidget::onConstituencySelectionChanged()
         textToDisplay);
 }
 
-QModelIndex ConstituencyExplorerWidget::currentConstituencyIndex() const
+QModelIndex ConstituencyExplorerWidget::selectedConstituencyIndex() const
 {
     if (!constituencySelectionModel_
         || constituencySelectionModel_->selectedIndexes().isEmpty())
@@ -164,7 +164,7 @@ QModelIndex ConstituencyExplorerWidget::currentConstituencyIndex() const
 
 int ConstituencyExplorerWidget::currentConstituencyId() const
 {
-    auto index = currentConstituencyIndex();
+    auto index = selectedConstituencyIndex();
     if (!index.isValid() || !constituencyModel_)
         return -1;
     return constituencyModel_->data(index, ConstituencyModel::IdRole).toInt();
@@ -172,7 +172,7 @@ int ConstituencyExplorerWidget::currentConstituencyId() const
 
 QString ConstituencyExplorerWidget::currentConstituencyName() const
 {
-    auto index = currentConstituencyIndex();
+    auto index = selectedConstituencyIndex();
     if (!index.isValid() || !constituencyModel_)
         return QString();
     return constituencyModel_->data(index, ConstituencyModel::NameRole)

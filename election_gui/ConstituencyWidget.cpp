@@ -103,7 +103,9 @@ void ConstituencyWidget::selectConstituencyInModel()
 {
     if (!constituencySelectionModel_)
         return;
-    if (idOfMostRecentlySelectedConstituency_ > -1)
+    auto selectedItemList = scene()->selectedItems();
+    if (selectedItemList.isEmpty()
+        && idOfMostRecentlySelectedConstituency_ > -1)
     {
         auto indexOfMostRecentlySelectedConstituency =
             election_core_utils::idToModelIndex(
@@ -117,12 +119,11 @@ void ConstituencyWidget::selectConstituencyInModel()
             return;
         }
     }
-    auto itemList = scene()->selectedItems();
-    if (itemList.isEmpty())
-        itemList = scene()->items();
-    if (itemList.isEmpty())
+    if (selectedItemList.isEmpty())
+        selectedItemList = scene()->items();
+    if (selectedItemList.isEmpty())
         return;
-    auto itemToSelect = itemList.first();
+    auto itemToSelect = selectedItemList.first();
     if (!itemToSelect)
         return;
     auto index = indexItemCache_[itemToSelect];

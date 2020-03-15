@@ -10,7 +10,7 @@
 class ConstituencyModel;
 class PoliticianModel;
 class PollResultModel;
-class RotatingItemsWidget;
+class QDialog;
 class QItemSelectionModel;
 
 namespace Ui
@@ -55,7 +55,7 @@ private:
     std::future<bool> fut_;
     QTimer dataRefreshTimer_;
 
-    RotatingItemsWidget* rotatingItemsLoadScreen_ = nullptr;
+    QDialog* loadScreen_ = nullptr;
 
     Ui::ConstituencyExplorerWidget* ui_;
 };

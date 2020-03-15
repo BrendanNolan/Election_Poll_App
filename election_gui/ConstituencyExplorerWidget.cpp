@@ -2,6 +2,7 @@
 
 #include "ui_ConstituencyExplorerWidget.h"
 
+#include <QDialog>
 #include <QItemSelectionModel>
 #include <QMessageBox>
 
@@ -10,12 +11,11 @@
 #include <memory>
 
 #include "ConstituencyModel.h"
+#include "election_core_definitions.h"
+#include "election_gui_utils.h"
 #include "PoliticianModel.h"
 #include "PoliticianPictureProxyModel.h"
 #include "PollResultModel.h"
-
-#include "election_core_definitions.h"
-#include "election_gui_utils.h"
 #include "RotatingItemsWidget.h"
 #include "SqlDatabaseManagerFactory.h"
 
@@ -183,9 +183,6 @@ void ConstituencyExplorerWidget::asynchronouslyRefreshModels()
 {
     auto sizeOfMainWindow = rect().size();
     auto desiredSizeOfLoadScreen = 0.5 * sizeOfMainWindow;
-    auto desiredPositionOfLoadScreen =
-        rect().topLeft()
-        + QPoint(rect().width() * 1.0 / 4.0, rect().height() * 1.0 / 4.0);
     auto edgeLengthOfLoadScreenPixmaps =
         0.15
         * std::min(
@@ -206,23 +203,28 @@ void ConstituencyExplorerWidget::asynchronouslyRefreshModels()
             desiredSizeOfLoadScreenPixmaps, Qt::KeepAspectRatio)));
     }
 
-    rotatingItemsLoadScreen_ = new RotatingItemsWidget(this);
-    rotatingItemsLoadScreen_->setFrameRate(60);
-    rotatingItemsLoadScreen_->setInterFrameAngleDifference(25);
-    rotatingItemsLoadScreen_->setFixedSize(desiredSizeOfLoadScreen);
-    rotatingItemsLoadScreen_->setRotationRadius(
-        rotatingItemsLoadScreen_->preferredRotationRadius());
-    rotatingItemsLoadScreen_->scene()->setBackgroundBrush(
-        QBrush(QColor(10, 15, 68)));
-    rotatingItemsLoadScreen_->setHorizontalScrollBarPolicy(
-        Qt::ScrollBarAlwaysOff);
-    rotatingItemsLoadScreen_->setVerticalScrollBarPolicy(
-        Qt::ScrollBarAlwaysOff);
-    rotatingItemsLoadScreen_->setRotatingItems(politicianGraphicsItems);
-    rotatingItemsLoadScreen_->setWindowModality(Qt::ApplicationModal);
-    rotatingItemsLoadScreen_->move(desiredPositionOfLoadScreen);
-    rotatingItemsLoadScreen_->show();
-    rotatingItemsLoadScreen_->raise();
+    loadScreen_ = new QDialog(this);
+    loadScreen_->setWindowTitle("Refreshing Data ...");
+    auto loadScreenLayout = new QHBoxLayout(loadScreen_);
+    loadScreen_->setModal(true);
+    auto rotatingItemsWidget = new RotatingItemsWidget();
+    {
+        rotatingItemsWidget->setFrameRate(60);
+        rotatingItemsWidget->setInterFrameAngleDifference(25);
+        rotatingItemsWidget->setFixedSize(desiredSizeOfLoadScreen);
+        rotatingItemsWidget->setRotationRadius(
+            rotatingItemsWidget->preferredRotationRadius());
+        rotatingItemsWidget->scene()->setBackgroundBrush(
+            QBrush(QColor(10, 15, 68)));
+        rotatingItemsWidget->setHorizontalScrollBarPolicy(
+            Qt::ScrollBarAlwaysOff);
+        rotatingItemsWidget->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        rotatingItemsWidget->setRotatingItems(politicianGraphicsItems);
+    }
+    loadScreenLayout->addWidget(rotatingItemsWidget);
+    loadScreen_->setVisible(true);
+    loadScreen_->raise();
+
     dataRefreshTimer_.setInterval(std::chrono::seconds(1));
 
     fut_ = std::async(
@@ -237,8 +239,8 @@ void ConstituencyExplorerWidget::onDataRefreshTimerTimeout()
         return;
 
     dataRefreshTimer_.stop();
-    delete rotatingItemsLoadScreen_;
-    rotatingItemsLoadScreen_ = nullptr;
+    delete loadScreen_;
+    loadScreen_ = nullptr;
 
     auto refreshSuccssful = fut_.get();
     if (refreshSuccssful)

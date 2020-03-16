@@ -3,7 +3,6 @@
 
 #include <QDateTime>
 #include <QHash>
-#include <Qvariant>
 
 class PollResult
 {
@@ -13,13 +12,13 @@ public:
         const QString& source,
         const QDateTime& dateTime,
         int constituencyId,
-        const QHash<QString, QVariant>& histogram = QHash<QString, QVariant>());
+        const QHash<QString, int>& histogram = QHash<QString, int>());
 
     void appendToHistogram(const QString& name, int value);
     int value(const QString& name) const;
 
-    QHash<QString, QVariant> histogram() const;
-    void setHistogram(const QHash<QString, QVariant>& histogram);
+    QHash<QString, int> histogram() const;
+    void setHistogram(const QHash<QString, int>& histogram);
     int constituencyId() const;
     void setConstituencyId(int constituencyId);
     QString source() const;
@@ -27,7 +26,7 @@ public:
 
 private:
     int constituencyId_ = -1;
-    QHash<QString, QVariant> histogram_;
+    QHash<QString, int> histogram_;
     QString source_ = "Unknown";
     QDateTime dateTime_ = QDateTime();
 };

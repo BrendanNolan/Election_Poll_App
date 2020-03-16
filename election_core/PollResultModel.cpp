@@ -1,6 +1,8 @@
 #include "PollResultModel.h"
 
-#include "PollResult.h"
+#include <QHash>
+#include <QString>
+#include <QVariant>
 
 #include "IDatabaseManagerFactory.h"
 #include "IPollResultDatabaseManager.h"
@@ -39,7 +41,13 @@ QVariant PollResultModel::data(const QModelIndex& index, int role) const
         return pollResult.source() + " (" + pollResult.dateTime().toString()
                + ')';
     case HistogramRole:
-        return pollResult.histogram();
+    {
+        auto stringIntHash = pollResult.histogram();
+        QHash<QString, QVariant> stringVarHash;
+        for (const auto& key : stringIntHash.keys())
+            stringVarHash[key] = stringIntHash[key];
+        return stringVarHash;
+    }
     case SourceRole:
         return pollResult.source();
     case DateTimeRole:
@@ -57,8 +65,11 @@ bool PollResultModel::setData(
     if (role != HistogramRole)
         return false;
 
-    pollResultCache_[index.row()]->setHistogram(
-        value.value<QHash<QString, QVariant>>());
+    auto stringVarHash = value.value<QHash<QString, QVariant>>();
+    auto stringIntHash = QHash<QString, int>();
+    for (const auto& key : stringVarHash.keys())
+        stringIntHash[key] = stringVarHash[key].toInt();
+    pollResultCache_[index.row()]->setHistogram(stringIntHash);
     emit dataChanged(index, index);
     return true;
 }

@@ -22,6 +22,7 @@ public:
         QObject* parent = nullptr);
     QVariant data(
         const QModelIndex& index, int role = Qt::DecorationRole) const override;
+
     void setMaxCacheCapacity(int capacity);
     ConstituencyModel* constituencyModel() const;
 

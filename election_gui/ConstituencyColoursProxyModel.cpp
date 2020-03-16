@@ -10,6 +10,9 @@
 
 namespace
 {
+const auto PREFERRED_WIDTH = 50;
+const auto PREFERRED_HEIGHT = 50;
+
 QColor hashToColour(const QHash<QString, QVariant>& hash);
 }
 
@@ -75,7 +78,7 @@ QVariant ConstituencyColoursProxyModel::data(
     if (it != pixmapCache_.cend())
         return it->second;
 
-    QPixmap pixmap(50, 50);
+    QPixmap pixmap(PREFERRED_WIDTH, PREFERRED_HEIGHT);
     auto sectionWidth = pixmap.width() / politicianCount;
     auto pixmapHeight = pixmap.height();
     QPainter painter(&pixmap);

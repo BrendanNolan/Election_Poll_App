@@ -3,6 +3,7 @@
 #include <QtGlobal>
 
 #include <QPainter>
+#include <QPen>
 
 #include "PollResultModel.h"
 
@@ -47,8 +48,20 @@ QVariant PollResultHistogramProxyModel::data(
         return it->second;
 
     QPixmap pixmap(PREFERRED_WIDTH, PREFERRED_HEIGHT);
+    auto pollSource = data(index, PollResultModel::SourceRole).toString();
+    if (pollSource == "NYT")
+        pixmap.fill(Qt::cyan);
+    else if (pollSource == "WAPO")
+        pixmap.fill(Qt::darkYellow);
+    else if (pollSource == "HUFFPO")
+        pixmap.fill(Qt::green);
+    else
+        pixmap.fill(Qt::magenta);
     QPainter painter;
     // HACKY BIT UPCOMING - WILL NEED TO CHANGE
+    QPen pen(Qt::black);
+    pen.setWidth(3);
+    painter.setPen(pen);
     auto loopCounter = 0;
     for (const auto& key : histogram.keys())
     {

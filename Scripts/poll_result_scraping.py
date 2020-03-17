@@ -37,5 +37,5 @@ for constituency_id in range(1, 5):
             (constituency_id, source, date_time, politician_name, poll_value)
             VALUES
             (?, ?, ?, ?, ?)
-        ''', (constituency_id, sources[j], 20200201 + i, "Politician" + str(i), i * 40))
+        ''', (constituency_id, sources[randrange(3)], 20200201 + j, "Politician" + str(j), j * 20))
         db.commit()

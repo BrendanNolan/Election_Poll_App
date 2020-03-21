@@ -57,7 +57,7 @@ QVariant PollResultHistogramProxyModel::data(
         pixmap.fill(Qt::green);
     else
         pixmap.fill(Qt::magenta);
-    QPainter painter;
+    QPainter painter(&pixmap);
     // HACKY BIT UPCOMING - WILL NEED TO CHANGE
     QPen pen(Qt::black);
     pen.setWidth(3);

@@ -64,6 +64,9 @@ ConstituencyExplorerWidget.cpp, the call to QWidget::setWindowModality() doesn't
     PoliticianModel is called for. Still shouldn't crash thogh!!!!!
 20) Still got a problem with 19). Also, politican pictures are sometimes flattened vertically and displayed on the duoble.
 21) A template might be the way to go with the proxy models (at least Politician and PollResult proxy models - constituency is a bit different.).
+22) It's pribably time now to make a utils library. RollingKeyValueCache should definitely be in there,
+    along with the geometry things. Should probably have this library not depend on Qt. Can make a 
+    qt_utils library later if I need one.
 
 At the moment, the main work of ConstituencyDrillDownWidget is in having buttons
 manipulate the electoral status of a PoliticianModel. We should have a widget 

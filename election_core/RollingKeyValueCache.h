@@ -1,47 +1,78 @@
 #ifndef ROLLINGKEYVALUECACHE_H
 #define ROLLINGKEYVALUECACHE_H
 
-#include <QtGlobal>
-
-#include <QColor>
-#include <QHash>
-#include <QQueue>
+#include <algorithm>
+#include <stdexcept>
+#include <utility>
+#include <vector>
 
 template<class Key, class Value> class RollingKeyValueCache
 {
 public:
-    Value& operator[](const Key& key)
+    void insert(const Key& key, const Value& value)
     {
-        if (!hash_.contains(key))
-            keyQueue_.enqueue(key);
+        auto found = find(key);
+        if (found == cache_.end())
+        {
+            cache_.emplace_back(key, value);
+            reduceToCapacity();
+            return;
+        }
 
-        auto& value = hash_[key];
-
-        if (hash_.size() > capacity_)
-            hash_.remove(keyQueue_.dequeue());
-
-        return value;
+        found->second = value;
     }
 
-    Value operator[](const Key& key) const { return hash_[key]; }
+    bool contains(const Key& key) const { return find(key) != cache_.end(); }
 
-    bool contains(const Key& key) const { return hash_.contains(key); }
+    /*
+        Throws std::out_of_range exception if \param key not present in cache.
+    */
+    Value& value(const Key& key)
+    {
+        auto found = find(key);
+        if (found == cache_.end())
+            throw std::out_of_range("Attempt to find value of missing key.");
+        return found->second;
+    }
 
     void setCapacity(int capacity)
     {
-        while (hash_.size() > capacity_)
-        {
-            auto dequeuedVal = keyQueue_.dequeue();
-            auto numItemsRemoved = hash_.remove(dequeuedVal);
-            Q_ASSERT(numItemsRemoved == 1);
-        }
-
         capacity_ = capacity;
+        reduceToCapacity();
     }
 
 private:
-    QHash<Key, Value> hash_;
-    QQueue<Key> keyQueue_;
+    void reduceToCapacity()
+    {
+        while (cache_.size() > static_cast<size_t>(capacity_))
+            cache_.erase(cache_.begin());
+    }
+
+    typename std::vector<std::pair<Key, Value>>::iterator find(const Key& key)
+    {
+        auto found = std::find_if(
+            cache_.begin(),
+            cache_.end(),
+            [&key](const std::pair<Key, Value>& pair) {
+                return pair.first == key;
+            });
+        return found;
+    }
+
+    typename std::vector<std::pair<Key, Value>>::const_iterator find(
+        const Key& key) const
+    {
+        auto found = std::find_if(
+            cache_.cbegin(),
+            cache_.cend(),
+            [&key](const std::pair<Key, Value>& pair) {
+                return pair.first == key;
+            });
+        return found;
+    }
+
+private:
+    std::vector<std::pair<Key, Value>> cache_;
     int capacity_ = 50;
 };
 

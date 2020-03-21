@@ -33,13 +33,13 @@ QVariant PoliticianPictureProxyModel::data(
                     .toString();
     if (pixmapCache_.contains(path))
     {
-        return pixmapCache_[path];
+        return pixmapCache_.value(path);
     }
     else
     {
         auto pixmap = QPixmap(path).scaled(
             PREFERRED_WIDTH, PREFERRED_HEIGHT, Qt::IgnoreAspectRatio);
-        pixmapCache_[path] = pixmap;
+        pixmapCache_.insert(path, pixmap);
         return pixmap;
     }
 }

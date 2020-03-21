@@ -52,9 +52,9 @@ QVariant ConstituencyColoursProxyModel::data(
                                sourceConstituencyModel->index(row, 0),
                                PoliticianModel::PartyColourRole)
                            .value<QHash<QString, QVariant>>();
-        colours.insert(hashToColour(rgbHash));
+        colours.push_back(hashToColour(rgbHash));
     }
-    /*std::sort(colours.begin(), colours.end(), [](QColor a, QColor b) {
+    std::sort(colours.begin(), colours.end(), [](QColor a, QColor b) {
         if (a.red() > b.red())
             return true;
         if (a.red() < b.red())
@@ -68,10 +68,10 @@ QVariant ConstituencyColoursProxyModel::data(
         if (a.blue() < b.blue())
             return false;
         return false;
-    });*/
+    });
     
     if (pixmapCache_.contains(colours))
-        return pixmapCache_[colours];
+        return pixmapCache_.value(colours);
 
     QPixmap pixmap(PREFERRED_WIDTH, PREFERRED_HEIGHT);
     auto sectionWidth = pixmap.width() / politicianCount;
@@ -84,7 +84,7 @@ QVariant ConstituencyColoursProxyModel::data(
         painter.fillRect(rectToFill, colour);
         currentDrawXValue += sectionWidth;
     }
-    pixmapCache_[colours] = pixmap;
+    pixmapCache_.insert(colours, pixmap);
     return pixmap;
 }
 

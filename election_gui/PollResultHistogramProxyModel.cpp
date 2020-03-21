@@ -39,7 +39,7 @@ QVariant PollResultHistogramProxyModel::data(
         histogram[key] = stringVarHash[key].toInt();
 
     if (pixmapCache_.contains(histogram))
-        return pixmapCache_[histogram];
+        return pixmapCache_.value(histogram);
 
     QPixmap pixmap(PREFERRED_WIDTH, PREFERRED_HEIGHT);
     auto pollSource = data(index, PollResultModel::SourceRole).toString();
@@ -64,7 +64,7 @@ QVariant PollResultHistogramProxyModel::data(
         painter.drawText(loopCounter * 10, 0, key);
         painter.drawText(loopCounter * 10, 50, QString::number(histogram[key]));
     }
-    pixmapCache_[histogram] = pixmap;
+    pixmapCache_.insert(histogram, pixmap);
     return pixmap;
 }
 

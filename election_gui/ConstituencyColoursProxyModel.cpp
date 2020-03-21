@@ -52,9 +52,9 @@ QVariant ConstituencyColoursProxyModel::data(
                                sourceConstituencyModel->index(row, 0),
                                PoliticianModel::PartyColourRole)
                            .value<QHash<QString, QVariant>>();
-        colours.push_back(hashToColour(rgbHash));
+        colours.insert(hashToColour(rgbHash));
     }
-    std::sort(colours.begin(), colours.end(), [](QColor a, QColor b) {
+    /*std::sort(colours.begin(), colours.end(), [](QColor a, QColor b) {
         if (a.red() > b.red())
             return true;
         if (a.red() < b.red())
@@ -68,15 +68,10 @@ QVariant ConstituencyColoursProxyModel::data(
         if (a.blue() < b.blue())
             return false;
         return false;
-    });
-    auto it = std::find_if(
-        pixmapCache_.cbegin(),
-        pixmapCache_.cend(),
-        [&colours](const QPair<QVector<QColor>, QPixmap>& pair) {
-            return pair.first == colours;
-        });
-    if (it != pixmapCache_.cend())
-        return it->second;
+    });*/
+    
+    if (pixmapCache_.contains(colours))
+        return pixmapCache_[colours];
 
     QPixmap pixmap(PREFERRED_WIDTH, PREFERRED_HEIGHT);
     auto sectionWidth = pixmap.width() / politicianCount;
@@ -89,29 +84,13 @@ QVariant ConstituencyColoursProxyModel::data(
         painter.fillRect(rectToFill, colour);
         currentDrawXValue += sectionWidth;
     }
-    insertToCacheWhileRespectingCapacity(colours, pixmap);
+    pixmapCache_[colours] = pixmap;
     return pixmap;
 }
 
-void ConstituencyColoursProxyModel::setMaxCacheCapacity(int capacity)
+void ConstituencyColoursProxyModel::setCacheCapacity(int capacity)
 {
-    if (capacity < maxCacheCapacity_)
-    {
-        pixmapCache_.erase(
-            pixmapCache_.end()
-                - static_cast<ptrdiff_t>(maxCacheCapacity_ - capacity),
-            pixmapCache_.end());
-    }
-
-    maxCacheCapacity_ = capacity;
-}
-
-void ConstituencyColoursProxyModel::insertToCacheWhileRespectingCapacity(
-    const QVector<QColor>& colours, const QPixmap& pixmap) const
-{
-    if (pixmapCache_.size() > maxCacheCapacity_)
-        pixmapCache_.pop_front();
-    pixmapCache_.append(QPair<QVector<QColor>, QPixmap>(colours, pixmap));
+    pixmapCache_.setCapacity(capacity);
 }
 
 ConstituencyModel* ConstituencyColoursProxyModel::constituencyModel() const

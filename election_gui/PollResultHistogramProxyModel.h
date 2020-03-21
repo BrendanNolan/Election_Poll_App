@@ -9,6 +9,8 @@
 #include <QVariant>
 #include <QVector>
 
+#include "RollingKeyValueCache.h"
+
 class PollResultModel;
 
 // OBVIOUSLY FAR FROM COMPLETE
@@ -20,16 +22,11 @@ public:
     QVariant data(
         const QModelIndex& index, int role = Qt::DecorationRole) const override;
 
-    void setMaxCacheCapacity(int capacity);
+    void setCacheCapacity(int capacity);
     PollResultModel* pollResultModel() const;
 
 private:
-    void insertToCacheWhileRespectingCapacity(
-        const QPair<QHash<QString, QVariant>, QPixmap>& pair) const;
-
-private:
-    mutable QVector<QPair<QHash<QString, int>, QPixmap>> pixmapCache_;
-    int maxCacheCapacity_ = 50;
+    mutable RollingKeyValueCache<QHash<QString, int>, QPixmap> pixmapCache_;
     QPixmap blackPixmap_;
 };
 

@@ -3,11 +3,11 @@
 
 #include <QIdentityProxyModel>
 #include <QColor>
-#include <QPair>
 #include <QPixmap>
 #include <QVector>
 
 #include "PoliticianModel.h"
+#include "RollingKeyValueCache.h"
 
 class ConstituencyModel;
 
@@ -23,17 +23,12 @@ public:
     QVariant data(
         const QModelIndex& index, int role = Qt::DecorationRole) const override;
 
-    void setMaxCacheCapacity(int capacity);
+    void setCacheCapacity(int capacity);
     ConstituencyModel* constituencyModel() const;
 
 private:
-    void insertToCacheWhileRespectingCapacity(
-        const QVector<QColor>& colours, const QPixmap& pixmap) const;
-
-private:
     mutable PoliticianModel politicianModel_;
-    mutable QVector<QPair<QVector<QColor>, QPixmap>> pixmapCache_;
-    int maxCacheCapacity_ = 50;
+    mutable RollingKeyValueCache<QVector<QColor>, QPixmap> pixmapCache_;
     QPixmap blackPixmap_;
 };
 

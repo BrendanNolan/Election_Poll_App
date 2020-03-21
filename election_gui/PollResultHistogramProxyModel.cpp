@@ -38,14 +38,8 @@ QVariant PollResultHistogramProxyModel::data(
     for (const auto& key : stringVarHash.keys())
         histogram[key] = stringVarHash[key].toInt();
 
-    auto it = std::find_if(
-        pixmapCache_.cbegin(),
-        pixmapCache_.cend(),
-        [&histogram](const QPair<QHash<QString, int>, QPixmap>& pair) {
-            return pair.first == histogram;
-        });
-    if (it != pixmapCache_.cend())
-        return it->second;
+    if (pixmapCache_.contains(histogram))
+        return pixmapCache_[histogram];
 
     QPixmap pixmap(PREFERRED_WIDTH, PREFERRED_HEIGHT);
     auto pollSource = data(index, PollResultModel::SourceRole).toString();
@@ -70,20 +64,13 @@ QVariant PollResultHistogramProxyModel::data(
         painter.drawText(loopCounter * 10, 0, key);
         painter.drawText(loopCounter * 10, 50, QString::number(histogram[key]));
     }
+    pixmapCache_[histogram] = pixmap;
     return pixmap;
 }
 
-void PollResultHistogramProxyModel::setMaxCacheCapacity(int capacity)
+void PollResultHistogramProxyModel::setCacheCapacity(int capacity)
 {
-    if (capacity < maxCacheCapacity_)
-    {
-        pixmapCache_.erase(
-            pixmapCache_.end()
-                - static_cast<ptrdiff_t>(maxCacheCapacity_ - capacity),
-            pixmapCache_.end());
-    }
-
-    maxCacheCapacity_ = capacity;
+    pixmapCache_.setCapacity(capacity);
 }
 
 PollResultModel* PollResultHistogramProxyModel::pollResultModel() const

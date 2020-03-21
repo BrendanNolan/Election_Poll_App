@@ -31,36 +31,22 @@ QVariant PoliticianPictureProxyModel::data(
     auto path = politicianModel()
                     ->data(index, PoliticianModel::FilePathRole)
                     .toString();
-    auto found = std::find_if(
-        pixmapCache_.begin(),
-        pixmapCache_.end(),
-        [&path](const QPair<QString, QPixmap>& pair) {
-            return pair.first == path;
-        });
-    if (found != pixmapCache_.end())
+    if (pixmapCache_.contains(path))
     {
-        return found->second;
+        return pixmapCache_[path];
     }
     else
     {
         auto pixmap = QPixmap(path).scaled(
             PREFERRED_WIDTH, PREFERRED_HEIGHT, Qt::IgnoreAspectRatio);
-        insertIntoCacheWhileRespectingCapacity(path, pixmap);
+        pixmapCache_[path] = pixmap;
         return pixmap;
     }
 }
 
-void PoliticianPictureProxyModel::setMaxCacheCapacity(int capacity)
+void PoliticianPictureProxyModel::setCacheCapacity(int capacity)
 {
-    if (capacity < maxCacheCapacity_)
-    {
-        pixmapCache_.erase(
-            pixmapCache_.end()
-                - static_cast<ptrdiff_t>(maxCacheCapacity_ - capacity),
-            pixmapCache_.end());
-    }
-
-    maxCacheCapacity_ = capacity;
+    pixmapCache_.setCapacity(capacity);
 }
 
 PoliticianModel* PoliticianPictureProxyModel::politicianModel() const
@@ -68,12 +54,4 @@ PoliticianModel* PoliticianPictureProxyModel::politicianModel() const
     auto ret = qobject_cast<PoliticianModel*>(sourceModel());
     Q_ASSERT(ret);
     return ret;
-}
-
-void PoliticianPictureProxyModel::insertIntoCacheWhileRespectingCapacity(
-    const QString& filePath, const QPixmap& pixmap) const
-{
-    if (pixmapCache_.size() > maxCacheCapacity_)
-        pixmapCache_.pop_front();
-    pixmapCache_.append(QPair<QString, QPixmap>(filePath, pixmap));
 }

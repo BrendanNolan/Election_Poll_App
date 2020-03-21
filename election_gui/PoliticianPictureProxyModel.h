@@ -4,8 +4,8 @@
 #include <QIdentityProxyModel>
 #include <QPixmap>
 #include <QString>
-#include <QPair>
-#include <QVector>
+
+#include "RollingKeyValueCache.h"
 
 class PoliticianModel;
 
@@ -16,17 +16,12 @@ public:
         PoliticianModel* politicianModel = nullptr, QObject* parent = nullptr);
     QVariant data(
         const QModelIndex& index, int role = Qt::DecorationRole) const override;
-    
-    void setMaxCacheCapacity(int capacity);
+
+    void setCacheCapacity(int capacity);
     PoliticianModel* politicianModel() const;
 
 private:
-    void insertIntoCacheWhileRespectingCapacity(
-        const QString& filePath, const QPixmap& pixmap) const;
-
-private:
-    mutable QVector<QPair<QString, QPixmap>> pixmapCache_;
-    int maxCacheCapacity_ = 50;
+    mutable RollingKeyValueCache<QString, QPixmap> pixmapCache_;
     QPixmap blackPixmap_;
 };
 

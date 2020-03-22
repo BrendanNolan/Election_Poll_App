@@ -51,19 +51,8 @@ QVariant PollResultHistogramProxyModel::data(
         pixmap.fill(Qt::green);
     else
         pixmap.fill(Qt::magenta);
-    QPainter painter(&pixmap);
-    // HACKY BIT UPCOMING - WILL NEED TO CHANGE
-    QPen pen(Qt::black);
-    pen.setWidth(3);
-    painter.setPen(pen);
-    auto loopCounter = 0;
-    for (const auto& key : histogram.keys())
-    {
-        if (loopCounter > 1)
-            break;
-        painter.drawText(loopCounter * 10, 0, key);
-        painter.drawText(loopCounter * 10, 50, QString::number(histogram[key]));
-    }
+    
+    histogramPainter_.paint(histogram, &pixmap);
     pixmapCache_.insert(histogram, pixmap);
     return pixmap;
 }

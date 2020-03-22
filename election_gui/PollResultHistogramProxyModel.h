@@ -9,6 +9,7 @@
 #include <QVariant>
 #include <QVector>
 
+#include "HistogramPainter.h"
 #include "RollingKeyValueCache.h"
 
 class PollResultModel;
@@ -27,6 +28,7 @@ public:
 
 private:
     mutable RollingKeyValueCache<QHash<QString, int>, QPixmap> pixmapCache_;
+    HistogramPainter histogramPainter_;
     QPixmap blackPixmap_;
 };
 

@@ -5,6 +5,7 @@
 #include <QPainter>
 #include <QPen>
 
+#include "HistogramPainter.h"
 #include "PollResultModel.h"
 
 namespace
@@ -13,9 +14,14 @@ const auto PREFERRED_WIDTH = 100;
 const auto PREFERRED_HEIGHT = 50;
 }// namespace
 
+PollResultHistogramProxyModel::~PollResultHistogramProxyModel()
+{
+}
+
 PollResultHistogramProxyModel::PollResultHistogramProxyModel(
     PollResultModel* pollResultModel, QObject* parent)
     : QIdentityProxyModel(parent)
+    , histogramPainter_(std::make_unique<HistogramPainter>())
     , blackPixmap_(1, 1)
 {
     setSourceModel(pollResultModel);
@@ -52,7 +58,8 @@ QVariant PollResultHistogramProxyModel::data(
     else
         pixmap.fill(Qt::magenta);
     
-    histogramPainter_.paint(histogram, &pixmap);
+    histogramPainter_->setHistogram(&histogram);
+    histogramPainter_->paint(&pixmap);
     pixmapCache_.insert(histogram, pixmap);
     return pixmap;
 }

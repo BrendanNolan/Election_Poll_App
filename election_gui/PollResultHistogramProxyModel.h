@@ -9,15 +9,19 @@
 #include <QVariant>
 #include <QVector>
 
-#include "HistogramPainter.h"
+#include <memory>
+
 #include "RollingKeyValueCache.h"
 
+class HistogramPainter;
 class PollResultModel;
 
 // OBVIOUSLY FAR FROM COMPLETE
 class PollResultHistogramProxyModel : public QIdentityProxyModel
 {
 public:
+    ~PollResultHistogramProxyModel();
+
     PollResultHistogramProxyModel(
         PollResultModel* pollResultModel = nullptr, QObject* parent = nullptr);
     QVariant data(
@@ -28,7 +32,7 @@ public:
 
 private:
     mutable RollingKeyValueCache<QHash<QString, int>, QPixmap> pixmapCache_;
-    HistogramPainter histogramPainter_;
+    std::unique_ptr<HistogramPainter> histogramPainter_;
     QPixmap blackPixmap_;
 };
 

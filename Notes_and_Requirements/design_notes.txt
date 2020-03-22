@@ -67,6 +67,7 @@ ConstituencyExplorerWidget.cpp, the call to QWidget::setWindowModality() doesn't
 22) It's pribably time now to make a utils library. RollingKeyValueCache should definitely be in there,
     along with the geometry things. Should probably have this library not depend on Qt. Can make a 
     qt_utils library later if I need one.
+23) Histogram background colours are not updating.
 
 At the moment, the main work of ConstituencyDrillDownWidget is in having buttons
 manipulate the electoral status of a PoliticianModel. We should have a widget 

@@ -14,7 +14,8 @@ HEADERS += \
     RotatingItemsWidget.h \
     ConstituencyColoursProxyModel.h \
     PoliticianPictureProxyModel.h \
-    PollResultHistogramProxyModel.h
+    PollResultHistogramProxyModel.h \
+    HistogramPainter.h
 
 SOURCES += \
     ConstituencyWidget.cpp \
@@ -28,7 +29,8 @@ SOURCES += \
     RotatingItemsWidget.cpp \
     ConstituencyColoursProxyModel.cpp \
     PoliticianPictureProxyModel.cpp \
-    PollResultHistogramProxyModel.cpp
+    PollResultHistogramProxyModel.cpp \
+    HistogramPainter.cpp
 
 FORMS += \
     ConstituencyDrillDownWidget.ui \

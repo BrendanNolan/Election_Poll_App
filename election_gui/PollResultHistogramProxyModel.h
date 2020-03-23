@@ -13,7 +13,7 @@
 
 #include "RollingKeyValueCache.h"
 
-class IPlotPainter;
+class PlotPainter;
 class PollResultModel;
 
 // OBVIOUSLY FAR FROM COMPLETE
@@ -28,12 +28,11 @@ public:
         const QModelIndex& index, int role = Qt::DecorationRole) const override;
 
     void setCacheCapacity(int capacity);
-    void setPlotPainter(std::unique_ptr<IPlotPainter> plotPainter);
     PollResultModel* pollResultModel() const;
 
 private:
     mutable RollingKeyValueCache<QHash<QString, int>, QPixmap> pixmapCache_;
-    std::unique_ptr<IPlotPainter> plotPainter_;
+    std::unique_ptr<HistogramPainter> histogramPainter_ = nullptr;
     QPixmap blackPixmap_;
 };
 

@@ -10,11 +10,12 @@
 #include <memory>
 
 #include "ConstituencyModel.h"
-#include "ThinPixmapDelegate.h"
+#include "HistogramPainter.h"
 #include "PoliticianModel.h"
 #include "PoliticianPictureProxyModel.h"
 #include "PollResultModel.h"
 #include "PollResultPlotProxyModel.h"
+#include "ThinPixmapDelegate.h"
 
 ConstituencyDrillDownWidget::ConstituencyDrillDownWidget(
     QWidget* parent, Qt::WindowFlags flags)
@@ -67,6 +68,7 @@ void ConstituencyDrillDownWidget::setPollResultModel(PollResultModel* model)
 {
     auto proxyModel =
         new PollResultPlotProxyModel(model, ui_->pollResultListView);
+    proxyModel_->setPlotPainter(std::make_unique<HistogramPainter>());
 
     ui_->pollResultListView->setModel(proxyModel);
 }

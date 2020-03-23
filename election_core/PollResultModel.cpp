@@ -69,7 +69,7 @@ bool PollResultModel::setData(
     auto stringIntHash = QHash<QString, int>();
     for (const auto& key : stringVarHash.keys())
         stringIntHash[key] = stringVarHash[key].toInt();
-    pollResultCache_[index.row()]->setHistogram(stringIntHash);
+    pollResultCache_[index.row()]->setPlotData(stringIntHash);
     emit dataChanged(index, index);
     return true;
 }

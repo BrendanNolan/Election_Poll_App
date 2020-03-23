@@ -5,7 +5,7 @@
 #include <QPainter>
 #include <QPen>
 
-#include "IPlotPainter.h"
+#include "PlotPainter.h"
 #include "PollResultModel.h"
 
 namespace
@@ -46,9 +46,6 @@ QVariant PollResultPlotProxyModel::data(
     if (pixmapCache_.contains(histogram))
         return pixmapCache_.value(histogram);
 
-    if (!plotPainter_)
-        return QPixmap();
-
     QPixmap pixmap(PREFERRED_WIDTH, PREFERRED_HEIGHT);
     auto pollSource = data(index, PollResultModel::SourceRole).toString();
     if (pollSource == "NYT")
@@ -60,8 +57,8 @@ QVariant PollResultPlotProxyModel::data(
     else
         pixmap.fill(Qt::magenta);
     
-    plotPainter_->setPlotData(&histogram);
-    plotPainter_->paint(&pixmap);
+    histogramPainter_->setHistogram(&histogram);
+    histogramPainter_->paint(&pixmap);
     pixmapCache_.insert(histogram, pixmap);
     return pixmap;
 }
@@ -69,12 +66,6 @@ QVariant PollResultPlotProxyModel::data(
 void PollResultPlotProxyModel::setCacheCapacity(int capacity)
 {
     pixmapCache_.setCapacity(capacity);
-}
-
-void PollResultPlotProxyModel::setPlotPainter(
-    std::unique_ptr<IPlotPainter> plotPainter)
-{
-    plotPainter_ = std::move(plotPainter);
 }
 
 PollResultModel* PollResultPlotProxyModel::pollResultModel() const

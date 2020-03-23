@@ -1,11 +1,11 @@
 #include "HistogramPainter.h"
 
-HistogramPainter::HistogramPainter(const Histogram* histogram)
+HistogramPainter::HistogramPainter(const PlotData* histogram)
     : histogram_(histogram)
 {
 }
 
-void HistogramPainter::setHistogram(const Histogram* histogram)
+void HistogramPainter::setPlotData(const PlotData* histogram)
 {
     histogram_ = histogram;
 }

@@ -27,7 +27,7 @@ QHash<QString, int> PollResult::histogram() const
     return histogram_;
 }
 
-void PollResult::setHistogram(const QHash<QString, int>& histogram)
+void PollResult::setPlotData(const QHash<QString, int>& histogram)
 {
     histogram_ = histogram;
 }

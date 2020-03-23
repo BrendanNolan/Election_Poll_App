@@ -18,7 +18,7 @@ public:
     int value(const QString& name) const;
 
     QHash<QString, int> histogram() const;
-    void setHistogram(const QHash<QString, int>& histogram);
+    void setPlotData(const QHash<QString, int>& histogram);
     int constituencyId() const;
     void setConstituencyId(int constituencyId);
     QString source() const;

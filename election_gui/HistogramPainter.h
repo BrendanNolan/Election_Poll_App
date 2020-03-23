@@ -5,18 +5,17 @@
 #include <QRect>
 #include <QString>
 
+#include "IPlotPainter.h"
+
 class QPaintDevice;
 
-using Histogram = QHash<QString, int>;
-
-class HistogramPainter
+class HistogramPainter : public IPlotPainter
 {
 public:
-    HistogramPainter(const Histogram* histogram = nullptr);
-    virtual ~HistogramPainter() = default;
+    HistogramPainter(const PlotData* histogram = nullptr);
     
-    void setHistogram(const Histogram* histogram);
-    virtual void paint(QPaintDevice* paintDevice);
+    void setPlotData(const PlotData* histogram) override;
+    void paint(QPaintDevice* paintDevice) override;
 
 protected:
     void makeBars();
@@ -24,7 +23,7 @@ protected:
     void reset();
 
 private:
-    const Histogram* histogram_;
+    const PlotData* histogram_;
 
     QHash<QString, QRect> bars_;
 };

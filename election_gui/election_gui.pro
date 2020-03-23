@@ -15,7 +15,8 @@ HEADERS += \
     ConstituencyColoursProxyModel.h \
     PoliticianPictureProxyModel.h \
     PollResultPlotProxyModel.h \
-    HistogramPainter.h
+    HistogramPainter.h \
+    IPlotPainter.h
 
 SOURCES += \
     ConstituencyWidget.cpp \

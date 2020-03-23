@@ -2,9 +2,6 @@
 
 #include <QtGlobal>
 
-#include <QPainter>
-#include <QPen>
-
 #include "IPlotPainter.h"
 #include "PollResultModel.h"
 
@@ -39,12 +36,12 @@ QVariant PollResultPlotProxyModel::data(
     auto stringVarHash =
         sourcePollResultModel->data(index, PollResultModel::PlotRole)
             .value<QHash<QString, QVariant>>();
-    QHash<QString, int> histogram;
+    QHash<QString, int> plot;
     for (const auto& key : stringVarHash.keys())
-        histogram[key] = stringVarHash[key].toInt();
+        plot[key] = stringVarHash[key].toInt();
 
-    if (pixmapCache_.contains(histogram))
-        return pixmapCache_.value(histogram);
+    if (pixmapCache_.contains(plot))
+        return pixmapCache_.value(plot);
 
     if (!plotPainter_)
         return QPixmap();
@@ -60,9 +57,9 @@ QVariant PollResultPlotProxyModel::data(
     else
         pixmap.fill(Qt::magenta);
     
-    plotPainter_->setPlotData(&histogram);
+    plotPainter_->setPlotData(&plot);
     plotPainter_->paint(&pixmap);
-    pixmapCache_.insert(histogram, pixmap);
+    pixmapCache_.insert(plot, pixmap);
     return pixmap;
 }
 

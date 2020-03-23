@@ -21,7 +21,7 @@ public:
     {
         SourceRole = Qt::UserRole + 1,
         DateTimeRole,
-        HistogramRole
+        PlotRole
     };
 
     int rowCount(const QModelIndex& parent = QModelIndex()) const override;

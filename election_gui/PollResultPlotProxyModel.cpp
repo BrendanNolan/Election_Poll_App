@@ -37,7 +37,7 @@ QVariant PollResultPlotProxyModel::data(
         return sourcePollResultModel->data(index, role);
 
     auto stringVarHash =
-        sourcePollResultModel->data(index, PollResultModel::HistogramRole)
+        sourcePollResultModel->data(index, PollResultModel::PlotRole)
             .value<QHash<QString, QVariant>>();
     QHash<QString, int> histogram;
     for (const auto& key : stringVarHash.keys())

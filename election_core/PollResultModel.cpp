@@ -40,7 +40,7 @@ QVariant PollResultModel::data(const QModelIndex& index, int role) const
     case Qt::DisplayRole:
         return pollResult.source() + " (" + pollResult.dateTime().toString()
                + ')';
-    case HistogramRole:
+    case PlotRole:
     {
         auto stringIntHash = pollResult.plot();
         QHash<QString, QVariant> stringVarHash;
@@ -62,7 +62,7 @@ bool PollResultModel::setData(
 {
     if (!election_core_utils::isIndexValid(index, *this))
         return false;
-    if (role != HistogramRole)
+    if (role != PlotRole)
         return false;
 
     auto stringVarHash = value.value<QHash<QString, QVariant>>();

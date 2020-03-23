@@ -1,4 +1,4 @@
-#include "PollResultHistogramProxyModel.h"
+#include "PollResultPlotProxyModel.h"
 
 #include <QtGlobal>
 
@@ -14,11 +14,11 @@ const auto PREFERRED_WIDTH = 100;
 const auto PREFERRED_HEIGHT = 50;
 }// namespace
 
-PollResultHistogramProxyModel::~PollResultHistogramProxyModel()
+PollResultPlotProxyModel::~PollResultPlotProxyModel()
 {
 }
 
-PollResultHistogramProxyModel::PollResultHistogramProxyModel(
+PollResultPlotProxyModel::PollResultPlotProxyModel(
     PollResultModel* pollResultModel, QObject* parent)
     : QIdentityProxyModel(parent)
     , histogramPainter_(std::make_unique<HistogramPainter>())
@@ -28,7 +28,7 @@ PollResultHistogramProxyModel::PollResultHistogramProxyModel(
     blackPixmap_.fill(Qt::black);
 }
 
-QVariant PollResultHistogramProxyModel::data(
+QVariant PollResultPlotProxyModel::data(
     const QModelIndex& index, int role) const
 {
     auto sourcePollResultModel = pollResultModel();
@@ -64,12 +64,12 @@ QVariant PollResultHistogramProxyModel::data(
     return pixmap;
 }
 
-void PollResultHistogramProxyModel::setCacheCapacity(int capacity)
+void PollResultPlotProxyModel::setCacheCapacity(int capacity)
 {
     pixmapCache_.setCapacity(capacity);
 }
 
-PollResultModel* PollResultHistogramProxyModel::pollResultModel() const
+PollResultModel* PollResultPlotProxyModel::pollResultModel() const
 {
     auto prm = qobject_cast<PollResultModel*>(sourceModel());
     Q_ASSERT(prm);

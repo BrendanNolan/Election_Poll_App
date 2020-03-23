@@ -1,5 +1,5 @@
-#ifndef POLLRESULTHISTOGRAMPROXYMODEL_H
-#define POLLRESULTHISTOGRAMPROXYMODEL_H
+#ifndef POLLRESULTPLOTPROXYMODEL_H
+#define POLLRESULTPLOTPROXYMODEL_H
 
 #include <QIdentityProxyModel>
 #include <QHash>
@@ -17,12 +17,12 @@ class HistogramPainter;
 class PollResultModel;
 
 // OBVIOUSLY FAR FROM COMPLETE
-class PollResultHistogramProxyModel : public QIdentityProxyModel
+class PollResultPlotProxyModel : public QIdentityProxyModel
 {
 public:
-    ~PollResultHistogramProxyModel();
+    ~PollResultPlotProxyModel();
 
-    PollResultHistogramProxyModel(
+    PollResultPlotProxyModel(
         PollResultModel* pollResultModel = nullptr, QObject* parent = nullptr);
     QVariant data(
         const QModelIndex& index, int role = Qt::DecorationRole) const override;
@@ -36,4 +36,4 @@ private:
     QPixmap blackPixmap_;
 };
 
-#endif// POLLRESULTHISTOGRAMPROXYMODEL_H
+#endif// POLLRESULTPLOTPROXYMODEL_H

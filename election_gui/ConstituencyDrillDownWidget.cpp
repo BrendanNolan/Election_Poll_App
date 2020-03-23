@@ -68,7 +68,7 @@ void ConstituencyDrillDownWidget::setPollResultModel(PollResultModel* model)
 {
     auto proxyModel =
         new PollResultPlotProxyModel(model, ui_->pollResultListView);
-    proxyModel_->setPlotPainter(std::make_unique<HistogramPainter>());
+    proxyModel->setPlotPainter(std::make_unique<HistogramPainter>());
 
     ui_->pollResultListView->setModel(proxyModel);
 }

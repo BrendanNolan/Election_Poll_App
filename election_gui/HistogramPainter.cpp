@@ -1,10 +1,5 @@
 #include "HistogramPainter.h"
 
-HistogramPainter::HistogramPainter(const PlotData* histogram)
-    : histogram_(histogram)
-{
-}
-
 void HistogramPainter::setPlotData(const PlotData* histogram)
 {
     histogram_ = histogram;

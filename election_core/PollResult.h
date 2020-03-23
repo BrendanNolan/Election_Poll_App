@@ -14,7 +14,7 @@ public:
         int constituencyId,
         const QHash<QString, int>& plot = QHash<QString, int>());
 
-    void appendToHistogram(const QString& name, int value);
+    void appendToPlot(const QString& name, int value);
     int value(const QString& name) const;
 
     QHash<QString, int> plot() const;

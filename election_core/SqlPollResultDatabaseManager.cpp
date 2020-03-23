@@ -162,7 +162,7 @@ vector<unique_ptr<PollResult>> SqlPollResultDatabaseManager::
         }
         else
         {
-            pollResult->appendToHistogram(
+            pollResult->appendToPlot(
                 query.value("politician_name").toString(),
                 query.value("poll_value").toInt());
         }

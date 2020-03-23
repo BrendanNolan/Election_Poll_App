@@ -12,7 +12,7 @@ PollResult::PollResult(
 {
 }
 
-void PollResult::appendToHistogram(const QString& name, int value)
+void PollResult::appendToPlot(const QString& name, int value)
 {
     plot_[name] = value;
 }

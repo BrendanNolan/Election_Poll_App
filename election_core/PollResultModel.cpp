@@ -42,7 +42,7 @@ QVariant PollResultModel::data(const QModelIndex& index, int role) const
                + ')';
     case HistogramRole:
     {
-        auto stringIntHash = pollResult.histogram();
+        auto stringIntHash = pollResult.plot();
         QHash<QString, QVariant> stringVarHash;
         for (const auto& key : stringIntHash.keys())
             stringVarHash[key] = stringIntHash[key];

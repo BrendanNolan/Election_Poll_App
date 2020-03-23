@@ -4,9 +4,9 @@ PollResult::PollResult(
     const QString& source,
     const QDateTime& dateTime,
     int constituencyId,
-    const QHash<QString, int>& histogram)
+    const QHash<QString, int>& plot)
     : constituencyId_(constituencyId)
-    , histogram_(histogram)
+    , plot_(plot)
     , source_(source)
     , dateTime_(dateTime)
 {
@@ -14,22 +14,22 @@ PollResult::PollResult(
 
 void PollResult::appendToHistogram(const QString& name, int value)
 {
-    histogram_[name] = value;
+    plot_[name] = value;
 }
 
 int PollResult::value(const QString& name) const
 {
-    return histogram_[name];
+    return plot_[name];
 }
 
-QHash<QString, int> PollResult::histogram() const
+QHash<QString, int> PollResult::plot() const
 {
-    return histogram_;
+    return plot_;
 }
 
-void PollResult::setPlotData(const QHash<QString, int>& histogram)
+void PollResult::setPlotData(const QHash<QString, int>& plot)
 {
-    histogram_ = histogram;
+    plot_ = plot;
 }
 
 int PollResult::constituencyId() const

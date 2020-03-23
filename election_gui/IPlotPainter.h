@@ -8,7 +8,7 @@ class QPaintDevice;
 class IPlotPainter
 {
 public:
-    virtual void setPlotData(const PlotData* histogram) = 0;
+    virtual void setPlotData(const PlotData* plot) = 0;
     virtual void paint(QPaintDevice* paintDevice) = 0;
 };
 

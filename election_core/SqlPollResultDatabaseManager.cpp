@@ -58,8 +58,8 @@ void SqlPollResultDatabaseManager::addPollResult(const PollResult& result) const
     auto constituencyId = result.constituencyId();
     auto source = result.source();
     auto dateTime = result.dateTime();
-    auto histogram = result.histogram();
-    for (auto it = histogram.constBegin(); it != histogram.constEnd(); ++it)
+    auto plot = result.plot();
+    for (auto it = plot.constBegin(); it != plot.constEnd(); ++it)
     {// May need to move the above query preparation inside this loop.
         query.bindValue(":constituency_id", constituencyId);
         query.bindValue(":source", source);
@@ -92,8 +92,8 @@ void SqlPollResultDatabaseManager::updatePollResult(
     auto constituencyId = result.constituencyId();
     auto source = result.source();
     auto dateTime = result.dateTime();
-    auto histogram = result.histogram();
-    for (auto it = histogram.constBegin(); it != histogram.constEnd(); ++it)
+    auto plot = result.plot();
+    for (auto it = plot.constBegin(); it != plot.constEnd(); ++it)
     {// May need to move the above query preparation inside this loop.
         query.bindValue(":constituency_id", constituencyId);
         query.bindValue(":source", source);

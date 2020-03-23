@@ -12,8 +12,6 @@ class QPaintDevice;
 class HistogramPainter : public IPlotPainter
 {
 public:
-    HistogramPainter(const PlotData* histogram = nullptr);
-    
     void setPlotData(const PlotData* histogram) override;
     void paint(QPaintDevice* paintDevice) override;
 

@@ -9,8 +9,8 @@ CONFIG += static
 # DEFINES += ELECTIONCORE_LIBRARY
 
 DEFINES += \  
-    DATABASE_PATH=\"\\\"$${database_path}\\\"\" \
-    SCRIPTS_PATH=\"\\\"$${scripts_path}\\\"\"
+    DATABASE_PATH=\\\"$${database_path}\\\" \
+    SCRIPTS_PATH=\\\"$${scripts_path}\\\"
 
 SOURCES += \
     SqlConstituencyDatabaseManager.cpp \

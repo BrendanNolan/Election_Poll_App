@@ -1,3 +1,5 @@
+include($$top_srcdir/paths.pri)
+
 QT += core gui widgets sql
 
 TARGET = election_gui
@@ -38,32 +40,32 @@ FORMS += \
     ConstituencyExplorerWidget.ui
 
 INCLUDEPATH += \
-    $$PWD/../election_core \
+    $$election_core_source_path \
     $$(PYTHON_38_STUFF)\include
 
 win32:CONFIG(release, debug|release) {
     LIBS += \ 
-        -L$$OUT_PWD/../election_core/release/ \ 
+        -L$$election_core_build_path/release/ \ 
         -L$$(PYTHON_38_STUFF)/libs/ \
         -lelection_core \
         -lpython38
 }
 else:win32:CONFIG(debug, debug|release) {
     LIBS += \ 
-        -L$$OUT_PWD/../election_core/debug/ \
+        -L$$election_core_build_path/debug/ \
         -L$$(PYTHON_38_STUFF)/libs/ \ 
         -lelection_core \
         -lpython38_d
 }
 else:unix {
     LIBS += \
-        -L$$OUT_PWD/../election_core/ \
+        -L$$election_core_build_path \
         -lelection_core
 }
 
 win32:CONFIG(release, debug|release) {
-    QMAKE_POST_LINK += cp $$(PYTHON_38_STUFF)/python38.dll $$OUT_PWD/../election_gui/release/
+    QMAKE_POST_LINK += cp $$(PYTHON_38_STUFF)/python38.dll $$election_gui_build_path/release/
 }
 else:win32:CONFIG(debug, debug|release) {
-    QMAKE_POST_LINK += cp $$(PYTHON_38_STUFF)/python38_d.dll $$OUT_PWD/../election_gui/debug/
+    QMAKE_POST_LINK += cp $$(PYTHON_38_STUFF)/python38_d.dll $$election_gui_build_path/debug/
 }

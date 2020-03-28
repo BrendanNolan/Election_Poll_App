@@ -1,3 +1,5 @@
+include($$top_srcdir/paths.pri)
+
 QT += sql
 
 TARGET = election_core
@@ -5,6 +7,10 @@ TEMPLATE = lib
 CONFIG += static
 
 # DEFINES += ELECTIONCORE_LIBRARY
+
+DEFINES += \  
+    DATABASE_PATH=\"\\\"$${database_path}\\\"\" \
+    SCRIPTS_PATH=\"\\\"$${scripts_path}\\\"\"
 
 SOURCES += \
     SqlConstituencyDatabaseManager.cpp \

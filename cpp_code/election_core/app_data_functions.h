@@ -1,5 +1,5 @@
-#ifndef ELECTION_CORE_DEFINITIONS_H
-#define ELECTION_CORE_DEFINITIONS_H
+#ifndef APP_DATA_FUNCTIONS_H
+#define APP_DATA_FUNCTIONS_H
 
 #include <QDir>
 #include <QString>
@@ -9,35 +9,12 @@
 namespace paths
 {
 
-QString pollZAppAppData()
-{
-    return std::getenv("POLL_ZAPP");
-}
-
-QString databasePath()
-{
-    return pollZAppAppData()
-           + QDir::toNativeSeparators("/databases/primary_database.db");
-}
-
-QString politicianScrapingScript()
-{
-    return pollZAppAppData()
-           + QDir::toNativeSeparators("/scripts/politician_scraping.py");
-}
-
-QString constituencyScrapingScript()
-{
-    return pollZAppAppData()
-           + QDir::toNativeSeparators("/scripts/constituency_scraping.py");
-}
-
-QString pollResultScrapingScript()
-{
-    return pollZAppAppData()
-           + QDir::toNativeSeparators("/scripts/poll_result_scraping.py");
-}
+QString pollZAppAppData();
+QString databasePath();
+QString politicianScrapingScript();
+QString constituencyScrapingScript();
+QString pollResultScrapingScript();
 
 }// namespace paths
 
-#endif// ELECTION_CORE_DEFINITIONS_H
+#endif// APP_DATA_FUNCTIONS_H

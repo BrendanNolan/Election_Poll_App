@@ -2,8 +2,10 @@
 
 #include <QApplication>
 #include <QFileInfo>
+#include <QMessageBox>
 
 #include <cstdlib>
+#include <exception>
 #include <string>
 
 #include "MainWindow.h"
@@ -19,7 +21,18 @@ int main(int argc, char* argv[])
     Py_SetProgramName(wc.c_str());
 
     StartupHandler startup;
-    startup.performStartupTasks();
+    try
+    {
+        startup.performStartupTasks();
+    }
+    catch (const std::exception& /*exc*/)
+    {
+        QMessageBox failureWarning;
+        failureWarning.setWindowTitle("Load Failure");
+        failureWarning.setIcon(QMessageBox::Warning);
+        failureWarning.setText("Data Loading Operation Failed");
+        failureWarning.exec();
+    }
 
     QApplication app(argc, argv);
     MainWindow mainWin;

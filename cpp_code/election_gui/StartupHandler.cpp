@@ -10,21 +10,17 @@
 
 void StartupHandler::performStartupTasks()
 {
-    QDir pollZappData(paths::pollZAppAppData());
-    if (!pollZappData.exists())
+    QDir dir;
+    dir.mkpath(paths::pollZAppAppData());
+    QDir pzAppData(paths::pollZAppAppData());
+    if (!pzAppData.exists())
     {
-        QString appDataString(std::getenv("APPDATA"));
-        if (appDataString.isEmpty())
-            throw std::exception("APPDATA environment variable missing.");
-        QDir appData(appDataString);
-        if (!appData.exists())
-            throw std::exception(
-                "APPDATA environment variable poits to missing directory.");
-        if (!pollZappData.mkpath(paths::pollZAppAppData()))
-            throw std::exception("Could not create directory for app.");
+        throw std::exception(
+            "PollZapp app data directory does not exist and could not be "
+            "created.");
     }
-    pollZappData.mkdir("scripts");
-    pollZappData.mkdir("databases");
+    pzAppData.mkdir("scripts");
+    pzAppData.mkdir("databases");
 
     QDir scriptsSourceDir(QDir::toNativeSeparators("../../scripts/"));
     auto scriptsSourceDirAbsPath = scriptsSourceDir.absolutePath();

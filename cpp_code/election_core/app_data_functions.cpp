@@ -1,5 +1,7 @@
 #include "app_data_functions.h"
 
+#include <QDir>
+
 QString paths::pollZAppAppData()
 {
     return std::getenv("POLL_ZAPP");
@@ -27,4 +29,10 @@ QString paths::pollResultScrapingScript()
 {
     return pollZAppAppData()
            + QDir::toNativeSeparators("/scripts/poll_result_scraping.py");
+}
+
+QString paths::scriptsSourceDir()
+{
+    QDir scripts(QDir::toNativeSeparators("../../scripts/"));
+    return scripts.absolutePath();
 }

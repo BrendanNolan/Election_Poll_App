@@ -22,19 +22,16 @@ void StartupHandler::performStartupTasks()
     pzAppData.mkdir("scripts");
     pzAppData.mkdir("databases");
 
-    QDir scriptsSourceDir(QDir::toNativeSeparators("../../scripts/"));
-    auto scriptsSourceDirAbsPath = scriptsSourceDir.absolutePath();
-
     QFile::copy(
-        scriptsSourceDirAbsPath
-            + QDir::toNativeSeparators("politician_scraping.py"),
+        paths::scriptsSourceDir()
+            + QDir::toNativeSeparators("/politician_scraping.py"),
         paths::politicianScrapingScript());
     QFile::copy(
-        scriptsSourceDirAbsPath
-            + QDir::toNativeSeparators("poll_result_scraping.py"),
+        paths::scriptsSourceDir()
+            + QDir::toNativeSeparators("/poll_result_scraping.py"),
         paths::pollResultScrapingScript());
     QFile::copy(
-        scriptsSourceDirAbsPath
-            + QDir::toNativeSeparators("constituency_scraping.py"),
+        paths::scriptsSourceDir()
+            + QDir::toNativeSeparators("/constituency_scraping.py"),
         paths::constituencyScrapingScript());
 }

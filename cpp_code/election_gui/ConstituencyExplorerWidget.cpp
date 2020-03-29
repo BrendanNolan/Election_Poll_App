@@ -3,13 +3,11 @@
 #include "ui_ConstituencyExplorerWidget.h"
 
 #include <QDialog>
-#include <QDir>
 #include <QItemSelectionModel>
 #include <QMessageBox>
 
 #include <QtGlobal>
 
-#include <cstdlib>
 #include <memory>
 
 #include "ConstituencyModel.h"
@@ -27,9 +25,7 @@ ConstituencyExplorerWidget::ConstituencyExplorerWidget(QWidget* parent)
 {
     ui_->setupUi(this);
 
-    auto factory = SqlDatabaseManagerFactory(QFileInfo(
-        std::getenv("POLL_ZAPP")
-        + QDir::toNativeSeparators(QString("/databases/primary_database.db"))));
+    auto factory = SqlDatabaseManagerFactory(QFileInfo(paths::databasePath));
 
     auto politicianModel = new PoliticianModel(factory, this);
     auto politicianSelectionModel = new QItemSelectionModel(politicianModel);

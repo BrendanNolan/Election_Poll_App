@@ -1,12 +1,9 @@
 #include "SqlPoliticianDatabaseManager.h"
 
-#include <QDir>
 #include <QSqlDatabase>
 #include <QSqlQuery>
 #include <QUrl>
 #include <QVariant>
-
-#include <cstdlib>
 
 #include "election_core_definitions.h"
 #include "election_core_utils.h"
@@ -230,9 +227,8 @@ void SqlPoliticianDatabaseManager::clearPoliticiansFromConstituency(
 
 bool SqlPoliticianDatabaseManager::refreshDatabase() const
 {
-    if (python_scripting::runPythonScript(QFileInfo(
-            std::getenv("POLL_ZAPP")
-            + QDir::toNativeSeparators("/scripts/politician_scraping.py"))))
+    if (python_scripting::runPythonScript(
+            QFileInfo(paths::politicianScrapingScript)))
     {
         if (auto signaller = databaseSignaller())
             emit signaller->databaseRefreshed();

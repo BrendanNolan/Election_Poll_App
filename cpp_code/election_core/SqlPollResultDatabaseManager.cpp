@@ -1,11 +1,8 @@
 #include "SqlPollResultDatabaseManager.h"
 
-#include <QDir>
 #include <QFileInfo>
 #include <QSqlDatabase>
 #include <QSqlQuery>
-
-#include <cstdlib>
 
 #include "election_core_definitions.h"
 #include "election_core_utils.h"
@@ -177,9 +174,8 @@ vector<unique_ptr<PollResult>> SqlPollResultDatabaseManager::
 
 bool SqlPollResultDatabaseManager::refreshDatabase() const
 {
-    if (python_scripting::runPythonScript(QFileInfo(
-            std::getenv("POLL_ZAPP")
-            + QDir::toNativeSeparators("/scripts/poll_result_scraping.py"))))
+    if (python_scripting::runPythonScript(
+            QFileInfo(paths::pollResultScrapingScript)))
     {
         if (auto signaller = databaseSignaller())
             emit signaller->databaseRefreshed();

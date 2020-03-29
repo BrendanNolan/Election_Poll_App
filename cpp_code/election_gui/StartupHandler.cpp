@@ -13,11 +13,13 @@ void StartupHandler::performStartupTasks()
     QDir pollZappData(paths::pollZAppAppData);
     if (!pollZappData.exists())
     {
-        QDir appData(std::getenv("APPDATA"));
+        QString appDataString(std::getenv("APPDATA"));
+        if (appDataString.isEmpty())
+            throw std::exception("APPDATA environment variable missing.");
+        QDir appData(appDataString);
         if (!appData.exists())
             throw std::exception(
-                "APPDATA environment variable is either absent or does not "
-                "point to a valid directory.");
+                "APPDATA environment variable poits to missing directory.");
         if (!pollZappData.mkpath(paths::pollZAppAppData))
             throw std::exception("Could not create directory for app.");
     }

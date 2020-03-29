@@ -14,7 +14,7 @@ const auto PREFERRED_WIDTH = 50;
 const auto PREFERRED_HEIGHT = 50;
 
 QColor hashToColour(const QHash<QString, QVariant>& hash);
-}
+}// namespace
 
 ConstituencyColoursProxyModel::ConstituencyColoursProxyModel(
     ConstituencyModel& constituencyModel,
@@ -69,7 +69,7 @@ QVariant ConstituencyColoursProxyModel::data(
             return false;
         return false;
     });
-    
+
     if (pixmapCache_.contains(colours))
         return pixmapCache_.value(colours);
 

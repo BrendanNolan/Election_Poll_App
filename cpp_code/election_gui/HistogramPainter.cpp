@@ -14,7 +14,6 @@ void HistogramPainter::paint(QPaintDevice* paintDevice)
 
 void HistogramPainter::makeBars()
 {
-
 }
 
 void HistogramPainter::reset()

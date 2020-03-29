@@ -56,7 +56,7 @@ QVariant PollResultPlotProxyModel::data(
         pixmap.fill(Qt::green);
     else
         pixmap.fill(Qt::magenta);
-    
+
     plotPainter_->setPlotData(&plot);
     plotPainter_->paint(&pixmap);
     pixmapCache_.insert(plot, pixmap);

@@ -12,4 +12,4 @@ public:
     virtual void paint(QPaintDevice* paintDevice) = 0;
 };
 
-#endif // IPLOTPAINTER_H
+#endif// IPLOTPAINTER_H

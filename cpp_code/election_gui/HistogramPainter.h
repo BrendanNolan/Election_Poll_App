@@ -17,7 +17,7 @@ public:
 
 protected:
     void makeBars();
-    
+
     void reset();
 
 private:

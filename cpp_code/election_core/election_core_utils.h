@@ -12,8 +12,7 @@ class QString;
 namespace election_core_utils
 {
 
-template <class Model>
-QModelIndex idToModelIndex(const Model& model, int id)
+template<class Model> QModelIndex idToModelIndex(const Model& model, int id)
 {
     auto numRows = model.rowCount();
     for (auto row = 0; row < numRows; ++row)

@@ -1,9 +1,12 @@
 #include "SqlConstituencyDatabaseManager.h"
 
+#include <QDir>
 #include <QFileInfo>
 #include <QSqlDatabase>
 #include <QSqlQuery>
 #include <Qvariant>
+
+#include <cstdlib>
 
 #include "Constituency.h"
 #include "election_core_definitions.h"
@@ -132,8 +135,9 @@ vector<unique_ptr<Constituency>> SqlConstituencyDatabaseManager::
 
 bool SqlConstituencyDatabaseManager::refreshDatabase() const
 {
-    if (python_scripting::runPythonScript(
-            QFileInfo(paths::constituencyScrapingScript)))
+    if (python_scripting::runPythonScript(QFileInfo(
+            std::getenv("POLL_ZAPP")
+            + QDir::toNativeSeparators("/scripts/constituency_scraping.py"))))
     {
         if (auto signaller = databaseSignaller())
             emit signaller->databaseRefreshed();

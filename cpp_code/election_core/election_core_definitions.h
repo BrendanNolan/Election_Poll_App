@@ -1,20 +1,31 @@
 #ifndef ELECTIONDEFINITIONS_H
 #define ELECTIONDEFINITIONS_H
 
+#include <QDir>
 #include <QString>
+
+#include <cstdlib>
 
 namespace paths
 {
 
-static const QString databasePath(
-    DATABASE_PATH);
+static const QString pollZAppAppData(std::getenv("POLL_ZAPP"));
+
+static const auto databasePath =
+    pollZAppAppData
+    + QDir::toNativeSeparators("/databases/primary_database.db");
 
 static const auto politicianScrapingScript =
-    QString(SCRIPTS_PATH) + "\\politician_scraping.py";
+    pollZAppAppData
+    + QDir::toNativeSeparators("/scripts/politician_scraping.py");
+
 static const auto constituencyScrapingScript =
-    QString(SCRIPTS_PATH) + "\\constituency_scraping.py";
+    pollZAppAppData
+    + QDir::toNativeSeparators("/scripts/constituency_scraping.py");
+
 static const auto pollResultScrapingScript =
-    QString(SCRIPTS_PATH) + "\\poll_result_scraping.py";
+    pollZAppAppData
+    + QDir::toNativeSeparators("/scripts/poll_result_scraping.py");
 
 }// namespace paths
 

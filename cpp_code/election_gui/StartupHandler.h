@@ -3,7 +3,8 @@
 
 class StartupHandler
 {
-
+public:
+    void performStartupTasks();
 };
 
 #endif // STARTUPHANDLER_H

@@ -4,7 +4,7 @@
 #include <QSqlDatabase>
 #include <QSqlQuery>
 
-#include "election_core_definitions.h"
+#include "app_data_functions.h"
 #include "election_core_utils.h"
 #include "PollResult.h"
 
@@ -175,7 +175,7 @@ vector<unique_ptr<PollResult>> SqlPollResultDatabaseManager::
 bool SqlPollResultDatabaseManager::refreshDatabase() const
 {
     if (python_scripting::runPythonScript(
-            QFileInfo(paths::pollResultScrapingScript)))
+            QFileInfo(paths::pollResultScrapingScript())))
     {
         if (auto signaller = databaseSignaller())
             emit signaller->databaseRefreshed();

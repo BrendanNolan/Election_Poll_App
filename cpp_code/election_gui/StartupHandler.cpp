@@ -6,11 +6,11 @@
 #include <cstdlib>
 #include <exception>
 
-#include "election_core_definitions.h"
+#include "app_data_functions.h"
 
 void StartupHandler::performStartupTasks()
 {
-    QDir pollZappData(paths::pollZAppAppData);
+    QDir pollZappData(paths::pollZAppAppData());
     if (!pollZappData.exists())
     {
         QString appDataString(std::getenv("APPDATA"));
@@ -20,7 +20,7 @@ void StartupHandler::performStartupTasks()
         if (!appData.exists())
             throw std::exception(
                 "APPDATA environment variable poits to missing directory.");
-        if (!pollZappData.mkpath(paths::pollZAppAppData))
+        if (!pollZappData.mkpath(paths::pollZAppAppData()))
             throw std::exception("Could not create directory for app.");
     }
     pollZappData.mkdir("scripts");
@@ -32,13 +32,13 @@ void StartupHandler::performStartupTasks()
     QFile::copy(
         scriptsSourceDirAbsPath
             + QDir::toNativeSeparators("politician_scraping.py"),
-        paths::politicianScrapingScript);
+        paths::politicianScrapingScript());
     QFile::copy(
         scriptsSourceDirAbsPath
             + QDir::toNativeSeparators("poll_result_scraping.py"),
-        paths::pollResultScrapingScript);
+        paths::pollResultScrapingScript());
     QFile::copy(
         scriptsSourceDirAbsPath
             + QDir::toNativeSeparators("constituency_scraping.py"),
-        paths::constituencyScrapingScript);
+        paths::constituencyScrapingScript());
 }

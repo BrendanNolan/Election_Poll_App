@@ -11,7 +11,7 @@
 #include <memory>
 
 #include "ConstituencyModel.h"
-#include "election_core_definitions.h"
+#include "app_data_functions.h"
 #include "election_gui_utils.h"
 #include "PoliticianModel.h"
 #include "PoliticianPictureProxyModel.h"
@@ -25,7 +25,7 @@ ConstituencyExplorerWidget::ConstituencyExplorerWidget(QWidget* parent)
 {
     ui_->setupUi(this);
 
-    auto factory = SqlDatabaseManagerFactory(QFileInfo(paths::databasePath));
+    auto factory = SqlDatabaseManagerFactory(QFileInfo(paths::databasePath()));
 
     auto politicianModel = new PoliticianModel(factory, this);
     auto politicianSelectionModel = new QItemSelectionModel(politicianModel);

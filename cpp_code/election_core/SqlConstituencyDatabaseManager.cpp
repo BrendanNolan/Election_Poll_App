@@ -6,7 +6,7 @@
 #include <Qvariant>
 
 #include "Constituency.h"
-#include "election_core_definitions.h"
+#include "app_data_functions.h"
 #include "election_core_utils.h"
 #include "Politician.h"
 
@@ -133,7 +133,7 @@ vector<unique_ptr<Constituency>> SqlConstituencyDatabaseManager::
 bool SqlConstituencyDatabaseManager::refreshDatabase() const
 {
     if (python_scripting::runPythonScript(
-            QFileInfo(paths::constituencyScrapingScript)))
+            QFileInfo(paths::constituencyScrapingScript())))
     {
         if (auto signaller = databaseSignaller())
             emit signaller->databaseRefreshed();

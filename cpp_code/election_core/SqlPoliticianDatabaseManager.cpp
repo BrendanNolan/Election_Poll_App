@@ -5,7 +5,7 @@
 #include <QUrl>
 #include <QVariant>
 
-#include "election_core_definitions.h"
+#include "app_data_functions.h"
 #include "election_core_utils.h"
 #include "Politician.h"
 
@@ -228,7 +228,7 @@ void SqlPoliticianDatabaseManager::clearPoliticiansFromConstituency(
 bool SqlPoliticianDatabaseManager::refreshDatabase() const
 {
     if (python_scripting::runPythonScript(
-            QFileInfo(paths::politicianScrapingScript)))
+            QFileInfo(paths::politicianScrapingScript())))
     {
         if (auto signaller = databaseSignaller())
             emit signaller->databaseRefreshed();

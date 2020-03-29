@@ -41,7 +41,6 @@ HEADERS += \
     SqlPoliticianDatabaseManager.h \
     election_core_utils.h \
     UnaryPredicate.h \
-    election_core_definitions.h \
     DatabaseSignaller.h \
     RollingKeyValueCache.h
 

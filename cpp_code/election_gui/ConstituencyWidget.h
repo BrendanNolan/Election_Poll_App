@@ -51,8 +51,7 @@ private:
 
     int idOfMostRecentlySelectedConstituency_ = -1;
 
-    // Needs to change. Caching indices is a bad idea.
-    QMap<QGraphicsItem*, QModelIndex> indexItemCache_;
+    QMap<QGraphicsItem*, int> ItemConstituencyIds;
 };
 
 #endif// CONSTITUENCYWIDGET_H

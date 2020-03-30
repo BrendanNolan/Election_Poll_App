@@ -55,10 +55,10 @@ void ConstituencyWidget::setSelectionModel(QItemSelectionModel* selectionModel)
 void ConstituencyWidget::loadSceneConstituencies()
 {
     scene()->clear();
-    indexItemCache_.clear();
+    ItemConstituencyIds.clear();
 
     auto rows = constituencyProxyModel_->rowCount();
-    QMap<QGraphicsItem*, QModelIndex> roughMap;
+    QMap<QGraphicsItem*, int> roughMap;
     for (auto row = 0; row < rows; ++row)
     {
         auto index = constituencyProxyModel_->index(row, 0);
@@ -76,14 +76,16 @@ void ConstituencyWidget::loadSceneConstituencies()
         pixmapItem->setFlag(QGraphicsItem::ItemIsSelectable);
         scene()->addItem(pixmapItem);
         pixmapItem->setPos(constituencyPosition);
-        roughMap[pixmapItem] = index;
+        roughMap[pixmapItem] =
+            constituencyProxyModel_->data(index, ConstituencyModel::IdRole)
+                .toInt();
     }
     /*
         The following line is temporary. Eventually a
         RectanglePositionCalculator will calculate new sizes and positions
         for the QPixmapItems.
     */
-    indexItemCache_ = roughMap;
+    ItemConstituencyIds = roughMap;
 }
 
 void ConstituencyWidget::onSelectionChanged(const QItemSelection& selected)
@@ -126,7 +128,9 @@ void ConstituencyWidget::selectConstituencyInModel()
     auto itemToSelect = selectedItemList.first();
     if (!itemToSelect)
         return;
-    auto index = indexItemCache_[itemToSelect];
+    auto id = ItemConstituencyIds[itemToSelect];
+    auto index = election_core_utils::idToModelIndex(
+        *(constituencyProxyModel_->constituencyModel()), id);
     if (!index.isValid())
         return;
     constituencySelectionModel_->select(
@@ -174,16 +178,19 @@ void ConstituencyWidget::connectModelSignals()
 void ConstituencyWidget::refreshPixmaps(
     const QModelIndex& topLeft, const QModelIndex& bottomRight)
 {
-    for (auto it = indexItemCache_.begin(); it != indexItemCache_.end(); ++it)
+    for (auto it = ItemConstituencyIds.begin(); it != ItemConstituencyIds.end();
+         ++it)
     {
-        if (it.value().row() < topLeft.row()
-            || it.value().row() > bottomRight.row())
+        auto index = election_core_utils ::idToModelIndex(
+            *(constituencyProxyModel_->constituencyModel()), it.value());
+        if (index.row() < topLeft.row()
+            || index.row() > bottomRight.row())
             continue;
         if (auto pixmapItem =
                 qgraphicsitem_cast<QGraphicsPixmapItem*>(it.key()))
         {
             pixmapItem->setPixmap(
-                constituencyProxyModel_->data(it.value(), Qt::DecorationRole)
+                constituencyProxyModel_->data(index, Qt::DecorationRole)
                     .value<QPixmap>());
         }
     }

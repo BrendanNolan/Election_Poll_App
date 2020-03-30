@@ -183,8 +183,7 @@ void ConstituencyWidget::refreshPixmaps(
     {
         auto index = election_core_utils ::idToModelIndex(
             *(constituencyProxyModel_->constituencyModel()), it.value());
-        if (index.row() < topLeft.row()
-            || index.row() > bottomRight.row())
+        if (index.row() < topLeft.row() || index.row() > bottomRight.row())
             continue;
         if (auto pixmapItem =
                 qgraphicsitem_cast<QGraphicsPixmapItem*>(it.key()))

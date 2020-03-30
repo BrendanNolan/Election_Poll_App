@@ -16,23 +16,23 @@ QString paths::databasePath()
 QString paths::politicianScrapingScript()
 {
     return pollZAppAppData()
-           + QDir::toNativeSeparators("/scripts/politician_scraping.py");
+           + QDir::toNativeSeparators("/py_scripts/politician_scraping.py");
 }
 
 QString paths::constituencyScrapingScript()
 {
     return pollZAppAppData()
-           + QDir::toNativeSeparators("/scripts/constituency_scraping.py");
+           + QDir::toNativeSeparators("/py_scripts/constituency_scraping.py");
 }
 
 QString paths::pollResultScrapingScript()
 {
     return pollZAppAppData()
-           + QDir::toNativeSeparators("/scripts/poll_result_scraping.py");
+           + QDir::toNativeSeparators("/py_scripts/poll_result_scraping.py");
 }
 
 QString paths::scriptsSourceDir()
 {
-    QDir scripts(QDir::toNativeSeparators("../../scripts/"));
+    QDir scripts(QDir::toNativeSeparators("../../py_scripts/"));
     return scripts.absolutePath();
 }

@@ -19,7 +19,7 @@ void StartupHandler::performStartupTasks()
             "PollZapp app data directory does not exist and could not be "
             "created.");
     }
-    pzAppData.mkdir("scripts");
+    pzAppData.mkdir("py_scripts");
     pzAppData.mkdir("databases");
 
     QFile::copy(

@@ -35,7 +35,8 @@ SqlConstituencyDatabaseManager::SqlConstituencyDatabaseManager(
         "id INTEGER PRIMARY KEY AUTOINCREMENT, "
         "name TEXT, "
         "latitude INTEGER, "
-        "longitude INTEGER"
+        "longitude INTEGER, "
+        "area_sq_km INTEGER"
         ")");
 }
 
@@ -55,12 +56,13 @@ void SqlConstituencyDatabaseManager::addConstituency(
     QSqlQuery query(database);
     query.prepare(
         "INSERT INTO constituencies "
-        "(name, latitude, longitude) "
+        "(name, latitude, longitude, area_sq_km) "
         "VALUES "
-        "(:name, :latitude, :longitude)");
+        "(:name, :latitude, :longitude, :area_sq_km)");
     query.bindValue(":name", constituency.name());
     query.bindValue(":latitude", constituency.latitude());
     query.bindValue(":longitude", constituency.longitude());
+    query.bindValue(":area_sq_km", constituency.areaSqKm());
     query.exec();
     constituency.setId(query.lastInsertId().toInt());
 }
@@ -79,12 +81,14 @@ void SqlConstituencyDatabaseManager::updateConstituency(
         "name = (:name) "
         "latitude = (:latitude)"
         "longitude = (:longitude)"
+        "area_sq_km = (:area_sq_km)"
         "WHERE "
         "id = (:id)");
     query.bindValue(":name", constituency.name());
     query.bindValue(":latitude", constituency.latitude());
     query.bindValue(":longitude", constituency.longitude());
     query.bindValue(":id", constituency.id());
+    query.bindValue(":area_sq_km", constituency.areaSqKm());
     query.exec();
 }
 
@@ -152,6 +156,7 @@ unique_ptr<Constituency> sqlQueryToConstituency(const QSqlQuery& query)
     constituency->setName(query.value("name").toString());
     constituency->setLatitude(query.value("latitude").toInt());
     constituency->setLongitude(query.value("longitude").toInt());
+    constituency->setAreaSqKm(query.value("area_sq_km").toInt());
     return constituency;
 }
 }// namespace

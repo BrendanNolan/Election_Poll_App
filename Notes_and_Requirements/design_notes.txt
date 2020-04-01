@@ -1,3 +1,7 @@
+Bugs:
+1) Constituencies are not spatially layed out correctly. May want to have 
+   scroll bars too.
+
 Questions for forums:
 1) What if a method of a subclass of QAbstractItemModel emits both dataChanged() and modelReset()?
 2) 

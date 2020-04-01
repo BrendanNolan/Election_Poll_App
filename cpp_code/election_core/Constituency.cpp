@@ -1,7 +1,7 @@
 #include "Constituency.h"
 
 Constituency::Constituency(
-    const QString& name, int latitude, int longitude, int areaSqKm)
+    const QString& name, float latitude, float longitude, float areaSqKm)
     : name_(name)
     , latitude_(latitude)
     , longitude_(longitude)
@@ -29,32 +29,32 @@ void Constituency::setName(const QString& name)
     name_ = name;
 }
 
-int Constituency::latitude() const
+float Constituency::latitude() const
 {
     return latitude_;
 }
 
-void Constituency::setLatitude(int latitude)
+void Constituency::setLatitude(float latitude)
 {
     latitude_ = latitude;
 }
 
-int Constituency::longitude() const
+float Constituency::longitude() const
 {
     return longitude_;
 }
 
-void Constituency::setLongitude(int longitude)
+void Constituency::setLongitude(float longitude)
 {
     longitude_ = longitude;
 }
 
-int Constituency::areaSqKm() const
+float Constituency::areaSqKm() const
 {
     return areaSqKm_;
 }
 
-void Constituency::setAreaSqKm(int sqKm)
+void Constituency::setAreaSqKm(float sqKm)
 {
     areaSqKm_ = sqKm;
 }

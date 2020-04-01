@@ -34,9 +34,9 @@ SqlConstituencyDatabaseManager::SqlConstituencyDatabaseManager(
         "("
         "id INTEGER PRIMARY KEY AUTOINCREMENT, "
         "name TEXT, "
-        "latitude INTEGER, "
-        "longitude INTEGER, "
-        "area_sq_km INTEGER"
+        "latitude FLOAT, "
+        "longitude FLOAT, "
+        "area_sq_km FLOAT"
         ")");
 }
 
@@ -154,9 +154,9 @@ unique_ptr<Constituency> sqlQueryToConstituency(const QSqlQuery& query)
     unique_ptr<Constituency> constituency(new Constituency);
     constituency->setId(query.value("id").toInt());
     constituency->setName(query.value("name").toString());
-    constituency->setLatitude(query.value("latitude").toInt());
-    constituency->setLongitude(query.value("longitude").toInt());
-    constituency->setAreaSqKm(query.value("area_sq_km").toInt());
+    constituency->setLatitude(query.value("latitude").toFloat());
+    constituency->setLongitude(query.value("longitude").toFloat());
+    constituency->setAreaSqKm(query.value("area_sq_km").toFloat());
     return constituency;
 }
 }// namespace

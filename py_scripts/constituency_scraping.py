@@ -20,17 +20,17 @@ cursor.execute('''
         (
         id INTEGER PRIMARY KEY AUTOINCREMENT, 
         name TEXT, 
-        latitude INTEGER, 
-        longitude INTEGER,
-        area_sq_km INTEGER
+        latitude FLOAT, 
+        longitude FLOAT,
+        area_sq_km FLOAT
         )
 ''')
 db.commit()
 
 constituency_names = ["Wexford", "Dublin West", "Dun Laoighre", "Galway"]
-constituency_areas = [2365, 600, 600, 3500]
-constituency_latitudes = [] #These should be floats. Need to change C++ code.
-constituency_longitudes = [] #These should be floats. Need to change C++ code.
+constituency_areas = [2365.0, 600.0, 600.0, 3500.0]
+constituency_latitudes = [52.3369, 53.3104, 53.2944 , 53.2707] #These should be floats. Need to change C++ code.
+constituency_longitudes = [6.4633, 6.2899, 6.1339 , 9.0568] #These should be floats. Need to change C++ code.
 
 for i in range(len(constituency_names)):
     cursor.execute('''
@@ -38,5 +38,5 @@ for i in range(len(constituency_names)):
             (name, latitude, longitude, area_sq_km) 
             VALUES  
             (?, ?, ?, ?)
-    ''', (constituency_names[i], i * 40, i * 40, constituency_areas[i]))
+    ''', (constituency_names[i], constituency_latitudes[i], constituency_longitudes[i], constituency_areas[i]))
     db.commit()

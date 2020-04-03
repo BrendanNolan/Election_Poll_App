@@ -23,7 +23,7 @@ protected:
     void reset();
 
 private:
-    const PlotData* histogram_;
+    const PlotData* histogramData_;
 
     QHash<QString, QRect> bars_;
 };

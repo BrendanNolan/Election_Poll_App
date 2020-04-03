@@ -2,13 +2,13 @@
 
 void HistogramPainter::setPlotData(const PlotData* histogram)
 {
-    histogram_ = histogram;
+    histogramData_ = histogram;
 }
 
 void HistogramPainter::paint(QPaintDevice* paintDevice)
 {
     reset();
-    if (!histogram_ || !paintDevice)
+    if (!histogramData_ || !paintDevice)
         return;
     makeBars();
     paintAxes();
@@ -29,6 +29,6 @@ void HistogramPainter::paintBars() const
 
 void HistogramPainter::reset()
 {
-    histogram_ = nullptr;
+    histogramData_ = nullptr;
     bars_.clear();
 }

@@ -17,6 +17,8 @@ public:
 
 protected:
     void makeBars();
+    void paintAxes() const;
+    void paintBars() const;
 
     void reset();
 

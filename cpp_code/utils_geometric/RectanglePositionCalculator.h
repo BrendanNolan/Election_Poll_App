@@ -3,12 +3,13 @@
 
 #include <vector>
 
+#include "IRectanglePositionCalculator.h"
 #include "Rectangle.h"
 
-class RectanglePositionCalculator
+class PolygonInflatingPositioningEngine : public IPolygonLayoutEngine
 {
 public:
-    void setPositions(std::vector<Rectangle>& rectangles);
+    void setPositions(std::vector<Rectangle>& rectangles) override;
 
 private:
     void reposition(Rectangle& rect) const;

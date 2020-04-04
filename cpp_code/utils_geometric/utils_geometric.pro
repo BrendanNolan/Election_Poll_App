@@ -10,6 +10,7 @@ HEADERS += \
     geom_defs.h \
     Points.h \
     Rectangle.h \
+    IRectanglePositionCalculator.h \
     RectanglePositionCalculator.h
 
 SOURCES += \

@@ -12,10 +12,13 @@
 #include "ConstituencyModel.h"
 #include "ConstituencyColoursProxyModel.h "
 #include "election_core_utils.h"
+#include "IRectanglePositionCalculator.h"
 #include "RectanglePositionCalculator.h"
 
-ConstituencyWidget::ConstituencyWidget(QWidget* parent)
-    : QGraphicsView(parent)
+ConstituencyWidget::ConstituencyWidget(
+    QWidget* parent,
+    std::unique_ptr<IPolygonLayoutEngine> rectanglePositionCalculator)
+    : QGraphicsView(parent) 
 {
     setScene(new QGraphicsScene(this));
     connect(
@@ -23,6 +26,21 @@ ConstituencyWidget::ConstituencyWidget(QWidget* parent)
         &QGraphicsScene::selectionChanged,
         this,
         &ConstituencyWidget::selectConstituencyInModel);
+    
+    if (rectanglePositionCalculator)
+    {
+        rectanglePositionCalculator_ = std::move(rectanglePositionCalculator);
+    }
+    else
+    {
+        rectanglePositionCalculator_ =
+            std::unique_ptr<PolygonInflatingPositioningEngine>(
+                new PolygonInflatingPositioningEngine());
+    }
+}
+
+ConstituencyWidget::~ConstituencyWidget()
+{
 }
 
 void ConstituencyWidget::setModels(
@@ -50,6 +68,12 @@ void ConstituencyWidget::setSelectionModel(QItemSelectionModel* selectionModel)
         this,
         &ConstituencyWidget::onSelectionChanged);
     selectConstituencyInModel();
+}
+
+void ConstituencyWidget::setRectanglePositionCalculator(
+    std::unique_ptr<IPolygonLayoutEngine> rectanglePositionCalculator)
+{
+    rectanglePositionCalculator_ = std::move(rectanglePositionCalculator);
 }
 
 void ConstituencyWidget::loadSceneConstituencies()
@@ -81,9 +105,9 @@ void ConstituencyWidget::loadSceneConstituencies()
                 .toInt();
     }
     /*
-        The following line is temporary. Eventually a
-        RectanglePositionCalculator will calculate new sizes and positions
-        for the QPixmapItems.
+        The following line is temporary. Eventually it will be replaced by
+        something like
+        RectanglePositionCalculator_->setPosition().
     */
     ItemConstituencyIds = roughMap;
 }

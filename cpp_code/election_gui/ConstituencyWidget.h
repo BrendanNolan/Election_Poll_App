@@ -6,6 +6,8 @@
 #include <QModelIndex>
 #include <QVector>
 
+#include <memory>
+
 #include "Constituency.h"
 
 class ConstituencyModel;
@@ -16,6 +18,7 @@ class QGraphicsScene;
 class QItemSelection;
 class QItemSelectionModel;
 class QPoint;
+class IPolygonLayoutEngine;
 
 /*
     Should just keep a ConstituencyModel and, in ConstituencyWidget::setModel(),
@@ -27,11 +30,18 @@ class ConstituencyWidget : public QGraphicsView
     Q_OBJECT
 
 public:
-    explicit ConstituencyWidget(QWidget* parent = nullptr);
+    explicit ConstituencyWidget(
+        QWidget* parent = nullptr,
+        std::unique_ptr<IPolygonLayoutEngine>
+            rectanglePositionCalculator = nullptr);
+    ~ConstituencyWidget();
 
     void setModels(
         ConstituencyModel* constituencyModel, PoliticianModel* politicianModel);
     void setSelectionModel(QItemSelectionModel* selectionModel);
+    void setRectanglePositionCalculator(
+        std::unique_ptr<IPolygonLayoutEngine>
+            rectanglePositionCalculator);
 
 private slots:
     void onSelectionChanged(const QItemSelection& selected);
@@ -48,6 +58,8 @@ private:
     ConstituencyColoursProxyModel* constituencyProxyModel_ = nullptr;
     QItemSelectionModel* constituencySelectionModel_ = nullptr;
     PoliticianModel* politicianModel_;
+
+    std::unique_ptr<IPolygonLayoutEngine> rectanglePositionCalculator_;
 
     int idOfMostRecentlySelectedConstituency_ = -1;
 

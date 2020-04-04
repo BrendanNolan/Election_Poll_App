@@ -34,7 +34,7 @@ private:
     QTimer rotationTimer_;
     int milisecInterval_ = 250;
 
-    double rotationAngle_ = -(2.0 * geom_utils::pi) / 10.0;
+    double rotationAngle_ = -(2.0 * geom::pi) / 10.0;
     double rotationRadius_ = 0.0;
 
     QVector<QGraphicsItem*> rotatingItems_;

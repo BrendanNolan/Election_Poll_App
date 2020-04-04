@@ -1,8 +1,6 @@
 #include "Points.h"
 
-#include <QFileInfo>
-
-namespace geom_utils
+namespace geom
 {
 
 PolarPoint::PolarPoint(double r, double theta)
@@ -97,11 +95,6 @@ CartesianPoint operator-(const CartesianPoint& a, const CartesianPoint& b)
     return CartesianPoint(a.x() - b.x(), a.y() - b.y());
 }
 
-QPointF cartesianToQPointF(CartesianPoint& cp)
-{
-    return QPointF(cp.x(), -(cp.y()));
-}
-
 PolarPoint cartesianToPolar(const CartesianPoint& cartPoint)
 {
     auto x = cartPoint.x();
@@ -129,7 +122,7 @@ double dist(const CartesianPoint& a, const CartesianPoint& b)
     return std::sqrt(std::pow(a.x() - b.x(), 2) + std::pow(a.y() - b.y(), 2));
 }
 
-double geom_utils::distFromOrigin(const QPointF& point)
+double geom::distFromOrigin(const CartesianPoint& point)
 {
     return static_cast<double>(
         std::sqrt(std::pow(point.x(), 2) + std::pow(point.y(), 2)));

@@ -6,13 +6,9 @@
     I need new utilities.
 */
 
-#include <QPointF>
-
 #include <cmath>
 
-class QFileInfo;
-
-namespace geom_utils
+namespace geom
 {
 
 const auto pi = 3.141;
@@ -63,15 +59,13 @@ CartesianPoint operator+(const CartesianPoint& a, const CartesianPoint& b);
 
 CartesianPoint operator-(const CartesianPoint& a, const CartesianPoint& b);
 
-QPointF cartesianToQPointF(CartesianPoint& cp);
-
 PolarPoint cartesianToPolar(const CartesianPoint& cartPoint);
 
 CartesianPoint polarToCartesian(const PolarPoint& polarPoint);
 
 double dist(const CartesianPoint& a, const CartesianPoint& b);
 
-double distFromOrigin(const QPointF& point);
+double distFromOrigin(const CartesianPoint& point);
 
 };// namespace geom_utils
 

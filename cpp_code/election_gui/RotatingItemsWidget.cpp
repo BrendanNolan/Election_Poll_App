@@ -47,12 +47,12 @@ void RotatingItemsWidget::setFrameRate(int framesPerSecond)
 void RotatingItemsWidget::setInterFrameAngleDifference(int degrees)
 {
     degrees %= 360;
-    rotationAngle_ = ((2.0 * geom_utils::pi) / 360) * degrees;
+    rotationAngle_ = ((2.0 * geom::pi) / 360) * degrees;
 }
 
 void RotatingItemsWidget::rotateItems()
 {
-    using namespace geom_utils;
+    using namespace geom;
     for (auto item : rotatingItems_)
     {
         auto pos = item->pos();
@@ -80,7 +80,7 @@ void RotatingItemsWidget::positionRotatingItems()
     if (rotatingItems_.isEmpty())
         return;
 
-    using namespace geom_utils;
+    using namespace geom;
     auto itemCount = rotatingItems_.size();
     auto newRadius = rotationRadius_;
     CartesianPoint startPoint(0.0, newRadius);
@@ -99,7 +99,7 @@ void RotatingItemsWidget::positionRotatingItems()
             itemAlreadyInScene = true;*/
 
         auto pos = item->pos();
-        auto currentRadius = distFromOrigin(pos);
+        auto currentRadius = distFromOrigin(CartesianPoint(pos.x(), pos.y()));
 
         if (currentRadius != 0)
         {

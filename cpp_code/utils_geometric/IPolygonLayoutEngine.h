@@ -8,6 +8,7 @@
 class IPolygonLayoutEngine
 {
 public:
+    virtual ~IPolygonLayoutEngine() = default;
     virtual void layout(std::vector<Polygon>& polygons) = 0;
 };
 

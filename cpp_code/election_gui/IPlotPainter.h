@@ -8,6 +8,7 @@ class QPaintDevice;
 class IPlotPainter
 {
 public:
+    virtual ~IPlotPainter() = default;
     virtual void setPlotData(const PlotData* plot) = 0;
     virtual void paint(QPaintDevice* paintDevice) = 0;
 };

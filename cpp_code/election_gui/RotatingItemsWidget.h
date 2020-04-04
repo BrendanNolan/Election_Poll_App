@@ -7,8 +7,6 @@
 #include <QTimer>
 #include <QVector>
 
-#include "election_gui_utils.h"
-
 class RotatingItemsWidget : public QGraphicsView
 {
     Q_OBJECT

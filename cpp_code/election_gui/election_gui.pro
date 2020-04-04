@@ -9,10 +9,8 @@ HEADERS += \
     ConstituencyWidget.h \
     ConstituencyDrillDownWidget.h \
     ConstituencyExplorerWidget.h \
-    RectanglePositionCalculator.h \
     MainWindow.h \
     ThinPixmapDelegate.h \
-    election_gui_utils.h \
     RotatingItemsWidget.h \
     ConstituencyColoursProxyModel.h \
     PoliticianPictureProxyModel.h \
@@ -25,11 +23,9 @@ SOURCES += \
     ConstituencyWidget.cpp \
     ConstituencyDrillDownWidget.cpp \
     ConstituencyExplorerWidget.cpp \
-    RectanglePositionCalculator.cpp \
     main.cpp \
     MainWindow.cpp \
     ThinPixmapDelegate.cpp \
-    election_gui_utils.cpp \
     RotatingItemsWidget.cpp \
     ConstituencyColoursProxyModel.cpp \
     PoliticianPictureProxyModel.cpp \
@@ -43,25 +39,32 @@ FORMS += \
 
 INCLUDEPATH += \
     $$election_core_source_path \
+    $$utils_geometric_source_path \
     $$(PYTHON_38_STUFF)\include
 
 win32:CONFIG(release, debug|release) {
     LIBS += \ 
-        -L$$election_core_build_path/release/ \ 
+        -L$$election_core_build_path/release/ \
+        -L$$utils_geometric_build_path/release/ \
         -L$$(PYTHON_38_STUFF)/libs/ \
         -lelection_core \
+        -lutils_geometric \
         -lpython38
 }
 else:win32:CONFIG(debug, debug|release) {
     LIBS += \ 
         -L$$election_core_build_path/debug/ \
+        -L$$utils_geometric_build_path/debug/ \
         -L$$(PYTHON_38_STUFF)/libs/ \ 
         -lelection_core \
+        -lutils_geometric \
         -lpython38_d
 }
 else:unix {
     LIBS += \
-        -L$$election_core_build_path \
+        -L$$election_core_build_path/ \
+        -L$$utils_geometric_build_path/ \
+        -lutils_geometric \
         -lelection_core
 }
 

@@ -1,5 +1,7 @@
 #include "Points.h"
 
+#include "geom_defs.h"
+
 namespace geom
 {
 
@@ -128,4 +130,4 @@ double geom::distFromOrigin(const CartesianPoint& point)
         std::sqrt(std::pow(point.x(), 2) + std::pow(point.y(), 2)));
 }
 
-}// namespace geom_utils
+}// namespace geom

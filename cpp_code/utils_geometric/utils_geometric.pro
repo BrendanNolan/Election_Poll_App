@@ -7,6 +7,7 @@ TEMPLATE = lib
 CONFIG += static
 
 HEADERS += \
+    geom_defs.h \
     Points.h \
     Rectangle.h \
     RectanglePositionCalculator.h

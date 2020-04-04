@@ -7,6 +7,8 @@
 #include <QTimer>
 #include <QVector>
 
+#include "geom_defs.h"
+
 class RotatingItemsWidget : public QGraphicsView
 {
     Q_OBJECT

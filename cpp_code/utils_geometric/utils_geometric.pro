@@ -9,11 +9,11 @@ CONFIG += static
 HEADERS += \
     geom_defs.h \
     Points.h \
-    Rectangle.h \
-    IRectanglePositionCalculator.h \
-    RectanglePositionCalculator.h
+    Polygon.h \
+    IPolygonLayoutEngine.h \
+    PolygonInflatingPositioningEngine.h
 
 SOURCES += \
     Points.cpp \
-    Rectangle.cpp \
-    RectanglePositionCalculator.cpp
+    Polygon.cpp \
+    PolygonInflatingPositioningEngine.cpp

@@ -1,19 +1,21 @@
-#ifndef RECTANGLEPOSITIONCALCULATOR_H
-#define RECTANGLEPOSITIONCALCULATOR_H
+#ifndef POLYGONINFLATINGPOSITIONINGENGINE_H
+#define POLYGONINFLATINGPOSITIONINGENGINE_H
 
 #include <vector>
 
-#include "IRectanglePositionCalculator.h"
-#include "Rectangle.h"
+#include "IPolygonLayoutEngine.h"
+#include "Polygon.h"
 
 class PolygonInflatingPositioningEngine : public IPolygonLayoutEngine
 {
 public:
-    void setPositions(std::vector<Rectangle>& rectangles) override;
+    void layout(std::vector<Polygon>& polygons) override;
 
 private:
-    void reposition(Rectangle& rect) const;
-    std::vector<Rectangle>* rectangles;
+    void reposition(Polygon& rect) const;
+
+private:
+    std::vector<Polygon>* polygons_;
 };
 
-#endif// RECTANGLEPOSITIONCALCULATOR_H
+#endif// POLYGONINFLATINGPOSITIONINGENGINE_H

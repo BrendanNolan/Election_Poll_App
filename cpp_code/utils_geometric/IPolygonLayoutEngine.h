@@ -1,14 +1,14 @@
-#ifndef IRECTANGLEPOSITIONCALCULATOR_H
-#define IRECTANGLEPOSITIONCALCULATOR_H
+#ifndef IPOLYGONLAYOUTENGINE_H
+#define IPOLYGONLAYOUTENGINE_H
 
 #include <vector>
 
-#include "Rectangle.h"
+#include "Polygon.h"
 
 class IPolygonLayoutEngine
 {
 public:
-    virtual void setPositions(std::vector<Rectangle>& rectangles) = 0;
+    virtual void layout(std::vector<Polygon>& polygons) = 0;
 };
 
-#endif// IRECTANGLEPOSITIONCALCULATOR_H
+#endif// IPOLYGONLAYOUTENGINE_H

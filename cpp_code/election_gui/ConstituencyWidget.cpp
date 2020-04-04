@@ -12,12 +12,12 @@
 #include "ConstituencyModel.h"
 #include "ConstituencyColoursProxyModel.h "
 #include "election_core_utils.h"
-#include "IRectanglePositionCalculator.h"
-#include "RectanglePositionCalculator.h"
+#include "IPolygonLayoutEngine.h"
+#include "PolygonInflatingPositioningEngine.h"
 
 ConstituencyWidget::ConstituencyWidget(
     QWidget* parent,
-    std::unique_ptr<IPolygonLayoutEngine> rectanglePositionCalculator)
+    std::unique_ptr<IPolygonLayoutEngine> polygonLayoutEngine)
     : QGraphicsView(parent) 
 {
     setScene(new QGraphicsScene(this));
@@ -27,13 +27,13 @@ ConstituencyWidget::ConstituencyWidget(
         this,
         &ConstituencyWidget::selectConstituencyInModel);
     
-    if (rectanglePositionCalculator)
+    if (polygonLayoutEngine)
     {
-        rectanglePositionCalculator_ = std::move(rectanglePositionCalculator);
+        polygonLayoutEngine_ = std::move(polygonLayoutEngine);
     }
     else
     {
-        rectanglePositionCalculator_ =
+        polygonLayoutEngine_ =
             std::unique_ptr<PolygonInflatingPositioningEngine>(
                 new PolygonInflatingPositioningEngine());
     }
@@ -70,10 +70,10 @@ void ConstituencyWidget::setSelectionModel(QItemSelectionModel* selectionModel)
     selectConstituencyInModel();
 }
 
-void ConstituencyWidget::setRectanglePositionCalculator(
-    std::unique_ptr<IPolygonLayoutEngine> rectanglePositionCalculator)
+void ConstituencyWidget::setPolygonLayoutEngine(
+    std::unique_ptr<IPolygonLayoutEngine> polygonLayoutEngine)
 {
-    rectanglePositionCalculator_ = std::move(rectanglePositionCalculator);
+    polygonLayoutEngine_ = std::move(polygonLayoutEngine);
 }
 
 void ConstituencyWidget::loadSceneConstituencies()
@@ -107,7 +107,7 @@ void ConstituencyWidget::loadSceneConstituencies()
     /*
         The following line is temporary. Eventually it will be replaced by
         something like
-        RectanglePositionCalculator_->setPosition().
+        polygonLayoutEngine_->layout().
     */
     ItemConstituencyIds = roughMap;
 }

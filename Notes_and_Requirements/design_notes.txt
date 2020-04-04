@@ -107,9 +107,9 @@ Maybe no class should be composed of a QSqlDatabase or an owning pointer to such
 the documentation of QSqlDatabase). Perhaps the database managers' methods should just call 
 QSqlDatabase::database() whenever they want to access the database. Not sure. 
 
-I'll need a rectangle layout calculator (to be created on the stack in whatever
+I'll need a polygon layout calculator (to be created on the stack in whatever
 method of ConstituencyWidget is responsible for defining the locations of the constituencies). 
-I'll also need a rectangle navigator (to be kept by the ConstituencyExplorer) for allowing the user to navigate through constituencies using 
+I'll also need a polygon navigator (to be kept by the ConstituencyExplorer) for allowing the user to navigate through constituencies using 
 arrow keys. It will probably be wise in this case to give ConstituencyModel a QItemSelectionModel
 to keep track of which constituency is currently selected. Clicking on a constituency or
 navigating to it with the arrow keys should select it. Double-clicking a constituency or 

@@ -1,8 +1,8 @@
-#ifndef RECTANGLE_H
-#define RECTANGLE_H
+#ifndef POLYGON_H
+#define POLYGON_H
 
-class Rectangle
+class Polygon
 {
 };
 
-#endif// RECTANGLE_H
+#endif// POLYGON_H

@@ -1,10 +1,10 @@
-#include "RectanglePositionCalculator.h"
+#include "PolygonInflatingPositioningEngine.h"
 
-void PolygonInflatingPositioningEngine::setPositions(
-    std::vector<Rectangle>& rectangles)
+void PolygonInflatingPositioningEngine::layout(
+    std::vector<Polygon>& polygons)
 {
 }
 
-void PolygonInflatingPositioningEngine::reposition(Rectangle& rect) const
+void PolygonInflatingPositioningEngine::reposition(Polygon& rect) const
 {
 }

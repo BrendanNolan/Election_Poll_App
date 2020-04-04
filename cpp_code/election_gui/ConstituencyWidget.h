@@ -33,15 +33,15 @@ public:
     explicit ConstituencyWidget(
         QWidget* parent = nullptr,
         std::unique_ptr<IPolygonLayoutEngine>
-            rectanglePositionCalculator = nullptr);
+            polygonLayoutEngine = nullptr);
     ~ConstituencyWidget();
 
     void setModels(
         ConstituencyModel* constituencyModel, PoliticianModel* politicianModel);
     void setSelectionModel(QItemSelectionModel* selectionModel);
-    void setRectanglePositionCalculator(
+    void setPolygonLayoutEngine(
         std::unique_ptr<IPolygonLayoutEngine>
-            rectanglePositionCalculator);
+            polygonLayoutEngine);
 
 private slots:
     void onSelectionChanged(const QItemSelection& selected);
@@ -59,7 +59,7 @@ private:
     QItemSelectionModel* constituencySelectionModel_ = nullptr;
     PoliticianModel* politicianModel_;
 
-    std::unique_ptr<IPolygonLayoutEngine> rectanglePositionCalculator_;
+    std::unique_ptr<IPolygonLayoutEngine> polygonLayoutEngine_;
 
     int idOfMostRecentlySelectedConstituency_ = -1;
 

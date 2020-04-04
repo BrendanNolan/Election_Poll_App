@@ -1,5 +1,5 @@
-#ifndef ELECTION_GUI_UTILS_H
-#define ELECTION_GUI_UTILS_H
+#ifndef POINTS_H
+#define POINTS_H
 
 /*
     These utils are far from their final form. I am addiing to them as and when
@@ -75,4 +75,4 @@ double distFromOrigin(const QPointF& point);
 
 };// namespace geom_utils
 
-#endif// ELECTION_GUI_UTILS_H
+#endif// POINTS_H

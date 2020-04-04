@@ -13,5 +13,5 @@ HEADERS += \
 
 SOURCES += \
     Points.cpp \
-    Rectangle.h \
+    Rectangle.cpp \
     RectanglePositionCalculator.cpp

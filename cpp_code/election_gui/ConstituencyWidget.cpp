@@ -15,10 +15,8 @@
 #include "IPolygonLayoutEngine.h"
 #include "PolygonInflatingPositioningEngine.h"
 
-ConstituencyWidget::ConstituencyWidget(
-    QWidget* parent,
-    std::unique_ptr<IPolygonLayoutEngine> polygonLayoutEngine)
-    : QGraphicsView(parent) 
+ConstituencyWidget::ConstituencyWidget(QWidget* parent)
+    : QGraphicsView(parent)
 {
     setScene(new QGraphicsScene(this));
     connect(
@@ -26,17 +24,6 @@ ConstituencyWidget::ConstituencyWidget(
         &QGraphicsScene::selectionChanged,
         this,
         &ConstituencyWidget::selectConstituencyInModel);
-    
-    if (polygonLayoutEngine)
-    {
-        polygonLayoutEngine_ = std::move(polygonLayoutEngine);
-    }
-    else
-    {
-        polygonLayoutEngine_ =
-            std::unique_ptr<PolygonInflatingPositioningEngine>(
-                new PolygonInflatingPositioningEngine());
-    }
 }
 
 ConstituencyWidget::~ConstituencyWidget()

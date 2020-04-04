@@ -21,8 +21,9 @@ class QPoint;
 class IPolygonLayoutEngine;
 
 /*
-    Should just keep a ConstituencyModel and, in ConstituencyWidget::setModel(),
-    make a proxy model parented to the ConstituencyWidget instance.
+   Should just keep a ConstituencyModel and, in
+   ConstituencyWidget::setModel(), make a proxy model parented to the
+   ConstituencyWidget instance.
 */
 
 class ConstituencyWidget : public QGraphicsView
@@ -30,18 +31,14 @@ class ConstituencyWidget : public QGraphicsView
     Q_OBJECT
 
 public:
-    explicit ConstituencyWidget(
-        QWidget* parent = nullptr,
-        std::unique_ptr<IPolygonLayoutEngine>
-            polygonLayoutEngine = nullptr);
+    explicit ConstituencyWidget(QWidget* parent = nullptr);
     ~ConstituencyWidget();
 
     void setModels(
         ConstituencyModel* constituencyModel, PoliticianModel* politicianModel);
     void setSelectionModel(QItemSelectionModel* selectionModel);
     void setPolygonLayoutEngine(
-        std::unique_ptr<IPolygonLayoutEngine>
-            polygonLayoutEngine);
+        std::unique_ptr<IPolygonLayoutEngine> polygonLayoutEngine);
 
 private slots:
     void onSelectionChanged(const QItemSelection& selected);

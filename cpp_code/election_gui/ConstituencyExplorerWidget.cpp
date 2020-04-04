@@ -16,6 +16,7 @@
 #include "PoliticianModel.h"
 #include "PoliticianPictureProxyModel.h"
 #include "PollResultModel.h"
+#include "PolygonInflatingPositioningEngine.h"
 #include "RotatingItemsWidget.h"
 #include "SqlDatabaseManagerFactory.h"
 
@@ -24,6 +25,9 @@ ConstituencyExplorerWidget::ConstituencyExplorerWidget(QWidget* parent)
     , ui_(new Ui::ConstituencyExplorerWidget)
 {
     ui_->setupUi(this);
+    ui_->constituencyWidget->setPolygonLayoutEngine(
+        std::unique_ptr<PolygonInflatingPositioningEngine>(
+            new PolygonInflatingPositioningEngine()));
 
     auto factory = SqlDatabaseManagerFactory(QFileInfo(paths::databasePath()));
 

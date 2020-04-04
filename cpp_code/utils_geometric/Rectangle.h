@@ -3,7 +3,6 @@
 
 class Rectangle
 {
-
 };
 
-#endif // RECTANGLE_H
+#endif// RECTANGLE_H

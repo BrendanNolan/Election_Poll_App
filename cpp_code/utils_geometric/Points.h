@@ -64,6 +64,6 @@ double dist(const CartesianPoint& a, const CartesianPoint& b);
 
 double distFromOrigin(const CartesianPoint& point);
 
-};// namespace geom_utils
+};// namespace geom
 
 #endif// POINTS_H

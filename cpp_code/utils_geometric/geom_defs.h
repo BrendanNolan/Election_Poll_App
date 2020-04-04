@@ -5,6 +5,6 @@ namespace geom
 {
 const auto pi = 3.141;
 const auto doublePrecisionTolerance = 0.000001;
-}
+}// namespace geom
 
-#endif // GEOM_DEFS_H
+#endif// GEOM_DEFS_H

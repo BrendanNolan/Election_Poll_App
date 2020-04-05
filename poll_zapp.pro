@@ -7,4 +7,5 @@ SUBDIRS += \
 
 poll_zapp_gui.depends += \
     poll_zapp_core \
-    utils_geometric
+    utils_geometric \
+    utils_qt_dep

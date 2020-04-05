@@ -5,10 +5,12 @@ TEMPLATE = lib
 CONFIG += static
 
 HEADERS += \
-    point_utils.h
+    point_utils.h \
+    QtSceneCoordConverter.h
 
 SOURCES += \
-    point_utils.cpp
+    point_utils.cpp \
+    QtSceneCoordConverter.cpp
 
 INCLUDEPATH += \
     $$utils_geometric_source_path

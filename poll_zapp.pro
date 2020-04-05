@@ -1,3 +1,4 @@
+TARGET = poll_zapp
 TEMPLATE = subdirs
 
 SUBDIRS += \

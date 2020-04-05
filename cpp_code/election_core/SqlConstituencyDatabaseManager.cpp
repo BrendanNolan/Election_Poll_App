@@ -24,7 +24,7 @@ SqlConstituencyDatabaseManager::SqlConstituencyDatabaseManager(
     , databaseFileInfo_(databaseFileInfo)
 {
     auto database =
-        election_core_utils::connectToSqlDatabase(databaseFileInfo_);
+        poll_zapp_core_utils::connectToSqlDatabase(databaseFileInfo_);
     if (!database.isValid() || database.tables().contains("constituencies"))
         return;
 
@@ -49,7 +49,7 @@ void SqlConstituencyDatabaseManager::addConstituency(
     Constituency& constituency) const
 {
     auto database =
-        election_core_utils::connectToSqlDatabase(databaseFileInfo_);
+        poll_zapp_core_utils::connectToSqlDatabase(databaseFileInfo_);
     if (!database.isValid())
         return;
 
@@ -71,7 +71,7 @@ void SqlConstituencyDatabaseManager::updateConstituency(
     const Constituency& constituency) const
 {
     auto database =
-        election_core_utils::connectToSqlDatabase(databaseFileInfo_);
+        poll_zapp_core_utils::connectToSqlDatabase(databaseFileInfo_);
     if (!database.isValid())
         return;
 
@@ -95,7 +95,7 @@ void SqlConstituencyDatabaseManager::updateConstituency(
 void SqlConstituencyDatabaseManager::removeConstituency(int id) const
 {
     auto database =
-        election_core_utils::connectToSqlDatabase(databaseFileInfo_);
+        poll_zapp_core_utils::connectToSqlDatabase(databaseFileInfo_);
     if (!database.isValid())
         return;
 
@@ -107,7 +107,7 @@ unique_ptr<Constituency> SqlConstituencyDatabaseManager::constituency(
     int id) const
 {
     auto database =
-        election_core_utils::connectToSqlDatabase(databaseFileInfo_);
+        poll_zapp_core_utils::connectToSqlDatabase(databaseFileInfo_);
     if (!database.isValid())
         return nullptr;
 
@@ -121,7 +121,7 @@ vector<unique_ptr<Constituency>> SqlConstituencyDatabaseManager::
     constituencies() const
 {
     auto database =
-        election_core_utils::connectToSqlDatabase(databaseFileInfo_);
+        poll_zapp_core_utils::connectToSqlDatabase(databaseFileInfo_);
     if (!database.isValid())
         return vector<unique_ptr<Constituency>>();
 

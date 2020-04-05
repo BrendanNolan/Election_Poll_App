@@ -31,7 +31,7 @@ int PollResultModel::rowCount(const QModelIndex& /*parent*/) const
 
 QVariant PollResultModel::data(const QModelIndex& index, int role) const
 {
-    if (!election_core_utils::isIndexValid(index, *this))
+    if (!poll_zapp_core_utils::isIndexValid(index, *this))
         return QVariant();
 
     const auto& pollResult = *(pollResultCache_[index.row()]);
@@ -60,7 +60,7 @@ QVariant PollResultModel::data(const QModelIndex& index, int role) const
 bool PollResultModel::setData(
     const QModelIndex& index, const QVariant& value, int role)
 {
-    if (!election_core_utils::isIndexValid(index, *this))
+    if (!poll_zapp_core_utils::isIndexValid(index, *this))
         return false;
     if (role != PlotRole)
         return false;

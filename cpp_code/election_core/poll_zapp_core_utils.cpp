@@ -9,7 +9,7 @@
 #include <cstdio>
 #include <string>
 
-namespace election_core_utils
+namespace poll_zapp_core_utils
 {
 
 bool isIndexValid(const QModelIndex& index, const QAbstractListModel& model)
@@ -43,7 +43,7 @@ QSqlDatabase connectToSqlDatabase(const QFileInfo& databaseFileInfo)
     return database;
 }
 
-}// namespace election_core_utils
+}// namespace poll_zapp_core_utils
 
 namespace python_scripting
 {

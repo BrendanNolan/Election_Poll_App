@@ -9,7 +9,7 @@ class QAbstractListModel;
 class QItemSelectionModel;
 class QString;
 
-namespace election_core_utils
+namespace poll_zapp_core_utils
 {
 
 template<class Model> QModelIndex idToModelIndex(const Model& model, int id)
@@ -33,7 +33,7 @@ bool isIndexValid(const QModelIndex& index, const QAbstractListModel& model);
 QSqlDatabase connectToSqlDatabase(
     const QFileInfo& databaseFileInfo = QFileInfo());
 
-}// namespace election_core_utils
+}// namespace poll_zapp_core_utils
 
 namespace python_scripting
 {

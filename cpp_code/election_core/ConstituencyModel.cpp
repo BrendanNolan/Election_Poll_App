@@ -35,7 +35,7 @@ int ConstituencyModel::rowCount(const QModelIndex& /*parent*/) const
 
 QVariant ConstituencyModel::data(const QModelIndex& index, int role) const
 {
-    if (!election_core_utils::isIndexValid(index, *this))
+    if (!poll_zapp_core_utils::isIndexValid(index, *this))
         return false;
     const auto& constituency = *(constituencyCache_[index.row()]);
     switch (role)

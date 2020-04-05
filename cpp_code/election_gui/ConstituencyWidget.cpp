@@ -121,7 +121,7 @@ void ConstituencyWidget::selectConstituencyInModel()
         && idOfMostRecentlySelectedConstituency_ > -1)
     {
         auto indexOfMostRecentlySelectedConstituency =
-            election_core_utils::idToModelIndex(
+            poll_zapp_core_utils::idToModelIndex(
                 *(constituencyProxyModel_->constituencyModel()),
                 idOfMostRecentlySelectedConstituency_);
         if (indexOfMostRecentlySelectedConstituency.isValid())
@@ -140,7 +140,7 @@ void ConstituencyWidget::selectConstituencyInModel()
     if (!itemToSelect)
         return;
     auto id = ItemConstituencyIds[itemToSelect];
-    auto index = election_core_utils::idToModelIndex(
+    auto index = poll_zapp_core_utils::idToModelIndex(
         *(constituencyProxyModel_->constituencyModel()), id);
     if (!index.isValid())
         return;
@@ -192,7 +192,7 @@ void ConstituencyWidget::refreshPixmaps(
     for (auto it = ItemConstituencyIds.begin(); it != ItemConstituencyIds.end();
          ++it)
     {
-        auto index = election_core_utils ::idToModelIndex(
+        auto index = poll_zapp_core_utils ::idToModelIndex(
             *(constituencyProxyModel_->constituencyModel()), it.value());
         if (index.row() < topLeft.row() || index.row() > bottomRight.row())
             continue;

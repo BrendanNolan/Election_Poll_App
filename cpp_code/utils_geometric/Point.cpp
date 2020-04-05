@@ -1,133 +1,130 @@
-#include "Points.h"
+#include "Point.h"
+
+#include <cmath>
+#include <utility>
 
 #include "geom_defs.h"
 
+namespace
+{
+std::pair<double, double> cartesianToPolar(double x, double y);
+std::pair<double, double> polarToCartesian(double r, double theta);
+}// namespace
+
 namespace geom
 {
-
-PolarPoint::PolarPoint(double r, double theta)
-    : r_(r)
-{
-    setTheta(theta);
-}
-
-void PolarPoint::rotate(double radians)
-{
-    setTheta(theta_ + radians);
-}
-
-PolarPoint PolarPoint::rotated(double radians) const
-{
-    auto rotatedCopy = *this;
-    rotatedCopy.rotate(radians);
-    return rotatedCopy;
-}
-
-double PolarPoint::r() const
-{
-    return r_;
-}
-
-double PolarPoint::theta() const
-{
-    return theta_;
-}
-
-void PolarPoint::setR(double r)
-{
-    r_ = r;
-}
-
-void PolarPoint::setTheta(double theta)
-{
-    theta_ = std::fmod(theta, 2 * pi);
-}
-
-CartesianPoint::CartesianPoint(double x, double y)
+Point::Point(double x, double y)
     : x_(x)
     , y_(y)
 {
 }
 
-void CartesianPoint::rotateAbout(const CartesianPoint& fulcrum, double radians)
+Point Point::newCartesianPoint(double x, double y)
 {
-    auto translatedPoint = *this - fulcrum;
-    auto polarTranslatedPoint = cartesianToPolar(translatedPoint);
-    auto rotatedPolarTranslatedPoint = polarTranslatedPoint.rotated(radians);
-    auto rotatedTranslatedPoint = polarToCartesian(rotatedPolarTranslatedPoint);
-    auto rotatedPoint = rotatedTranslatedPoint + fulcrum;
-    *this = rotatedPoint;
+    return Point(x, y);
 }
 
-CartesianPoint CartesianPoint::rotatedAbout(
-    const CartesianPoint& fulcrum, double radians) const
+Point Point::newPolarPoint(double r, double theta)
+{
+    auto xyPair = polarToCartesian(r, theta);
+    return Point(xyPair.first, xyPair.second);
+}
+
+Point Point::origin()
+{
+    return Point(0.0, 0.0);
+}
+
+double Point::r() const
+{
+    return cartesianToPolar(x_, y_).first;
+}
+
+double Point::theta() const
+{
+    return cartesianToPolar(x_, y_).second;
+}
+
+void Point::setPolarCoords(double r, double theta)
+{
+    auto xyPair = polarToCartesian(r, theta);
+    x_ = xyPair.first;
+    y_ = xyPair.second;
+}
+
+void Point::setCartesianCoords(double x, double y)
+{
+    x_ = x;
+    y_ = y;
+}
+
+void Point::rotateAbout(const Point& fulcrum, double radians)
+{
+    *this = *this - fulcrum;
+    rotateAboutOrigin(radians);
+    *this = *this + fulcrum;
+}
+
+Point Point::rotatedAbout(const Point& fulcrum, double radians) const
 {
     auto rotatedCopy = *this;
     rotatedCopy.rotateAbout(fulcrum, radians);
     return rotatedCopy;
 }
 
-double CartesianPoint::x() const
+double Point::x() const
 {
     return x_;
 }
 
-double CartesianPoint::y() const
+double Point::y() const
 {
     return y_;
 }
 
-void CartesianPoint::setX(double x)
+void Point::rotateAboutOrigin(double radians)
 {
-    x_ = x;
+    setPolarCoords(r(), theta() + radians);
 }
 
-void CartesianPoint::setY(double y)
+Point Point::rotatedAboutOrigin(double radians) const
 {
-    y_ = y;
+    auto cpy = *this;
+    cpy.rotateAboutOrigin(radians);
+    return cpy;
 }
 
-CartesianPoint operator+(const CartesianPoint& a, const CartesianPoint& b)
+Point operator+(const Point& a, const Point& b)
 {
-    return CartesianPoint(a.x() + b.x(), a.y() + b.y());
+    return Point::newCartesianPoint(a.x() + b.x(), a.y() + b.y());
 }
 
-CartesianPoint operator-(const CartesianPoint& a, const CartesianPoint& b)
+Point operator-(const Point& a, const Point& b)
 {
-    return CartesianPoint(a.x() - b.x(), a.y() - b.y());
+    return Point::newCartesianPoint(a.x() - b.x(), a.y() - b.y());
 }
 
-PolarPoint cartesianToPolar(const CartesianPoint& cartPoint)
-{
-    auto x = cartPoint.x();
-    auto y = cartPoint.y();
-
-    auto r = std::sqrt(std::pow(x, 2) + std::pow(y, 2));
-    if (r < doublePrecisionTolerance)
-        return PolarPoint(0.0, 0.0);
-
-    auto theta = (y >= 0.0) ? std::acos(x / r) : -std::acos(x / r);
-
-    return PolarPoint(r, theta);
-}
-
-CartesianPoint polarToCartesian(const PolarPoint& polarPoint)
-{
-    CartesianPoint cartPoint;
-    cartPoint.setX(polarPoint.r() * std::cos(polarPoint.theta()));
-    cartPoint.setY(polarPoint.r() * std::sin(polarPoint.theta()));
-    return cartPoint;
-}
-
-double dist(const CartesianPoint& a, const CartesianPoint& b)
+double dist(const Point& a, const Point& b)
 {
     return std::sqrt(std::pow(a.x() - b.x(), 2) + std::pow(a.y() - b.y(), 2));
 }
 
-double geom::distFromOrigin(const CartesianPoint& point)
-{
-    return static_cast<double>(
-        std::sqrt(std::pow(point.x(), 2) + std::pow(point.y(), 2)));
-}
-
 }// namespace geom
+
+namespace
+{
+std::pair<double, double> cartesianToPolar(double x, double y)
+{
+    auto r = std::sqrt(std::pow(x, 2) + std::pow(y, 2));
+    if (r < geom::doublePrecisionTolerance)
+        return { 0.0, 0.0 };
+    auto theta = (y >= 0.0) ? std::acos(x / r) : -std::acos(x / r);
+    return { r, theta };
+}
+std::pair<double, double> polarToCartesian(double r, double theta)
+{
+    auto x = r * std::cos(theta);
+    auto y = r * std::sin(theta);
+    return { x, y };
+}
+}// namespace

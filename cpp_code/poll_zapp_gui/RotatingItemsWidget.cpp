@@ -56,10 +56,10 @@ void RotatingItemsWidget::rotateItems()
     for (auto item : rotatingItems_)
     {
         auto pos = item->pos();
-        CartesianPoint cartPoint(
+        auto point = Point::newCartesianPoint(
             static_cast<double>(pos.x()), static_cast<double>(pos.y()));
-        cartPoint.rotateAbout(CartesianPoint(0.0, 0.0), rotationAngle_);
-        item->setPos(cartPoint.x(), cartPoint.y());
+        point.rotateAbout(Point::origin(), rotationAngle_);
+        item->setPos(point.x(), point.y());
     }
 }
 
@@ -83,7 +83,7 @@ void RotatingItemsWidget::positionRotatingItems()
     using namespace geom;
     auto itemCount = rotatingItems_.size();
     auto newRadius = rotationRadius_;
-    CartesianPoint startPoint(0.0, newRadius);
+    auto startPoint = Point::newPolarPoint(0.0, newRadius);
     for (auto i = 0; i < itemCount; ++i)
     {
         auto item = rotatingItems_[i];
@@ -99,7 +99,7 @@ void RotatingItemsWidget::positionRotatingItems()
             itemAlreadyInScene = true;*/
 
         auto pos = item->pos();
-        auto currentRadius = distFromOrigin(CartesianPoint(pos.x(), pos.y()));
+        auto currentRadius = Point::newCartesianPoint(pos.x(), pos.y()).r();
 
         if (currentRadius != 0)
         {

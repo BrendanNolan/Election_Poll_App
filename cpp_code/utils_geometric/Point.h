@@ -1,69 +1,48 @@
-#ifndef POINTS_H
-#define POINTS_H
+#ifndef POINT_H
+#define POINT_H
 
 /*
     These utils are far from their final form. I am addiing to them as and when
     I need new utilities.
 */
 
-#include <cmath>
-
 namespace geom
 {
 
-class PolarPoint
+class Point
 {
+protected:
+    Point(double x, double y);
+
 public:
-    PolarPoint() = default;
-    PolarPoint(double r, double theta);
+    static Point newCartesianPoint(double x, double y);
+    static Point newPolarPoint(double r, double theta);
+    static Point origin();
 
-    void rotate(double radians);
+    void rotateAbout(const Point& fulcrum, double radians);
+    Point rotatedAbout(const Point& fulcrum, double radians) const;
 
-    PolarPoint rotated(double radians) const;
-
-    double r() const;
-    double theta() const;
-    void setR(double r);
-    void setTheta(double theta);
-
-private:
-    double r_ = 0;
-    double theta_ = 0;
-};
-
-class CartesianPoint
-{
-public:
-    CartesianPoint() = default;
-    CartesianPoint(double x, double y);
-
-    void rotateAbout(const CartesianPoint& fulcrum, double radians);
-
-    CartesianPoint rotatedAbout(
-        const CartesianPoint& fulcrum, double radians) const;
+    void setPolarCoords(double r, double theta);
+    void setCartesianCoords(double x, double y);
 
     double x() const;
     double y() const;
-    void setX(double x);
-    void setY(double y);
+    double r() const;
+    double theta() const;
+
+private: 
+    void rotateAboutOrigin(double radians);
+    Point rotatedAboutOrigin(double radians) const;
 
 private:
     double x_ = 0;
     double y_ = 0;
 };
 
-CartesianPoint operator+(const CartesianPoint& a, const CartesianPoint& b);
-
-CartesianPoint operator-(const CartesianPoint& a, const CartesianPoint& b);
-
-PolarPoint cartesianToPolar(const CartesianPoint& cartPoint);
-
-CartesianPoint polarToCartesian(const PolarPoint& polarPoint);
-
-double dist(const CartesianPoint& a, const CartesianPoint& b);
-
-double distFromOrigin(const CartesianPoint& point);
+Point operator+(const Point& a, const Point& b);
+Point operator-(const Point& a, const Point& b);
+double dist(const Point& a, const Point& b);
 
 };// namespace geom
 
-#endif// POINTS_H
+#endif// POINT_H

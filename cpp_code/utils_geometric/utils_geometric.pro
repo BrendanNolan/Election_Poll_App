@@ -8,12 +8,12 @@ CONFIG += static
 
 HEADERS += \
     geom_defs.h \
-    Points.h \
+    Point.h \
     Polygon.h \
     IPolygonLayoutEngine.h \
     PolygonInflatingPositioningEngine.h
 
 SOURCES += \
-    Points.cpp \
+    Point.cpp \
     Polygon.cpp \
     PolygonInflatingPositioningEngine.cpp

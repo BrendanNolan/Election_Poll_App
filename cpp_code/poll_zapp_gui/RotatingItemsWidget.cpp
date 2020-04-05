@@ -3,7 +3,7 @@
 #include <QGraphicsRectItem>
 #include <QGraphicsScene>
 
-#include "Points.h"
+#include "Point.h"
 
 RotatingItemsWidget::RotatingItemsWidget(QWidget* parent)
     : QGraphicsView(parent)

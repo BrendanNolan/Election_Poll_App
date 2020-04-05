@@ -213,7 +213,7 @@ void ConstituencyExplorerWidget::asynchronouslyRefreshModels()
     auto rotatingItemsWidget = new RotatingItemsWidget();
     {
         rotatingItemsWidget->setFrameRate(60);
-        rotatingItemsWidget->setInterFrameAngleDifference(25);
+        rotatingItemsWidget->setInterFrameAngleDifference(-25);
         rotatingItemsWidget->setFixedSize(desiredSizeOfLoadScreen);
         rotatingItemsWidget->setRotationRadius(
             rotatingItemsWidget->preferredRotationRadius());

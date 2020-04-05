@@ -37,12 +37,15 @@ void StartupHandler::performStartupTasks()
         paths::constituencyScrapingScript());
 
     QDir picturesSrcDir(paths::picturesSourceDir());
-    auto fileInfoList = picturesSrcDir.entryInfoList();
-    for (const auto& entry : fileInfoList)
+    if (picturesSrcDir.exists())
     {
-        QFile::copy(
-            entry.absoluteFilePath(),
-            paths::picturesDataDir()
-                + QDir::toNativeSeparators("/" + entry.fileName()));
+        auto fileInfoList = picturesSrcDir.entryInfoList();
+        for (const auto& entry : fileInfoList)
+        {
+            QFile::copy(
+                entry.absoluteFilePath(),
+                paths::picturesDataDir()
+                    + QDir::toNativeSeparators("/" + entry.fileName()));
+        }
     }
 }

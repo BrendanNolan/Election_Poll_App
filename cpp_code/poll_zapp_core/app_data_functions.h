@@ -13,8 +13,10 @@ QString databasePath();
 QString politicianScrapingScript();
 QString constituencyScrapingScript();
 QString pollResultScrapingScript();
+QString picturesDataDir();
 
 QString scriptsSourceDir();
+QString picturesSourceDir();
 
 }// namespace paths
 

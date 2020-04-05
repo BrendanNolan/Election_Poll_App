@@ -21,6 +21,7 @@ void StartupHandler::performStartupTasks()
     }
     pzAppData.mkdir("py_scripts");
     pzAppData.mkdir("databases");
+    pzAppData.mkdir("Pictures");
 
     QFile::copy(
         paths::scriptsSourceDir()
@@ -34,4 +35,14 @@ void StartupHandler::performStartupTasks()
         paths::scriptsSourceDir()
             + QDir::toNativeSeparators("/constituency_scraping.py"),
         paths::constituencyScrapingScript());
+
+    QDir picturesSrcDir(paths::picturesSourceDir());
+    auto fileInfoList = picturesSrcDir.entryInfoList();
+    for (const auto& entry : fileInfoList)
+    {
+        QFile::copy(
+            entry.absoluteFilePath(),
+            paths::picturesDataDir()
+                + QDir::toNativeSeparators("/" + entry.fileName()));
+    }
 }

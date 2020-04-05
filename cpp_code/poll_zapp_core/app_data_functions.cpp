@@ -31,8 +31,19 @@ QString paths::pollResultScrapingScript()
            + QDir::toNativeSeparators("/py_scripts/poll_result_scraping.py");
 }
 
+QString paths::picturesDataDir()
+{
+    return pollZAppAppData() + QDir::toNativeSeparators("/Pictures/");
+}
+
 QString paths::scriptsSourceDir()
 {
     QDir scripts(QDir::toNativeSeparators("../../py_scripts/"));
     return scripts.absolutePath();
+}
+
+QString paths::picturesSourceDir()
+{
+    QDir pictures(QDir::toNativeSeparators("../../Pictures/"));
+    return pictures.absolutePath();
 }

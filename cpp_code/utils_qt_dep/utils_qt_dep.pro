@@ -1,5 +1,8 @@
 include($$top_srcdir/paths.pri)
 
+QT -= \
+    gui
+
 TARGET = utils_qt_dep
 TEMPLATE = lib
 CONFIG += static

@@ -1,6 +1,6 @@
 include($$top_srcdir/paths.pri)
 
-QT += core gui widgets sql
+QT += widgets sql
 
 TARGET = poll_zapp_gui
 TEMPLATE = app

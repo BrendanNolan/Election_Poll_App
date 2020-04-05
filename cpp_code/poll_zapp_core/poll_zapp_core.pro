@@ -1,6 +1,7 @@
 include($$top_srcdir/paths.pri)
 
 QT += sql
+QT -= gui
 
 TARGET = poll_zapp_core
 TEMPLATE = lib

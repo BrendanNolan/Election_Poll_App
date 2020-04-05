@@ -1,6 +1,6 @@
 #include <Python.h>
 
-#include "election_core_utils.h"
+#include "poll_zapp_core_utils.h"
 
 #include <QAbstractListModel>
 #include <QDir>

@@ -1,5 +1,5 @@
-#ifndef ELECTION_CORE_UTILS_H
-#define ELECTION_CORE_UTILS_H
+#ifndef POLL_ZAPP_CORE_UTILS_H
+#define POLL_ZAPP_CORE_UTILS_H
 
 #include <QFileInfo>
 #include <QModelIndex>
@@ -42,4 +42,4 @@ bool runPythonScript(const QFileInfo& script);
 
 }// namespace python_scripting
 
-#endif// ELECTION_CORE_UTILS_H
+#endif// POLL_ZAPP_CORE_UTILS_H

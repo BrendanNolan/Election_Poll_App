@@ -22,8 +22,8 @@ SOURCES += \
     PollResult.cpp \
     SqlPollResultDatabaseManager.cpp \
     SqlPoliticianDatabaseManager.cpp \
-    election_core_utils.cpp \
     app_data_functions.cpp \
+    poll_zapp_core_utils.cpp
 
 HEADERS += \
     IConstituencyDatabaseManager.h \
@@ -40,11 +40,11 @@ HEADERS += \
     PollResult.h \
     SqlPollResultDatabaseManager.h \
     SqlPoliticianDatabaseManager.h \
-    election_core_utils.h \
     UnaryPredicate.h \
     app_data_functions.h \
     DatabaseSignaller.h \
-    RollingKeyValueCache.h
+    RollingKeyValueCache.h \
+    poll_zapp_core_utils.h
 
 INCLUDEPATH += \
     $$(PYTHON_38_STUFF)\include

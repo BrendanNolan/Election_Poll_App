@@ -3,7 +3,7 @@
 #include <QSqlDatabase>
 
 #include "DatabaseSignaller.h"
-#include "election_core_utils.h"
+#include "poll_zapp_core_utils.h"
 #include "SqlConstituencyDatabaseManager.h"
 #include "SqlPoliticianDatabaseManager.h"
 #include "SqlPollResultDatabaseManager.h"

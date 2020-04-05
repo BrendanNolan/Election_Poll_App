@@ -2,6 +2,8 @@
 
 #include <QPointF>
 
+#include <cmath>
+
 #include "Point.h"
 #include "QtSceneCoordConverter.h"
 
@@ -22,5 +24,10 @@ QPointF geom::rotatedAbout(
     auto cpy = point;
     rotateAbout(cpy, fulcrum, radians);
     return cpy;
+}
+
+float geom::length(const QPointF& point)
+{
+    return std::sqrt(std::pow(point.x(), 2) + std::pow(point.y(), 2));
 }
 }// namespace geom

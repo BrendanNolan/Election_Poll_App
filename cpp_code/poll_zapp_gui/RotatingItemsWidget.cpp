@@ -3,8 +3,7 @@
 #include <QGraphicsRectItem>
 #include <QGraphicsScene>
 
-#include "Point.h"
-#include "QtSceneCoordConverter.h"
+#include "point_utils.h"
 
 RotatingItemsWidget::RotatingItemsWidget(QWidget* parent)
     : QGraphicsView(parent)
@@ -54,12 +53,11 @@ void RotatingItemsWidget::setInterFrameAngleDifference(int degrees)
 void RotatingItemsWidget::rotateItems()
 {
     using namespace geom;
-    QtSceneCoordConverter converter;
     for (auto item : rotatingItems_)
     {
-        auto point = converter.point(item->pos());
-        point.rotateAbout(Point::origin(), rotationAngle_);
-        item->setPos(converter.qPointF(point));
+        auto pos = item->pos();
+        rotateAbout(pos, QPointF(0.0f, 0.0f), rotationAngle_);
+        item->setPos(pos);
     }
 }
 
@@ -83,8 +81,7 @@ void RotatingItemsWidget::positionRotatingItems()
     using namespace geom;
     auto itemCount = rotatingItems_.size();
     auto newRadius = rotationRadius_;
-    auto startPoint = Point::newCartesianPoint(0.0, newRadius);
-    QtSceneCoordConverter converter;
+    auto startPoint = QPointF(0.0, -newRadius);
     for (auto i = 0; i < itemCount; ++i)
     {
         auto item = rotatingItems_[i];
@@ -100,7 +97,7 @@ void RotatingItemsWidget::positionRotatingItems()
             itemAlreadyInScene = true;*/
 
         auto pos = item->pos();
-        auto currentRadius = converter.point(pos).r();
+        auto currentRadius = length(pos);
 
         if (currentRadius != 0)
         {
@@ -108,8 +105,9 @@ void RotatingItemsWidget::positionRotatingItems()
         }
         else
         {
-            auto defPos = startPoint.rotatedAbout(
-                Point::origin(),
+            auto defPos = rotatedAbout(
+                startPoint,
+                QPointF(0, 0),
                 (i / static_cast<double>(itemCount)) * (2 * pi));
             item->setPos(defPos.x(), defPos.y());
         }

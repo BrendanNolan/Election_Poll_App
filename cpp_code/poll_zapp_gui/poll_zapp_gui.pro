@@ -40,7 +40,7 @@ FORMS += \
 INCLUDEPATH += \
     $$poll_zapp_core_source_path \
     $$utils_geometric_source_path \
-    $$utils_qt_dep_cource_path \
+    $$utils_qt_dep_source_path \
     $$(PYTHON_38_STUFF)\include
 
 win32:CONFIG(release, debug|release) {

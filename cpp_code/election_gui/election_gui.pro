@@ -2,7 +2,7 @@ include($$top_srcdir/paths.pri)
 
 QT += core gui widgets sql
 
-TARGET = election_gui
+TARGET = poll_zapp_gui
 TEMPLATE = app
 
 HEADERS += \
@@ -38,39 +38,39 @@ FORMS += \
     ConstituencyExplorerWidget.ui
 
 INCLUDEPATH += \
-    $$election_core_source_path \
+    $$poll_zapp_core_source_path \
     $$utils_geometric_source_path \
     $$(PYTHON_38_STUFF)\include
 
 win32:CONFIG(release, debug|release) {
     LIBS += \ 
-        -L$$election_core_build_path/release/ \
+        -L$$poll_zapp_core_build_path/release/ \
         -L$$utils_geometric_build_path/release/ \
         -L$$(PYTHON_38_STUFF)/libs/ \
-        -lelection_core \
+        -lpoll_zapp_core \
         -lutils_geometric \
         -lpython38
 }
 else:win32:CONFIG(debug, debug|release) {
     LIBS += \ 
-        -L$$election_core_build_path/debug/ \
+        -L$$poll_zapp_core_build_path/debug/ \
         -L$$utils_geometric_build_path/debug/ \
         -L$$(PYTHON_38_STUFF)/libs/ \ 
-        -lelection_core \
+        -lpoll_zapp_core \
         -lutils_geometric \
         -lpython38_d
 }
 else:unix {
     LIBS += \
-        -L$$election_core_build_path/ \
+        -L$$poll_zapp_core_build_path/ \
         -L$$utils_geometric_build_path/ \
         -lutils_geometric \
-        -lelection_core
+        -lpoll_zapp_core
 }
 
 win32:CONFIG(release, debug|release) {
-    QMAKE_POST_LINK += cp $$(PYTHON_38_STUFF)/python38.dll $$election_gui_build_path/release/
+    QMAKE_POST_LINK += cp $$(PYTHON_38_STUFF)/python38.dll $$poll_zapp_gui_build_path/release/
 }
 else:win32:CONFIG(debug, debug|release) {
-    QMAKE_POST_LINK += cp $$(PYTHON_38_STUFF)/python38_d.dll $$election_gui_build_path/debug/
+    QMAKE_POST_LINK += cp $$(PYTHON_38_STUFF)/python38_d.dll $$poll_zapp_gui_build_path/debug/
 }

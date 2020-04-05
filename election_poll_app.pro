@@ -1,10 +1,10 @@
 TEMPLATE = subdirs
 
 SUBDIRS += \
-    cpp_code/election_gui \
-    cpp_code/election_core \
+    cpp_code/poll_zapp_gui \
+    cpp_code/poll_zapp_core \
     cpp_code/utils_geometric
 
-election_gui.depends += \
-    election_core \
+poll_zapp_gui.depends += \
+    poll_zapp_core \
     utils_geometric

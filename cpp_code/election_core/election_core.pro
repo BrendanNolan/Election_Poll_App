@@ -2,11 +2,9 @@ include($$top_srcdir/paths.pri)
 
 QT += sql
 
-TARGET = election_core
+TARGET = poll_zapp_core
 TEMPLATE = lib
 CONFIG += static
-
-# DEFINES += ELECTIONCORE_LIBRARY
 
 SOURCES += \
     SqlConstituencyDatabaseManager.cpp \

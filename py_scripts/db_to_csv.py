@@ -3,7 +3,7 @@ import os
 import sqlite3
 
 
-primary_database_path = "C:\\CPP_Stuff\\Election_Poll_App\\primary_database.db"
+primary_database_path = os.getenv("POLL_ZAPP") + "\\databases\\primary_database.db"
 primary_database = open(primary_database_path, 'r')
 primary_database.close()
 

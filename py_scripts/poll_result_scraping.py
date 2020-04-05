@@ -4,7 +4,7 @@ from random import randrange
 import sqlite3
 
 
-path_to_pictures = "C:\\CPP_Stuff\\Election_Poll_App\\Pictures\\"
+path_to_pictures = os.getenv("POLL_ZAPP") + "\\Pictures\\"
 
 primary_database_path = os.getenv("POLL_ZAPP") + "\\databases\\primary_database.db"
 primary_database = open(primary_database_path, 'a')

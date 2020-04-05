@@ -12,7 +12,6 @@
 
 #include "ConstituencyModel.h"
 #include "app_data_functions.h"
-#include "Points.h"
 #include "PoliticianModel.h"
 #include "PoliticianPictureProxyModel.h"
 #include "PollResultModel.h"

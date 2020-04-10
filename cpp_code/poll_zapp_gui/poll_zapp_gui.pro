@@ -17,7 +17,8 @@ HEADERS += \
     PollResultPlotProxyModel.h \
     HistogramPainter.h \
     IPlotPainter.h \
-    StartupHandler.h
+    StartupHandler.h \
+    PlotData.h
 
 SOURCES += \
     ConstituencyWidget.cpp \
@@ -31,7 +32,8 @@ SOURCES += \
     PoliticianPictureProxyModel.cpp \
     PollResultPlotProxyModel.cpp \
     HistogramPainter.cpp \
-    StartupHandler.cpp
+    StartupHandler.cpp \
+    PlotData.cpp
 
 FORMS += \
     ConstituencyDrillDownWidget.ui \

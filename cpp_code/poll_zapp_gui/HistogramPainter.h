@@ -5,6 +5,7 @@
 #include <QString>
 
 #include "IPlotPainter.h"
+#include "PlotData.h"
 
 class QPaintDevice;
 

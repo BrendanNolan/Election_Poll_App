@@ -12,6 +12,7 @@
 #include <memory>
 
 #include "IPlotPainter.h"
+#include "PlotData.h"
 #include "PoliticianModel.h"
 #include "RollingKeyValueCache.h"
 

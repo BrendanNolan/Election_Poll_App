@@ -4,7 +4,6 @@
 #include <QColor>
 #include <QVector>
 
-
 class PlotData;
 class QPaintDevice;
 

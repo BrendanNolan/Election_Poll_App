@@ -51,7 +51,7 @@ QVariant PollResultPlotProxyModel::data(// needs work
         auto colour =
             politicianModel_.data(index, PoliticianModel::PartyColourRole)
                 .value<QColor>();
-        plotData.push_back(
+        plotData.add(
             PlotDataPoint(name, colour, namesAndPollingNumbers[name]));
     }
 

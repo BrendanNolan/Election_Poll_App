@@ -31,7 +31,7 @@ QModelIndex nameToModelIndex(const Model& model, const QString& name)
     for (auto row = 0; row < numRows; ++row)
     {
         auto modelIndex = model.index(row, 0);
-        if (model.data(modelIndex, Model::IdRole).toInt() == id)
+        if (model.data(modelIndex, Model::NameRole).toString() == name)
             return modelIndex;
     }
     return QModelIndex();

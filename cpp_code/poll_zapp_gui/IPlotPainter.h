@@ -1,7 +1,24 @@
 #ifndef IPLOTPAINTER_H
 #define IPLOTPAINTER_H
 
-using PlotData = QHash<QString, int>;
+#include <QColor>
+#include <QVector>
+
+struct PlotDataPoint
+{
+    PlotDataPoint(const QString& name, const QColor& colour, int value)
+        : name_(name)
+        , colour_(colour)
+        , value_(value)
+    {
+    }
+
+    QString name_;
+    QColor colour_;
+    int value_;
+};
+
+using PlotData = QVector<PlotDataPoint>;
 
 class QPaintDevice;
 

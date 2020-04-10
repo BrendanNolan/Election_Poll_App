@@ -1,8 +1,8 @@
 #include "HistogramPainter.h"
 
-void HistogramPainter::setPlotData(const PlotData* histogram)
+void HistogramPainter::setPlotData(const PlotData* data)
 {
-    histogramData_ = histogram;
+    histogramData_ = data;
 }
 
 void HistogramPainter::paint(QPaintDevice* paintDevice)

@@ -11,9 +11,10 @@
 
 #include <memory>
 
+#include "IPlotPainter.h"
+#include "PoliticianModel.h"
 #include "RollingKeyValueCache.h"
 
-class IPlotPainter;
 class PollResultModel;
 
 // OBVIOUSLY FAR FROM COMPLETE
@@ -23,7 +24,9 @@ public:
     ~PollResultPlotProxyModel();
 
     PollResultPlotProxyModel(
-        PollResultModel* pollResultModel = nullptr, QObject* parent = nullptr);
+        PollResultModel& pollResultModel,
+        const PoliticianModel& politicianModel,
+        QObject* parent = nullptr);
     QVariant data(
         const QModelIndex& index, int role = Qt::DecorationRole) const override;
 
@@ -32,7 +35,8 @@ public:
     PollResultModel* pollResultModel() const;
 
 private:
-    mutable RollingKeyValueCache<QHash<QString, int>, QPixmap> pixmapCache_;
+    mutable PoliticianModel politicianModel_;
+    mutable RollingKeyValueCache<PlotData, QPixmap> pixmapCache_;
     std::unique_ptr<IPlotPainter> plotPainter_;
     QPixmap blackPixmap_;
 };

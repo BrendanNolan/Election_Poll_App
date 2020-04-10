@@ -1,7 +1,6 @@
 #ifndef HISTOGRAMPAINTER_H
 #define HISTOGRAMPAINTER_H
 
-#include <QHash>
 #include <QRect>
 #include <QString>
 
@@ -9,10 +8,17 @@
 
 class QPaintDevice;
 
+struct HistogramBar
+{
+    QString name_;
+    QColor colour_;
+    QRect rect_;
+};
+
 class HistogramPainter : public IPlotPainter
 {
 public:
-    void setPlotData(const PlotData* histogram) override;
+    void setPlotData(const PlotData* data) override;
     void paint(QPaintDevice* paintDevice) override;
 
 protected:
@@ -25,7 +31,7 @@ protected:
 private:
     const PlotData* histogramData_;
 
-    QHash<QString, QRect> bars_;
+    QVector<HistogramBar> bars_;
 };
 
 #endif// HISTOGRAMPAINTER_H

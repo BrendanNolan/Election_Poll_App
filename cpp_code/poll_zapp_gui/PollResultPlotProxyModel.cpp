@@ -2,8 +2,8 @@
 
 #include <QtGlobal>
 
-#include "IPlotPainter.h"
 #include "PollResultModel.h"
+#include "poll_zapp_core_utils.h"
 
 namespace
 {
@@ -16,16 +16,20 @@ PollResultPlotProxyModel::~PollResultPlotProxyModel()
 }
 
 PollResultPlotProxyModel::PollResultPlotProxyModel(
-    PollResultModel* pollResultModel, QObject* parent)
+    PollResultModel& pollResultModel,
+    const PoliticianModel& politicianModel,
+    QObject* parent)
     : QIdentityProxyModel(parent)
+    , politicianModel_(politicianModel)
     , blackPixmap_(1, 1)
 {
-    setSourceModel(pollResultModel);
+    setSourceModel(&pollResultModel);
     blackPixmap_.fill(Qt::black);
 }
 
-QVariant PollResultPlotProxyModel::data(
-    const QModelIndex& index, int role) const
+QVariant PollResultPlotProxyModel::data(// needs work
+    const QModelIndex& index,
+    int role) const
 {
     auto sourcePollResultModel = pollResultModel();
     if (!sourcePollResultModel)
@@ -36,12 +40,23 @@ QVariant PollResultPlotProxyModel::data(
     auto stringVarHash =
         sourcePollResultModel->data(index, PollResultModel::PlotRole)
             .value<QHash<QString, QVariant>>();
-    QHash<QString, int> plot;
+    QHash<QString, int> namesAndPollingNumbers;
     for (const auto& key : stringVarHash.keys())
-        plot[key] = stringVarHash[key].toInt();
+        namesAndPollingNumbers[key] = stringVarHash[key].toInt();
+    PlotData plotData;
+    for (const auto& name : namesAndPollingNumbers.keys())
+    {
+        auto index =
+            poll_zapp_core_utils::nameToModelIndex(politicianModel_, name);
+        auto colour =
+            politicianModel_.data(index, PoliticianModel::PartyColourRole)
+                .value<QColor>();
+        plotData.push_back(
+            PlotDataPoint(name, colour, namesAndPollingNumbers[name]));
+    }
 
-    if (pixmapCache_.contains(plot))
-        return pixmapCache_.value(plot);
+    if (pixmapCache_.contains(plotData))
+        return pixmapCache_.value(plotData);
 
     if (!plotPainter_)
         return QPixmap();
@@ -57,9 +72,9 @@ QVariant PollResultPlotProxyModel::data(
     else
         pixmap.fill(Qt::magenta);
 
-    plotPainter_->setPlotData(&plot);
+    plotPainter_->setPlotData(&plotData);
     plotPainter_->paint(&pixmap);
-    pixmapCache_.insert(plot, pixmap);
+    pixmapCache_.insert(plotData, pixmap);
     return pixmap;
 }
 

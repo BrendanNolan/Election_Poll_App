@@ -5,6 +5,7 @@
 #include <QAbstractListModel>
 #include <QDir>
 #include <QFileInfo>
+#include <QString>
 
 #include <cstdio>
 #include <string>

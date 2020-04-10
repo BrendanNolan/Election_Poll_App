@@ -40,11 +40,12 @@ ConstituencyExplorerWidget::ConstituencyExplorerWidget(QWidget* parent)
     auto pollResultModel = new PollResultModel(factory, this);
     auto pollResultSelectionModel = new QItemSelectionModel(pollResultModel);
 
-    setModels();
+    setModels(
+        politicianModel,
+        constituencyModel,
+        pollResultModel);
     setPoliticianSelectionModel(politicianSelectionModel);
-
     setConstituencySelectionModel(constituencySelectionModel);
-
     setPollResultSelectionModel(pollResultSelectionModel);
 
     auto dataLoadSuccessful = refreshModels();
@@ -83,13 +84,25 @@ ConstituencyExplorerWidget::~ConstituencyExplorerWidget()
     delete ui_;
 }
 
-void ConstituencyExplorerWidget::setConstituencyModel(ConstituencyModel* model)
+void ConstituencyExplorerWidget::setModels(
+    PoliticianModel* politicianModel,
+    ConstituencyModel* constituencyModel,
+    PollResultModel* pollResultModel)
 {
-    constituencyModel_ = model;
-    if (!politicianModel_)
-        return;
+    politicianModel_ = politicianModel;
+    pollResultModel_ = pollResultModel;
+    
+    ui_->constituencyDrillDownWidget->setModels(
+        politicianModel_,
+        pollResultModel_);
 
-    ui_->constituencyWidget->setModels(constituencyModel_, politicianModel_);
+    constituencyModel_ = constituencyModel;
+    ui_->constituencyWidget->setModels(
+        constituencyModel_, 
+        politicianModel_);
+    
+    pollResultModel_->setConstituency(currentConstituencyId());
+    politicianModel_->setConstituency(currentConstituencyId());
 }
 
 void ConstituencyExplorerWidget::setConstituencySelectionModel(
@@ -107,25 +120,11 @@ void ConstituencyExplorerWidget::setConstituencySelectionModel(
         &ConstituencyExplorerWidget::onConstituencySelectionChanged);
 }
 
-void ConstituencyExplorerWidget::setPoliticianModel(PoliticianModel* model)
-{
-    politicianModel_ = model;
-    politicianModel_->setConstituency(currentConstituencyId());
-    ui_->constituencyDrillDownWidget->setPoliticianModel(politicianModel_);
-}
-
 void ConstituencyExplorerWidget::setPoliticianSelectionModel(
     QItemSelectionModel* selectionModel)
 {
     ui_->constituencyDrillDownWidget->setPoliticianSelectionModel(
         selectionModel);
-}
-
-void ConstituencyExplorerWidget::setPollResultModel(PollResultModel* model)
-{
-    pollResultModel_ = model;
-    pollResultModel_->setConstituency(currentConstituencyId());
-    ui_->constituencyDrillDownWidget->setPollResultModel(pollResultModel_);
 }
 
 void ConstituencyExplorerWidget::setPollResultSelectionModel(

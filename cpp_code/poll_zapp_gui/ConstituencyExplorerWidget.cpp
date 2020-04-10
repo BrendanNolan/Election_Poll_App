@@ -40,13 +40,11 @@ ConstituencyExplorerWidget::ConstituencyExplorerWidget(QWidget* parent)
     auto pollResultModel = new PollResultModel(factory, this);
     auto pollResultSelectionModel = new QItemSelectionModel(pollResultModel);
 
-    setPoliticianModel(politicianModel);
+    setModels();
     setPoliticianSelectionModel(politicianSelectionModel);
 
-    setConstituencyModel(constituencyModel);
     setConstituencySelectionModel(constituencySelectionModel);
 
-    setPollResultModel(pollResultModel);
     setPollResultSelectionModel(pollResultSelectionModel);
 
     auto dataLoadSuccessful = refreshModels();

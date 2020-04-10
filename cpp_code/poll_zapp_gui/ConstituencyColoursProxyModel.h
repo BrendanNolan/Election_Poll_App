@@ -17,7 +17,7 @@ class ConstituencyColoursProxyModel : public QIdentityProxyModel
 
 public:
     ConstituencyColoursProxyModel(
-        ConstituencyModel& constituencyModel,
+        ConstituencyModel* constituencyModel,
         const PoliticianModel& politicianModel,
         QObject* parent = nullptr);
     QVariant data(

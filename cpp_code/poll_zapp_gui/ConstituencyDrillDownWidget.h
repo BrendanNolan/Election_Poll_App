@@ -24,9 +24,10 @@ public:
         QWidget* parent = nullptr, Qt::WindowFlags flags = Qt::WindowFlags());
     ~ConstituencyDrillDownWidget();
 
-    void setPoliticianModel(PoliticianModel* model);
+    void setModels(
+        PoliticianModel* politicianModel, 
+        PollResultModel* pollResultModel);
     void setPoliticianSelectionModel(QItemSelectionModel* selectionModel);
-    void setPollResultModel(PollResultModel* model);
     void setPollResultSelectionModel(QItemSelectionModel* selectionModel);
 
     void setDisplayedConstituencyName(const QString& name);

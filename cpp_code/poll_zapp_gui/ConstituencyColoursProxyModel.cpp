@@ -17,14 +17,14 @@ QColor hashToColour(const QHash<QString, QVariant>& hash);
 }// namespace
 
 ConstituencyColoursProxyModel::ConstituencyColoursProxyModel(
-    ConstituencyModel& constituencyModel,
+    ConstituencyModel* constituencyModel,
     const PoliticianModel& politicianModel,
     QObject* parent)
     : QIdentityProxyModel(parent)
     , politicianModel_(politicianModel)
     , blackPixmap_(1, 1)
 {
-    setSourceModel(&constituencyModel);
+    setSourceModel(constituencyModel);
     blackPixmap_.fill(Qt::black);
 }
 

@@ -24,7 +24,7 @@ public:
     ~PollResultPlotProxyModel();
 
     PollResultPlotProxyModel(
-        PollResultModel& pollResultModel,
+        PollResultModel* pollResultModel,
         const PoliticianModel& politicianModel,
         QObject* parent = nullptr);
     QVariant data(

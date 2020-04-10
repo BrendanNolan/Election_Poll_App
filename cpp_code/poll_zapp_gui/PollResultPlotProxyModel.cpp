@@ -16,14 +16,14 @@ PollResultPlotProxyModel::~PollResultPlotProxyModel()
 }
 
 PollResultPlotProxyModel::PollResultPlotProxyModel(
-    PollResultModel& pollResultModel,
+    PollResultModel* pollResultModel,
     const PoliticianModel& politicianModel,
     QObject* parent)
     : QIdentityProxyModel(parent)
     , politicianModel_(politicianModel)
     , blackPixmap_(1, 1)
 {
-    setSourceModel(&pollResultModel);
+    setSourceModel(pollResultModel);
     blackPixmap_.fill(Qt::black);
 }
 

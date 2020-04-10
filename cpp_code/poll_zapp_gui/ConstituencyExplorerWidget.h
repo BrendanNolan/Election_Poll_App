@@ -26,11 +26,12 @@ public:
     ConstituencyExplorerWidget(QWidget* parent = nullptr);
     ~ConstituencyExplorerWidget();
 
-    void setConstituencyModel(ConstituencyModel* model);
+    void setModels(
+        PoliticianModel* politicianModel,
+        ConstituencyModel* constituencyModel,
+        PollResultModel* pollResultModel);
     void setConstituencySelectionModel(QItemSelectionModel* selectionModel);
-    void setPoliticianModel(PoliticianModel* model);
     void setPoliticianSelectionModel(QItemSelectionModel* selectionModel);
-    void setPollResultModel(PollResultModel* model);
     void setPollResultSelectionModel(QItemSelectionModel* selectionModel);
 
 private slots:

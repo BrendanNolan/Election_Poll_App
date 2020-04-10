@@ -41,7 +41,7 @@ void ConstituencyWidget::setModels(
     }
     politicianModel_ = politicianModel;
     constituencyProxyModel_ = new ConstituencyColoursProxyModel(
-        *constituencyModel, *politicianModel_, this);
+        constituencyModel, *politicianModel_, this);
     connectModelSignals();
     loadModel();
 }

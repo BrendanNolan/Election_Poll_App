@@ -20,8 +20,8 @@ ConstituencyColoursProxyModel::ConstituencyColoursProxyModel(
     ConstituencyModel& constituencyModel,
     const PoliticianModel& politicianModel,
     QObject* parent)
-    : politicianModel_(politicianModel)
-    , QIdentityProxyModel(parent)
+    : QIdentityProxyModel(parent)
+    , politicianModel_(politicianModel)
     , blackPixmap_(1, 1)
 {
     setSourceModel(&constituencyModel);

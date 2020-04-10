@@ -48,9 +48,12 @@ QVariant PollResultPlotProxyModel::data(// needs work
     {
         auto index =
             poll_zapp_core_utils::nameToModelIndex(politicianModel_, name);
-        auto colour =
+        auto rgbHash =
             politicianModel_.data(index, PoliticianModel::PartyColourRole)
-                .value<QColor>();
+                .value<QHash<QString, QVariant>>();
+        // The function hashToColour should be pulled out from 
+        // ConstituencyColoursProxyModel to utils_qt_dep
+        auto colour = hashToColour(rgbHash);
         plotData.add(
             PlotDataPoint(name, colour, namesAndPollingNumbers[name]));
     }

@@ -14,13 +14,13 @@ class QtSceneCoordConverter
 {
 public:
     /*
-        A distance of 1 between two geom::Point objects is represented by a 
+        A distance of 1 between two geom::Point objects is represented by a
         distance of 1/scale on the QGraphicsScene.
 
-        In other words, scale is the shrinkage factor when going from a geom::Point to 
-        a QPointF. This will be very large if, for example, your QGraphicsScene
-        is displaying a map of the world and the geom::Point objects represnting
-        points on the globe are measured in milimetres.
+        In other words, scale is the shrinkage factor when going from a
+       geom::Point to a QPointF. This will be very large if, for example, your
+       QGraphicsScene is displaying a map of the world and the geom::Point
+       objects represnting points on the globe are measured in milimetres.
     */
     QtSceneCoordConverter(double scale = 1);
 

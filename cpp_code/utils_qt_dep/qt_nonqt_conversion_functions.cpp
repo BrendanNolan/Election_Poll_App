@@ -13,4 +13,4 @@ QColor hashToColour(const QHash<QString, QVariant>& hash)
     return QColor(red, green, blue);
 }
 
-} // qt_nonqt_conversions
+}// namespace qt_nonqt_conversions

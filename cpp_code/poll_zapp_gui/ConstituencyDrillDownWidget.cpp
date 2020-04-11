@@ -47,8 +47,7 @@ ConstituencyDrillDownWidget::~ConstituencyDrillDownWidget()
 }
 
 void ConstituencyDrillDownWidget::setModels(
-    PoliticianModel* politicianModel, 
-    PollResultModel* pollResultModel)
+    PoliticianModel* politicianModel, PollResultModel* pollResultModel)
 {
     politicianModel_ = politicianModel;
 
@@ -58,11 +57,8 @@ void ConstituencyDrillDownWidget::setModels(
     ui_->politicianListView->setModel(politicianProxyModel);
     ui_->sittingRadioButton->setChecked(true);
 
-    auto pollResultProxyModel =
-        new PollResultPlotProxyModel(
-            pollResultModel,
-            *politicianModel, 
-            ui_->pollResultListView);
+    auto pollResultProxyModel = new PollResultPlotProxyModel(
+        pollResultModel, *politicianModel, ui_->pollResultListView);
     pollResultProxyModel->setPlotPainter(
         std::unique_ptr<HistogramPainter>(new HistogramPainter()));
 

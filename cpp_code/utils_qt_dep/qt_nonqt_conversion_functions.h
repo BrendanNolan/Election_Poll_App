@@ -10,6 +10,6 @@ namespace qt_nonqt_conversions
 
 QColor hashToColour(const QHash<QString, QVariant>& hash);
 
-} // qt_nonqt_conversions
+}// namespace qt_nonqt_conversions
 
-#endif // QT_NONQT_CONVERSION_FUNCTIONS_H
+#endif// QT_NONQT_CONVERSION_FUNCTIONS_H

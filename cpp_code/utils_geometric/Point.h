@@ -30,7 +30,7 @@ public:
     double r() const;
     double theta() const;
 
-private: 
+private:
     void rotateAboutOrigin(double radians);
     Point rotatedAboutOrigin(double radians) const;
 

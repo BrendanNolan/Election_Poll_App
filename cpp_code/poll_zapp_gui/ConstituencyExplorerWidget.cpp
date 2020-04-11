@@ -40,10 +40,7 @@ ConstituencyExplorerWidget::ConstituencyExplorerWidget(QWidget* parent)
     auto pollResultModel = new PollResultModel(factory, this);
     auto pollResultSelectionModel = new QItemSelectionModel(pollResultModel);
 
-    setModels(
-        politicianModel,
-        constituencyModel,
-        pollResultModel);
+    setModels(politicianModel, constituencyModel, pollResultModel);
     setPoliticianSelectionModel(politicianSelectionModel);
     setConstituencySelectionModel(constituencySelectionModel);
     setPollResultSelectionModel(pollResultSelectionModel);
@@ -91,16 +88,13 @@ void ConstituencyExplorerWidget::setModels(
 {
     politicianModel_ = politicianModel;
     pollResultModel_ = pollResultModel;
-    
+
     ui_->constituencyDrillDownWidget->setModels(
-        politicianModel_,
-        pollResultModel_);
+        politicianModel_, pollResultModel_);
 
     constituencyModel_ = constituencyModel;
-    ui_->constituencyWidget->setModels(
-        constituencyModel_, 
-        politicianModel_);
-    
+    ui_->constituencyWidget->setModels(constituencyModel_, politicianModel_);
+
     pollResultModel_->setConstituency(currentConstituencyId());
     politicianModel_->setConstituency(currentConstituencyId());
 }

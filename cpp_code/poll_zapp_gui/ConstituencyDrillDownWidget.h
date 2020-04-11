@@ -25,8 +25,7 @@ public:
     ~ConstituencyDrillDownWidget();
 
     void setModels(
-        PoliticianModel* politicianModel, 
-        PollResultModel* pollResultModel);
+        PoliticianModel* politicianModel, PollResultModel* pollResultModel);
     void setPoliticianSelectionModel(QItemSelectionModel* selectionModel);
     void setPollResultSelectionModel(QItemSelectionModel* selectionModel);
 

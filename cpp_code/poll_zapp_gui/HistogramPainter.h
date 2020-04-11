@@ -5,12 +5,14 @@
 #include <QString>
 
 #include "IPlotPainter.h"
-#include "PlotData.h"
 
+class PlotData;
 class QPaintDevice;
 
 struct HistogramBar
 {
+    HistogramBar(const QString& name, const QColor& colour, const QRect& rect);
+
     QString name_;
     QColor colour_;
     QRect rect_;
@@ -31,6 +33,7 @@ protected:
 
 private:
     const PlotData* histogramData_;
+    QPaintDevice* paintDevice_ = nullptr;
 
     QVector<HistogramBar> bars_;
 };

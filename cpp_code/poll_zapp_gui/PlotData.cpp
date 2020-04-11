@@ -18,12 +18,39 @@ bool PlotDataPoint::operator==(const PlotDataPoint& other) const
            && value_ == other.value_;
 }
 
-void PlotData::add(const PlotDataPoint& dataPoint)
+void PlotData::addDataPoint(const PlotDataPoint& dataPoint)
 {
     dataPoints_.append(dataPoint);
 }
 
+void PlotData::addNumericalMetaData(const QString& metaDataName, double value)
+{
+    numericalMetaData_[metaDataName] = value;
+}
+
+void PlotData::addTextMetaData(const QString& metaDataName, const QString& text)
+{
+    textMetaData_[metaDataName] = text;
+}
+
+const QVector<PlotDataPoint>& PlotData::dataPoints() const
+{
+    return dataPoints_;
+}
+
+const QHash<QString, double>& PlotData::numericalMetaData() const
+{
+    return numericalMetaData_;
+}
+
+const QHash<QString, QString>& PlotData::textMetaData() const
+{
+    return textMetaData_;
+}
+
 bool PlotData::operator==(const PlotData& other) const
 {
-    return dataPoints_ == other.dataPoints_;
+    return dataPoints_ == other.dataPoints_
+        && numericalMetaData_ == other.numericalMetaData_
+        && textMetaData_ == other.textMetaData_;
 }

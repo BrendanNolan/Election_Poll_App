@@ -57,8 +57,10 @@ QVariant PollResultPlotProxyModel::data(// needs work
         auto colour = qt_nonqt_conversions::hashToColour(rgbHash);
         if (!colour.isValid())
             colour = QColor(Qt::black);
-        plotData.add(PlotDataPoint(name, colour, namesAndPollingNumbers[name]));
+        plotData.addDataPoint(PlotDataPoint(name, colour, namesAndPollingNumbers[name]));
     }
+    auto pollSource = data(index, PollResultModel::SourceRole).toString();
+    plotData.addTextMetaData("Source", pollSource);
 
     if (pixmapCache_.contains(plotData))
         return pixmapCache_.value(plotData);
@@ -67,15 +69,6 @@ QVariant PollResultPlotProxyModel::data(// needs work
         return QPixmap();
 
     QPixmap pixmap(PREFERRED_WIDTH, PREFERRED_HEIGHT);
-    auto pollSource = data(index, PollResultModel::SourceRole).toString();
-    if (pollSource == "NYT")
-        pixmap.fill(Qt::cyan);
-    else if (pollSource == "WAPO")
-        pixmap.fill(Qt::darkYellow);
-    else if (pollSource == "HUFFPO")
-        pixmap.fill(Qt::green);
-    else
-        pixmap.fill(Qt::magenta);
 
     plotPainter_->setPlotData(&plotData);
     plotPainter_->paint(&pixmap);

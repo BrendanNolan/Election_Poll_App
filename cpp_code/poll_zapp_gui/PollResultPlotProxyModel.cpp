@@ -52,8 +52,6 @@ QVariant PollResultPlotProxyModel::data(// needs work
         auto rgbHash =
             politicianModel_.data(index, PoliticianModel::PartyColourRole)
                 .value<QHash<QString, QVariant>>();
-        // The function hashToColour should be pulled out from 
-        // ConstituencyColoursProxyModel to utils_qt_dep
         auto colour = qt_nonqt_conversions::hashToColour(rgbHash);
         plotData.add(
             PlotDataPoint(name, colour, namesAndPollingNumbers[name]));

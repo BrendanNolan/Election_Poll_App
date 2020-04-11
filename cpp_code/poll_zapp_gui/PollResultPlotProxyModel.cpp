@@ -38,6 +38,8 @@ QVariant PollResultPlotProxyModel::data(// needs work
     if (role != Qt::DecorationRole)
         return sourcePollResultModel->data(index, role);
 
+    politicianModel_.setConstituency(sourcePollResultModel->constituencyId());
+
     auto stringVarHash =
         sourcePollResultModel->data(index, PollResultModel::PlotRole)
             .value<QHash<QString, QVariant>>();
@@ -53,8 +55,7 @@ QVariant PollResultPlotProxyModel::data(// needs work
             politicianModel_.data(index, PoliticianModel::PartyColourRole)
                 .value<QHash<QString, QVariant>>();
         auto colour = qt_nonqt_conversions::hashToColour(rgbHash);
-        plotData.add(
-            PlotDataPoint(name, colour, namesAndPollingNumbers[name]));
+        plotData.add(PlotDataPoint(name, colour, namesAndPollingNumbers[name]));
     }
 
     if (pixmapCache_.contains(plotData))

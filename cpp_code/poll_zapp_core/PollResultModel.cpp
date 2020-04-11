@@ -114,6 +114,11 @@ QModelIndex PollResultModel::addPollresult(unique_ptr<PollResult> pollResult)
     return index(row);
 }
 
+int PollResultModel::constituencyId() const
+{
+    return constituencyId_;
+}
+
 void PollResultModel::reload()
 {
     beginResetModel();

@@ -33,6 +33,7 @@ public:
     QHash<int, QByteArray> roleNames() const override;
 
     QModelIndex addPollresult(std::unique_ptr<PollResult> pollResult);
+    int constituencyId() const;
 
     bool refreshDataSource();
 

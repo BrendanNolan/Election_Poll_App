@@ -17,16 +17,12 @@ HistogramBar::HistogramBar(
 {
 }
 
-void HistogramPainter::setPlotData(const PlotData* data)
+void HistogramPainter::paint(const PlotData& data, QPaintDevice* paintDevice)
 {
-    histogramData_ = data;
-}
-
-void HistogramPainter::paint(QPaintDevice* paintDevice)
-{
-    reset();
+    bars_.clear();
+    histogramData_ = &data;
     paintDevice_ = paintDevice;
-    if (!histogramData_ || !paintDevice)
+    if (!paintDevice)
         return;
     makeBars();
     paintAxes();
@@ -77,18 +73,11 @@ void HistogramPainter::paintBars() const
 {
     if (!paintDevice_ || bars_.isEmpty())
         return;
-    
+
     QPainter painter(paintDevice_);
     for (const auto& bar : bars_)
     {
         painter.drawRect(bar.rect_);
         painter.fillRect(bar.rect_, bar.colour_);
     }
-}
-
-void HistogramPainter::reset()
-{
-    paintDevice_ = nullptr;
-    histogramData_ = nullptr;
-    bars_.clear();
 }

@@ -11,8 +11,7 @@ class IPlotPainter
 {
 public:
     virtual ~IPlotPainter() = default;
-    virtual void setPlotData(const PlotData* plot) = 0;
-    virtual void paint(QPaintDevice* paintDevice) = 0;
+    virtual void paint(const PlotData& plot, QPaintDevice* paintDevice) = 0;
 };
 
 #endif// IPLOTPAINTER_H

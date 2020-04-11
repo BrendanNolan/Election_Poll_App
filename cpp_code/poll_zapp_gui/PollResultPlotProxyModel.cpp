@@ -70,8 +70,7 @@ QVariant PollResultPlotProxyModel::data(// needs work
 
     QPixmap pixmap(PREFERRED_WIDTH, PREFERRED_HEIGHT);
 
-    plotPainter_->setPlotData(&plotData);
-    plotPainter_->paint(&pixmap);
+    plotPainter_->paint(plotData, &pixmap);
     pixmapCache_.insert(plotData, pixmap);
     return pixmap;
 }

@@ -11,6 +11,7 @@ class QPaintDevice;
 
 struct HistogramBar
 {
+    HistogramBar() = default;
     HistogramBar(const QString& name, const QColor& colour, const QRect& rect);
 
     QString name_;
@@ -21,15 +22,12 @@ struct HistogramBar
 class HistogramPainter : public IPlotPainter
 {
 public:
-    void setPlotData(const PlotData* data) override;
-    void paint(QPaintDevice* paintDevice) override;
+    void paint(const PlotData& data, QPaintDevice* paintDevice) override;
 
 protected:
     void makeBars();
     void paintAxes() const;
     void paintBars() const;
-
-    void reset();
 
 private:
     const PlotData* histogramData_;

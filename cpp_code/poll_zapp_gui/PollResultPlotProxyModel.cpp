@@ -4,6 +4,7 @@
 
 #include "PollResultModel.h"
 #include "poll_zapp_core_utils.h"
+#include "qt_nonqt_conversion_functions.h"
 
 namespace
 {
@@ -53,7 +54,7 @@ QVariant PollResultPlotProxyModel::data(// needs work
                 .value<QHash<QString, QVariant>>();
         // The function hashToColour should be pulled out from 
         // ConstituencyColoursProxyModel to utils_qt_dep
-        auto colour = hashToColour(rgbHash);
+        auto colour = qt_nonqt_conversions::hashToColour(rgbHash);
         plotData.add(
             PlotDataPoint(name, colour, namesAndPollingNumbers[name]));
     }

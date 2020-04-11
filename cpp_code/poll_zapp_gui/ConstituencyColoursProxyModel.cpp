@@ -7,13 +7,12 @@
 #include <algorithm>
 
 #include "ConstituencyModel.h"
+#include "qt_nonqt_conversion_functions.h"
 
 namespace
 {
 const auto PREFERRED_WIDTH = 50;
 const auto PREFERRED_HEIGHT = 50;
-
-QColor hashToColour(const QHash<QString, QVariant>& hash);
 }// namespace
 
 ConstituencyColoursProxyModel::ConstituencyColoursProxyModel(
@@ -52,7 +51,7 @@ QVariant ConstituencyColoursProxyModel::data(
                                sourceConstituencyModel->index(row, 0),
                                PoliticianModel::PartyColourRole)
                            .value<QHash<QString, QVariant>>();
-        colours.push_back(hashToColour(rgbHash));
+        colours.push_back(qt_nonqt_conversions::hashToColour(rgbHash));
     }
     std::sort(colours.begin(), colours.end(), [](QColor a, QColor b) {
         if (a.red() > b.red())
@@ -99,14 +98,3 @@ ConstituencyModel* ConstituencyColoursProxyModel::constituencyModel() const
     Q_ASSERT(ret);
     return ret;
 }
-
-namespace
-{
-QColor hashToColour(const QHash<QString, QVariant>& hash)
-{
-    auto red = hash["red"].toInt();
-    auto green = hash["green"].toInt();
-    auto blue = hash["blue"].toInt();
-    return QColor(red, green, blue);
-}
-}// namespace

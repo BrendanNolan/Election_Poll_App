@@ -1,6 +1,7 @@
 #include "Point.h"
 
 #include <cmath>
+#include <exception>
 #include <utility>
 
 #include "geom_defs.h"
@@ -33,6 +34,11 @@ Point Point::newPolarPoint(double r, double theta)
 Point Point::origin()
 {
     return Point(0.0, 0.0);
+}
+
+bool Point::operator==(const Point& other) const
+{
+    return other.x_ == x_ && other.y_ == y_;
 }
 
 double Point::r() const
@@ -70,6 +76,14 @@ Point Point::rotatedAbout(const Point& fulcrum, double radians) const
     auto rotatedCopy = *this;
     rotatedCopy.rotateAbout(fulcrum, radians);
     return rotatedCopy;
+}
+
+void Point::normalise()
+{
+    if (*this == origin())
+        return;
+
+    *this /= norm(*this);
 }
 
 double Point::x() const
@@ -119,6 +133,38 @@ Point operator-(const Point& a, const Point& b)
 double dist(const Point& a, const Point& b)
 {
     return std::sqrt(std::pow(a.x() - b.x(), 2) + std::pow(a.y() - b.y(), 2));
+}
+
+double norm(const Point& point)
+{
+    return dist(point, Point::origin());
+}
+
+double angle(const Point& a, const Point& corner, const Point& b)
+{
+    if (a == b || b == corner || a == corner)
+        throw std::exception("At least two points the same.");
+    auto a2 = a - corner;
+    auto b2 = b - corner;
+    a2.normalise();
+    b2.normalise();
+
+
+}
+
+Quadrant quadrant(const Point& point)
+{
+    auto x = point.x();
+    auto y = point.y();
+
+    if (x >= 0 && y >= 0)
+        return Quadrant::first;
+    else if (x < 0 && y >= 0)
+        return Quadrant::second;
+    else if (x < 0 && y < 0)
+        return Quadrant::third;
+    else
+        return Quadrant::fourth;
 }
 
 }// namespace geom

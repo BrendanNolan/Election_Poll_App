@@ -9,6 +9,14 @@
 namespace geom
 {
 
+enum class Quadrant
+{
+    first,
+    second,
+    third,
+    fourth
+};
+
 class Point
 {
 protected:
@@ -19,8 +27,11 @@ public:
     static Point newPolarPoint(double r, double theta);
     static Point origin();
 
+    bool operator==(const Point& other) const;
+
     void rotateAbout(const Point& fulcrum, double radians);
     Point rotatedAbout(const Point& fulcrum, double radians) const;
+    void normalise();
 
     void setPolarCoords(double r, double theta);
     void setCartesianCoords(double x, double y);
@@ -45,6 +56,9 @@ private:
 Point operator+(const Point& a, const Point& b);
 Point operator-(const Point& a, const Point& b);
 double dist(const Point& a, const Point& b);
+double norm(const Point& point);
+double angle(const Point& a, const Point& corner, const Point& b);
+Quadrant quadrant(const Point& point);
 
 };// namespace geom
 

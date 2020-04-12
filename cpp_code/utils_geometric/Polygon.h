@@ -21,6 +21,7 @@ private:
 };
 
 Point centroid(const Polygon& polygon);
+double area(const Polygon& polygon);
 
 }
 

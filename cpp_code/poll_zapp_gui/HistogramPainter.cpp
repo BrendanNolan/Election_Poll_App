@@ -61,7 +61,7 @@ void HistogramPainter::makeBars()
     for (auto& bar : bars_)
     {
         bar.rect_.moveBottomLeft(barBottomLeft);
-        barBottomLeft += QPoint(barWidth, 0);
+        barBottomLeft += QPoint(1.1 * barWidth, 0);
     }
 }
 
@@ -78,6 +78,9 @@ void HistogramPainter::paintBars() const
     for (const auto& bar : bars_)
     {
         painter.drawRect(bar.rect_);
-        painter.fillRect(bar.rect_, bar.colour_);
+        if (bar.colour_.isValid())
+            painter.fillRect(bar.rect_, bar.colour_);
+        else
+            painter.drawText(bar.rect_.bottomLeft(), "?");
     }
 }

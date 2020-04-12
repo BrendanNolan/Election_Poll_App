@@ -38,8 +38,8 @@ QVariant PollResultModel::data(const QModelIndex& index, int role) const
     switch (role)
     {
     case Qt::DisplayRole:
-        return pollResult.source() + " (" + pollResult.dateTime().toString()
-               + ')';
+    case SourceRole:
+        return pollResult.source();
     case PlotRole:
     {
         auto stringIntHash = pollResult.plot();
@@ -48,8 +48,6 @@ QVariant PollResultModel::data(const QModelIndex& index, int role) const
             stringVarHash[key] = stringIntHash[key];
         return stringVarHash;
     }
-    case SourceRole:
-        return pollResult.source();
     case DateTimeRole:
         return pollResult.dateTime();
     default:

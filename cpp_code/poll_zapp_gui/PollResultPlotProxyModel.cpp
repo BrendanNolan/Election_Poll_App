@@ -1,5 +1,7 @@
 #include "PollResultPlotProxyModel.h"
 
+#include <QDate>
+#include <QDateTime>
 #include <QtGlobal>
 
 #include "PollResultModel.h"
@@ -55,10 +57,16 @@ QVariant PollResultPlotProxyModel::data(// needs work
             politicianModel_.data(index, PoliticianModel::PartyColourRole)
                 .value<QHash<QString, QVariant>>();
         auto colour = qt_nonqt_conversions::hashToColour(rgbHash);
-        plotData.addDataPoint(PlotDataPoint(name, colour, namesAndPollingNumbers[name]));
+        plotData.addDataPoint(
+            PlotDataPoint(name, colour, namesAndPollingNumbers[name]));
     }
     auto pollSource = data(index, PollResultModel::SourceRole).toString();
     plotData.addTextMetaData("Source", pollSource);
+    auto pollDate = data(index, PollResultModel::DateTimeRole)
+                        .toDateTime()
+                        .date()
+                        .toString();
+    plotData.addTextMetaData("Date", pollDate);
 
     if (pixmapCache_.contains(plotData))
         return pixmapCache_.value(plotData);

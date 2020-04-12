@@ -30,13 +30,15 @@ db.commit()
 
 sources = ["NYT", "WAPO", "HUFFPO", "NYPOST"]
 politician_names = ["Rory", "David", "Kate", "Brendan"]
-
-source_range = list(range(4))
-politician_range = list(range(4))
-random.shuffle(source_range)
-random.shuffle(politician_range)
+poll_scores = [20, 7, 35, 30]
 
 for constituency_id in range(1, 5):
+    source_range = list(range(4))
+    politician_range = list(range(4))
+    poll_score_range = list(range(4))
+    random.shuffle(source_range)
+    random.shuffle(politician_range)
+    random.shuffle(poll_score_range)
     for j in source_range:
         for i in politician_range:
             cursor.execute('''
@@ -44,6 +46,6 @@ for constituency_id in range(1, 5):
                 (constituency_id, source, date_time, politician_name, poll_value)
                 VALUES
                 (?, ?, ?, ?, ?)
-            ''', (constituency_id, sources[j], 20200201 + j, politician_names[i], j * 20))
+            ''', (constituency_id, sources[j], 20200201 + j, politician_names[i], poll_scores[poll_score_range[i]]))
 
 db.commit()

@@ -13,7 +13,7 @@ void Polygon::inflate(double inflationFactor)
 {
     auto theCentroid = centroid(*this);
     auto& thePoints = points();
-    for (auto& point : thePoints) 
+    for (auto& point : thePoints)
         dilate(point, theCentroid, inflationFactor);
 }
 

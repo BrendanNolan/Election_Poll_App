@@ -9,13 +9,13 @@
 class PolygonInflatingPositioningEngine : public IPolygonLayoutEngine
 {
 public:
-    void layout(std::vector<Polygon>& polygons) override;
+    void layout(std::vector<geom::Polygon>& polygons) override;
 
 private:
-    void reposition(Polygon& rect) const;
+    void reposition(geom::Polygon& rect) const;
 
 private:
-    std::vector<Polygon>* polygons_;
+    std::vector<geom::Polygon>* polygons_;
 };
 
 #endif// POLYGONINFLATINGPOSITIONINGENGINE_H

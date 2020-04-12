@@ -1,6 +1,9 @@
 #include "PolygonInflatingPositioningEngine.h"
 
-void PolygonInflatingPositioningEngine::layout(std::vector<Polygon>& polygons)
+using namespace geom;
+using namespace std;
+
+void PolygonInflatingPositioningEngine::layout(vector<Polygon>& polygons)
 {
 }
 

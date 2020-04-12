@@ -94,6 +94,18 @@ Point Point::rotatedAboutOrigin(double radians) const
     return cpy;
 }
 
+void Point::operator*=(double scalar)
+{
+    x_ *= scalar;
+    y_ *= scalar;
+}
+
+void Point::operator/=(double scalar)
+{
+    x_ /= scalar;
+    y_ /= scalar;
+}
+
 Point operator+(const Point& a, const Point& b)
 {
     return Point::newCartesianPoint(a.x() + b.x(), a.y() + b.y());

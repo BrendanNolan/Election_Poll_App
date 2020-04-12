@@ -11,9 +11,11 @@ HEADERS += \
     Point.h \
     Polygon.h \
     IPolygonLayoutEngine.h \
-    PolygonInflatingPositioningEngine.h
+    PolygonInflatingPositioningEngine.h \
+    geom_functions.h
 
 SOURCES += \
     Point.cpp \
     Polygon.cpp \
-    PolygonInflatingPositioningEngine.cpp
+    PolygonInflatingPositioningEngine.cpp \
+    geom_functions.cpp

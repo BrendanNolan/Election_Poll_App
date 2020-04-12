@@ -11,12 +11,16 @@ namespace geom
 class Polygon
 {
 public:
-    geom::Point centroid() const;
     void inflate(double inflationFactor);
 
+    const std::vector<Point>& points() const;
+    std::vector<Point>& points();
+
 private:
-    std::vector<geom::Point> points_;
+    std::vector<Point> points_;
 };
+
+Point centroid(const Polygon& polygon);
 
 }
 

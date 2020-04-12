@@ -2,28 +2,49 @@
 
 #include <algorithm>
 
+#include "geom_functions.h"
+
 using namespace std;
 
 namespace geom
 {
 
-Point Polygon::centroid() const
+void Polygon::inflate(double inflationFactor)
 {
-    auto n = points_.size();
+    auto theCentroid = centroid(*this);
+    auto& thePoints = points();
+    for (auto& point : thePoints) 
+        dilate(point, theCentroid, inflationFactor);
+}
+
+const vector<Point>& Polygon::points() const
+{
+    return points_;
+}
+
+vector<Point>& Polygon::points()
+{
+    return points_;
+}
+
+Point centroid(const Polygon& polygon)
+{
+    const auto& points = polygon.points();
+    auto n = points.size();
     if (n == 0)
         return Point::newCartesianPoint(0.0, 0.0);
 
     vector<double> x;
     x.reserve(n);
     std::transform(
-        points_.begin(), points_.end(), x.begin(), [](const Point& point) {
+        points.begin(), points.end(), x.begin(), [](const Point& point) {
             return point.x();
         });
 
     vector<double> y;
     y.reserve(n);
     std::transform(
-        points_.begin(), points_.end(), y.begin(), [](const Point& point) {
+        points.begin(), points.end(), y.begin(), [](const Point& point) {
             return point.y();
         });
 
@@ -49,10 +70,6 @@ Point Polygon::centroid() const
     cx *= (1.0 / 6.0);
 
     return Point::newCartesianPoint(cx, cy);
-}
-
-void Polygon::inflate(double inflationFactor)
-{
 }
 
 }// namespace geom

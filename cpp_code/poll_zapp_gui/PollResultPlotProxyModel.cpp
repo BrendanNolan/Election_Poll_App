@@ -55,8 +55,6 @@ QVariant PollResultPlotProxyModel::data(// needs work
             politicianModel_.data(index, PoliticianModel::PartyColourRole)
                 .value<QHash<QString, QVariant>>();
         auto colour = qt_nonqt_conversions::hashToColour(rgbHash);
-        if (!colour.isValid())
-            colour = QColor(Qt::black);
         plotData.addDataPoint(PlotDataPoint(name, colour, namesAndPollingNumbers[name]));
     }
     auto pollSource = data(index, PollResultModel::SourceRole).toString();

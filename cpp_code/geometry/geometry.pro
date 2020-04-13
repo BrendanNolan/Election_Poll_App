@@ -10,9 +10,11 @@ HEADERS += \
     geom_defs.h \
     Point.h \
     Polygon.h \
-    geom_functions.h
+    geom_functions.h \
+    PolygonFactory.h
 
 SOURCES += \
     Point.cpp \
     Polygon.cpp \
-    geom_functions.cpp
+    geom_functions.cpp \
+    PolygonFactory.cpp

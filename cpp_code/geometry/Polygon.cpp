@@ -29,6 +29,12 @@ void Polygon::moveTo(const Point& toPoint)
         point += translationVec;
 }
 
+void geom::Polygon::translate(const Point& translationPoint)
+{
+    auto newCentroid = centroid(*this) + translationPoint;
+    moveTo(newCentroid);
+}
+
 const vector<Point>& Polygon::points() const
 {
     return points_;
@@ -37,6 +43,16 @@ const vector<Point>& Polygon::points() const
 vector<Point>& Polygon::points()
 {
     return points_;
+}
+
+void Polygon::setPoints(const std::vector<Point>& points)
+{
+    points_ = points;
+}
+
+bool Polygon::isValid() const
+{
+    return points_.size() > 2;// also should check that not all points collinear
 }
 
 Point centroid(const Polygon& polygon)

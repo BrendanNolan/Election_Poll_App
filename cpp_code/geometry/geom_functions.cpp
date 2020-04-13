@@ -30,7 +30,7 @@ Polygon geom::createSquareOfArea(double area)
     return Polygon(points);
 }
 
-Rectangle boundingRect(const std::vector<Point>& points)
+Polygon boundingRect(const std::vector<Point>& points)
 {
     std::vector<double> xs;
     std::vector<double> ys;
@@ -48,6 +48,7 @@ Rectangle boundingRect(const std::vector<Point>& points)
     auto right = *(std::max(xs.begin(), xs.end()));
     auto top = *(std::max(ys.begin(), ys.end()));
     auto bottom = *(std::min(xs.begin(), xs.end()));
+    return Polygon(std::vector<Point>{});
 }
 
 }// namespace geom

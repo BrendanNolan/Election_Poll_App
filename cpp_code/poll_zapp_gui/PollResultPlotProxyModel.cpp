@@ -6,7 +6,7 @@
 
 #include "PollResultModel.h"
 #include "poll_zapp_core_utils.h"
-#include "qt_nonqt_conversion_functions.h"
+#include "poll_zapp_gui_utils.h"
 
 namespace
 {

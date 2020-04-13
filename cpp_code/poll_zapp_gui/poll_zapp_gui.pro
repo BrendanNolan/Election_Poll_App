@@ -18,7 +18,8 @@ HEADERS += \
     HistogramPainter.h \
     IPlotPainter.h \
     StartupHandler.h \
-    PlotData.h
+    PlotData.h \
+    poll_zapp_gui_utils.h
 
 SOURCES += \
     ConstituencyWidget.cpp \
@@ -33,7 +34,8 @@ SOURCES += \
     PollResultPlotProxyModel.cpp \
     HistogramPainter.cpp \
     StartupHandler.cpp \
-    PlotData.cpp
+    PlotData.cpp \
+    poll_zapp_gui_utils.cpp
 
 FORMS += \
     ConstituencyDrillDownWidget.ui \

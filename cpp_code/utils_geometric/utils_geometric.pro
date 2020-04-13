@@ -1,4 +1,6 @@
-QT += widgets
+QT -= \
+    core \
+    gui
 
 TARGET = utils_geometric
 TEMPLATE = lib

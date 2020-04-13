@@ -19,9 +19,6 @@ Projects:
         Contains the low-level models and database managing classes which provide data to the 
         GUI components. 
         Qt dependencies: core, sql
-    utils_qt_dep (static library):
-        Contains low-level utilities for Qt classes.
-        Qt dependencies: core
     utils_geometric (static library): 
         Contains low-level, simple geometry classes.
         Qt dependencies: none

@@ -57,7 +57,6 @@ Point operator+(const Point& a, const Point& b);
 Point operator-(const Point& a, const Point& b);
 double dist(const Point& a, const Point& b);
 double norm(const Point& point);
-double angle(const Point& a, const Point& corner, const Point& b);
 Quadrant quadrant(const Point& point);
 
 };// namespace geom

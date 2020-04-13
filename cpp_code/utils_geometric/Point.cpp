@@ -140,16 +140,6 @@ double norm(const Point& point)
     return dist(point, Point::origin());
 }
 
-double angle(const Point& a, const Point& corner, const Point& b)
-{
-    if (a == b || b == corner || a == corner)
-        throw std::exception("At least two points the same.");
-    auto a2 = a - corner;
-    auto b2 = b - corner;
-    a2.normalise();
-    b2.normalise();
-}
-
 Quadrant quadrant(const Point& point)
 {
     auto x = point.x();

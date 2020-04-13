@@ -51,7 +51,7 @@ QVariant ConstituencyColoursProxyModel::data(
                                sourceConstituencyModel->index(row, 0),
                                PoliticianModel::PartyColourRole)
                            .value<QHash<QString, QVariant>>();
-        colours.push_back(qt_nonqt_conversions::hashToColour(rgbHash));
+        colours.push_back(qt_nonqt_conversion::hashToColour(rgbHash));
     }
     std::sort(colours.begin(), colours.end(), [](QColor a, QColor b) {
         if (a.red() > b.red())

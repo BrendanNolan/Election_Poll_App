@@ -1,5 +1,5 @@
-#ifndef POINT_UTILS_H
-#define POINT_UTILS_H
+#ifndef QT_POINT_FUNCTIONS_H
+#define QT_POINT_FUNCTIONS_H
 
 class QPointF;
 
@@ -13,4 +13,4 @@ QPointF rotatedAbout(
 float length(const QPointF& point);
 }// namespace geom
 
-#endif// POINT_UTILS_H
+#endif// QT_POINT_FUNCTIONS_H

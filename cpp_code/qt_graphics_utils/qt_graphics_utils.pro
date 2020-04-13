@@ -2,7 +2,7 @@ include($$top_srcdir/paths.pri)
 
 QT += widgets
 
-TARGET = utils_qt_dep
+TARGET = qt_hraphics_utils
 TEMPLATE = lib
 CONFIG += static
 
@@ -18,4 +18,4 @@ SOURCES += \
     GraphicsItemInflatingPositioningEngine.cpp
     
 INCLUDEPATH += \
-    $$utils_geometric_source_path
+    $$geometry_source_path

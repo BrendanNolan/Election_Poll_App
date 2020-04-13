@@ -2,7 +2,7 @@ QT -= \
     core \
     gui
 
-TARGET = utils_geometric
+TARGET = geometry
 TEMPLATE = lib
 CONFIG += static
 

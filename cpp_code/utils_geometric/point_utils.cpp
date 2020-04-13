@@ -18,7 +18,7 @@ void rotateAbout(QPointF& point, const QPointF& fulcrum, double radians)
     point = converter.qPointF(p);
 }
 
-QPointF geom::rotatedAbout(
+QPointF rotatedAbout(
     const QPointF& point, const QPointF& fulcrum, double radians)
 {
     auto cpy = point;
@@ -26,7 +26,7 @@ QPointF geom::rotatedAbout(
     return cpy;
 }
 
-float geom::length(const QPointF& point)
+float length(const QPointF& point)
 {
     return std::sqrt(std::pow(point.x(), 2) + std::pow(point.y(), 2));
 }

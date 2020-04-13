@@ -1,3 +1,5 @@
+QT += widgets
+
 TARGET = utils_geometric
 TEMPLATE = lib
 CONFIG += static

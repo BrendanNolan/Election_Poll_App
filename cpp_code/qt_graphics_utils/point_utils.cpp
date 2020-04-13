@@ -7,7 +7,7 @@
 #include "Point.h"
 #include "QtSceneCoordConverter.h"
 
-namespace geom
+namespace qt_point_functions
 {
 void rotateAbout(QPointF& point, const QPointF& fulcrum, double radians)
 {

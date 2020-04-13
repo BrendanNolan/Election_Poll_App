@@ -2,7 +2,7 @@ include($$top_srcdir/paths.pri)
 
 QT += widgets
 
-TARGET = qt_hraphics_utils
+TARGET = qt_graphics_utils
 TEMPLATE = lib
 CONFIG += static
 

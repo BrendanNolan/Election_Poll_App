@@ -57,7 +57,7 @@ void RotatingItemsWidget::rotateItems()
     for (auto item : rotatingItems_)
     {
         auto pos = item->pos();
-        rotateAbout(pos, QPointF(0.0f, 0.0f), rotationAngle_);
+        qt_point_functions::rotateAbout(pos, QPointF(0.0f, 0.0f), rotationAngle_);
         item->setPos(pos);
     }
 }
@@ -98,7 +98,7 @@ void RotatingItemsWidget::positionRotatingItems()
             itemAlreadyInScene = true;*/
 
         auto pos = item->pos();
-        auto currentRadius = length(pos);
+        auto currentRadius = qt_point_functions::length(pos);
 
         if (currentRadius != 0)
         {
@@ -106,7 +106,7 @@ void RotatingItemsWidget::positionRotatingItems()
         }
         else
         {
-            auto defPos = rotatedAbout(
+            auto defPos = qt_point_functions::rotatedAbout(
                 startPoint,
                 QPointF(0, 0),
                 (i / static_cast<double>(itemCount)) * (2 * pi));

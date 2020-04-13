@@ -3,7 +3,7 @@
 
 class QPointF;
 
-namespace geom
+namespace qt_point_functions
 {
 void rotateAbout(QPointF& point, const QPointF& fulcrum, double radians);
 

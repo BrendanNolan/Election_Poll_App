@@ -7,15 +7,15 @@ TEMPLATE = lib
 CONFIG += static
 
 HEADERS += \
+    qt_point_functions.h \
     QtSceneCoordConverter.h \
     GraphicsItemLayoutEngine.h \
-    GraphicsItemInflatingPositioningEngine.h \
-    qt_point_functions.h
+    GraphicsItemInflatingPositioningEngine.h
     
 SOURCES += \
+    qt_point_functions.cpp \
     QtSceneCoordConverter.cpp \
-    GraphicsItemInflatingPositioningEngine.cpp \
-    qt_point_functions.cpp
+    GraphicsItemInflatingPositioningEngine.cpp
     
 INCLUDEPATH += \
     $$geometry_source_path

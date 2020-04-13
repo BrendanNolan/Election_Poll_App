@@ -1,21 +1,18 @@
 #ifndef GRAPHICSITEMINFLATINGPOSITIONINGENGINE_H
 #define GRAPHICSITEMINFLATINGPOSITIONINGENGINE_H
 
-#include <vector>
-
 #include "GraphicsItemLayoutEngine.h"
-#include "Polygon.h"
 
 class GraphicsItemInflatingPositioningEngine : public GraphicsItemLayoutEngine
 {
 public:
-    void layout(std::vector<geom::Polygon>& polygons) override;
+    void layout(QVector<QGraphicsItem>& items) override;
 
 private:
-    void reposition(geom::Polygon& rect) const;
+    void reposition(QGraphicsItem& item) const;
 
 private:
-    std::vector<geom::Polygon>* polygons_;
+    QVector<QGraphicsItem>* items_;
 };
 
 #endif// GRAPHICSITEMINFLATINGPOSITIONINGENGINE_H

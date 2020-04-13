@@ -1,12 +1,9 @@
 #include "GraphicsItemInflatingPositioningEngine.h"
 
-using namespace geom;
-using namespace std;
-
-void GraphicsItemInflatingPositioningEngine::layout(vector<Polygon>& polygons)
+void GraphicsItemInflatingPositioningEngine::layout(QVector<QGraphicsItem>& items)
 {
 }
 
-void GraphicsItemInflatingPositioningEngine::reposition(Polygon& rect) const
+void GraphicsItemInflatingPositioningEngine::reposition(QGraphicsItem& item) const
 {
 }

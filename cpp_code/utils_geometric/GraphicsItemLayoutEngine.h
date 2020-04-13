@@ -1,15 +1,14 @@
 #ifndef GRAPHICSITEMLAYOUTENGINE_H
 #define GRAPHICSITEMLAYOUTENGINE_H
 
-#include <vector>
-
-#include "Polygon.h"
+#include <QGraphicsItem>
+#include <QVector>
 
 class GraphicsItemLayoutEngine
 {
 public:
     virtual ~GraphicsItemLayoutEngine() = default;
-    virtual void layout(std::vector<geom::Polygon>& polygons) = 0;
+    virtual void layout(QVector<QGraphicsItem>& items) = 0;
 };
 
 #endif// GRAPHICSITEMLAYOUTENGINE_H

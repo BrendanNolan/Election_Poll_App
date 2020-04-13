@@ -12,8 +12,8 @@
 #include "ConstituencyModel.h"
 #include "ConstituencyColoursProxyModel.h "
 #include "poll_zapp_core_utils.h"
-#include "IPolygonLayoutEngine.h"
-#include "PolygonInflatingPositioningEngine.h"
+#include "GraphicsItemLayoutEngine.h"
+#include "GraphicsItemInflatingPositioningEngine.h"
 
 ConstituencyWidget::ConstituencyWidget(QWidget* parent)
     : QGraphicsView(parent)

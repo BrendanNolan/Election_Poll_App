@@ -3,7 +3,7 @@
 
 #include <vector>
 
-#include "IPolygonLayoutEngine.h"
+#include "GraphicsItemLayoutEngine.h"
 #include "Polygon.h"
 
 class PolygonInflatingPositioningEngine : public IPolygonLayoutEngine

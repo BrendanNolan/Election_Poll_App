@@ -10,12 +10,12 @@ HEADERS += \
     geom_defs.h \
     Point.h \
     Polygon.h \
-    IPolygonLayoutEngine.h \
-    PolygonInflatingPositioningEngine.h \
-    geom_functions.h
+    geom_functions.h \
+    GraphicsItemLayoutEngine.h \
+    GraphicsItemInflatingPositioningEngine.h
 
 SOURCES += \
     Point.cpp \
     Polygon.cpp \
-    PolygonInflatingPositioningEngine.cpp \
-    geom_functions.cpp
+    geom_functions.cpp \
+    GraphicsItemInflatingPositioningEngine.cpp

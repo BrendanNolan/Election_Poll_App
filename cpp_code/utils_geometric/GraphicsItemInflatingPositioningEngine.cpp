@@ -1,4 +1,4 @@
-#include "PolygonInflatingPositioningEngine.h"
+#include "GraphicsItemInflatingPositioningEngine.h"
 
 using namespace geom;
 using namespace std;

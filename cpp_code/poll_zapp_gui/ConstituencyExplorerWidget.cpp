@@ -15,7 +15,7 @@
 #include "PoliticianModel.h"
 #include "PoliticianPictureProxyModel.h"
 #include "PollResultModel.h"
-#include "PolygonInflatingPositioningEngine.h"
+#include "GraphicsItemInflatingPositioningEngine.h"
 #include "RotatingItemsWidget.h"
 #include "SqlDatabaseManagerFactory.h"
 

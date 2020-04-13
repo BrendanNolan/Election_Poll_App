@@ -18,7 +18,7 @@ class QGraphicsScene;
 class QItemSelection;
 class QItemSelectionModel;
 class QPoint;
-class IPolygonLayoutEngine;
+class GraphicsItemLayoutEngine;
 
 /*
    Should just keep a ConstituencyModel and, in
@@ -38,7 +38,7 @@ public:
         ConstituencyModel* constituencyModel, PoliticianModel* politicianModel);
     void setSelectionModel(QItemSelectionModel* selectionModel);
     void setPolygonLayoutEngine(
-        std::unique_ptr<IPolygonLayoutEngine> polygonLayoutEngine);
+        std::unique_ptr<GraphicsItemLayoutEngine> polygonLayoutEngine);
 
 private slots:
     void onSelectionChanged(const QItemSelection& selected);
@@ -56,7 +56,7 @@ private:
     QItemSelectionModel* constituencySelectionModel_ = nullptr;
     PoliticianModel* politicianModel_;
 
-    std::unique_ptr<IPolygonLayoutEngine> polygonLayoutEngine_;
+    std::unique_ptr<GraphicsItemLayoutEngine> polygonLayoutEngine_;
 
     int idOfMostRecentlySelectedConstituency_ = -1;
 

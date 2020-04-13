@@ -3,10 +3,10 @@
 using namespace geom;
 using namespace std;
 
-void PolygonInflatingPositioningEngine::layout(vector<Polygon>& polygons)
+void GraphicsItemInflatingPositioningEngine::layout(vector<Polygon>& polygons)
 {
 }
 
-void PolygonInflatingPositioningEngine::reposition(Polygon& rect) const
+void GraphicsItemInflatingPositioningEngine::reposition(Polygon& rect) const
 {
 }

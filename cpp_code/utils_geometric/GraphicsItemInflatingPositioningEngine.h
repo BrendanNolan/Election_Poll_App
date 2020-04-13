@@ -6,7 +6,7 @@
 #include "GraphicsItemLayoutEngine.h"
 #include "Polygon.h"
 
-class PolygonInflatingPositioningEngine : public IPolygonLayoutEngine
+class GraphicsItemInflatingPositioningEngine : public GraphicsItemLayoutEngine
 {
 public:
     void layout(std::vector<geom::Polygon>& polygons) override;

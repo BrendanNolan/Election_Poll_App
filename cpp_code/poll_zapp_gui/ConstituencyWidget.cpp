@@ -58,7 +58,7 @@ void ConstituencyWidget::setSelectionModel(QItemSelectionModel* selectionModel)
 }
 
 void ConstituencyWidget::setPolygonLayoutEngine(
-    std::unique_ptr<IPolygonLayoutEngine> polygonLayoutEngine)
+    std::unique_ptr<GraphicsItemLayoutEngine> polygonLayoutEngine)
 {
     polygonLayoutEngine_ = std::move(polygonLayoutEngine);
 }

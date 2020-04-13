@@ -5,10 +5,10 @@
 
 #include "Polygon.h"
 
-class IPolygonLayoutEngine
+class GraphicsItemLayoutEngine
 {
 public:
-    virtual ~IPolygonLayoutEngine() = default;
+    virtual ~GraphicsItemLayoutEngine() = default;
     virtual void layout(std::vector<geom::Polygon>& polygons) = 0;
 };
 

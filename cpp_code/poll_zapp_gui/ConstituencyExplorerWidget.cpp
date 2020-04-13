@@ -25,8 +25,8 @@ ConstituencyExplorerWidget::ConstituencyExplorerWidget(QWidget* parent)
 {
     ui_->setupUi(this);
     ui_->constituencyWidget->setPolygonLayoutEngine(
-        std::unique_ptr<PolygonInflatingPositioningEngine>(
-            new PolygonInflatingPositioningEngine()));
+        std::unique_ptr<GraphicsItemInflatingPositioningEngine>(
+            new GraphicsItemInflatingPositioningEngine()));
 
     auto factory = SqlDatabaseManagerFactory(QFileInfo(paths::databasePath()));
 

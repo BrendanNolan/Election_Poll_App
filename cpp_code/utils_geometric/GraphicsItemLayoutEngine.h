@@ -1,5 +1,5 @@
-#ifndef IPOLYGONLAYOUTENGINE_H
-#define IPOLYGONLAYOUTENGINE_H
+#ifndef GRAPHICSITEMLAYOUTENGINE_H
+#define GRAPHICSITEMLAYOUTENGINE_H
 
 #include <vector>
 
@@ -12,4 +12,4 @@ public:
     virtual void layout(std::vector<geom::Polygon>& polygons) = 0;
 };
 
-#endif// IPOLYGONLAYOUTENGINE_H
+#endif// GRAPHICSITEMLAYOUTENGINE_H

@@ -1,5 +1,5 @@
-#ifndef QT_NONQT_CONVERSION_FUNCTIONS_H
-#define QT_NONQT_CONVERSION_FUNCTIONS_H
+#ifndef POLL_ZAPP_GUI_UTILS_H
+#define POLL_ZAPP_GUI_UTILS_H
 
 #include <QColor>
 #include <QString>
@@ -12,4 +12,4 @@ QColor hashToColour(const QHash<QString, QVariant>& hash);
 
 }// namespace qt_nonqt_conversions
 
-#endif// QT_NONQT_CONVERSION_FUNCTIONS_H
+#endif// POLL_ZAPP_GUI_UTILS_H

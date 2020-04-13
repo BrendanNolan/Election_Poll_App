@@ -12,4 +12,4 @@ void dilate(Point& moveablePoint, const Point& anchor, double dilationFactor)
     moveablePoint = translated + anchor;
 }
 
-}
+}// namespace geom

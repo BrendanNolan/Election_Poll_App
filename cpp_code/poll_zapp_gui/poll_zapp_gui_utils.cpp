@@ -7,8 +7,7 @@ namespace qt_nonqt_conversion
 
 QColor hashToColour(const QHash<QString, QVariant>& hash)
 {
-    if (!hash.contains("red")
-        || !hash.contains("green")
+    if (!hash.contains("red") || !hash.contains("green")
         || !hash.contains("blue"))
     {
         return QColor();
@@ -20,4 +19,4 @@ QColor hashToColour(const QHash<QString, QVariant>& hash)
     return QColor(red, green, blue);
 }
 
-}// namespace qt_nonqt_conversions
+}// namespace qt_nonqt_conversion

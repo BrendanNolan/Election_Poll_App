@@ -23,7 +23,8 @@ void RotatingItemsWidget::setRotatingItems(const QVector<QGraphicsItem*>& items)
 {
     qDeleteAll(rotatingItems_);
     rotatingItems_ = items;
-    for (auto item : rotatingItems_) scene()->addItem(item);
+    for (auto item : rotatingItems_)
+        scene()->addItem(item);
     positionRotatingItems();
 }
 

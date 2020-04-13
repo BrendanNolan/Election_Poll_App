@@ -72,6 +72,4 @@ Point centroid(const Polygon& polygon)
     return Point::newCartesianPoint(cx, cy);
 }
 
-
-
 }// namespace geom

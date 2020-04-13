@@ -10,6 +10,6 @@ namespace qt_nonqt_conversion
 
 QColor hashToColour(const QHash<QString, QVariant>& hash);
 
-}// namespace qt_nonqt_conversions
+}// namespace qt_nonqt_conversion
 
 #endif// POLL_ZAPP_GUI_UTILS_H

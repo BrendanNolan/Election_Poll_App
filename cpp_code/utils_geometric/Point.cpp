@@ -148,8 +148,6 @@ double angle(const Point& a, const Point& corner, const Point& b)
     auto b2 = b - corner;
     a2.normalise();
     b2.normalise();
-
-
 }
 
 Quadrant quadrant(const Point& point)

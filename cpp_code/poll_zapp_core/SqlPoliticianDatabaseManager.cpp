@@ -70,7 +70,8 @@ vector<unique_ptr<Politician>> SqlPoliticianDatabaseManager::mpsForConstituency(
     query.bindValue(":constituency_id", constituencyId);
     query.bindValue(":elected", 1);
     query.exec();
-    while (query.next()) ret.push_back(sqlQueryToPolitician(query));
+    while (query.next())
+        ret.push_back(sqlQueryToPolitician(query));
     return ret;
 }
 
@@ -96,7 +97,8 @@ vector<unique_ptr<Politician>> SqlPoliticianDatabaseManager::
     query.bindValue(":candidate", 1);
     if (!query.exec())
         return vector<unique_ptr<Politician>>();
-    while (query.next()) ret.push_back(sqlQueryToPolitician(query));
+    while (query.next())
+        ret.push_back(sqlQueryToPolitician(query));
     return ret;
 }
 

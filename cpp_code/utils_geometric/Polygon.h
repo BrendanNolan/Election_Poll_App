@@ -23,6 +23,6 @@ private:
 Point centroid(const Polygon& polygon);
 double area(const Polygon& polygon);
 
-}
+}// namespace geom
 
 #endif// POLYGON_H

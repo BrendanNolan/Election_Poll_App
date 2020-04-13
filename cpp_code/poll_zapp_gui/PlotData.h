@@ -23,7 +23,7 @@ public:
     void addDataPoint(const PlotDataPoint& dataPoint);
     void addNumericalMetaData(const QString& metaDataName, double value);
     void addTextMetaData(const QString& metaDataName, const QString& text);
-    
+
     const QVector<PlotDataPoint>& dataPoints() const;
     const QHash<QString, double>& numericalMetaData() const;
     const QHash<QString, QString>& textMetaData() const;

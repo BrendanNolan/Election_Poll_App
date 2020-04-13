@@ -51,6 +51,6 @@ const QHash<QString, QString>& PlotData::textMetaData() const
 bool PlotData::operator==(const PlotData& other) const
 {
     return dataPoints_ == other.dataPoints_
-        && numericalMetaData_ == other.numericalMetaData_
-        && textMetaData_ == other.textMetaData_;
+           && numericalMetaData_ == other.numericalMetaData_
+           && textMetaData_ == other.textMetaData_;
 }

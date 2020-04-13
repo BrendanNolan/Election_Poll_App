@@ -129,7 +129,8 @@ vector<unique_ptr<Constituency>> SqlConstituencyDatabaseManager::
     QSqlQuery query(database);
     if (!query.exec("SELECT * FROM constituencies"))
         return vector<unique_ptr<Constituency>>();
-    while (query.next()) ret.push_back(sqlQueryToConstituency(query));
+    while (query.next())
+        ret.push_back(sqlQueryToConstituency(query));
 
     return ret;
 }

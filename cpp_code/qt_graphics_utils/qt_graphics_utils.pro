@@ -1,5 +1,7 @@
 include($$top_srcdir/paths.pri)
 
+QT += widgets
+
 TARGET = utils_qt_dep
 TEMPLATE = lib
 CONFIG += static
@@ -7,12 +9,13 @@ CONFIG += static
 HEADERS += \
     point_utils.h \
     QtSceneCoordConverter.h \
-    qt_nonqt_conversion_functions.h
-
+    GraphicsItemLayoutEngine.h \
+    GraphicsItemInflatingPositioningEngine.h
+    
 SOURCES += \
     point_utils.cpp \
     QtSceneCoordConverter.cpp \
-    qt_nonqt_conversion_functions.cpp
-
+    GraphicsItemInflatingPositioningEngine.cpp
+    
 INCLUDEPATH += \
     $$utils_geometric_source_path

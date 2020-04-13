@@ -9,12 +9,24 @@ using namespace std;
 namespace geom
 {
 
+Polygon::Polygon(const std::vector<Point>& points)
+    : points_(points)
+{
+}
+
 void Polygon::inflate(double inflationFactor)
 {
     auto theCentroid = centroid(*this);
     auto& thePoints = points();
     for (auto& point : thePoints)
         dilate(point, theCentroid, inflationFactor);
+}
+
+void Polygon::moveTo(const Point& toPoint)
+{
+    auto translationVec = toPoint - centroid(*this);
+    for (auto& point : points_)
+        point += translationVec;
 }
 
 const vector<Point>& Polygon::points() const

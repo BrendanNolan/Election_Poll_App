@@ -36,6 +36,8 @@ public:
     void setPolarCoords(double r, double theta);
     void setCartesianCoords(double x, double y);
 
+    void operator+=(const Point& other);
+    void operator-=(const Point& other);
     void operator*=(double scalar);
     void operator/=(double scalar);
 

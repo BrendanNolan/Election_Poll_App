@@ -12,8 +12,11 @@
 #include "ConstituencyModel.h"
 #include "ConstituencyColoursProxyModel.h "
 #include "poll_zapp_core_utils.h"
+#include "geom_functions.h"
 #include "GraphicsItemLayoutEngine.h"
 #include "GraphicsItemInflatingPositioningEngine.h"
+#include "Point.h"
+#include "Polygon.h"
 
 ConstituencyWidget::ConstituencyWidget(QWidget* parent)
     : QGraphicsView(parent)
@@ -58,19 +61,36 @@ void ConstituencyWidget::setSelectionModel(QItemSelectionModel* selectionModel)
 }
 
 void ConstituencyWidget::setPolygonLayoutEngine(
-    std::unique_ptr<GraphicsItemLayoutEngine> polygonLayoutEngine)
+    std::unique_ptr<GraphicsItemLayoutEngine> graphicsItemLayoutEngine)
 {
-    polygonLayoutEngine_ = std::move(polygonLayoutEngine);
+    graphicsItemLayoutEngine_ = std::move(graphicsItemLayoutEngine);
 }
 
 void ConstituencyWidget::loadSceneConstituencies()
 {
-    scene()->clear();
-    ItemConstituencyIds.clear();
+    using namespace geom;
 
-    auto rows = constituencyProxyModel_->rowCount();
+    scene()->clear();
+    itemConstituencyIds_.clear();
+
+    auto rowCount = constituencyProxyModel_->rowCount();
+    
+    std::vector<Point> constituencyPositions;
+    constituencyPositions.reserve(rowCount);
+    for (auto row = 0; row < rowCount; ++row)
+    {
+        auto index = constituencyProxyModel_->index(row, 0);
+        auto x = constituencyProxyModel_
+                          ->data(index, ConstituencyModel::LongitudeRole)
+                          .toInt();
+        auto y = constituencyProxyModel_
+                          ->data(index, ConstituencyModel::LatitudeRole)
+                          .toInt();
+        constituencyPositions.push_back(Point::newCartesianPoint(x, y));
+    }
+    
     QMap<QGraphicsItem*, int> roughMap;
-    for (auto row = 0; row < rows; ++row)
+    for (auto row = 0; row < rowCount; ++row)
     {
         auto index = constituencyProxyModel_->index(row, 0);
         QPointF constituencyPosition(
@@ -91,12 +111,10 @@ void ConstituencyWidget::loadSceneConstituencies()
             constituencyProxyModel_->data(index, ConstituencyModel::IdRole)
                 .toInt();
     }
-    /*
-        The following line is temporary. Eventually it will be replaced by
-        something like
-        polygonLayoutEngine_->layout().
-    */
-    ItemConstituencyIds = roughMap;
+
+    auto items = itemConstituencyIds_.keys().toVector();
+
+    itemConstituencyIds_ = roughMap;
 }
 
 void ConstituencyWidget::onSelectionChanged(const QItemSelection& selected)
@@ -139,7 +157,7 @@ void ConstituencyWidget::selectConstituencyInModel()
     auto itemToSelect = selectedItemList.first();
     if (!itemToSelect)
         return;
-    auto id = ItemConstituencyIds[itemToSelect];
+    auto id = itemConstituencyIds_[itemToSelect];
     auto index = poll_zapp_core_utils::idToModelIndex(
         *(constituencyProxyModel_->constituencyModel()), id);
     if (!index.isValid())
@@ -189,7 +207,8 @@ void ConstituencyWidget::connectModelSignals()
 void ConstituencyWidget::refreshPixmaps(
     const QModelIndex& topLeft, const QModelIndex& bottomRight)
 {
-    for (auto it = ItemConstituencyIds.begin(); it != ItemConstituencyIds.end();
+    for (auto it = itemConstituencyIds_.begin();
+         it != itemConstituencyIds_.end();
          ++it)
     {
         auto index = poll_zapp_core_utils ::idToModelIndex(

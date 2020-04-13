@@ -11,7 +11,10 @@ namespace geom
 class Polygon
 {
 public:
+    Polygon(const std::vector<Point>& points);
+    
     void inflate(double inflationFactor);
+    void moveTo(const Point& toPoint);
 
     const std::vector<Point>& points() const;
     std::vector<Point>& points();

@@ -64,6 +64,16 @@ void Point::setCartesianCoords(double x, double y)
     y_ = y;
 }
 
+void Point::operator+=(const Point& other)
+{
+    *this = *this + other;
+}
+
+void Point::operator-=(const Point& other)
+{
+    *this = *this - other;
+}
+
 void Point::rotateAbout(const Point& fulcrum, double radians)
 {
     *this = *this - fulcrum;

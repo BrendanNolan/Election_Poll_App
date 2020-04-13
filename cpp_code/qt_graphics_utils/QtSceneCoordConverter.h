@@ -2,6 +2,9 @@
 #define QTSCENECOORDCONVERTER_H
 
 #include <QPointF>
+
+#include <vector>
+
 #include "Point.h"
 
 /*
@@ -9,6 +12,8 @@
     between normal coordinates and QGraphicsScene coordinates (where the y-axis
     is inverted).
 */
+
+class QGraphicsScene;
 
 class QtSceneCoordConverter
 {
@@ -28,6 +33,8 @@ public:
     geom::Point point(const QPointF& qPointF) const;
 
     void setScale(double scale);
+    void inferScale(
+        const std::vector<geom::Point>& points, const QGraphicsScene& scene);
 
 private:
     double scale_ = 1.0;

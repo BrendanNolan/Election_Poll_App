@@ -1,8 +1,12 @@
 #include "QtSceneCoordConverter.h"
 
+#include <QGraphicsScene>
+
+#include <algorithm>
 #include <cmath>
 
 #include "geom_defs.h"
+#include "geom_functions.h"
 
 using namespace geom;
 
@@ -33,4 +37,15 @@ geom::Point QtSceneCoordConverter::point(const QPointF& qPointF) const
 void QtSceneCoordConverter::setScale(double scale)
 {
     scale_ = scale;
+}
+
+void QtSceneCoordConverter::inferScale(
+    const std::vector<Point>& points, const QGraphicsScene& scene)
+{
+    auto rectBound = boundingRect(points);
+
+    auto widthRatio = rectBound.width() / scene.width();
+    auto heightRatio = rectBound.height() / scene.height();
+
+    scale_ = std::max(widthRatio, heightRatio);
 }

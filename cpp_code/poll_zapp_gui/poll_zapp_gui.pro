@@ -43,40 +43,40 @@ FORMS += \
 
 INCLUDEPATH += \
     $$poll_zapp_core_source_path \
-    $$utils_geometric_source_path \
-    $$utils_qt_dep_source_path \
+    $$geometry_source_path \
+    $$qt_graphics_utils_source_path \
     $$(PYTHON_38_STUFF)\include
 
 win32:CONFIG(release, debug|release) {
     LIBS += \ 
         -L$$poll_zapp_core_build_path/release/ \
-        -L$$utils_geometric_build_path/release/ \
-        -L$$utils_qt_dep_build_path/release/ \
+        -L$$geometry_build_path/release/ \
+        -L$$qt_graphics_utils_build_path/release/ \
         -L$$(PYTHON_38_STUFF)/libs/ \
         -lpoll_zapp_core \
-        -lutils_geometric \
-        -lutils_qt_dep \
+        -lgeometry \
+        -lqt_graphics_utils \
         -lpython38
 }
 else:win32:CONFIG(debug, debug|release) {
     LIBS += \ 
         -L$$poll_zapp_core_build_path/debug/ \
-        -L$$utils_geometric_build_path/debug/ \
-        -L$$utils_qt_dep_build_path/debug/ \
+        -L$$geometry_build_path/debug/ \
+        -L$$qt_graphics_utils_build_path/debug/ \
         -L$$(PYTHON_38_STUFF)/libs/ \ 
         -lpoll_zapp_core \
-        -lutils_geometric \
-        -lutils_qt_dep \
+        -lgeometry \
+        -lqt_graphics_utils \
         -lpython38_d
 }
 else:unix {
     LIBS += \
         -L$$poll_zapp_core_build_path/ \
-        -L$$utils_geometric_build_path/ \
-        -L$$utils_qt_dep_build_path/ \
+        -L$$geometry_build_path/ \
+        -L$$qt_graphics_utils_build_path/ \
         -lpoll_zapp_core \
-        -lutils_geometric \
-        -lutils_qt_dep
+        -lgeometry \
+        -lqt_graphics_utils
 }
 
 win32:CONFIG(release, debug|release) {

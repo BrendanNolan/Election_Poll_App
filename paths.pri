@@ -1,9 +1,9 @@
-utils_qt_dep_source_path = $$top_srcdir/cpp_code/utils_qt_dep/
-utils_geometric_source_path = $$top_srcdir/cpp_code/utils_geometric/
+qt_graphics_utils_source_path = $$top_srcdir/cpp_code/qt_graphics_utils/
+geometry_source_path = $$top_srcdir/cpp_code/geometry/
 poll_zapp_core_source_path = $$top_srcdir/cpp_code/poll_zapp_core/
 poll_zapp_gui_source_path = $$top_srcdir/cpp_code/poll_zapp_gui/
 
-utils_qt_dep_build_path = $$top_builddir/cpp_code/utils_qt_dep/
-utils_geometric_build_path = $$top_builddir/cpp_code/utils_geometric/
+qt_graphics_utils_build_path = $$top_builddir/cpp_code/qt_graphics_utils/
+geometry_build_path = $$top_builddir/cpp_code/geometry/
 poll_zapp_core_build_path = $$top_builddir/cpp_code/poll_zapp_core/
 poll_zapp_gui_build_path = $$top_builddir/cpp_code/poll_zapp_gui/

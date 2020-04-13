@@ -1,4 +1,4 @@
-#include "point_utils.h"
+#include "qt_point_functions.h"
 
 #include <QPointF>
 

@@ -7,13 +7,13 @@ TEMPLATE = lib
 CONFIG += static
 
 HEADERS += \
-    point_utils.h \
+    qt_point_functions.h \
     QtSceneCoordConverter.h \
     GraphicsItemLayoutEngine.h \
     GraphicsItemInflatingPositioningEngine.h
     
 SOURCES += \
-    point_utils.cpp \
+    qt_point_functions.cpp \
     QtSceneCoordConverter.cpp \
     GraphicsItemInflatingPositioningEngine.cpp
     

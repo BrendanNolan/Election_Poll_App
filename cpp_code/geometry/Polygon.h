@@ -24,12 +24,16 @@ public:
 
     bool isValid() const;
 
+    int edgeCount() const;
+
 private:
     std::vector<Point> points_;
 };
 
 Point centroid(const Polygon& polygon);
 double area(const Polygon& polygon);
+std::vector<double> xCoords(const Polygon& polygon);
+std::vector<double> yCoords(const Polygon& polygon);
 
 }// namespace geom
 

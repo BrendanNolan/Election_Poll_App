@@ -20,12 +20,12 @@ Point::Point(double x, double y)
 {
 }
 
-Point Point::newCartesianPoint(double x, double y)
+Point Point::createCartesian(double x, double y)
 {
     return Point(x, y);
 }
 
-Point Point::newPolarPoint(double r, double theta)
+Point Point::createPolar(double r, double theta)
 {
     auto xyPair = polarToCartesian(r, theta);
     return Point(xyPair.first, xyPair.second);
@@ -132,12 +132,12 @@ void Point::operator/=(double scalar)
 
 Point operator+(const Point& a, const Point& b)
 {
-    return Point::newCartesianPoint(a.x() + b.x(), a.y() + b.y());
+    return Point::createCartesian(a.x() + b.x(), a.y() + b.y());
 }
 
 Point operator-(const Point& a, const Point& b)
 {
-    return Point::newCartesianPoint(a.x() - b.x(), a.y() - b.y());
+    return Point::createCartesian(a.x() - b.x(), a.y() - b.y());
 }
 
 double dist(const Point& a, const Point& b)

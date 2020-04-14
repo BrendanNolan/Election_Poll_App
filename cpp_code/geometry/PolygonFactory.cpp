@@ -8,10 +8,10 @@ Polygon PolygonFactory::createRectangle(
 {
     auto w = width / 2;
     auto h = height / 2;
-    auto topRight = Point::newCartesianPoint(w, h);
-    auto bottomRight = Point::newCartesianPoint(w, -h);
-    auto bottomLeft = Point::newCartesianPoint(-w, -h);
-    auto topLeft = Point::newCartesianPoint(-w, h);
+    auto topRight = Point::createCartesian(w, h);
+    auto bottomRight = Point::createCartesian(w, -h);
+    auto bottomLeft = Point::createCartesian(-w, -h);
+    auto topLeft = Point::createCartesian(-w, h);
     auto ret = Polygon(
         std::vector<Point>{ topRight, bottomRight, bottomLeft, topLeft });
     ret.moveTo(centre);

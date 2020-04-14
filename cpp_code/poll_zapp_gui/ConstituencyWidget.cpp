@@ -86,7 +86,7 @@ void ConstituencyWidget::loadSceneConstituencies()
         auto y = constituencyProxyModel_
                           ->data(index, ConstituencyModel::LatitudeRole)
                           .toInt();
-        constituencyPositions.push_back(Point::newCartesianPoint(x, y));
+        constituencyPositions.push_back(Point::createCartesian(x, y));
     }
     
     QMap<QGraphicsItem*, int> roughMap;

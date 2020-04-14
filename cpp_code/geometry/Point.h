@@ -23,8 +23,8 @@ protected:
     Point(double x, double y);
 
 public:
-    static Point newCartesianPoint(double x, double y);
-    static Point newPolarPoint(double r, double theta);
+    static Point createCartesian(double x, double y);
+    static Point createPolar(double r, double theta);
     static Point origin();
 
     bool operator==(const Point& other) const;

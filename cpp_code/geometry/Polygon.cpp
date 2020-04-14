@@ -60,7 +60,7 @@ Point centroid(const Polygon& polygon)
     const auto& points = polygon.points();
     auto n = points.size();
     if (n == 0)
-        return Point::newCartesianPoint(0.0, 0.0);
+        return Point::createCartesian(0.0, 0.0);
 
     vector<double> x;
     x.reserve(n);
@@ -97,7 +97,7 @@ Point centroid(const Polygon& polygon)
     }
     cx *= (1.0 / 6.0);
 
-    return Point::newCartesianPoint(cx, cy);
+    return Point::createCartesian(cx, cy);
 }
 
 }// namespace geom

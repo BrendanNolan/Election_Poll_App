@@ -22,10 +22,10 @@ Polygon geom::createSquareOfArea(double area)
     if (area < doublePrecisionTolerance)
         throw std::exception("Cannot create polygon of zero or negative area");
     auto c = std::sqrt(area) / 2;
-    auto topRight = Point::newCartesianPoint(c, c);
-    auto bottomRight = Point::newCartesianPoint(c, -c);
-    auto bottomLeft = Point::newCartesianPoint(-c, -c);
-    auto topLeft = Point::newCartesianPoint(-c, c);
+    auto topRight = Point::createCartesian(c, c);
+    auto bottomRight = Point::createCartesian(c, -c);
+    auto bottomLeft = Point::createCartesian(-c, -c);
+    auto topLeft = Point::createCartesian(-c, c);
     std::vector<Point> points = { topRight, bottomRight, bottomLeft, topLeft };
     return Polygon(points);
 }

@@ -57,7 +57,8 @@ void RotatingItemsWidget::rotateItems()
     for (auto item : rotatingItems_)
     {
         auto pos = item->pos();
-        qt_point_functions::rotateAbout(pos, QPointF(0.0f, 0.0f), rotationAngle_);
+        qt_point_functions::rotateAbout(
+            pos, QPointF(0.0f, 0.0f), rotationAngle_);
         item->setPos(pos);
     }
 }

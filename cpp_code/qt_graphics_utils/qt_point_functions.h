@@ -11,6 +11,6 @@ QPointF rotatedAbout(
     const QPointF& point, const QPointF& fulcrum, double radians);
 
 float length(const QPointF& point);
-}// namespace geom
+}// namespace qt_point_functions
 
 #endif// QT_POINT_FUNCTIONS_H

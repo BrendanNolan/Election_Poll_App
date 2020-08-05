@@ -74,21 +74,21 @@ void ConstituencyWidget::loadSceneConstituencies()
     itemConstituencyIds_.clear();
 
     auto rowCount = constituencyProxyModel_->rowCount();
-    
+
     std::vector<Point> constituencyPositions;
     constituencyPositions.reserve(rowCount);
     for (auto row = 0; row < rowCount; ++row)
     {
         auto index = constituencyProxyModel_->index(row, 0);
         auto x = constituencyProxyModel_
-                          ->data(index, ConstituencyModel::LongitudeRole)
-                          .toInt();
+                     ->data(index, ConstituencyModel::LongitudeRole)
+                     .toInt();
         auto y = constituencyProxyModel_
-                          ->data(index, ConstituencyModel::LatitudeRole)
-                          .toInt();
+                     ->data(index, ConstituencyModel::LatitudeRole)
+                     .toInt();
         constituencyPositions.push_back(Point::createCartesian(x, y));
     }
-    
+
     QMap<QGraphicsItem*, int> roughMap;
     for (auto row = 0; row < rowCount; ++row)
     {

@@ -120,12 +120,10 @@ vector<double> xCoords(const Polygon& polygon)
     vector<double> x;
     auto points = polygon.points();
     std::transform(
-        points.begin(), 
-        points.end(), 
-        std::back_inserter(x), 
-        [](const Point& point) {
-            return point.x();
-        });
+        points.begin(),
+        points.end(),
+        std::back_inserter(x),
+        [](const Point& point) { return point.x(); });
     return x;
 }
 
@@ -134,12 +132,10 @@ vector<double> yCoords(const Polygon& polygon)
     vector<double> y;
     auto points = polygon.points();
     std::transform(
-        points.begin(), 
-        points.end(), 
-        std::back_inserter(y), 
-        [](const Point& point) {
-            return point.y();
-        });
+        points.begin(),
+        points.end(),
+        std::back_inserter(y),
+        [](const Point& point) { return point.y(); });
     return y;
 }
 

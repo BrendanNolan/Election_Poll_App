@@ -30,4 +30,4 @@ float length(const QPointF& point)
 {
     return std::sqrt(std::pow(point.x(), 2) + std::pow(point.y(), 2));
 }
-}// namespace geom
+}// namespace qt_point_functions

@@ -30,8 +30,7 @@ geom::Point QtSceneCoordConverter::point(const QPointF& qPointF) const
     if (std::abs(scale) < geom::doublePrecisionTolerance)
         scale = 1;
 
-    return Point::createCartesian(
-        qPointF.x() * scale, -(qPointF.y() * scale));
+    return Point::createCartesian(qPointF.x() * scale, -(qPointF.y() * scale));
 }
 
 void QtSceneCoordConverter::setScale(double scale)

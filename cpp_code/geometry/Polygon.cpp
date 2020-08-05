@@ -55,6 +55,11 @@ bool Polygon::isValid() const
     return points_.size() > 2;// also should check that not all points collinear
 }
 
+int Polygon::edgeCount() const
+{
+    return static_cast<int>(points_.size());
+}
+
 Point centroid(const Polygon& polygon)
 {
     auto n = polygon.edgeCount();
@@ -88,23 +93,53 @@ Point centroid(const Polygon& polygon)
     return Point::createCartesian(cx, cy);
 }
 
+double width(const Polygon& polygon)
+{
+    if (polygon.edgeCount() < 1)
+        return 0;
+
+    auto xs = xCoords(polygon);
+    std::sort(xs.begin(), xs.end());
+
+    return std::abs(xs.back() - xs.front());
+}
+
+double height(const Polygon& polygon)
+{
+    if (polygon.edgeCount() < 1)
+        return 0;
+
+    auto ys = yCoords(polygon);
+    std::sort(ys.begin(), ys.end());
+
+    return std::abs(ys.back() - ys.front());
+}
+
 vector<double> xCoords(const Polygon& polygon)
 {
     vector<double> x;
-    x.reserve(polygon.edgeCount());
-    std::transform(points.begin(), points.end(), x.begin(), [](const Point& point) {
-        return point.x();
-    });
+    auto points = polygon.points();
+    std::transform(
+        points.begin(), 
+        points.end(), 
+        std::back_inserter(x), 
+        [](const Point& point) {
+            return point.x();
+        });
     return x;
 }
 
 vector<double> yCoords(const Polygon& polygon)
 {
     vector<double> y;
-    y.reserve(n);
-    std::transform(points.begin(), points.end(), y.begin(), [](const Point& point) {
-        return point.y();
-    });
+    auto points = polygon.points();
+    std::transform(
+        points.begin(), 
+        points.end(), 
+        std::back_inserter(y), 
+        [](const Point& point) {
+            return point.y();
+        });
     return y;
 }
 

@@ -32,6 +32,8 @@ private:
 
 Point centroid(const Polygon& polygon);
 double area(const Polygon& polygon);
+double width(const Polygon& polygon);
+double height(const Polygon& polygon);
 std::vector<double> xCoords(const Polygon& polygon);
 std::vector<double> yCoords(const Polygon& polygon);
 

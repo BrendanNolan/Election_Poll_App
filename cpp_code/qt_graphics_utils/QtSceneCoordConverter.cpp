@@ -44,8 +44,8 @@ void QtSceneCoordConverter::inferScale(
 {
     auto rectBound = boundingRect(points);
 
-    auto widthRatio = rectBound.width() / scene.width();
-    auto heightRatio = rectBound.height() / scene.height();
+    auto widthRatio = width(rectBound) / scene.width();
+    auto heightRatio = height(rectBound) / scene.height();
 
     scale_ = std::max(widthRatio, heightRatio);
 }

@@ -4,6 +4,7 @@
 #include <QFileInfo>
 
 #include <memory>
+#include <mutex>
 #include <vector>
 
 #include "DatabaseSignaller.h"
@@ -34,6 +35,7 @@ public:
 
 private:
     QFileInfo databaseFileInfo_;
+    mutable std::mutex mutex_;
 };
 
 #endif// SQLPOLITICIANDATABASEMANAGER_H

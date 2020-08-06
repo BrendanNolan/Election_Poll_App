@@ -13,7 +13,6 @@ public:
     explicit SqlPollResultDatabaseManager(
         const QFileInfo& databaseFileInfo = QFileInfo(),
         std::shared_ptr<DatabaseSignaller> databaseSignaller = nullptr);
-    SqlPollResultDatabaseManager* clone() const override;
 
     void addPollResult(const PollResult& result) const override;
     void updatePollResult(const PollResult& result) const override;

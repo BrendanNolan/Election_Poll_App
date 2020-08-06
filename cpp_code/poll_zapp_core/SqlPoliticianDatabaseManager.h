@@ -17,7 +17,6 @@ public:
     explicit SqlPoliticianDatabaseManager(
         const QFileInfo& databaseFileInfo = QFileInfo(),
         std::shared_ptr<DatabaseSignaller> databaseSignaller = nullptr);
-    SqlPoliticianDatabaseManager* clone() const override;
 
     std::vector<std::unique_ptr<Politician>> mpsForConstituency(
         int constituencyId) const override;

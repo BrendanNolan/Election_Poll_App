@@ -18,7 +18,6 @@ public:
     explicit SqlConstituencyDatabaseManager(
         const QFileInfo& databaseFileInfo = QFileInfo(),
         std::shared_ptr<DatabaseSignaller> databaseSignaller = nullptr);
-    SqlConstituencyDatabaseManager* clone() const override;
 
     void addConstituency(Constituency& constituency) const override;
     void updateConstituency(const Constituency& constituency) const override;

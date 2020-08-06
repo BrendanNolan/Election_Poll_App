@@ -18,8 +18,6 @@ public:
         createPollResultDatabaseManager() const = 0;
     virtual std::shared_ptr<IPoliticianDatabaseManager>
         createPoliticianDatabaseManager() const = 0;
-
-    virtual IDatabaseManagerFactory* clone() const = 0;
 };
 
 #endif// IDATABASEMANAGERFACTORY_H

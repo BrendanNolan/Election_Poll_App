@@ -19,11 +19,6 @@ SqlDatabaseManagerFactory::SqlDatabaseManagerFactory(
 {
 }
 
-SqlDatabaseManagerFactory* SqlDatabaseManagerFactory::clone() const
-{
-    return new SqlDatabaseManagerFactory(*this);
-}
-
 shared_ptr<IConstituencyDatabaseManager> SqlDatabaseManagerFactory::
     createConstituencyDatabaseManager() const
 {

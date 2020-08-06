@@ -15,7 +15,6 @@ public:
     IPoliticianDatabaseManager(
         std::shared_ptr<DatabaseSignaller> databaseSignaller);
     virtual ~IPoliticianDatabaseManager() = default;
-    virtual IPoliticianDatabaseManager* clone() const = 0;
 
     virtual std::vector<std::unique_ptr<Politician>> mpsForConstituency(
         int constituencyId) const = 0;

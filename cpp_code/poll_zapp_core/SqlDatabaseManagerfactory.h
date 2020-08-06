@@ -20,7 +20,6 @@ class SqlDatabaseManagerFactory : public IDatabaseManagerFactory
 public:
     explicit SqlDatabaseManagerFactory(
         const QFileInfo& databaseFileInfo = QFileInfo());
-    SqlDatabaseManagerFactory* clone() const override;
 
     std::shared_ptr<IConstituencyDatabaseManager>
         createConstituencyDatabaseManager() const override;

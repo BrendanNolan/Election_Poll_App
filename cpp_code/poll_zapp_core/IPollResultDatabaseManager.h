@@ -15,7 +15,6 @@ public:
     IPollResultDatabaseManager(
         std::shared_ptr<DatabaseSignaller> databaseSignaller);
     virtual ~IPollResultDatabaseManager() = default;
-    virtual IPollResultDatabaseManager* clone() const = 0;
 
     virtual void addPollResult(const PollResult& result) const = 0;
     virtual void updatePollResult(const PollResult& result) const = 0;

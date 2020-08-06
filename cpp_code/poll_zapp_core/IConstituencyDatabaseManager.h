@@ -14,7 +14,6 @@ public:
     IConstituencyDatabaseManager(
         std::shared_ptr<DatabaseSignaller> databaseSignaller);
     virtual ~IConstituencyDatabaseManager() = default;
-    virtual IConstituencyDatabaseManager* clone() const = 0;
 
     virtual void addConstituency(Constituency& constituency) const = 0;
     virtual void updateConstituency(const Constituency& constituency) const = 0;

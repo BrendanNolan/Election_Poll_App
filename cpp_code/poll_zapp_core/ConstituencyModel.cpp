@@ -21,7 +21,7 @@ ConstituencyModel::ConstituencyModel(
     , manager_(factory.createConstituencyDatabaseManager())
 {
     connect(
-        manager_->databaseSignaller(),
+        &(manager_->databaseSignaller()),
         &DatabaseSignaller::databaseRefreshed,
         this,
         &ConstituencyModel::reload);

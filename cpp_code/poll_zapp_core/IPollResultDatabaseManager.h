@@ -12,8 +12,6 @@ class QString;
 class IPollResultDatabaseManager
 {
 public:
-    IPollResultDatabaseManager(
-        std::shared_ptr<DatabaseSignaller> databaseSignaller);
     virtual ~IPollResultDatabaseManager() = default;
 
     virtual void addPollResult(const PollResult& result) const = 0;
@@ -23,10 +21,10 @@ public:
         int id) const = 0;
 
     virtual bool refreshDatabase() const = 0;
-    DatabaseSignaller* databaseSignaller() const;
+    DatabaseSignaller& databaseSignaller() const;
 
 private:
-    std::shared_ptr<DatabaseSignaller> databaseSignaller_;
+    mutable DatabaseSignaller databaseSignaller_;
 };
 
 #endif// IPOLLRESULTDATABASEMANAGER_H

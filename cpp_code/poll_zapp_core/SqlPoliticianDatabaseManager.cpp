@@ -17,10 +17,8 @@ unique_ptr<Politician> sqlQueryToPolitician(const QSqlQuery& query);
 }
 
 SqlPoliticianDatabaseManager::SqlPoliticianDatabaseManager(
-    const QFileInfo& databaseFileInfo,
-    std::shared_ptr<DatabaseSignaller> databaseSignaller)
-    : IPoliticianDatabaseManager(databaseSignaller)
-    , databaseFileInfo_(databaseFileInfo)
+    const QFileInfo& databaseFileInfo)
+    : databaseFileInfo_(databaseFileInfo)
 {
     auto database =
         poll_zapp_core_utils::connectToSqlDatabase(databaseFileInfo_);
@@ -242,15 +240,14 @@ bool SqlPoliticianDatabaseManager::refreshDatabase() const
 {
     std::lock_guard<std::mutex> lockGuard(mutex_);
     
-    if (python_scripting::runPythonScript(
+    if (!python_scripting::runPythonScript(
             QFileInfo(paths::politicianScrapingScript())))
     {
-        if (auto signaller = databaseSignaller())
-            emit signaller->databaseRefreshed();
-        return true;
+        return false;
     }
 
-    return false;
+    emit databaseSignaller().databaseRefreshed();
+    return true;
 }
 
 namespace

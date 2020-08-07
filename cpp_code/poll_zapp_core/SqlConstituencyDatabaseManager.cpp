@@ -18,10 +18,8 @@ unique_ptr<Constituency> sqlQueryToConstituency(const QSqlQuery& query);
 }
 
 SqlConstituencyDatabaseManager::SqlConstituencyDatabaseManager(
-    const QFileInfo& databaseFileInfo,
-    std::shared_ptr<DatabaseSignaller> databaseSignaller)
-    : IConstituencyDatabaseManager(databaseSignaller)
-    , databaseFileInfo_(databaseFileInfo)
+    const QFileInfo& databaseFileInfo)
+    : databaseFileInfo_(databaseFileInfo)
 {
     auto database =
         poll_zapp_core_utils::connectToSqlDatabase(databaseFileInfo_);
@@ -132,15 +130,14 @@ vector<unique_ptr<Constituency>> SqlConstituencyDatabaseManager::
 
 bool SqlConstituencyDatabaseManager::refreshDatabase() const
 {
-    if (python_scripting::runPythonScript(
+    if (!python_scripting::runPythonScript(
             QFileInfo(paths::constituencyScrapingScript())))
     {
-        if (auto signaller = databaseSignaller())
-            emit signaller->databaseRefreshed();
-        return true;
+        return false;
     }
-
-    return false;
+        
+    emit databaseSignaller().databaseRefreshed();
+    return true;
 }
 
 namespace

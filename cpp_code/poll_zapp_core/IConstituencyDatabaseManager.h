@@ -11,8 +11,6 @@ class Constituency;
 class IConstituencyDatabaseManager
 {
 public:
-    IConstituencyDatabaseManager(
-        std::shared_ptr<DatabaseSignaller> databaseSignaller);
     virtual ~IConstituencyDatabaseManager() = default;
 
     virtual void addConstituency(Constituency& constituency) const = 0;
@@ -23,10 +21,10 @@ public:
         const = 0;
 
     virtual bool refreshDatabase() const = 0;
-    DatabaseSignaller* databaseSignaller() const;
+    DatabaseSignaller& databaseSignaller() const;
 
 private:
-    std::shared_ptr<DatabaseSignaller> databaseSignaller_;
+    mutable DatabaseSignaller databaseSignaller_;
 };
 
 #endif// ICONSTITUENCYDATABASEMANAGER_H

@@ -7,7 +7,6 @@
 
 #include "IDatabaseManagerFactory.h"
 
-class DatabaseSignaller;
 class IConstituencyDatabaseManager;
 class IPollResultDatabaseManager;
 class IPoliticianDatabaseManager;
@@ -20,6 +19,7 @@ class SqlDatabaseManagerFactory : public IDatabaseManagerFactory
 public:
     explicit SqlDatabaseManagerFactory(
         const QFileInfo& databaseFileInfo = QFileInfo());
+    ~SqlDatabaseManagerFactory();
 
     std::shared_ptr<IConstituencyDatabaseManager>
         createConstituencyDatabaseManager() const override;
@@ -30,9 +30,6 @@ public:
 
 private:
     QFileInfo databaseFileInfo_;
-    std::shared_ptr<DatabaseSignaller> constituencySignaller_;
-    std::shared_ptr<DatabaseSignaller> politicianSignaller_;
-    std::shared_ptr<DatabaseSignaller> pollResultSignaller_;
 };
 
 #endif// SQLDATABASEMANAGERFACTORY_H

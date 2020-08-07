@@ -11,10 +11,8 @@
 using namespace std;
 
 SqlPollResultDatabaseManager::SqlPollResultDatabaseManager(
-    const QFileInfo& databaseFileInfo,
-    std::shared_ptr<DatabaseSignaller> databaseSignaller)
-    : IPollResultDatabaseManager(databaseSignaller)
-    , databaseFileInfo_(databaseFileInfo)
+    const QFileInfo& databaseFileInfo)
+    : databaseFileInfo_(databaseFileInfo)
 {
     auto database =
         poll_zapp_core_utils::connectToSqlDatabase(databaseFileInfo_);
@@ -169,13 +167,12 @@ vector<unique_ptr<PollResult>> SqlPollResultDatabaseManager::
 
 bool SqlPollResultDatabaseManager::refreshDatabase() const
 {
-    if (python_scripting::runPythonScript(
-            QFileInfo(paths::pollResultScrapingScript())))
+    if (!python_scripting::runPythonScript(
+        QFileInfo(paths::pollResultScrapingScript())))
     {
-        if (auto signaller = databaseSignaller())
-            emit signaller->databaseRefreshed();
-        return true;
+        return false;
     }
 
-    return false;
+    emit databaseSignaller().databaseRefreshed();
+    return true;
 }

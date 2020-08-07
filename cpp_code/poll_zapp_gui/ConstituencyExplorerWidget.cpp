@@ -28,7 +28,8 @@ ConstituencyExplorerWidget::ConstituencyExplorerWidget(QWidget* parent)
         std::unique_ptr<GraphicsItemInflatingPositioningEngine>(
             new GraphicsItemInflatingPositioningEngine()));
 
-    auto factory = SqlDatabaseManagerFactory(QFileInfo(paths::databasePath()));
+    auto dbPath = paths::databasePath();
+    SqlDatabaseManagerFactory factory(QFileInfo(dbPath));
 
     auto politicianModel = new PoliticianModel(factory, this);
     auto politicianSelectionModel = new QItemSelectionModel(politicianModel);

@@ -11,8 +11,7 @@ class SqlPollResultDatabaseManager : public IPollResultDatabaseManager
 {
 public:
     explicit SqlPollResultDatabaseManager(
-        const QFileInfo& databaseFileInfo = QFileInfo(),
-        std::shared_ptr<DatabaseSignaller> databaseSignaller = nullptr);
+        const QFileInfo& databaseFileInfo = QFileInfo());
 
     void addPollResult(const PollResult& result) const override;
     void updatePollResult(const PollResult& result) const override;

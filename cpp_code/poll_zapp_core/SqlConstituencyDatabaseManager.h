@@ -16,8 +16,7 @@ class SqlConstituencyDatabaseManager : public IConstituencyDatabaseManager
 {
 public:
     explicit SqlConstituencyDatabaseManager(
-        const QFileInfo& databaseFileInfo = QFileInfo(),
-        std::shared_ptr<DatabaseSignaller> databaseSignaller = nullptr);
+        const QFileInfo& databaseFileInfo = QFileInfo());
 
     void addConstituency(Constituency& constituency) const override;
     void updateConstituency(const Constituency& constituency) const override;

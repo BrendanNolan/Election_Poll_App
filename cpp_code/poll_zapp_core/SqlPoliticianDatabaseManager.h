@@ -16,8 +16,7 @@ class SqlPoliticianDatabaseManager : public IPoliticianDatabaseManager
 {
 public:
     explicit SqlPoliticianDatabaseManager(
-        const QFileInfo& databaseFileInfo = QFileInfo(),
-        std::shared_ptr<DatabaseSignaller> databaseSignaller = nullptr);
+        const QFileInfo& databaseFileInfo = QFileInfo());
 
     std::vector<std::unique_ptr<Politician>> mpsForConstituency(
         int constituencyId) const override;

@@ -19,12 +19,12 @@ PoliticianModel::PoliticianModel(
     , manager_(factory.createPoliticianDatabaseManager())
 {
     connect(
-        manager_->databaseSignaller(),
+        &(manager_->databaseSignaller()),
         &DatabaseSignaller::databaseRefreshed,
         this,
         &PoliticianModel::reload);
     connect(
-        manager_->databaseSignaller(),
+        &(manager_->databaseSignaller()),
         &DatabaseSignaller::databaseRefreshed,
         this,
         &PoliticianModel::refreshed);
@@ -43,7 +43,7 @@ PoliticianModel::PoliticianModel(const PoliticianModel& rhs)
             unique_ptr<Politician>(new Politician(*uniquePtrConstRef)));
     }
     connect(
-        manager_->databaseSignaller(),
+        &(manager_->databaseSignaller()),
         &DatabaseSignaller::databaseRefreshed,
         &rhs,
         &PoliticianModel::reload);

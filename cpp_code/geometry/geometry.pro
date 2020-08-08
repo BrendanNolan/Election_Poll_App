@@ -18,3 +18,6 @@ SOURCES += \
     Polygon.cpp \
     geom_functions.cpp \
     PolygonFactory.cpp
+
+INCLUDEPATH += \
+    $$(BOOST)

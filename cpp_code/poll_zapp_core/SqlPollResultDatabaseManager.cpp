@@ -168,7 +168,7 @@ vector<unique_ptr<PollResult>> SqlPollResultDatabaseManager::
 bool SqlPollResultDatabaseManager::refreshDatabase() const
 {
     if (!python_scripting::runPythonScript(
-        QFileInfo(paths::pollResultScrapingScript())))
+            QFileInfo(paths::pollResultScrapingScript())))
     {
         return false;
     }

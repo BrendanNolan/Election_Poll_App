@@ -102,7 +102,7 @@ vector<unique_ptr<Politician>> SqlPoliticianDatabaseManager::
 unique_ptr<Politician> SqlPoliticianDatabaseManager::politician(int id) const
 {
     std::lock_guard<std::mutex> lockGuard(mutex_);
-    
+
     auto database =
         poll_zapp_core_utils::connectToSqlDatabase(databaseFileInfo_);
     if (!database.isValid())
@@ -133,7 +133,7 @@ void SqlPoliticianDatabaseManager::addPoliticianToConstituency(
     Politician& thePolitician, int constituencyId) const
 {
     std::lock_guard<std::mutex> lockGuard(mutex_);
-    
+
     auto database =
         poll_zapp_core_utils::connectToSqlDatabase(databaseFileInfo_);
     if (!database.isValid())
@@ -171,7 +171,7 @@ void SqlPoliticianDatabaseManager::updatePolitician(
     const Politician& politician) const
 {
     std::lock_guard<std::mutex> lockGuard(mutex_);
-    
+
     auto database =
         poll_zapp_core_utils::connectToSqlDatabase(databaseFileInfo_);
     if (!database.isValid())
@@ -209,7 +209,7 @@ void SqlPoliticianDatabaseManager::updatePolitician(
 void SqlPoliticianDatabaseManager::removePolitician(int politicianId) const
 {
     std::lock_guard<std::mutex> lockGuard(mutex_);
-    
+
     auto database =
         poll_zapp_core_utils::connectToSqlDatabase(databaseFileInfo_);
     if (!database.isValid())
@@ -224,7 +224,7 @@ void SqlPoliticianDatabaseManager::clearPoliticiansFromConstituency(
     int constituencyId) const
 {
     std::lock_guard<std::mutex> lockGuard(mutex_);
-    
+
     auto database =
         poll_zapp_core_utils::connectToSqlDatabase(databaseFileInfo_);
     if (!database.isValid())
@@ -239,7 +239,7 @@ void SqlPoliticianDatabaseManager::clearPoliticiansFromConstituency(
 bool SqlPoliticianDatabaseManager::refreshDatabase() const
 {
     std::lock_guard<std::mutex> lockGuard(mutex_);
-    
+
     if (!python_scripting::runPythonScript(
             QFileInfo(paths::politicianScrapingScript())))
     {

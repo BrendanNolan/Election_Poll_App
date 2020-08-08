@@ -135,7 +135,7 @@ bool SqlConstituencyDatabaseManager::refreshDatabase() const
     {
         return false;
     }
-        
+
     emit databaseSignaller().databaseRefreshed();
     return true;
 }

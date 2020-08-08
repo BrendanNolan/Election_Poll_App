@@ -43,4 +43,4 @@ HEADERS += \
     poll_zapp_core_utils.h
 
 INCLUDEPATH += \
-    $$(PYTHON_38_STUFF)\include
+    $$(PYTHON_38_STUFF)/include

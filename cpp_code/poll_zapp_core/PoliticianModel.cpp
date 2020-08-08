@@ -57,7 +57,7 @@ int PoliticianModel::rowCount(const QModelIndex& /*parent*/) const
 
 QVariant PoliticianModel::data(const QModelIndex& index, int role) const
 {
-    if (!poll_zapp_core_utils::isIndexValid(index, *this))
+    if (!checkIndex(index))
         return QVariant();
     const auto& politician = *(politicianCache_[index.row()]);
     switch (role)
@@ -87,7 +87,7 @@ QVariant PoliticianModel::data(const QModelIndex& index, int role) const
 bool PoliticianModel::setData(
     const QModelIndex& index, const QVariant& value, int role)
 {
-    if (!poll_zapp_core_utils::isIndexValid(index, *this))
+    if (!checkIndex(index))
         return false;
     auto& politician = *(politicianCache_[index.row()]);
     switch (role)

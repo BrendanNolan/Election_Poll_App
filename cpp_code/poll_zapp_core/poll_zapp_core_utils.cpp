@@ -13,11 +13,6 @@
 namespace poll_zapp_core_utils
 {
 
-bool isIndexValid(const QModelIndex& index, const QAbstractListModel& model)
-{
-    return (index.row() >= 0) && (index.row() < model.rowCount()) && index.isValid();
-}
-
 QSqlDatabase connectToSqlDatabase(const QFileInfo& databaseFileInfo)
 {
     if (!databaseFileInfo.exists())

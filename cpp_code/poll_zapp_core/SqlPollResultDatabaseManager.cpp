@@ -33,6 +33,8 @@ SqlPollResultDatabaseManager::SqlPollResultDatabaseManager(
 
 void SqlPollResultDatabaseManager::addPollResult(const PollResult& result) const
 {
+    std::lock_guard<std::recursive_mutex> lockGuard(recursiveMutex_);
+
     auto database =
         poll_zapp_core_utils::connectToSqlDatabase(databaseFileInfo_);
     if (!database.isValid())
@@ -66,6 +68,8 @@ void SqlPollResultDatabaseManager::addPollResult(const PollResult& result) const
 void SqlPollResultDatabaseManager::updatePollResult(
     const PollResult& result) const
 {
+    std::lock_guard<std::recursive_mutex> lockGuard(recursiveMutex_);
+
     auto database =
         poll_zapp_core_utils::connectToSqlDatabase(databaseFileInfo_);
     if (!database.isValid())
@@ -100,6 +104,8 @@ void SqlPollResultDatabaseManager::updatePollResult(
 void SqlPollResultDatabaseManager::removePollResult(
     const PollResult& result) const
 {
+    std::lock_guard<std::recursive_mutex> lockGuard(recursiveMutex_);
+
     auto database =
         poll_zapp_core_utils::connectToSqlDatabase(databaseFileInfo_);
     if (!database.isValid())
@@ -122,6 +128,8 @@ void SqlPollResultDatabaseManager::removePollResult(
 vector<unique_ptr<PollResult>> SqlPollResultDatabaseManager::
     pollResultsForConstituency(int id) const
 {
+    std::lock_guard<std::recursive_mutex> lockGuard(recursiveMutex_);
+
     auto database =
         poll_zapp_core_utils::connectToSqlDatabase(databaseFileInfo_);
     if (!database.isValid())
@@ -167,6 +175,8 @@ vector<unique_ptr<PollResult>> SqlPollResultDatabaseManager::
 
 bool SqlPollResultDatabaseManager::refreshDatabase() const
 {
+    std::lock_guard<std::recursive_mutex> lockGuard(recursiveMutex_);
+
     if (!python_scripting::runPythonScript(
             QFileInfo(paths::pollResultScrapingScript())))
     {

@@ -2,7 +2,9 @@
 #define SQLPOLLRESULTDATABASEMANAGER_H
 
 #include <QFileInfo>
+
 #include <memory>
+#include <mutex>
 
 #include "DatabaseSignaller.h"
 #include "IPollResultDatabaseManager.h"
@@ -23,6 +25,7 @@ public:
 
 private:
     QFileInfo databaseFileInfo_;
+    mutable std::recursive_mutex recursiveMutex_;
 };
 
 #endif// SQLPOLLRESULTDATABASEMANAGER_H

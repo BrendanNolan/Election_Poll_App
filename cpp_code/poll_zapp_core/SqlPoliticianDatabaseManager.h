@@ -34,7 +34,7 @@ public:
 
 private:
     QFileInfo databaseFileInfo_;
-    mutable std::mutex mutex_;
+    mutable std::recursive_mutex recursiveMutex_;
 };
 
 #endif// SQLPOLITICIANDATABASEMANAGER_H

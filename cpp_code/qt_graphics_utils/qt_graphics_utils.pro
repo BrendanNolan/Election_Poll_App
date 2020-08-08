@@ -18,4 +18,5 @@ SOURCES += \
     qt_point_functions.cpp
     
 INCLUDEPATH += \
+    $$(BOOST) \
     $$geometry_source_path

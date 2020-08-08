@@ -188,3 +188,8 @@ bool SqlPollResultDatabaseManager::refreshDatabase() const
     emit databaseSignaller().databaseRefreshed();
     return true;
 }
+
+DatabaseSignaller& SqlPollResultDatabaseManager::databaseSignaller() const
+{
+    return signaller_;
+}

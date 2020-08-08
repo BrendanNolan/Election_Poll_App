@@ -253,6 +253,11 @@ bool SqlPoliticianDatabaseManager::refreshDatabase() const
     return true;
 }
 
+DatabaseSignaller& SqlPoliticianDatabaseManager::databaseSignaller() const
+{
+    return signaller_;
+}
+
 namespace
 {
 unique_ptr<Politician> sqlQueryToPolitician(const QSqlQuery& query)

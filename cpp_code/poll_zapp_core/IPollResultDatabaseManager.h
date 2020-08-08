@@ -4,7 +4,7 @@
 #include <memory>
 #include <vector>
 
-#include "DatabaseSignaller.h"
+class DatabaseSignaller;
 
 class PollResult;
 class QString;
@@ -21,10 +21,7 @@ public:
         int id) const = 0;
 
     virtual bool refreshDatabase() const = 0;
-    DatabaseSignaller& databaseSignaller() const;
-
-private:
-    mutable DatabaseSignaller databaseSignaller_;
+    virtual DatabaseSignaller& databaseSignaller() const = 0;
 };
 
 #endif// IPOLLRESULTDATABASEMANAGER_H

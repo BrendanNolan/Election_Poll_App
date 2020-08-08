@@ -13,9 +13,6 @@ SOURCES += \
     ConstituencyModel.cpp \
     PoliticianModel.cpp \
     PollResultModel.cpp \
-    IPollResultDatabaseManager.cpp \
-    IPoliticianDatabaseManager.cpp \
-    IConstituencyDatabaseManager.cpp \
     SqlDatabaseManagerFactory.cpp \
     Politician.cpp \
     PollResult.cpp \

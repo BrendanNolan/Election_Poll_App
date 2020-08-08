@@ -4,6 +4,7 @@
 #include <QString>
 #include <QVariant>
 
+#include "DatabaseSignaller.h"
 #include "IDatabaseManagerFactory.h"
 #include "IPollResultDatabaseManager.h"
 #include "poll_zapp_core_utils.h"

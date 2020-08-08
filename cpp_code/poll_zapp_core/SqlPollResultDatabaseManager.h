@@ -22,9 +22,11 @@ public:
         int id) const override;
 
     bool refreshDatabase() const override;
+    DatabaseSignaller& databaseSignaller() const override;
 
 private:
     QFileInfo databaseFileInfo_;
+    mutable DatabaseSignaller signaller_;
     mutable std::mutex mutex_;
 };
 

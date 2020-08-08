@@ -3,6 +3,7 @@
 #include <QDir>
 #include <QFileInfo>
 
+#include "DatabaseSignaller.h"
 #include "IDatabaseManagerFactory.h"
 #include "IPoliticianDatabaseManager.h"
 #include "poll_zapp_core_utils.h"

@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <map>
 
+#include "DatabaseSignaller.h"
 #include "IConstituencyDatabaseManager.h"
 #include "IDatabaseManagerFactory.h"
 #include "SqlDatabaseManagerFactory.h"

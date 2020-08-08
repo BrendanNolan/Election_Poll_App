@@ -6,8 +6,9 @@
 #include <memory>
 #include <vector>
 
-#include "DatabaseSignaller.h"
 #include "Politician.h"
+
+class DatabaseSignaller;
 
 class IPoliticianDatabaseManager
 {
@@ -27,10 +28,7 @@ public:
     virtual void clearPoliticiansFromConstituency(int constituencyId) const = 0;
 
     virtual bool refreshDatabase() const = 0;
-    DatabaseSignaller& databaseSignaller() const;
-
-private:
-    mutable DatabaseSignaller databaseSignaller_;
+    virtual DatabaseSignaller& databaseSignaller() const = 0;
 };
 
 #endif// IPOLITICIANDATABASEMANAGER_H

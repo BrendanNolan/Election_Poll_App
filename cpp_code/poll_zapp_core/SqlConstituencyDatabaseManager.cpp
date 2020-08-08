@@ -153,6 +153,11 @@ bool SqlConstituencyDatabaseManager::refreshDatabase() const
     return true;
 }
 
+DatabaseSignaller& SqlConstituencyDatabaseManager::databaseSignaller() const
+{
+    return signaller_;
+}
+
 namespace
 {
 unique_ptr<Constituency> sqlQueryToConstituency(const QSqlQuery& query)

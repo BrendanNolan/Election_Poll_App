@@ -164,6 +164,7 @@ void SqlPoliticianDatabaseManager::addPoliticianToConstituency(
         ":party_rgb_green", thePolitician.partyDetails().colour_.green_);
     query.bindValue(
         ":party_rgb_blue", thePolitician.partyDetails().colour_.blue_);
+    query.exec();
     thePolitician.setId(query.lastInsertId().toInt());
 }
 

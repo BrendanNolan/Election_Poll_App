@@ -6,6 +6,10 @@ Questions for forums:
 1) What if a method of a subclass of QAbstractItemModel emits both dataChanged() and modelReset()?
 2) 
 
+TODO:
+DatabaseManager classes currently create the database if it doesn't exist already; this
+feels like failure to separate concerns.
+
 
 Comments on my own code:
 1) MainWindow should not be clickable when load screen is displayed.

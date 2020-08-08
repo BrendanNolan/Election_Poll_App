@@ -13,18 +13,18 @@ using namespace boost::geometry;
 namespace geom
 {
 Point::Point(double x, double y)
-    : boostPoint_(x, y)
+    : boostCartPoint_(x, y)
 {
 }
 
 Point::Point(const BoostCartesianPoint2D& cartesian)
-    : boostPoint_(cartesian)
+    : boostCartPoint_(cartesian)
 {
 }
 
 Point::Point(const BoostPolarPoint2D& polar)
 { 
-    transform(polar, boostPoint_);
+    transform(polar, boostCartPoint_);
 }
 
 Point Point::createCartesian(double x, double y)
@@ -37,28 +37,36 @@ Point Point::createPolar(double r, double theta)
     return { BoostPolarPoint2D(r, theta) };
 }
 
+void Point::operator+=(const Point& other)
+{
+    auto newX = x() + other.x();
+    auto newY = y() + other.y();
+    boostCartPoint_.x(newX);
+    boostCartPoint_.y(newY);
+}
+
 double Point::r() const
 {
     BoostPolarPoint2D polar;
-    transform(boostPoint_, polar);
+    transform(boostCartPoint_, polar);
     return polar.x();
 }
 
 double Point::theta() const
 {
     BoostPolarPoint2D polar;
-    transform(boostPoint_, polar);
+    transform(boostCartPoint_, polar);
     return polar.y();
 }
 
 double Point::x() const
 {
-    return boostPoint_.x();
+    return boostCartPoint_.x();
 }
 
 double Point::y() const
 {
-    return boostPoint_.y();
+    return boostCartPoint_.y();
 }
 
 }// namespace geom

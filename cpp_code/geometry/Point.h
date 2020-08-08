@@ -33,13 +33,15 @@ public:
     static Point createCartesian(double x, double y);
     static Point createPolar(double r, double theta);
 
+    void operator+=(const Point& other);
+
     double x() const;
     double y() const;
     double r() const;
     double theta() const;
 
 private:
-    BoostCartesianPoint2D boostPoint_;
+    BoostCartesianPoint2D boostCartPoint_;
 };
 
 };// namespace geom

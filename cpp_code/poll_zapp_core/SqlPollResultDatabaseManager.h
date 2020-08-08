@@ -25,7 +25,7 @@ public:
 
 private:
     QFileInfo databaseFileInfo_;
-    mutable std::recursive_mutex recursiveMutex_;
+    mutable std::mutex mutex_;
 };
 
 #endif// SQLPOLLRESULTDATABASEMANAGER_H

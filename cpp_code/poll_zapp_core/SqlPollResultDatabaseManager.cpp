@@ -33,7 +33,7 @@ SqlPollResultDatabaseManager::SqlPollResultDatabaseManager(
 
 void SqlPollResultDatabaseManager::addPollResult(const PollResult& result) const
 {
-    std::lock_guard<std::recursive_mutex> lockGuard(recursiveMutex_);
+    std::lock_guard<std::mutex> lockGuard(mutex_);
 
     auto database =
         poll_zapp_core_utils::connectToSqlDatabase(databaseFileInfo_);
@@ -68,7 +68,7 @@ void SqlPollResultDatabaseManager::addPollResult(const PollResult& result) const
 void SqlPollResultDatabaseManager::updatePollResult(
     const PollResult& result) const
 {
-    std::lock_guard<std::recursive_mutex> lockGuard(recursiveMutex_);
+    std::lock_guard<std::mutex> lockGuard(mutex_);
 
     auto database =
         poll_zapp_core_utils::connectToSqlDatabase(databaseFileInfo_);
@@ -104,7 +104,7 @@ void SqlPollResultDatabaseManager::updatePollResult(
 void SqlPollResultDatabaseManager::removePollResult(
     const PollResult& result) const
 {
-    std::lock_guard<std::recursive_mutex> lockGuard(recursiveMutex_);
+    std::lock_guard<std::mutex> lockGuard(mutex_);
 
     auto database =
         poll_zapp_core_utils::connectToSqlDatabase(databaseFileInfo_);
@@ -128,7 +128,7 @@ void SqlPollResultDatabaseManager::removePollResult(
 vector<unique_ptr<PollResult>> SqlPollResultDatabaseManager::
     pollResultsForConstituency(int id) const
 {
-    std::lock_guard<std::recursive_mutex> lockGuard(recursiveMutex_);
+    std::lock_guard<std::mutex> lockGuard(mutex_);
 
     auto database =
         poll_zapp_core_utils::connectToSqlDatabase(databaseFileInfo_);
@@ -175,12 +175,14 @@ vector<unique_ptr<PollResult>> SqlPollResultDatabaseManager::
 
 bool SqlPollResultDatabaseManager::refreshDatabase() const
 {
-    std::lock_guard<std::recursive_mutex> lockGuard(recursiveMutex_);
-
-    if (!python_scripting::runPythonScript(
-            QFileInfo(paths::pollResultScrapingScript())))
     {
-        return false;
+        std::lock_guard<std::mutex> lockGuard(mutex_);
+
+        if (!python_scripting::runPythonScript(
+                QFileInfo(paths::pollResultScrapingScript())))
+        {
+            return false;
+        }
     }
 
     emit databaseSignaller().databaseRefreshed();

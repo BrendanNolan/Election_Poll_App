@@ -41,7 +41,7 @@ SqlConstituencyDatabaseManager::SqlConstituencyDatabaseManager(
 void SqlConstituencyDatabaseManager::addConstituency(
     Constituency& constituency) const
 {
-    std::lock_guard<std::recursive_mutex> lokguard(recursiveMutex_);
+    std::lock_guard<std::mutex> lokguard(mutex_);
 
     auto database =
         poll_zapp_core_utils::connectToSqlDatabase(databaseFileInfo_);
@@ -65,7 +65,7 @@ void SqlConstituencyDatabaseManager::addConstituency(
 void SqlConstituencyDatabaseManager::updateConstituency(
     const Constituency& constituency) const
 {
-    std::lock_guard<std::recursive_mutex> lokguard(recursiveMutex_);
+    std::lock_guard<std::mutex> lokguard(mutex_);
 
     auto database =
         poll_zapp_core_utils::connectToSqlDatabase(databaseFileInfo_);
@@ -91,7 +91,7 @@ void SqlConstituencyDatabaseManager::updateConstituency(
 
 void SqlConstituencyDatabaseManager::removeConstituency(int id) const
 {
-    std::lock_guard<std::recursive_mutex> lokguard(recursiveMutex_);
+    std::lock_guard<std::mutex> lokguard(mutex_);
 
     auto database =
         poll_zapp_core_utils::connectToSqlDatabase(databaseFileInfo_);
@@ -105,7 +105,7 @@ void SqlConstituencyDatabaseManager::removeConstituency(int id) const
 unique_ptr<Constituency> SqlConstituencyDatabaseManager::constituency(
     int id) const
 {
-    std::lock_guard<std::recursive_mutex> lokguard(recursiveMutex_);
+    std::lock_guard<std::mutex> lokguard(mutex_);
 
     auto database =
         poll_zapp_core_utils::connectToSqlDatabase(databaseFileInfo_);
@@ -121,7 +121,7 @@ unique_ptr<Constituency> SqlConstituencyDatabaseManager::constituency(
 vector<unique_ptr<Constituency>> SqlConstituencyDatabaseManager::
     constituencies() const
 {
-    std::lock_guard<std::recursive_mutex> lokguard(recursiveMutex_);
+    std::lock_guard<std::mutex> lokguard(mutex_);
 
     auto database =
         poll_zapp_core_utils::connectToSqlDatabase(databaseFileInfo_);
@@ -140,14 +140,15 @@ vector<unique_ptr<Constituency>> SqlConstituencyDatabaseManager::
 
 bool SqlConstituencyDatabaseManager::refreshDatabase() const
 {
-    std::lock_guard<std::recursive_mutex> lokguard(recursiveMutex_);
-
-    if (!python_scripting::runPythonScript(
-            QFileInfo(paths::constituencyScrapingScript())))
     {
-        return false;
-    }
+        std::lock_guard<std::mutex> lokguard(mutex_);
 
+        if (!python_scripting::runPythonScript(
+                QFileInfo(paths::constituencyScrapingScript())))
+        {
+            return false;
+        }
+    }
     emit databaseSignaller().databaseRefreshed();
     return true;
 }

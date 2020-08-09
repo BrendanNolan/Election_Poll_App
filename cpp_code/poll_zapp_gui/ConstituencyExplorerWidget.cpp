@@ -26,6 +26,7 @@ ConstituencyExplorerWidget::ConstituencyExplorerWidget(QWidget* parent)
 {
     ui_->setupUi(this);
     ui_->loadIndicatorLabel_->hide();
+
     ui_->constituencyWidget->setPolygonLayoutEngine(
         std::unique_ptr<GraphicsItemInflatingPositioningEngine>(
             new GraphicsItemInflatingPositioningEngine()));
@@ -171,10 +172,16 @@ QString ConstituencyExplorerWidget::currentConstituencyName() const
 
 void ConstituencyExplorerWidget::asynchronouslyRefreshModels()
 {
-    auto movie = new QMovie(":resources/loading_indictor.gif");
-    ui_->loadIndicatorLabel_->setMovie(movie);
+    if (!(ui_->loadIndicatorLabel_->movie()))
+    {
+        auto movie = new QMovie(":resources/loading_indictor.gif");
+        if (!movie->isValid())
+            return;
+        ui_->loadIndicatorLabel_->setMovie(movie);
+    }
+
     ui_->loadIndicatorLabel_->show();
-    movie->start();
+    ui_->loadIndicatorLabel_->movie()->start();
 }
 
 void ConstituencyExplorerWidget::reloadModels()

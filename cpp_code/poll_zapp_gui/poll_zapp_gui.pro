@@ -46,6 +46,8 @@ INCLUDEPATH += \
     $$(PYTHON_38_STUFF)/include \
     $$(BOOST)
 
+RESOURCES = resources.qrc
+
 win32:CONFIG(release, debug|release) {
     LIBS += \ 
         -L$$poll_zapp_core_build_path/release/ \

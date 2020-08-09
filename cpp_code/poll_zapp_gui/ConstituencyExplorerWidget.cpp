@@ -16,7 +16,6 @@
 #include "PoliticianPictureProxyModel.h"
 #include "PollResultModel.h"
 #include "GraphicsItemInflatingPositioningEngine.h"
-#include "RotatingItemsWidget.h"
 #include "SqlDatabaseManagerFactory.h"
 
 ConstituencyExplorerWidget::ConstituencyExplorerWidget(QWidget* parent)
@@ -68,12 +67,6 @@ ConstituencyExplorerWidget::ConstituencyExplorerWidget(QWidget* parent)
         &QPushButton::clicked,
         this,
         &ConstituencyExplorerWidget::asynchronouslyRefreshModels);
-
-    connect(
-        &dataRefreshTimer_,
-        &QTimer::timeout,
-        this,
-        &ConstituencyExplorerWidget::onDataRefreshTimerTimeout);
 }
 
 ConstituencyExplorerWidget::~ConstituencyExplorerWidget()
@@ -175,76 +168,6 @@ QString ConstituencyExplorerWidget::currentConstituencyName() const
 
 void ConstituencyExplorerWidget::asynchronouslyRefreshModels()
 {
-    auto sizeOfMainWindow = rect().size();
-    auto desiredSizeOfLoadScreen = 0.5 * sizeOfMainWindow;
-    auto edgeLengthOfLoadScreenPixmaps =
-        0.15
-        * std::min(
-              desiredSizeOfLoadScreen.width(),
-              desiredSizeOfLoadScreen.height());
-    QSize desiredSizeOfLoadScreenPixmaps(
-        edgeLengthOfLoadScreenPixmaps, edgeLengthOfLoadScreenPixmaps);
-
-    PoliticianPictureProxyModel politicianProxyModel(politicianModel_, nullptr);
-    QVector<QGraphicsItem*> politicianGraphicsItems;
-    auto rowCount = politicianProxyModel.rowCount();
-    for (auto row = 0; row < rowCount; ++row)
-    {
-        auto pixmap =
-            politicianProxyModel.data(politicianProxyModel.index(row, 0))
-                .value<QPixmap>();
-        politicianGraphicsItems.push_back(new QGraphicsPixmapItem(pixmap.scaled(
-            desiredSizeOfLoadScreenPixmaps, Qt::KeepAspectRatio)));
-    }
-
-    loadScreen_ = new QDialog(this);
-    loadScreen_->setWindowTitle("Refreshing Data ...");
-    auto loadScreenLayout = new QHBoxLayout(loadScreen_);
-    loadScreen_->setModal(true);
-    auto rotatingItemsWidget = new RotatingItemsWidget();
-    {
-        rotatingItemsWidget->setFrameRate(60);
-        rotatingItemsWidget->setInterFrameAngleDifference(-25);
-        rotatingItemsWidget->setFixedSize(desiredSizeOfLoadScreen);
-        rotatingItemsWidget->setRotationRadius(
-            rotatingItemsWidget->preferredRotationRadius());
-        rotatingItemsWidget->scene()->setBackgroundBrush(
-            QBrush(QColor(10, 15, 68)));
-        rotatingItemsWidget->setHorizontalScrollBarPolicy(
-            Qt::ScrollBarAlwaysOff);
-        rotatingItemsWidget->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-        rotatingItemsWidget->setRotatingItems(politicianGraphicsItems);
-    }
-    loadScreenLayout->addWidget(rotatingItemsWidget);
-    loadScreen_->setVisible(true);
-    loadScreen_->raise();
-
-    dataRefreshTimer_.setInterval(std::chrono::seconds(1));
-
-    fut_ = std::async(
-        std::launch::async, &ConstituencyExplorerWidget::refreshModels, this);
-    dataRefreshTimer_.start();
-}
-
-void ConstituencyExplorerWidget::onDataRefreshTimerTimeout()
-{
-    auto status = fut_.wait_for(std::chrono::seconds(0));
-    if (status != std::future_status::ready)
-        return;
-
-    dataRefreshTimer_.stop();
-    delete loadScreen_;
-    loadScreen_ = nullptr;
-
-    auto refreshSuccssful = fut_.get();
-    if (refreshSuccssful)
-        return;
-
-    QMessageBox failureWarning;
-    failureWarning.setWindowTitle("Update Failure");
-    failureWarning.setIcon(QMessageBox::Warning);
-    failureWarning.setText("Data Refresh Operation Failed");
-    failureWarning.exec();
 }
 
 void ConstituencyExplorerWidget::reloadModels()

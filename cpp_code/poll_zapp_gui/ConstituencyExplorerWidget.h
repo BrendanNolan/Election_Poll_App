@@ -3,9 +3,6 @@
 
 #include <QModelIndex>
 #include <QWidget>
-#include <QTimer>
-
-#include <future>
 
 class ConstituencyModel;
 class PoliticianModel;
@@ -36,7 +33,6 @@ public:
 
 private slots:
     void asynchronouslyRefreshModels();
-    void onDataRefreshTimerTimeout();
     void onConstituencySelectionChanged();
 
 private:
@@ -52,9 +48,6 @@ private:
     ConstituencyModel* constituencyModel_ = nullptr;
     PollResultModel* pollResultModel_ = nullptr;
     QItemSelectionModel* constituencySelectionModel_ = nullptr;
-
-    std::future<bool> fut_;
-    QTimer dataRefreshTimer_;
 
     QDialog* loadScreen_ = nullptr;
 

@@ -11,7 +11,6 @@ HEADERS += \
     ConstituencyExplorerWidget.h \
     MainWindow.h \
     ThinPixmapDelegate.h \
-    RotatingItemsWidget.h \
     ConstituencyColoursProxyModel.h \
     PoliticianPictureProxyModel.h \
     PollResultPlotProxyModel.h \
@@ -28,7 +27,6 @@ SOURCES += \
     main.cpp \
     MainWindow.cpp \
     ThinPixmapDelegate.cpp \
-    RotatingItemsWidget.cpp \
     ConstituencyColoursProxyModel.cpp \
     PoliticianPictureProxyModel.cpp \
     PollResultPlotProxyModel.cpp \

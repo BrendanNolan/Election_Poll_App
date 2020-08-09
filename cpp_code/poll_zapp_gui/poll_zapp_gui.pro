@@ -45,7 +45,8 @@ INCLUDEPATH += \
     $$poll_zapp_core_source_path \
     $$geometry_source_path \
     $$qt_graphics_utils_source_path \
-    $$(PYTHON_38_STUFF)/include
+    $$(PYTHON_38_STUFF)/include \
+    $$(BOOST)
 
 win32:CONFIG(release, debug|release) {
     LIBS += \ 

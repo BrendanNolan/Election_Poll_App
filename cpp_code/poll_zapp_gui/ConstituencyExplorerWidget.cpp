@@ -10,6 +10,7 @@
 
 #include <QtGlobal>
 
+#include <chrono>
 #include <condition_variable>
 #include <mutex>
 #include <thread>
@@ -51,7 +52,9 @@ ConstituencyExplorerWidget::ConstituencyExplorerWidget(QWidget* parent)
     setConstituencySelectionModel(constituencySelectionModel);
     setPollResultSelectionModel(pollResultSelectionModel);
 
-    auto dataLoadSuccessful = refreshModels();
+    std::condition_variable condVar;
+    std::mutex mutex;
+    auto dataLoadSuccessful = refreshModels(condVar, mutex);
     if (!dataLoadSuccessful)
     {
         QMessageBox failureWarning;
@@ -195,6 +198,7 @@ void ConstituencyExplorerWidget::asynchronouslyRefreshModels()
         condVar,
         mutex);
     condVar.wait(ul);
+    thread.join();
     ui_->loadIndicatorLabel_->movie()->stop();
     ui_->loadIndicatorLabel_->hide();
 }
@@ -211,7 +215,7 @@ void ConstituencyExplorerWidget::reloadModels()
 
 bool ConstituencyExplorerWidget::refreshModels(
     std::condition_variable& condVar,
-    std::mutex mutex)
+    std::mutex& mutex)
 {
     auto refreshSuccessful = true;
 
@@ -234,6 +238,9 @@ bool ConstituencyExplorerWidget::refreshModels(
                 refreshSuccessful = false;
         }
     }
+
+    using namespace std::chrono_literals;
+    std::this_thread::sleep_for(5s);
     condVar.notify_one();
 
     return refreshSuccessful;

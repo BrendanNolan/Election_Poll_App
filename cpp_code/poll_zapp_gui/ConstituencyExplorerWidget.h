@@ -45,7 +45,7 @@ private:
     void reloadModels();
     bool refreshModels(
         std::condition_variable& condVar,
-        std::mutex mutex);
+        std::mutex& mutex);
 
 private:
     PoliticianModel* politicianModel_ = nullptr;

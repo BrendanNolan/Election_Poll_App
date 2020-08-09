@@ -1,6 +1,8 @@
 #ifndef POINT_H
 #define POINT_H
 
+#include "geom_defs.h"
+
 /*
     These utils are far from their final form. I am addiing to them as and when
     I need new utilities.
@@ -27,8 +29,6 @@ public:
     static Point createPolar(double r, double theta);
     static Point origin();
 
-    bool operator==(const Point& other) const;
-
     void rotateAbout(const Point& fulcrum, double radians);
     Point rotatedAbout(const Point& fulcrum, double radians) const;
     void normalise();
@@ -41,8 +41,11 @@ public:
     void operator*=(double scalar);
     void operator/=(double scalar);
 
-    double x() const;
-    double y() const;
+    const double& x() const;
+    const double& y() const;
+    void x(const double& x);
+    void y(const double& y);
+
     double r() const;
     double theta() const;
 
@@ -51,8 +54,7 @@ private:
     Point rotatedAboutOrigin(double radians) const;
 
 private:
-    double x_ = 0;
-    double y_ = 0;
+    BoostCartesianPoint2D boostCartPoint_;
 };
 
 Point operator+(const Point& a, const Point& b);

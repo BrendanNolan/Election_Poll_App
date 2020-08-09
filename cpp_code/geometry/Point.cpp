@@ -15,8 +15,7 @@ std::pair<double, double> polarToCartesian(double r, double theta);
 namespace geom
 {
 Point::Point(double x, double y)
-    : x_(x)
-    , y_(y)
+    : boostCartPoint_(x, y)
 {
 }
 
@@ -36,32 +35,27 @@ Point Point::origin()
     return Point(0.0, 0.0);
 }
 
-bool Point::operator==(const Point& other) const
-{
-    return other.x_ == x_ && other.y_ == y_;
-}
-
 double Point::r() const
 {
-    return cartesianToPolar(x_, y_).first;
+    return cartesianToPolar(boostCartPoint_.x(), boostCartPoint_.y()).first;
 }
 
 double Point::theta() const
 {
-    return cartesianToPolar(x_, y_).second;
+    return cartesianToPolar(boostCartPoint_.x(), boostCartPoint_.y()).second;
 }
 
 void Point::setPolarCoords(double r, double theta)
 {
     auto xyPair = polarToCartesian(r, theta);
-    x_ = xyPair.first;
-    y_ = xyPair.second;
+    boostCartPoint_.x(xyPair.first);
+    boostCartPoint_.y(xyPair.second);
 }
 
 void Point::setCartesianCoords(double x, double y)
 {
-    x_ = x;
-    y_ = y;
+    boostCartPoint_.x(x);
+    boostCartPoint_.y(y);
 }
 
 void Point::operator+=(const Point& other)
@@ -90,20 +84,28 @@ Point Point::rotatedAbout(const Point& fulcrum, double radians) const
 
 void Point::normalise()
 {
-    if (*this == origin())
-        return;
-
-    *this /= norm(*this);
+    if (norm(*this) > 0.0)
+        *this /= norm(*this);
 }
 
-double Point::x() const
+const double& Point::x() const
 {
-    return x_;
+    return boostCartPoint_.x();
 }
 
-double Point::y() const
+const double& Point::y() const
 {
-    return y_;
+    return boostCartPoint_.y();
+}
+
+void Point::x(const double& x)
+{
+    boostCartPoint_.x(x);
+}
+
+void Point::y(const double& y)
+{
+    boostCartPoint_.y(y);
 }
 
 void Point::rotateAboutOrigin(double radians)
@@ -120,14 +122,20 @@ Point Point::rotatedAboutOrigin(double radians) const
 
 void Point::operator*=(double scalar)
 {
-    x_ *= scalar;
-    y_ *= scalar;
+    auto x = boostCartPoint_.x();
+    auto y = boostCartPoint_.y();
+    boostCartPoint_.x(scalar * x);
+    boostCartPoint_.y(scalar * y);
 }
 
 void Point::operator/=(double scalar)
 {
-    x_ /= scalar;
-    y_ /= scalar;
+    if (scalar == 0.0)
+        return;
+    auto x = boostCartPoint_.x();
+    auto y = boostCartPoint_.y();
+    boostCartPoint_.x(x / scalar);
+    boostCartPoint_.y(y /scalar);
 }
 
 Point operator+(const Point& a, const Point& b)

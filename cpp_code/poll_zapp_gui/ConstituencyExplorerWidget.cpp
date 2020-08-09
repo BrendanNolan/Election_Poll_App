@@ -10,6 +10,9 @@
 
 #include <QtGlobal>
 
+#include <condition_variable>
+#include <mutex>
+#include <thread>
 #include <memory>
 
 #include "ConstituencyModel.h"
@@ -182,6 +185,18 @@ void ConstituencyExplorerWidget::asynchronouslyRefreshModels()
 
     ui_->loadIndicatorLabel_->show();
     ui_->loadIndicatorLabel_->movie()->start();
+
+    std::condition_variable condVar;
+    std::mutex mutex;
+    std::unique_lock<std::mutex> ul(mutex);
+    std::thread thread(
+        &ConstituencyExplorerWidget::refreshModels, 
+        this,
+        condVar,
+        mutex);
+    condVar.wait(ul);
+    ui_->loadIndicatorLabel_->movie()->stop();
+    ui_->loadIndicatorLabel_->hide();
 }
 
 void ConstituencyExplorerWidget::reloadModels()
@@ -194,23 +209,32 @@ void ConstituencyExplorerWidget::reloadModels()
         pollResultModel_->reload();
 }
 
-bool ConstituencyExplorerWidget::refreshModels()
+bool ConstituencyExplorerWidget::refreshModels(
+    std::condition_variable& condVar,
+    std::mutex mutex)
 {
     auto refreshSuccessful = true;
-    if (constituencyModel_)
+
     {
-        if (!constituencyModel_->refreshDataSource())
-            refreshSuccessful = false;
+        std::lock_guard<std::mutex> lockGuard(mutex);
+
+        if (constituencyModel_)
+        {
+            if (!constituencyModel_->refreshDataSource())
+                refreshSuccessful = false;
+        }
+        if (politicianModel_)
+        {
+            if (!politicianModel_->refreshDataSource())
+                refreshSuccessful = false;
+        }
+        if (pollResultModel_)
+        {
+            if (!pollResultModel_->refreshDataSource())
+                refreshSuccessful = false;
+        }
     }
-    if (politicianModel_)
-    {
-        if (!politicianModel_->refreshDataSource())
-            refreshSuccessful = false;
-    }
-    if (pollResultModel_)
-    {
-        if (!pollResultModel_->refreshDataSource())
-            refreshSuccessful = false;
-    }
+    condVar.notify_one();
+
     return refreshSuccessful;
 }

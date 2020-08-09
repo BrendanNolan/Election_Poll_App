@@ -4,6 +4,8 @@
 #include <QModelIndex>
 #include <QWidget>
 
+#include <condition_variable>
+
 class ConstituencyModel;
 class PoliticianModel;
 class PollResultModel;
@@ -41,7 +43,9 @@ private:
     QString currentConstituencyName() const;
 
     void reloadModels();
-    bool refreshModels();
+    bool refreshModels(
+        std::condition_variable& condVar,
+        std::mutex mutex);
 
 private:
     PoliticianModel* politicianModel_ = nullptr;

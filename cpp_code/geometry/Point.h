@@ -33,12 +33,17 @@ public:
     static Point createCartesian(double x, double y);
     static Point createPolar(double r, double theta);
 
-    void operator+=(const Point& other);
-
     double x() const;
     double y() const;
+    void setX(double x);
+    void setY(double y);
+
     double r() const;
     double theta() const;
+    void setR(double r);
+    void setTheta(double theta);
+
+    void operator+=(const Point& other);
 
 private:
     BoostCartesianPoint2D boostCartPoint_;

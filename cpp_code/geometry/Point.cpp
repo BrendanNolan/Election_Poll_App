@@ -37,12 +37,24 @@ Point Point::createPolar(double r, double theta)
     return { BoostPolarPoint2D(r, theta) };
 }
 
-void Point::operator+=(const Point& other)
+double Point::x() const
 {
-    auto newX = x() + other.x();
-    auto newY = y() + other.y();
-    boostCartPoint_.x(newX);
-    boostCartPoint_.y(newY);
+    return boostCartPoint_.x();
+}
+
+double Point::y() const
+{
+    return boostCartPoint_.y();
+}
+
+void Point::setX(double x)
+{
+    boostCartPoint_.x(x);
+}
+
+void Point::setY(double y)
+{
+    boostCartPoint_.y(y);
 }
 
 double Point::r() const
@@ -59,14 +71,28 @@ double Point::theta() const
     return polar.y();
 }
 
-double Point::x() const
+void Point::setR(double r)
 {
-    return boostCartPoint_.x();
+    BoostPolarPoint2D polar;
+    transform(boostCartPoint_, polar);
+    polar.x(r);
+    transform(polar, boostCartPoint_);
 }
 
-double Point::y() const
+void Point::setTheta(double theta)
 {
-    return boostCartPoint_.y();
+    BoostPolarPoint2D polar;
+    transform(boostCartPoint_, polar);
+    polar.y(theta);
+    transform(polar, boostCartPoint_);
+}
+
+void Point::operator+=(const Point& other)
+{
+    auto newX = x() + other.x();
+    auto newY = y() + other.y();
+    boostCartPoint_.x(newX);
+    boostCartPoint_.y(newY);
 }
 
 }// namespace geom

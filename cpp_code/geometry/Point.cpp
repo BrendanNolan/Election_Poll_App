@@ -135,7 +135,7 @@ void Point::operator/=(double scalar)
     auto x = boostCartPoint_.x();
     auto y = boostCartPoint_.y();
     boostCartPoint_.x(x / scalar);
-    boostCartPoint_.y(y /scalar);
+    boostCartPoint_.y(y / scalar);
 }
 
 Point operator+(const Point& a, const Point& b)
